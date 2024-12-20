@@ -55,7 +55,7 @@ class DataController: ObservableObject {
         }
         try? viewContext.save()
     }
-    
+    // photo derictory
         private func getPhotoDirectory() -> URL {
             let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let photoDirectory = paths[0].appendingPathComponent("Photos")
