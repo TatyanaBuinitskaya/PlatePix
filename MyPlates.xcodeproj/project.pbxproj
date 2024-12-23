@@ -16,6 +16,11 @@
 		EB2250222D156C5A00E002D7 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250212D156C5A00E002D7 /* SideBarView.swift */; };
 		EB2250242D156C6800E002D7 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250232D156C6800E002D7 /* DetailView.swift */; };
 		EB2250262D156DB600E002D7 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250252D156DB600E002D7 /* Filter.swift */; };
+		EB22502A2D1599C800E002D7 /* Plate-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250292D1599C800E002D7 /* Plate-CoreDataHelpers.swift */; };
+		EB22502E2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22502D2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift */; };
+		EB2250302D197B8B00E002D7 /* PlateBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22502F2D197B8B00E002D7 /* PlateBox.swift */; };
+		EB2250322D198AD100E002D7 /* PlateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250312D198AD000E002D7 /* PlateView.swift */; };
+		EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250332D198AE300E002D7 /* NoPlateIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +36,11 @@
 		EB2250212D156C5A00E002D7 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		EB2250232D156C6800E002D7 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		EB2250252D156DB600E002D7 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		EB2250292D1599C800E002D7 /* Plate-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plate-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		EB22502D2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag-CoreDataHelpers.swift"; sourceTree = "<group>"; };
+		EB22502F2D197B8B00E002D7 /* PlateBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateBox.swift; sourceTree = "<group>"; };
+		EB2250312D198AD000E002D7 /* PlateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateView.swift; sourceTree = "<group>"; };
+		EB2250332D198AE300E002D7 /* NoPlateIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPlateIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +79,13 @@
 				EB2250252D156DB600E002D7 /* Filter.swift */,
 				EB2250212D156C5A00E002D7 /* SideBarView.swift */,
 				EB22500E2D1457FE00E002D7 /* ContentView.swift */,
+				EB22502F2D197B8B00E002D7 /* PlateBox.swift */,
 				EB2250232D156C6800E002D7 /* DetailView.swift */,
 				EB22501D2D146E9600E002D7 /* DataController.swift */,
+				EB2250312D198AD000E002D7 /* PlateView.swift */,
+				EB2250332D198AE300E002D7 /* NoPlateIView.swift */,
+				EB2250292D1599C800E002D7 /* Plate-CoreDataHelpers.swift */,
+				EB22502D2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift */,
 				EB22501A2D14588900E002D7 /* Main.xcdatamodeld */,
 				EB2250102D14580100E002D7 /* Assets.xcassets */,
 				EB2250122D14580100E002D7 /* Preview Content */,
@@ -157,12 +172,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB2250262D156DB600E002D7 /* Filter.swift in Sources */,
+				EB22502E2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift in Sources */,
 				EB22501C2D14588900E002D7 /* Main.xcdatamodeld in Sources */,
 				EB2250242D156C6800E002D7 /* DetailView.swift in Sources */,
 				EB22501E2D146E9600E002D7 /* DataController.swift in Sources */,
 				EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */,
+				EB2250302D197B8B00E002D7 /* PlateBox.swift in Sources */,
 				EB2250222D156C5A00E002D7 /* SideBarView.swift in Sources */,
+				EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */,
 				EB22500D2D1457FE00E002D7 /* MyPlatesApp.swift in Sources */,
+				EB2250322D198AD100E002D7 /* PlateView.swift in Sources */,
+				EB22502A2D1599C800E002D7 /* Plate-CoreDataHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct DetailView: View {
+    @EnvironmentObject var dataController: DataController
     var body: some View {
-        Text("Detail")
+        VStack {
+            if let plate = dataController.selectedPlate {
+                PlateView(plate: plate)
+            } else {
+                NoPlateIView()
+            }
+        }
+        .navigationTitle("Details")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
