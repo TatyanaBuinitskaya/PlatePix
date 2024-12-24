@@ -259,5 +259,25 @@ class DataController: ObservableObject {
         
         return allPlates.sorted()
     }
+    func newPlate() {
+        let plate = Plate(context: container.viewContext)
+        plate.title = "New Plate"
+        plate.creationDate = .now
+        plate.quality = 1
+        
+        if let tag = selectedFilter?.tag {
+            plate.addToTags(tag)
+        }
+        selectedPlate = plate
+        
+        save()
+    }
+    
+    func newTag() {
+        let tag = Tag(context: container.viewContext)
+        tag.id = UUID()
+        tag.name = "New tag"
+        save()
+    }
  
 }

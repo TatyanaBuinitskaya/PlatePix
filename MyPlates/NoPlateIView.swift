@@ -14,9 +14,7 @@ struct NoPlateIView: View {
                    .font(.title)
                    .foregroundStyle(.secondary)
 
-               Button("New Plate") {
-                   // make a new plate
-               }
+               Button("New Plate", action: dataController.newPlate)
     }
 }
 
