@@ -14,6 +14,7 @@ struct PlateBox: View {
     var body: some View {
         NavigationLink(value: plate){
             VStack{
+                Text(plate.plateTitle)
                 Text(plate.plateTagsList)
                 Image(systemName: plate.platePhoto)
                     .resizable()

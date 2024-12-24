@@ -21,7 +21,10 @@ extension Plate {
     var plateModificationDate: Date {
         modificationDate ?? .now
     }
-    
+    var plateTitle: String {
+           get {title ?? "" }
+           set {title = newValue }
+       }
     var plateNotes: String {
            get { notes ?? "" }
            set { notes = newValue }
@@ -56,6 +59,7 @@ extension Plate {
         plate.photo = "photo"
         plate.creationDate = .now
         plate.quality = 2
+        plate.title = "Example title"
         plate.notes = "Example notes"
         plate.completed = false
         return plate

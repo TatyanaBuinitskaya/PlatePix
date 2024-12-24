@@ -20,6 +20,12 @@ extension Tag {
         return result.filter {$0.creationDate == .now}
       
     }
+//    var tagTodayPlates: [Plate] {
+//        let result = plates?.allObjects as? [Plate] ?? []
+//        let calendar = Calendar.current
+//        let startOfToday = calendar.startOfDay(for: Date())
+//        return result.filter { $0.creationDate >= startOfToday }
+//    }
     
     static var example: Tag {
         let controller = DataController(inMemory: true)

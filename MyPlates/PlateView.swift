@@ -17,8 +17,8 @@ struct PlateView: View {
         Form {
             Section {
                 VStack(alignment: .leading) {
-//                    TextField("Title", text: $plate.issueTitle, prompt: Text("Enter the issue title here"))
-//                        .font(.title)
+                    TextField("Title", text: $plate.plateTitle, prompt: Text("Enter the plate title here"))
+                        .font(.title)
                     PhotosPicker(selection: $pickerItems, maxSelectionCount: 3, matching: .any(of: [.images, .not(.screenshots)])){
                         Label("Select a picture", systemImage: "photo")
                     }

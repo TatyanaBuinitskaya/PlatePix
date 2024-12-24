@@ -10,37 +10,16 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var dataController: DataController
     
-    var plates: [Plate] {
-        let filter = dataController.selectedFilter ?? .all
-        var allPlates: [Plate]
-
-        if let tag = filter.tag {
-            allPlates = tag.plates?.allObjects as? [Plate] ?? []
-        } else {
-            let request = Plate.fetchRequest()
-          //  request.predicate = NSPredicate(format: "date > %@", filter.minModificationDate as NSDate)
-            request.predicate = NSPredicate(format: "modificationDate > %@", filter.minModificationDate as NSDate)
-
-            
-            
-            allPlates = (try? dataController.container.viewContext.fetch(request)) ?? []
-        }
-        return allPlates.sorted()
-    }
- 
-    
     var body: some View {
         
         List(selection: $dataController.selectedPlate) {
-            ForEach(plates) { plate in
+            ForEach(dataController.platesForSelectedFilter()) { plate in
                 PlateBox(plate: plate)
             
                     }
             .onDelete(perform: delete)
                 }
-        Button("Print"){
-            print(plates)
-        }
+       
        
 //        List {
 //            ForEach(plates) { plate in
@@ -55,9 +34,57 @@ struct ContentView: View {
 //            }
 //        }
         .navigationTitle("Plates")
-       
+        .searchable(text: $dataController.filterText, tokens: $dataController.filterTokens, suggestedTokens: .constant(dataController.suggestedFilterTokens), prompt: "Filter issues, or type # to add tags") { tag in
+            Text(tag.tagName)
+        }
+        .toolbar {
+            Menu {
+                Button(dataController.filterEnabled ? "Turn Filter Off" : "Turn Filter On") {
+                    dataController.filterEnabled.toggle()
+                }
+
+                Divider()
+
+                Menu("Sort By") {
+                    Picker("Sort By", selection: $dataController.sortType) {
+                        Text("Date Created").tag(SortType.dateCreated)
+                        Text("Date Modified").tag(SortType.dateModified)
+                    }
+
+                    Divider()
+
+                    Picker("Sort Order", selection: $dataController.sortNewestFirst) {
+                        Text("Newest to Oldest").tag(true)
+                        Text("Oldest to Newest").tag(false)
+                    }
+                }
+
+                Picker("Status", selection: $dataController.filterStatus) {
+                    Text("All").tag(Status.all)
+                    Text("Missed").tag(Status.missed)
+                    Text("Completed").tag(Status.done)
+                }
+                .disabled(dataController.filterEnabled == false)
+
+                Picker("Meal quality", selection: $dataController.filterQuality) {
+                    Text("All").tag(-1)
+                    Text("Bad").tag(0)
+                    Text("Ok").tag(1)
+                    Text("Greate").tag(2)
+                }
+                .disabled(dataController.filterEnabled == false)
+            } label: {
+                Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
+                Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
+                    .symbolVariant(dataController.filterEnabled ? .fill : .none)
+            }
+        }
+
     }
+    
     func delete(_ offsets: IndexSet) {
+        let plates = dataController.platesForSelectedFilter()
+
         for offset in offsets {
             let item = plates[offset]
             dataController.delete(item)
