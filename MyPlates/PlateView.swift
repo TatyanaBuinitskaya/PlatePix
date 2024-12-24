@@ -81,6 +81,25 @@ struct PlateView: View {
         .onReceive(plate.objectWillChange) { _ in
             dataController.queueSave()
         }
+        .onSubmit(dataController.save)
+        .toolbar {
+            Menu {
+                Button {
+                    UIPasteboard.general.string = plate.title
+                } label: {
+                    Label("Copy Plate Title", systemImage: "doc.on.doc")
+                }
+
+                Button {
+                    plate.completed.toggle()
+                    dataController.save()
+                } label: {
+                    Label(plate.completed ? "Re-open Plate" : "Close Plate", systemImage: "bubble.left.and.exclamationmark.bubble.right")
+                }
+            } label: {
+                Label("Actions", systemImage: "ellipsis.circle")
+            }
+        }
     }
 }
 

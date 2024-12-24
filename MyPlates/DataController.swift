@@ -138,6 +138,8 @@ class DataController: ObservableObject {
         }
     
     func save() {
+        saveTask?.cancel()
+
         if container.viewContext.hasChanges {
             try? container.viewContext.save()
         }
@@ -156,6 +158,7 @@ class DataController: ObservableObject {
         container.viewContext.delete(object)
         save()
     }
+ 
     
     private func delete(_ fetchRequest: NSFetchRequest<NSFetchRequestResult>) {
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -257,7 +260,7 @@ class DataController: ObservableObject {
         let allPlates = (try? container.viewContext.fetch(request)) ?? []
         
         
-        return allPlates.sorted()
+        return allPlates
     }
     func newPlate() {
         let plate = Plate(context: container.viewContext)
@@ -278,6 +281,38 @@ class DataController: ObservableObject {
         tag.id = UUID()
         tag.name = "New tag"
         save()
+    }
+    
+    func count<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
+        (try? container.viewContext.count(for: fetchRequest)) ?? 0
+    }
+    
+    func hasEarned(award: Award) -> Bool {
+        switch award.criterion {
+        case "plates":
+            // returns true if they added a certain number of issues
+            let fetchRequest = Plate.fetchRequest()
+            let awardCount = count(for: fetchRequest)
+            return awardCount >= award.value
+
+        case "closed":
+            // returns true if they closed a certain number of issues
+            let fetchRequest = Plate.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "completed = true")
+            let awardCount = count(for: fetchRequest)
+            return awardCount >= award.value
+
+        case "tags":
+            // return true if they created a certain number of tags
+            let fetchRequest = Tag.fetchRequest()
+            let awardCount = count(for: fetchRequest)
+            return awardCount >= award.value
+
+        default:
+            // an unknown award criterion; this should never be allowed
+            // fatalError("Unknown award criterion: \(award.criterion)")
+            return false
+        }
     }
  
 }
