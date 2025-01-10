@@ -10,8 +10,13 @@ import SwiftUI
 struct SideBarView: View {
     @EnvironmentObject var dataController: DataController
     let smartFilters: [Filter] = [.all, .today]
+    // m
+    let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
     
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
+
+  
+
     
     @State private var tagToRename: Tag?
     @State private var renamingTag = false
@@ -21,16 +26,25 @@ struct SideBarView: View {
     
     var tagFilters: [Filter] {
         tags.map { tag in
-            Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
+            Filter(id: tag.tagID, name: tag.tagName, icon: "fork.knife.circle", tag: tag)
         }
     }
+    
     
     var body: some View {
         List(selection: $dataController.selectedFilter) {
             Section("Smart Filters") {
                 ForEach(smartFilters) { filter in
                     NavigationLink(value: filter) {
-                        Label(filter.name, systemImage: filter.icon)
+                        HStack{
+                            Label(filter.name, systemImage: filter.icon)
+                            Spacer()
+                            if filter == Filter.all {
+                                Text("\(dataController.allPlatesCount)")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        
                     }
                 }
             }
@@ -56,6 +70,34 @@ struct SideBarView: View {
                 }
                 .onDelete(perform: delete)
             }
+            Section("Quality Filters") {
+                ForEach(qualityFilters) { filter in
+                    NavigationLink(value: filter) {
+                        HStack {
+                            Image(systemName: filter.icon)
+                                .foregroundColor(filter.quality == 0 ? .red : filter.quality == 1 ? .yellow : .green)
+                            Text(filter.name)
+                            Spacer()
+                            Text("\(dataController.countPlates(for: filter.quality))")
+                                .foregroundColor(.secondary) 
+                        }
+                        
+                    }
+                }
+                if dataController.countPlates(for: 2) > dataController.countPlates(for: 0) && dataController.countPlates(for: 2) > dataController.countPlates(for: 1){
+                       Text("You're doing great! Keep up with the healthy choices!")
+                           .foregroundColor(.green)
+                           .italic()
+                   } else if dataController.countPlates(for: 0) > dataController.countPlates(for: 2) && dataController.countPlates(for: 0) > dataController.countPlates(for: 1)  {
+                       Text("You may want to focus on eating healthier.")
+                           .foregroundColor(.red)
+                           .italic()
+                   } else {
+                       Text("You're balancing your choices well!")
+                           .foregroundColor(.orange)
+                           .italic()
+                   }
+            }
         }
         .toolbar {
             Button(action: dataController.newTag) {
@@ -67,15 +109,6 @@ struct SideBarView: View {
             } label: {
                 Label("Show awards", systemImage: "rosette")
             }
-            
-            #if DEBUG
-            Button {
-                dataController.deleteAll()
-                dataController.createSampleData()
-            } label: {
-                Label("ADD SAMPLES", systemImage: "flame")
-            }
-            #endif
         }
         .alert("Rename tag", isPresented: $renamingTag) {
             Button("OK", action: completeRename)
@@ -84,6 +117,7 @@ struct SideBarView: View {
         }
         .sheet(isPresented: $showingAwards, content: AwardsView.init)
         .navigationTitle("Filters")
+       
     }
     
     func delete(_ offsets: IndexSet) {
@@ -108,6 +142,7 @@ struct SideBarView: View {
         tagToRename?.name = tagName
         dataController.save()
     }
+  
 }
 
 #Preview {

@@ -14,7 +14,7 @@ struct AwardsView: View {
     @State private var showingAwardDetails = false
     
     var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: 100, maximum: 100))]
+        [GridItem(.adaptive(minimum: 100, maximum: 150))]
     }
     
     var body: some View {
@@ -26,12 +26,16 @@ struct AwardsView: View {
                             selectedAward = award
                             showingAwardDetails = true
                         } label: {
-                            Image(systemName: award.image)
-                                .resizable()
-                                .scaledToFit()
-                                .padding()
-                                .frame(width: 100, height: 100)
-                                .foregroundColor(dataController.hasEarned(award: award) ? Color(award.color) : .secondary.opacity(0.5))
+                            VStack{
+                                Image(systemName: award.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(.horizontal)
+                                    .frame(width: 100, height: 100)
+                                Text("\(award.value)")
+                                    .font(.title2)
+                            }
+                            .foregroundColor(dataController.hasEarned(award: award) ? Color(award.color) : .secondary.opacity(0.5))
                         }
                     }
                 }

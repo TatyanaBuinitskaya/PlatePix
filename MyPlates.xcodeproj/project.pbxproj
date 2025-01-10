@@ -25,6 +25,11 @@
 		EB2250382D1ADCEF00E002D7 /* Awards.json in Resources */ = {isa = PBXBuildFile; fileRef = EB2250372D1ADCEF00E002D7 /* Awards.json */; };
 		EB22503C2D1ADDAB00E002D7 /* Award.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22503B2D1ADDAB00E002D7 /* Award.swift */; };
 		EB22503E2D1ADE7300E002D7 /* AwardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22503D2D1ADE7300E002D7 /* AwardsView.swift */; };
+		EB2250452D1D753A00E002D7 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EB2250442D1D753900E002D7 /* example.jpg */; };
+		EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250482D28FEA300E002D7 /* AwardSheetView.swift */; };
+		EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504A2D2D4B7700E002D7 /* SettingsView.swift */; };
+		EB22504D2D2E3D7500E002D7 /* PDFSheetShare.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504C2D2E3D7400E002D7 /* PDFSheetShare.swift */; };
+		EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +54,11 @@
 		EB2250372D1ADCEF00E002D7 /* Awards.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Awards.json; sourceTree = "<group>"; };
 		EB22503B2D1ADDAB00E002D7 /* Award.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Award.swift; sourceTree = "<group>"; };
 		EB22503D2D1ADE7300E002D7 /* AwardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardsView.swift; sourceTree = "<group>"; };
+		EB2250442D1D753900E002D7 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
+		EB2250482D28FEA300E002D7 /* AwardSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardSheetView.swift; sourceTree = "<group>"; };
+		EB22504A2D2D4B7700E002D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EB22504C2D2E3D7400E002D7 /* PDFSheetShare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFSheetShare.swift; sourceTree = "<group>"; };
+		EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +97,7 @@
 				EB2250252D156DB600E002D7 /* Filter.swift */,
 				EB2250212D156C5A00E002D7 /* SideBarView.swift */,
 				EB22500E2D1457FE00E002D7 /* ContentView.swift */,
+				EB22504A2D2D4B7700E002D7 /* SettingsView.swift */,
 				EB22502F2D197B8B00E002D7 /* PlateBox.swift */,
 				EB2250232D156C6800E002D7 /* DetailView.swift */,
 				EB22501D2D146E9600E002D7 /* DataController.swift */,
@@ -97,7 +108,11 @@
 				EB2250352D1ADA5C00E002D7 /* Bundle-Decodable.swift */,
 				EB2250372D1ADCEF00E002D7 /* Awards.json */,
 				EB22503B2D1ADDAB00E002D7 /* Award.swift */,
+				EB2250482D28FEA300E002D7 /* AwardSheetView.swift */,
 				EB22503D2D1ADE7300E002D7 /* AwardsView.swift */,
+				EB22504C2D2E3D7400E002D7 /* PDFSheetShare.swift */,
+				EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */,
+				EB2250442D1D753900E002D7 /* example.jpg */,
 				EB22501A2D14588900E002D7 /* Main.xcdatamodeld */,
 				EB2250102D14580100E002D7 /* Assets.xcassets */,
 				EB2250122D14580100E002D7 /* Preview Content */,
@@ -172,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB2250142D14580100E002D7 /* Preview Assets.xcassets in Resources */,
+				EB2250452D1D753A00E002D7 /* example.jpg in Resources */,
 				EB2250382D1ADCEF00E002D7 /* Awards.json in Resources */,
 				EB2250112D14580100E002D7 /* Assets.xcassets in Resources */,
 			);
@@ -185,9 +201,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB2250262D156DB600E002D7 /* Filter.swift in Sources */,
+				EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */,
 				EB22503C2D1ADDAB00E002D7 /* Award.swift in Sources */,
 				EB22503E2D1ADE7300E002D7 /* AwardsView.swift in Sources */,
 				EB22502E2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift in Sources */,
+				EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */,
+				EB22504D2D2E3D7500E002D7 /* PDFSheetShare.swift in Sources */,
 				EB22501C2D14588900E002D7 /* Main.xcdatamodeld in Sources */,
 				EB2250242D156C6800E002D7 /* DetailView.swift in Sources */,
 				EB2250362D1ADA5C00E002D7 /* Bundle-Decodable.swift in Sources */,
@@ -195,6 +214,7 @@
 				EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */,
 				EB2250302D197B8B00E002D7 /* PlateBox.swift in Sources */,
 				EB2250222D156C5A00E002D7 /* SideBarView.swift in Sources */,
+				EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */,
 				EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */,
 				EB22500D2D1457FE00E002D7 /* MyPlatesApp.swift in Sources */,
 				EB2250322D198AD100E002D7 /* PlateView.swift in Sources */,
@@ -337,6 +357,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlates/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "his app requires access to your camera to allow you to take photos of your meals.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -347,7 +368,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Tatyana.MyPlates;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.MyPlates;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -368,6 +389,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlates/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "his app requires access to your camera to allow you to take photos of your meals.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -378,7 +400,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Tatyana.MyPlates;
+				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.MyPlates;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension Plate {
-
+    
     var platePhoto: String {
         get {photo ?? ""}
         set {photo = newValue}
@@ -22,47 +23,38 @@ extension Plate {
         modificationDate ?? .now
     }
     var plateTitle: String {
-           get {title ?? "" }
-           set {title = newValue }
-       }
+        get {title ?? "" }
+        set {title = newValue }
+    }
     var plateNotes: String {
-           get { notes ?? "" }
-           set { notes = newValue }
+        get { notes ?? "" }
+        set { notes = newValue }
+    }
+    // 1 tag
+    var plateTag: Tag {
+           get { tag ?? Tag.example }
+           set { tag = newValue }
        }
-    // is needed?
-    var plateStatus: String {
-        if completed {
-            return "Completed"
-        } else {
-            return "Missed"
-        }
+    // 1 tag
+    var plateTagList: String {
+        guard let tag else { return "No tags" }
+        return plateTag.tagName
     }
     
-    var plateTags: [Tag] {
-        let result = tags?.allObjects as? [Tag] ?? []
-        return result.sorted()
-    }
-    var plateTagsList: String {
-        guard let tags else { return "No tags" }
-
-        if tags.count == 0 {
-            return "No tags"
-        } else {
-            return plateTags.map(\.tagName).formatted()
-        }
-    }
     static var example: Plate {
         let controller = DataController(inMemory: true)
         let viewContext = controller.container.viewContext
-
         let plate = Plate(context: viewContext)
-        plate.photo = "photo"
         plate.creationDate = .now
         plate.quality = 2
-        plate.title = "Example title"
-        plate.notes = "Example notes"
+        plate.title = "Plate " + Date().formatted()
+        plate.notes = "plus cup of coffee with milk"
         plate.completed = false
+        
+        plate.photo = Bundle.main.path(forResource: "example", ofType: "jpg")
+
         return plate
+        
     }
 }
 
