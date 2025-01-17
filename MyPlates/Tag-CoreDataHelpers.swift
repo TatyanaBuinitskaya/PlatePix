@@ -15,11 +15,11 @@ extension Tag {
     var tagName: String {
         name ?? ""
     }
-    var tagTodayPlates: [Plate] {
-        let result = plates?.allObjects as? [Plate] ?? []
-        return result.filter {$0.creationDate == .now}
-      
-    }
+//    var tagTodayPlates: [Plate] {
+//        let result = plates?.allObjects as? [Plate] ?? []
+//        return result.filter {$0.creationDate == .now}
+//      
+//    }
 
     static var example: Tag {
         let controller = DataController(inMemory: true)
@@ -44,5 +44,6 @@ extension Tag: Comparable {
         }
     }
 }
+
 
 

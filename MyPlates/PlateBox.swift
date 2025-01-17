@@ -15,35 +15,36 @@ struct PlateBox: View {
     var body: some View {
         // for list navigationLink
         //  NavigationLink(value: plate){
-        ZStack{
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
-                .shadow(radius: 10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                )
+        
+        
+//        ZStack{
+//            RoundedRectangle(cornerRadius: 10)
+//                .fill(Color.white)
+//                .shadow(radius: 5, x: 3, y: 3)
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 10)
+//                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+//                )
             
-            VStack(alignment: .leading, spacing: 3) {
-                Text(plate.plateTagList)
-                    .font(.title3)
-
-                Group {
+            VStack(spacing: 3) {
+                Group{
                     if let image = imagePlateView {
                         // Display the fetched or cached image
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFill()
-                            .frame(maxWidth: 200, maxHeight: 200)
+                            .frame(maxWidth: 200, maxHeight: 300)
                             .clipped()
                     } else {
                         // Placeholder while fetching the image
-                        Image(systemName: "photo")
+                        Image(systemName: "fork.knife.circle.fill")
                             .resizable()
                             .scaledToFill()
-                            .frame(maxWidth: 200, maxHeight: 200)
-                            .clipped()
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.blue)
+                            .frame(maxWidth: 200, maxHeight: 300)
+                            .clipShape(Rectangle())
                             .onAppear {
                                 Task {
                                     if let cloudRecordID = plate.cloudRecordID {
@@ -67,20 +68,53 @@ struct PlateBox: View {
                             }
                     }
                 }
+                    .overlay{
+                        if dataController.showMealTime || dataController.showQuality {
+                            VStack {
+                                Spacer() // Pushes the content to the bottom
+                                HStack{
+                                    if dataController.showMealTime {
+                                        HStack {
+                                            Text(plate.plateTagList)
+                                                .font(.subheadline)
+                                                .foregroundColor(.black)
+                                            Text(plate.plateCreationDate.formatted(date: .omitted, time: .shortened))
+                                                .font(.subheadline)
+                                                .foregroundColor(.black)
+                                        }
+                                    }
+                                    
+                                    if dataController.showQuality {
+                                        Spacer()
+                                        Image(systemName: "star.fill")
+                                            .foregroundColor(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
+                                            .font(.subheadline)
+                                    }
+                                }
+                                .padding(.horizontal, 3)
+                                .padding(3)
+                                .background(dataController.showMealTime ? Color.white.opacity(0.5) : Color.white.opacity(0.0))
+                            }
+                        }
+                    }
+                    .frame(maxWidth: 200, maxHeight: 300)
                 
-                HStack{
-                    Text(plate.plateCreationDate.formatted(date: .omitted, time: .shortened))
-                        .font(.subheadline)
-                    Spacer()
-                    Image(systemName: "star.fill")
-                        .foregroundColor(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
-                }
-                .frame(maxWidth: 200, maxHeight: 200)
-                Text(plate.plateNotes)
+                if dataController.showNotes {
+                       VStack(alignment: .leading, spacing: 5) {
+                           Text(plate.notes ?? "No notes")
+                               .foregroundColor(.black)
+                               .font(.caption2)
+                               .lineLimit(5) // Limits the number of lines to 3
+                               .minimumScaleFactor(0.5)
+                               .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 50, alignment: .topLeading)
+                       }
+                   }
             }
-            .padding(10)
-        }
-        .frame(maxWidth: 250, maxHeight: 300)
+            .background(
+                       Rectangle()
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 1) // Gray stroke
+                    )
+        
     }
    
 }

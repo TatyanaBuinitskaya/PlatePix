@@ -19,25 +19,28 @@ extension Plate {
         creationDate ?? .now
     }
     
-    var plateModificationDate: Date {
-        modificationDate ?? .now
-    }
+//    var plateModificationDate: Date {
+//        modificationDate ?? .now
+//    }
+    
+    
     var plateTitle: String {
         get {title ?? "" }
-        set {title = newValue }
+        set {title = newValue}
     }
     var plateNotes: String {
         get { notes ?? "" }
-        set { notes = newValue }
+        set { notes = newValue}
     }
     // 1 tag
     var plateTag: Tag {
            get { tag ?? Tag.example }
-           set { tag = newValue }
+        set { tag = newValue}
+           
        }
     // 1 tag
     var plateTagList: String {
-        guard let tag else { return "No tags" }
+        guard tag != nil else { return "No tags" }
         return plateTag.tagName
     }
     
@@ -49,10 +52,15 @@ extension Plate {
         plate.quality = 2
         plate.title = "Plate " + Date().formatted()
         plate.notes = "plus cup of coffee with milk"
-        plate.completed = false
-        
         plate.photo = Bundle.main.path(forResource: "example", ofType: "jpg")
-
+        
+//        let tag = Tag(context: viewContext)
+//           tag.id = UUID()  // Assign a unique identifier to the tag
+//           tag.name = "Breakfast"  // Set the name of the tag (could be dynamic or fetched)
+//
+//           // Assign the tag to the plate
+//           plate.tag = tag
+        
         return plate
         
     }
@@ -63,3 +71,5 @@ extension Plate: Comparable {
             return lhs.plateCreationDate < rhs.plateCreationDate
     }
 }
+
+

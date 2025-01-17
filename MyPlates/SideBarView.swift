@@ -7,22 +7,20 @@
 
 import SwiftUI
 
+
 struct SideBarView: View {
     @EnvironmentObject var dataController: DataController
-    let smartFilters: [Filter] = [.all, .today]
-    // m
+  //  let smartFilters: [Filter] = [.all, .filterForDate(Date())] // Smart filters: "All" and "Today"
     let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
     
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
-
-  
-
     
     @State private var tagToRename: Tag?
     @State private var renamingTag = false
     @State private var tagName = ""
     
     @State private var showingAwards = false
+    @State private var showCalendarSheet = false
     
     var tagFilters: [Filter] {
         tags.map { tag in
@@ -30,29 +28,56 @@ struct SideBarView: View {
         }
     }
     
-    
     var body: some View {
         List(selection: $dataController.selectedFilter) {
-            Section("Smart Filters") {
-                ForEach(smartFilters) { filter in
-                    NavigationLink(value: filter) {
-                        HStack{
-                            Label(filter.name, systemImage: filter.icon)
-                            Spacer()
-                            if filter == Filter.all {
-                                Text("\(dataController.allPlatesCount)")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        
-                    }
+            Section("Date Filters") {
+//                ForEach(smartFilters) { filter in
+//                    NavigationLink(value: filter) {
+//                        HStack {
+//                            Label(filter.name, systemImage: filter.icon)
+//                            Spacer()
+//                            if filter == Filter.all {
+//                                Text("\(dataController.allPlatesCount)")
+//                                    .foregroundColor(.secondary)
+//                            }
+//                        }
+//                    }
+//                }
+                Button {
+                    dataController.selectedFilter = Filter.all
+                    dataController.selectedDate = nil
+                } label: {
+                    Label("All plates", systemImage: "calendar")
+                }
+                
+                Button {
+                    dataController.selectedFilter = Filter.filterForDate(Date())
+                    dataController.selectedDate = Date()
+                } label: {
+                    Label("Today", systemImage: "1.square")
+                }
+                
+                Button {
+                    showCalendarSheet = true
+                } label: {
+                    Label("Select date", systemImage: "calendar.circle")
                 }
             }
+            
             Section("Tags") {
+                if tagFilters.isEmpty {
+                    Button {
+                        let context = dataController.container.viewContext
+                        dataController.createDefaultTags(context: context)
+                    } label: {
+                        Label("Create default tags", systemImage: "plus.square.on.square")
+                    }
+                }
+                
                 ForEach(tagFilters) { filter in
                     NavigationLink(value: filter) {
                         Label(filter.name, systemImage: filter.icon)
-                            .badge(filter.tag?.tagTodayPlates.count ?? 0)
+                          //  .badge(filter.tag?.tagTodayPlates.count ?? 0)
                             .contextMenu {
                                 Button {
                                     rename(filter)
@@ -64,12 +89,12 @@ struct SideBarView: View {
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
-
                             }
                     }
                 }
                 .onDelete(perform: delete)
             }
+            
             Section("Quality Filters") {
                 ForEach(qualityFilters) { filter in
                     NavigationLink(value: filter) {
@@ -79,24 +104,24 @@ struct SideBarView: View {
                             Text(filter.name)
                             Spacer()
                             Text("\(dataController.countPlates(for: filter.quality))")
-                                .foregroundColor(.secondary) 
+                                .foregroundColor(.secondary)
                         }
-                        
                     }
                 }
-                if dataController.countPlates(for: 2) > dataController.countPlates(for: 0) && dataController.countPlates(for: 2) > dataController.countPlates(for: 1){
-                       Text("You're doing great! Keep up with the healthy choices!")
-                           .foregroundColor(.green)
-                           .italic()
-                   } else if dataController.countPlates(for: 0) > dataController.countPlates(for: 2) && dataController.countPlates(for: 0) > dataController.countPlates(for: 1)  {
-                       Text("You may want to focus on eating healthier.")
-                           .foregroundColor(.red)
-                           .italic()
-                   } else {
-                       Text("You're balancing your choices well!")
-                           .foregroundColor(.orange)
-                           .italic()
-                   }
+                
+                if dataController.countPlates(for: 2) > dataController.countPlates(for: 0) && dataController.countPlates(for: 2) > dataController.countPlates(for: 1) {
+                    Text("You're doing great! Keep up with the healthy choices!")
+                        .foregroundColor(.green)
+                        .italic()
+                } else if dataController.countPlates(for: 0) > dataController.countPlates(for: 2) && dataController.countPlates(for: 0) > dataController.countPlates(for: 1) {
+                    Text("You may want to focus on eating healthier.")
+                        .foregroundColor(.red)
+                        .italic()
+                } else {
+                    Text("You're balancing your choices well!")
+                        .foregroundColor(.orange)
+                        .italic()
+                }
             }
         }
         .toolbar {
@@ -116,9 +141,12 @@ struct SideBarView: View {
             TextField("New name", text: $tagName)
         }
         .sheet(isPresented: $showingAwards, content: AwardsView.init)
+        .sheet(isPresented: $showCalendarSheet, content: CalendarSheetView.init)
         .navigationTitle("Filters")
-       
     }
+
+
+
     
     func delete(_ offsets: IndexSet) {
         for offset in offsets {
@@ -142,8 +170,16 @@ struct SideBarView: View {
         tagToRename?.name = tagName
         dataController.save()
     }
-  
-}
+    
+    // Ensure the filter changes are reflected properly when selecting "All" or "Today"
+       private func resetFilters() {
+           if dataController.selectedFilter == Filter.all {
+               dataController.selectedDate = nil
+           } else if dataController.selectedFilter == Filter.filterForDate(Date()) {
+               dataController.selectedDate = Date()
+           }
+       }
+   }
 
 #Preview {
     SideBarView()

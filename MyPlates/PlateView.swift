@@ -18,184 +18,489 @@ struct PlateView: View {
     @State private var showingICloudUnavailableAlert = false
     @State private var isDeleted = false
     
+    
     var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
-                .shadow(radius: 10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                )
-                .padding()
-            VStack{
-                if isDeleted {
-                    Text("This plate has been deleted.")
-                        .foregroundColor(.red)
-                } else {
-                    HStack{
-                        Button {
-                            isCameraPresented = true
-                        } label: {
-                            Image(systemName: "camera")
-                                .font(.title2)
-                            Text("Camera")
-                                .font(.title2)
-                        }
-                        Spacer()
+        
+//       VStack{
+//            if isDeleted {
+//                Text("This plate has been deleted.")
+//                    .foregroundColor(.red)
+//            } else {
+//                
+//                
+//                ZStack{
+//                    VStack{
+//                        
+//                        if let image = imagePlateView {
+//                            // Show image if it's already loaded
+//                            Image(uiImage: image)
+//                                .resizable()
+//                                .scaledToFill()
+//                                .frame(maxWidth: 500, maxHeight: 500)
+//                                .clipShape(Rectangle())
+//                              .padding()
+//                                .onTapGesture {
+//                                    isCameraPresented = true
+//                                }
+//                            
+//                        } else {
+//                            // Fallback system image while loading or if no image is available
+//                            Image(systemName: "fork.knife.circle.fill")
+//                                .resizable()
+//                                .scaledToFill()
+//                                .foregroundColor(.white)
+//                                .padding(30)
+//                                .background(Color.blue)
+//                                .frame(maxWidth: 500, maxHeight: 500)
+//                                .clipShape(Rectangle())
+//                             .padding()
+//                                .onTapGesture {
+//                                    isCameraPresented = true
+//                                }
+//                                .onAppear {
+//                                    Task {
+//                                        // Attempt to fetch the image from CloudKit
+//                                        if let cloudRecordID = plate.cloudRecordID {
+//                                            if let fetchedImage = await dataController.fetchImageFromCloudKit(recordID: cloudRecordID) {
+//                                                // Successfully fetched image from CloudKit
+//                                                imagePlateView = fetchedImage
+//                                            } else {
+//                                                print("Failed to fetch image from CloudKit. Attempting local load...")
+//                                                
+//                                                // If CloudKit fails, try loading the image locally
+//                                                if let localPath = plate.photo {
+//                                                    if let localImage = dataController.fetchImageFromFileSystem(imagePath: localPath) {
+//                                                        imagePlateView = localImage
+//                                                    } else {
+//                                                        print("Failed to load image from local storage.")
+//                                                    }
+//                                                }
+//                                            }
+//                                        } else if let localPath = plate.photo {
+//                                            // If no CloudKit record, directly try local storage
+//                                            if let localImage = dataController.fetchImageFromFileSystem(imagePath: localPath) {
+//                                                imagePlateView = localImage
+//                                            } else {
+//                                                print("Failed to load image from local storage.")
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                        }
+//                        
+//                        
+//                        
+//                        //                    .onTapGesture {
+//                        //                        isCameraPresented = true
+//                        //                    }
+//                        
+//                        
+//                        HStack {
+//                            Image(systemName: "clock")
+//                                .font(.title2)
+//                            
+//                            Menu {
+//                                if let currentTag = plate.tag {
+//                                    Button {
+//                                        plate.tag = nil // Remove the current tag
+//                                    } label: {
+//                                        Label(currentTag.tagName, systemImage: "checkmark")
+//                                    }
+//                                }
+//                                
+//                                let otherTags = dataController.missingTags(from: plate)
+//                                
+//                                if !otherTags.isEmpty {
+//                                    Divider()
+//                                    
+//                                    Section("Add Tag") {
+//                                        ForEach(otherTags, id: \.self) { tag in
+//                                            Button(tag.tagName) {
+//                                                plate.tag = tag // Assign the selected tag
+//                                            }
+//                                        }
+//                                    }
+//                                } else {
+//                                    Divider()
+//                                    Section("No Tags Available") {
+//                                        VStack{
+//                                            Button("Create default tags") {
+//                                                // Action to navigate to tag creation or create one inline
+//                                                dataController.createDefaultTags(context: dataController.container.viewContext)
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            } label: {
+//                                Text(plate.tag?.tagName ?? "No Tag")
+//                                    .font(.title3)
+//                            }
+//                            
+//                            Spacer()
+//                            
+//                            Image(systemName: "star.fill")
+//                                .foregroundColor(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
+//                                .font(.title2)
+//                            
+//                            
+//                            Menu {
+//                                Picker("Meal Quality", selection: $plate.quality) {
+//                                    Text("Unhealthy").tag(Int16(0))
+//                                    Text("Moderate").tag(Int16(1))
+//                                    Text("Healthy").tag(Int16(2))
+//                                }
+//                                .labelsHidden() // Hide the default labels
+//                            } label: {
+//                                Text(plate.quality == 0 ? "Unhealthy" : plate.quality == 1 ? "Moderate" : "Healthy")
+//                                    .font(.title3) // Customize font size here
+//                            }
+//                        }
+//                        .padding(.bottom, 10)
+//                        
+//                        
+//                        
+//                        HStack{
+//                            //                        Image(systemName: "pencil.and.list.clipboard")
+//                            //                            .font(.title3)
+//                            Text("Notes:")
+//                                .font(.title3)
+//                                .padding(.leading, 3)
+//                            
+//                            Spacer()
+//                        }
+//                        
+//                        TextField(
+//                            "Notes",
+//                            text: $plate.plateNotes,
+//                            prompt: Text("Enter the plate description here").foregroundColor(.gray),
+//                            axis: .vertical
+//                        )
+//                        
+//                        .padding(8)
+//                       // .frame(maxWidth: .infinity, height: 200, alignment: .top)
+//                      
+//                        .background(.white)
+//                        .cornerRadius(8)
+//                        .overlay(
+//                            RoundedRectangle(cornerRadius: 8)
+//                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+//                        )
+//                        .font(.body)
+//                        .lineLimit(5)
+//                        
+//                        Spacer()
+//                    }
+//                    .padding(10) // Inner padding for better usability
+//                    // .frame(maxWidth: .infinity, minHeight: 100, alignment: .top)
+//                    .background(.gray.opacity(0.2)) // Subtle background for input area
+//                    .cornerRadius(8) // Rounded corners for modern look
+//                    .padding()
+//                    
+//                    
+//                    
+//                 
+//                    
+//                    VStack{
+//                        Spacer()
+//                        HStack{
+//                            Spacer()
+//                            
+//                            PhotosPicker(selection: $pickerItems, maxSelectionCount: 1, matching: .images) {
+//                                
+//                                Image(systemName: "photo.stack")
+//                                    .font(.title2)
+//                                    .foregroundColor(.white)
+//                                    .padding()
+//                                    .background(Color.blue)
+//                                    .clipShape(Circle())
+//                                    .shadow(radius: 5)
+//                                    .padding(.horizontal)
+//                                
+//                                
+//                            }
+//                            .onChange(of: pickerItems) {
+//                                guard let item = pickerItems.first else { return }
+//                                
+//                                Task {
+//                                    if let data = try? await item.loadTransferable(type: Data.self),
+//                                       let image = UIImage(data: data) {
+//                                        let normalizedImage = image.fixedOrientation() // Correct orientation
+//                                        
+//                                        if let croppedImage = cropToSquare(image: normalizedImage) {
+//                                            let imageName = UUID().uuidString
+//                                            
+//                                            do {
+//                                                // Attempt to save the image to CloudKit
+//                                                if let recordID = await dataController.saveImageToCloudKit(image: croppedImage, imageName: imageName) {
+//                                                    plate.cloudRecordID = recordID.recordName
+//                                                    plate.photo = imageName
+//                                                    imagePlateView = croppedImage
+//                                                } else {
+//                                                    throw NSError(domain: "CloudKitSave", code: -1, userInfo: nil)
+//                                                }
+//                                            } catch {
+//                                                print("CloudKit save failed, attempting local save: \(error)")
+//                                                
+//                                                if let localPath = dataController.saveImageToFileSystem(image: croppedImage) {
+//                                                    plate.photo = localPath // Save local path
+//                                                    imagePlateView = croppedImage
+//                                                } else {
+//                                                    print("Failed to save image locally.")
+//                                                }
+//                                            }
+//                                            
+//                                            // Save changes to Core Data
+//                                            dataController.save()
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                            
+//                            Button {
+//                                isCameraPresented = true
+//                            } label: {
+//                                
+//                                Image(systemName: "camera")
+//                                    .font(.title2)
+//                                    .foregroundColor(.white)
+//                                    .padding()
+//                                    .background(Color.blue)
+//                                    .clipShape(Circle())
+//                                    .shadow(radius: 5)
+//                                    
+//                                
+//                            }
+//                            
+//                        }
+//                        
+//                    }
+//                    .padding()
+//                }
+//              
+//            }
+//              
+//            
+//        }
+//       .padding()
+        
+        VStack {
+            if isDeleted {
+                Text("This plate has been deleted.")
+                    .foregroundColor(.red)
+            } else {
+                ZStack{
+                    ScrollView { // Allow scrolling for smaller devices
                         
-                        PhotosPicker(selection: $pickerItems, maxSelectionCount: 1, matching: .images) {
-                            Image(systemName: "photo.stack")
-                                .font(.title2)
-                            Text("Library")
-                                .font(.title2)
-                        }
-                        .onChange(of: pickerItems) {
-                            guard let item = pickerItems.first else { return }
-                            
-                            Task {
-                                if let data = try? await item.loadTransferable(type: Data.self),
-                                   let image = UIImage(data: data) {
-                                    let normalizedImage = image.fixedOrientation() // Correct orientation
-                                    
-                                    if let croppedImage = cropToSquare(image: normalizedImage) {
-                                        let imageName = UUID().uuidString
-                                        
-                                        do {
-                                            // Attempt to save the image to CloudKit
-                                            if let recordID = await dataController.saveImageToCloudKit(image: croppedImage, imageName: imageName) {
-                                                plate.cloudRecordID = recordID.recordName
-                                                plate.photo = imageName
-                                                imagePlateView = croppedImage
-                                            } else {
-                                                throw NSError(domain: "CloudKitSave", code: -1, userInfo: nil)
-                                            }
-                                        } catch {
-                                            print("CloudKit save failed, attempting local save: \(error)")
-                                            
-                                            if let localPath = dataController.saveImageToFileSystem(image: croppedImage) {
-                                                plate.photo = localPath // Save local path
-                                                imagePlateView = croppedImage
-                                            } else {
-                                                print("Failed to save image locally.")
+                        VStack {
+                            // Image Section
+                            if let image = imagePlateView {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit() // Adapt to available space
+                                    .frame(maxWidth: UIScreen.main.bounds.width * 1, maxHeight: 600) // Scales with device width
+                                    .clipShape(Rectangle())
+                                    .onTapGesture {
+                                        isCameraPresented = true
+                                    }
+                            } else {
+                                Image(systemName: "fork.knife.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .frame(maxWidth: UIScreen.main.bounds.width * 1, maxHeight: 600)
+                                    .clipShape(Rectangle())
+                                    .onTapGesture {
+                                        isCameraPresented = true
+                                    }
+                                    .onAppear {
+                                        Task {
+                                            // Attempt to fetch the image from CloudKit
+                                            if let cloudRecordID = plate.cloudRecordID {
+                                                if let fetchedImage = await dataController.fetchImageFromCloudKit(recordID: cloudRecordID) {
+                                                    // Successfully fetched image from CloudKit
+                                                    imagePlateView = fetchedImage
+                                                } else {
+                                                    print("Failed to fetch image from CloudKit. Attempting local load...")
+                                                    
+                                                    // If CloudKit fails, try loading the image locally
+                                                    if let localPath = plate.photo {
+                                                        if let localImage = dataController.fetchImageFromFileSystem(imagePath: localPath) {
+                                                            imagePlateView = localImage
+                                                        } else {
+                                                            print("Failed to load image from local storage.")
+                                                        }
+                                                    }
+                                                }
+                                            } else if let localPath = plate.photo {
+                                                // If no CloudKit record, directly try local storage
+                                                if let localImage = dataController.fetchImageFromFileSystem(imagePath: localPath) {
+                                                    imagePlateView = localImage
+                                                } else {
+                                                    print("Failed to load image from local storage.")
+                                                }
                                             }
                                         }
-                                        
-                                        // Save changes to Core Data
-                                        dataController.save()
                                     }
-                                }
                             }
-                        }
-                    }
-                    Group {
-                        if let image = imagePlateView {
-                            // Show image if it's already loaded
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(maxWidth: 300, maxHeight: 300)
-                                .clipped()
-                        } else {
-                            // Fallback system image while loading or if no image is available
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.blue)
-                                .frame(maxWidth: .infinity, minHeight: 300)
-                                .onAppear {
-                                    Task {
-                                        // Attempt to fetch the image from CloudKit
-                                        if let cloudRecordID = plate.cloudRecordID {
-                                            if let fetchedImage = await dataController.fetchImageFromCloudKit(recordID: cloudRecordID) {
-                                                // Successfully fetched image from CloudKit
-                                                imagePlateView = fetchedImage
-                                            } else {
-                                                print("Failed to fetch image from CloudKit. Attempting local load...")
-                                                
-                                                // If CloudKit fails, try loading the image locally
-                                                if let localPath = plate.photo {
-                                                    if let localImage = dataController.fetchImageFromFileSystem(imagePath: localPath) {
-                                                        imagePlateView = localImage
-                                                    } else {
-                                                        print("Failed to load image from local storage.")
+                        
+                        // Metadata Section (Tag and Quality)
+                          
+                                HStack {
+                                    Image(systemName: "clock")
+                                        .font(.title2)
+                                    Menu {
+                                        // Tag Selection Menu
+                                        if let currentTag = plate.tag {
+                                            Button {
+                                                plate.tag = nil // Remove the current tag
+                                            } label: {
+                                                Label(currentTag.tagName, systemImage: "checkmark")
+                                            }
+                                        }
+                                        let otherTags = dataController.missingTags(from: plate)
+                                        if !otherTags.isEmpty {
+                                            Section("Add Tag") {
+                                                ForEach(otherTags, id: \.self) { tag in
+                                                    Button(tag.tagName) {
+                                                        plate.tag = tag // Assign the selected tag
                                                     }
                                                 }
                                             }
-                                        } else if let localPath = plate.photo {
-                                            // If no CloudKit record, directly try local storage
-                                            if let localImage = dataController.fetchImageFromFileSystem(imagePath: localPath) {
-                                                imagePlateView = localImage
-                                            } else {
-                                                print("Failed to load image from local storage.")
+                                        } else {
+                                            Section("No Tags Available") {
+                                                Button("Create default tags") {
+                                                    dataController.createDefaultTags(context: dataController.container.viewContext)
+                                                }
                                             }
+                                        }
+                                    } label: {
+                                        Text(plate.tag?.tagName ?? "No Tag")
+                                            .font(.title3)
+                                    }
+                                    Spacer()
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
+                                        .font(.title2)
+                                    Menu {
+                                        Picker("Meal Quality", selection: $plate.quality) {
+                                            Text("Unhealthy").tag(Int16(0))
+                                            Text("Moderate").tag(Int16(1))
+                                            Text("Healthy").tag(Int16(2))
+                                        }
+                                    } label: {
+                                        Text(plate.quality == 0 ? "Unhealthy" : plate.quality == 1 ? "Moderate" : "Healthy")
+                                            .font(.title3)
+                                    }
+                                }
+                                .padding(.top, 8)
+                                
+                            // Notes Section
+                            VStack(alignment: .leading) {
+                                HStack{
+                                    Text("Notes:")
+                                        .font(.title3)
+                                }
+                                TextField(
+                                    "Enter the plate description here",
+                                    text: $plate.plateNotes,
+                                    axis: .vertical
+                                )
+                                .padding(8)
+                                .frame(maxWidth: .infinity, minHeight: 100, maxHeight: 200, alignment: .top) // Scales for larger devices
+                                .background(Color.white)
+                                .cornerRadius(8)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                )
+                            }
+                      
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                    }
+                    VStack{
+                        Spacer()
+                        // Button Section
+                        HStack {
+                            Spacer()
+                            PhotosPicker(selection: $pickerItems, maxSelectionCount: 1, matching: .images) {
+                                Image(systemName: "photo.stack")
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                            }
+                            .padding(.horizontal)
+                            .onChange(of: pickerItems) {
+                                guard let item = pickerItems.first else { return }
+                                
+                                Task {
+                                    if let data = try? await item.loadTransferable(type: Data.self),
+                                       let image = UIImage(data: data) {
+                                        let normalizedImage = image.fixedOrientation() // Correct orientation
+                                        
+                                        if let croppedImage = cropToSquare(image: normalizedImage) {
+                                            let imageName = UUID().uuidString
+                                            
+                                            do {
+                                                // Attempt to save the image to CloudKit
+                                                if let recordID = await dataController.saveImageToCloudKit(image: croppedImage, imageName: imageName) {
+                                                    plate.cloudRecordID = recordID.recordName
+                                                    plate.photo = imageName
+                                                    imagePlateView = croppedImage
+                                                } else {
+                                                    throw NSError(domain: "CloudKitSave", code: -1, userInfo: nil)
+                                                }
+                                            } catch {
+                                                print("CloudKit save failed, attempting local save: \(error)")
+                                                
+                                                if let localPath = dataController.saveImageToFileSystem(image: croppedImage) {
+                                                    plate.photo = localPath // Save local path
+                                                    imagePlateView = croppedImage
+                                                } else {
+                                                    print("Failed to save image locally.")
+                                                }
+                                            }
+                                            
+                                            // Save changes to Core Data
+                                            dataController.save()
                                         }
                                     }
                                 }
-                        }
-                    }
-                    
-                    .onTapGesture {
-                        isCameraPresented = true
-                    }
-                    HStack{
-                        Spacer()
-                        Text("Meal quality:")
-                        Group{
-                            Image(systemName: "star.fill")
-                        }
-                        .foregroundColor(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
-                        Spacer()
-                    }
-                    .font(.title3)
-                    Picker("Meal Quality", selection: $plate.quality) {
-                        Text("Unhealthy").tag(Int16(0))
-                        Text("Moderate ").tag(Int16(1))
-                        Text("Healthy").tag(Int16(2))
-                    }
-                    .pickerStyle(.segmented)
-                    // 1 tag
-                    Menu {
-                        if let currentTag = plate.tag {
-                            Button {
-                                plate.tag = nil // Remove the current tag
-                            } label: {
-                                Label(currentTag.tagName, systemImage: "checkmark")
                             }
-                        }
-                        
-                        let otherTags = dataController.missingTags(from: plate)
-                        
-                        if !otherTags.isEmpty {
-                            Divider()
                             
-                            Section("Add Tag") {
-                                ForEach(otherTags, id: \.self) { tag in
-                                    Button(tag.tagName) {
-                                        plate.tag = tag // Assign the selected tag
-                                    }
-                                }
+                            Button {
+                                isCameraPresented = true
+                            } label: {
+                                Image(systemName: "camera")
+                                    .font(.title2)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.blue)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
                             }
                         }
-                    } label: {
-                        Text(plate.tag?.tagName ?? "No Tag")
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .animation(nil, value: plate.tag?.tagName)
+                        .padding(.horizontal)
                     }
-                    Spacer()
-                    Text("Notes")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
                     
-                    TextField("Notes", text: $plate.plateNotes, prompt: Text("Enter the plate description here"), axis: .vertical)
-                    Spacer()
+                    
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .padding(40)
+        }
+        .padding(.vertical)
+            
             .navigationTitle($plate.plateTitle)
             .navigationBarTitleDisplayMode(.inline)
-        }
+        
+        
         .sheet(isPresented: $isCameraPresented) {
             ImagePicker(sourceType: .camera) { image in
                 let normalizedImage = image.fixedOrientation() // Correct orientation
@@ -237,28 +542,7 @@ struct PlateView: View {
             .onChange(of: plate) {
                 isDeleted = false
             }
-//        .onChange(of: plate) {
-//            if plate.isDeleted || plate.photo == nil {
-//                imagePlateView = nil // Reset the image view
-//            } else {
-//                // Reload the image for the new plate
-//                if let cloudRecordID = plate.cloudRecordID {
-//                    Task {
-//                        if let fetchedImage = await dataController.fetchImageFromCloudKit(recordID: cloudRecordID) {
-//                            imagePlateView = fetchedImage
-//                        } else {
-//                            print("Failed to fetch image from CloudKit.")
-//                        }
-//                    }
-//                } else if let photoPath = plate.photo {
-//                    if let fetchedImage = dataController.fetchImageFromFileSystem(imagePath: photoPath) {
-//                        imagePlateView = fetchedImage
-//                    } else {
-//                        print("Failed to fetch image from local storage.")
-//                    }
-//                }
-//            }
-//        }
+
         .onReceive(plate.objectWillChange) { _ in
             dataController.queueSave()
         }
@@ -407,6 +691,10 @@ extension UIImage {
         return UIImage(cgImage: newCgImage)
     }
 }
+
+
+
+
 
 #Preview {
     PlateView(plate: .example)

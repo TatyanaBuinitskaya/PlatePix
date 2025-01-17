@@ -12,33 +12,34 @@ struct PDFSheetShare: View {
     @State private var pdfURL: URL?
     
     // Maximum number of columns for the grid
-    private let maxColumns = 4
+    private let maxColumns = 6
     
     var body: some View {
         VStack {
-            Button("Capture PDF and Share") {
-                captureAndCreatePDF()
-            }
-            .padding()
-            
-            // Show ShareLink if the PDF is created
-            if let pdfURL = pdfURL {
-                ShareLink(item: pdfURL) {
+            HStack{
+                Text(dataController.dynamicTitle)
+                    .font(.title3)
+                Spacer()
+                Button {
+                    captureAndCreatePDF()
+                } label: {
                     Label("Share PDF", systemImage: "square.and.arrow.up")
-                        .padding()
                 }
             }
+            .padding()
+           
+                if let pdfURL = pdfURL {
+                    ShareLink(item: pdfURL) {
+                        Label("Share PDF", systemImage: "square.and.arrow.up")
+                            .padding()
+                    }
+                }
             
             GeometryReader { geometry in
                 let plates = dataController.platesForSelectedFilter()
                 let gridItems = generateGridItems(for: plates.count)
-                let cellSize = calculateCellSize(geometry: geometry, itemCount: plates.count, columnCount: gridItems.count)
+//                let cellSize = calculateCellSize(geometry: geometry, itemCount: plates.count, columnCount: gridItems.count)
                 
-                VStack {
-                    Text(dataController.dynamicTitle)
-                        .font(.title)
-                        .padding()
-                    
                     LazyVGrid(columns: gridItems, spacing: 10) {
                         ForEach(plates, id: \.id) { plate in
                             if let photoPath = plate.photo, let image = loadImage(from: photoPath) {
@@ -64,7 +65,7 @@ struct PDFSheetShare: View {
                         }
                     }
                     .padding()
-                }
+                
             }
         }
     }
@@ -79,10 +80,31 @@ struct PDFSheetShare: View {
         }
     }
     // Function to generate grid items based on the number of plates
+//    private func generateGridItems(for itemCount: Int) -> [GridItem] {
+//        let columnCount = min(itemCount, maxColumns) // Max 4 columns, but fewer if fewer plates
+//        return Array(repeating: GridItem(.flexible()), count: columnCount)
+//    }
+    
     private func generateGridItems(for itemCount: Int) -> [GridItem] {
-        let columnCount = min(itemCount, maxColumns) // Max 4 columns, but fewer if fewer plates
-        return Array(repeating: GridItem(.flexible()), count: columnCount)
-    }
+           // Set column count dynamically based on the number of items
+           let columnCount: Int
+           
+        if itemCount <= 6 {
+            // If there are 6 or fewer items, use 2 columns
+            columnCount = 2
+        } else if itemCount <= 18{
+            columnCount = 3
+        } else if itemCount <= 28{
+            columnCount = 4
+        } else if itemCount <= 40{
+            columnCount = 5
+           } else {
+               // If there are more than 6 items, calculate the number of columns
+               columnCount = min(itemCount, maxColumns)  // Limits to max 4 columns
+           }
+           
+           return Array(repeating: GridItem(.flexible()), count: columnCount)
+       }
     
     // Function to calculate cell size dynamically
     private func calculateCellSize(geometry: GeometryProxy, itemCount: Int, columnCount: Int) -> CGSize {
@@ -172,6 +194,8 @@ struct PDFSheetShare: View {
             print("Error saving PDF: \(error)")
         }
     }
+    
+   
 }
 
 #Preview {

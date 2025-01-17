@@ -8,28 +8,47 @@ import CloudKit
 import CoreData
 import UIKit
 
-enum SortType: String {
-    case dateCreated = "creationDate"
-    case dateModified = "modificationDate"
-}
+//enum SortType: String {
+//    case dateCreated = "creationDate"
+//   // case dateModified = "modificationDate"
+//}
 
 class DataController: ObservableObject {
     let container: NSPersistentCloudKitContainer
     
-    @Published var selectedFilter: Filter? = Filter.today
+    @Published var selectedFilter: Filter? = Filter.filterForDate(Date()) 
     @Published var selectedPlate: Plate?
     @Published var filterText = ""
     @Published var filterTokens = [Tag]()
     
     @Published var filterQuality = -1
-    @Published var sortType = SortType.dateCreated
+  //  @Published var sortType = SortType.dateCreated
     @Published var sortNewestFirst = true
     // m
     @Published var selectedImage: UIImage?
     @Published var showCongratulations: Bool = false
     @Published var currentAward: Award = .example
     
-    @Published var selectedDate: Date? = nil
+    @Published var selectedDate: Date? = Date()
+    
+    @Published var showNotes: Bool {
+           didSet {
+               UserDefaults.standard.set(showNotes, forKey: "showNotes")
+           }
+       }
+       
+       @Published var showMealTime: Bool {
+           didSet {
+               UserDefaults.standard.set(showMealTime, forKey: "showMealTime")
+           }
+       }
+       
+       @Published var showQuality: Bool {
+           didSet {
+               UserDefaults.standard.set(showQuality, forKey: "showQuality")
+           }
+       }
+   
  
     
     private var saveTask: Task<Void, Error>?
@@ -42,28 +61,57 @@ class DataController: ObservableObject {
     
     
     var dynamicTitle: String {
-        if let tag = selectedFilter?.tag {
-            return tag.name ?? "Filtered Plates"
+        // If there's a selected date, we start with the date first
+        if let selectedDate = selectedDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .none
+            var title = dateFormatter.string(from: selectedDate) // Date of selected date
+
+            // If there's a quality filter, add it after the date
+            if let filter = selectedFilter, filter.quality >= 0 {
+                if filter.quality == 0 {
+                    title += " Unhealthy"
+                } else if filter.quality == 1 {
+                    title += " Moderate"
+                } else if filter.quality == 2 {
+                    title += " Healthy"
+                }
+            }
+
+            // If there's a tag filter, add it at the end of the title
+            if let tag = selectedFilter?.tag {
+                title += " \(tag.name ?? "Filtered Plates")"
+            }
+
+            return title
         }
-        
-        if selectedFilter == Filter.today {
+
+        // If it's today's filter, return today's date
+        if selectedFilter == Filter.filterForDate(Date()) {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .long
             dateFormatter.timeStyle = .none
             return dateFormatter.string(from: Date()) // Today's date
         }
-        
-        if let selectedDate = selectedDate { // Assuming `selectedDate` is a variable storing the picked date
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .long
-            dateFormatter.timeStyle = .none
-            return dateFormatter.string(from: selectedDate) // Selected date
+
+        // If no date is selected and there is a tag filter selected, show the tag name
+        if let tag = selectedFilter?.tag {
+            return tag.name ?? "Filtered Plates"
         }
-        
-        if selectedFilter == Filter.healthy {
-            return "Healthy"
+
+        // If no date is selected and there is a quality filter selected (even with "All" plates), show quality
+        if let filter = selectedFilter, filter.quality >= 0 {
+            if filter.quality == 0 {
+                return "Unhealthy"
+            } else if filter.quality == 1 {
+                return "Moderate"
+            } else if filter.quality == 2 {
+                return "Healthy"
+            }
         }
-        
+
+        // If no filter is selected, return "All Plates" or fallback to default
         return "All Plates"
     }
     
@@ -88,6 +136,11 @@ class DataController: ObservableObject {
     }
     
     init(inMemory: Bool = false) {
+        self.showNotes = UserDefaults.standard.bool(forKey: "showNotes")
+        self.showMealTime = UserDefaults.standard.bool(forKey: "showMealTime")
+        self.showQuality = UserDefaults.standard.bool(forKey: "showQuality")
+        
+        
         container = NSPersistentCloudKitContainer(name: "Main")
         
         if inMemory {
@@ -104,14 +157,22 @@ class DataController: ObservableObject {
             }
         }
         //m
-        let context = container.viewContext
-        createDefaultTags(context: context)
-
+//        let context = container.viewContext
+//        createDefaultTags(context: context)
+        
+        
+       
     }
+    
+  
+    
+   
+    
     func remoteStoreChanged(_ notification: Notification) {
         objectWillChange.send()
     }
     
+   
     // m
     func createDefaultTags(context: NSManagedObjectContext) {
         let defaultTagNames = ["Breakfast", "Lunch", "Dinner", "Snack"]
@@ -130,8 +191,7 @@ class DataController: ObservableObject {
         try? context.save()
     }
     
-
-        
+   
      
   
     
@@ -196,103 +256,54 @@ class DataController: ObservableObject {
         return (try? container.viewContext.fetch(request)) ?? []
     }
     
-//    func platesForSelectedFilter() -> [Plate] {
-//        let filter = selectedFilter ?? .all
-//        var predicates = [NSPredicate]()
-//        
-//        if let tag = filter.tag {
-//            //  let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
-//            let tagPredicate = NSPredicate(format: "tag.name == %@", tag.tagName)
-//            
-//            predicates.append(tagPredicate)
-//        } else {
-//            let datePredicate = NSPredicate(format: "modificationDate > %@", filter.minModificationDate as NSDate)
-//            predicates.append(datePredicate)
-//        }
-//        
-//        if filter.quality >= 0 {
-//            let qualityPredicate = NSPredicate(format: "quality = %d", filter.quality)
-//            predicates.append(qualityPredicate)
-//        } else if filterQuality >= 0 {
-//            let qualityFilterPredicate = NSPredicate(format: "quality = %d", filterQuality)
-//            predicates.append(qualityFilterPredicate)
-//        }
-//        
-//        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
-//        
-//        if trimmedFilterText.isEmpty == false {
-//            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
-//            let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
-//            let tagPredicate = NSPredicate(format: "tag.name CONTAINS[c] %@", trimmedFilterText) // Search in tag's name
-//            
-//            
-//            
-//            let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate, tagPredicate])
-//            predicates.append(combinedPredicate)
-//        }
-//        
-//        // Filter by quality specified in the Sidebar filter
-//        if filter.quality >= 0 {
-//            let qualityPredicate = NSPredicate(format: "quality = %d", filter.quality)
-//            predicates.append(qualityPredicate)
-//        } else if filterQuality >= 0 {
-//            // Apply ContentView quality filter only if no Sidebar quality filter is active
-//            let qualityFilterPredicate = NSPredicate(format: "quality = %d", filterQuality)
-//            predicates.append(qualityFilterPredicate)
-//        }
-//        
-//        let request = Plate.fetchRequest()
-//        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-//        request.sortDescriptors = [NSSortDescriptor(key: sortType.rawValue, ascending: sortNewestFirst)]
-//        let allPlates = (try? container.viewContext.fetch(request)) ?? []
-//        
-//        
-//        return allPlates
-//    }
     
     func platesForSelectedFilter() -> [Plate] {
-           let filter = selectedFilter ?? .all
-           var predicates = [NSPredicate]()
+        let filter = selectedFilter ?? .all
+        var predicates = [NSPredicate]()
 
-        if let tag = filter.tag {
-            let tagPredicate = NSPredicate(format: "tag.name == %@", tag.tagName)
-            
-            predicates.append(tagPredicate)
+        // Apply date filter if a selected date exists
+        if let selectedDate = filter.selectedDate ?? selectedDate {
+            let startOfDay = Calendar.current.startOfDay(for: selectedDate)
+            if let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) {
+                predicates.append(NSPredicate(format: "creationDate >= %@ AND creationDate < %@", startOfDay as NSDate, endOfDay as NSDate))
+            }
         }
-        else if let selectedDate = selectedDate {
-               let startOfDay = Calendar.current.startOfDay(for: selectedDate)
-               let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
 
-               let datePredicate = NSPredicate(format: "creationDate >= %@ AND creationDate < %@", startOfDay as NSDate, endOfDay as NSDate)
-               predicates.append(datePredicate)
-           } else if filter.minModificationDate > Date.distantPast {
-               let datePredicate = NSPredicate(format: "modificationDate > %@", filter.minModificationDate as NSDate)
-               predicates.append(datePredicate)
-           }
+        // Apply tag filter if there is a selected tag
+        if let tag = filter.tag {
+            predicates.append(NSPredicate(format: "tag.name == %@", tag.tagName))
+        }
 
-           if filter.quality >= 0 {
-               let qualityPredicate = NSPredicate(format: "quality = %d", filter.quality)
-               predicates.append(qualityPredicate)
-           } else if filterQuality >= 0 {
-               let qualityFilterPredicate = NSPredicate(format: "quality = %d", filterQuality)
-               predicates.append(qualityFilterPredicate)
-           }
+        // Apply quality filter if a quality is selected
+        if filter.quality >= 0 {
+            predicates.append(NSPredicate(format: "quality = %d", filter.quality))
+        }
 
-           let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
-           if !trimmedFilterText.isEmpty {
-               let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
-               let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
-               let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate])
-               predicates.append(combinedPredicate)
-           }
+        // Apply filter text if it exists
+        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
+        if !trimmedFilterText.isEmpty {
+            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
+            let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
+            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate]))
+        }
 
-           let request = Plate.fetchRequest()
-           request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-           request.sortDescriptors = [NSSortDescriptor(key: sortType.rawValue, ascending: sortNewestFirst)]
-           
-           return (try? container.viewContext.fetch(request)) ?? []
-       }
-   
+        // Combine all predicates (AND logic between date, quality, etc.)
+        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
+
+        if !predicates.isEmpty {
+            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        }
+
+        // If the filter is "All", no predicate will be applied (fetch all plates)
+        if filter == .all {
+            fetchRequest.predicate = nil
+        }
+
+        // Sorting plates by creationDate
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
+        
+        return (try? container.viewContext.fetch(fetchRequest)) ?? []
+    }
     
     // m
     func saveImageToFileSystem(image: UIImage) -> String? {
@@ -503,9 +514,21 @@ class DataController: ObservableObject {
         
         let plate = Plate(context: container.viewContext)
         plate.title = "Plate " + (plate.creationDate ?? .now).formatted()
-        plate.creationDate = .now
+        
+        // plate.creationDate = .now
+        
+        if let selectedDate = selectedDate {
+               // Set the creation date to the selected date, but keep the time as midnight
+               let calendar = Calendar.current
+               let newDate = calendar.startOfDay(for: selectedDate) // This sets time to midnight
+               plate.creationDate = newDate
+           } else {
+               // If no date is selected, default to today's date and time
+               plate.creationDate = .now
+           }
+   
         plate.quality = 1
-        // m
+     
         plate.photo = nil
         if let tag = selectedFilter?.tag {
             plate.tag = tag
