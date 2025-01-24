@@ -33,15 +33,39 @@ extension Plate {
         set { notes = newValue}
     }
     // 1 tag
-    var plateTag: Tag {
-           get { tag ?? Tag.example }
-        set { tag = newValue}
-           
-       }
+//    var plateTag: Tag {
+//           get { tag ?? Tag.example }
+//        set { tag = newValue}
+//           
+//       }
+    
+    // many tags
+    var plateTags: [Tag] {
+        let result = tags?.allObjects as? [Tag] ?? []
+        return result.sorted()
+    }
+    
     // 1 tag
-    var plateTagList: String {
-        guard tag != nil else { return "No tags" }
-        return plateTag.tagName
+//    var plateTagList: String {
+//        guard tag != nil else { return "No tags" }
+//        return plateTag.tagName
+//    }
+    
+    // many tags
+    var issueTagsList: String {
+        guard let tags else { return "No tags" }
+
+        if tags.count == 0 {
+            return "No tags"
+        } else {
+            return plateTags.map(\.tagName).formatted()
+        }
+    }
+    
+    //if mealtime not tags:
+    var plateMealtime: String {
+        get {mealtime ?? "" }
+        set {mealtime = newValue}
     }
     
     static var example: Plate {
@@ -50,6 +74,7 @@ extension Plate {
         let plate = Plate(context: viewContext)
         plate.creationDate = .now
         plate.quality = 2
+        plate.mealtime = "anytimeMeal"
         plate.title = "Plate " + Date().formatted()
         plate.notes = "plus cup of coffee with milk"
         plate.photo = Bundle.main.path(forResource: "example", ofType: "jpg")
@@ -72,4 +97,15 @@ extension Plate: Comparable {
     }
 }
 
-
+//extension Plate: Comparable {
+//    public static func <(lhs: Plate, rhs: Plate) -> Bool {
+//        let left = lhs.plateTitle.localizedLowercase
+//        let right = rhs.plateTitle.localizedLowercase
+//
+//        if left == right {
+//            return lhs.plateCreationDate < rhs.plateCreationDate
+//        } else {
+//            return left < right
+//        }
+//    }
+//}

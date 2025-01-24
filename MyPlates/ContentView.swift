@@ -27,6 +27,7 @@ struct ContentView: View {
   
     @State private var showPDFSheet = false
     @State private var showCalendarSheet = false
+    @State private var showFilterMenu = false
     
     
     var body: some View {
@@ -56,7 +57,13 @@ struct ContentView: View {
                             }
                         }
                       //  .padding(5)
+                        // 1 tag
                         .searchable(text: $dataController.filterText, prompt: "Filter plates")
+                        // many tags
+//                        .searchable(text: $dataController.filterText, tokens: $dataController.filterTokens, suggestedTokens: .constant(dataController.suggestedFilterTokens), prompt: "Filter plates, or type # to add tags") { tag in
+//                            Text(tag.tagName)
+//                        }
+                     
                     }
                 }
                 .padding()
@@ -96,6 +103,16 @@ struct ContentView: View {
                                     .foregroundColor(.white)
                                     .font(.title2)
                             }
+                            Text("tags")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Button(action: {
+                                dataController.showTags.toggle() // Toggle the state
+                            }) {
+                                Image(systemName: dataController.showTags ? "checkmark.circle.fill" : "circle")
+                                    .foregroundColor(.white)
+                                    .font(.title2)
+                            }
                         }
                         .padding(5)
                         .background{
@@ -122,103 +139,247 @@ struct ContentView: View {
                 }
             }
                 .navigationTitle(dataController.dynamicTitle)
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading){
-                        let filterOptions: [(label: String, filter: Filter)] = [
-                            ("All", .all),
-                            ("Healthy", .healthy),
-                            ("Moderate", .moderate),
-                            ("Unhealthy", .unhealthy)
-                        ]
-                        
-                        Menu {
-                            ForEach(filterOptions, id: \.filter) { option in
-                                Button {
-                                    dataController.selectedFilter = option.filter
-                                } label: {
-                                    HStack {
-                                        Text(option.label)
-                                        Spacer()
-                                        // Add checkmark if this filter is selected or if nothing is selected and the option is "All"
-                                        if dataController.selectedFilter == option.filter ||
-                                            (dataController.selectedFilter?.quality == -1 && option.filter == .all) {
-                                            Image(systemName: "checkmark")
-                                        }
-                                    }
-                                }
-                            }
-                        } label: {
-                            Image(systemName: dataController.selectedFilter?.quality == -1 ? "star" : "star.fill")
-                        }
-                        
-                        Menu {
-                            // "All" Button - Clears the selected tag filter, but keeps other filters (like date) intact
-                            Button(action: {
-                                // Clear the tag from the selected filter
-                                dataController.selectedFilter?.tag = nil
-                                
-                                // Reset the filter based on the selected date or "All" if no date is set
-                                if let selectedDate = dataController.selectedDate {
-                                    dataController.selectedFilter = Filter.filterForDate(selectedDate)
-                                } else {
-                                    dataController.selectedFilter = Filter.all
-                                }
-                                
-                            }
-                            ) {
-                                HStack {
-                                    Text("All")
-                                    Spacer()
-                                    
-                                    if dataController.selectedFilter?.tag == nil {
-                                        Image(systemName: "checkmark")
-                                    }
-                                }
-                            }
-                            
-                            ForEach(tagFilters, id: \.self) { filter in
-                                Button(action: {
-                                    dataController.selectedFilter = filter
-                                }) {
-                                    HStack {
-                                        Text(filter.name)
-                                        Spacer()
-                                        if dataController.selectedFilter?.tag == filter.tag {
-                                            Image(systemName: "checkmark")
-                                        }
-                                    }
-                                }
-                            }
-                        } label: {
-                            Image(systemName: dataController.selectedFilter?.tag == nil ? "fork.knife.circle" : "fork.knife.circle.fill")
-                        }
-                        
-                        
-                        Menu {
-                            Picker("Sort Order", selection: $dataController.sortNewestFirst) {
-                                Text("Newest to Oldest").tag(true)
-                                Text("Oldest to Newest").tag(false)
-                            }
-                        } label: {
-                            Label("Sort by", systemImage: "arrow.up.arrow.down")
-                        }
-                        
-                        Button(action: {
-                            showCalendarSheet = true
-                        }) {
-                            Image(systemName: dataController.selectedDate == nil ? "calendar" : "calendar.circle.fill")
-                            
-                        }
-                    }
+//                    ToolbarItemGroup(placement: .navigationBarLeading){
+//                        let filterOptions: [(label: String, filter: Filter)] = [
+//                            ("All", .all),
+//                            ("Healthy", .healthy),
+//                            ("Moderate", .moderate),
+//                            ("Unhealthy", .unhealthy)
+//                        ]
+//                        
+//                        Menu {
+//                            ForEach(filterOptions, id: \.filter) { option in
+//                                Button {
+//                                    dataController.selectedFilter = option.filter
+//                                } label: {
+//                                    HStack {
+//                                        Text(option.label)
+//                                        Spacer()
+//                                        // Add checkmark if this filter is selected or if nothing is selected and the option is "All"
+//                                        if dataController.selectedFilter == option.filter ||
+//                                            (dataController.selectedFilter?.quality == -1 && option.filter == .all) {
+//                                            Image(systemName: "checkmark")
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        } label: {
+//                            Image(systemName: dataController.selectedFilter?.quality == -1 ? "star" : "star.fill")
+//                        }
+//                        
+//                        Menu {
+//                            // "All" Button - Clears the selected tag filter, but keeps other filters (like date) intact
+//                            Button(action: {
+//                                // Clear the tag from the selected filter
+//                                dataController.selectedFilter?.tag = nil
+//                                
+//                                // Reset the filter based on the selected date or "All" if no date is set
+//                                if let selectedDate = dataController.selectedDate {
+//                                    dataController.selectedFilter = Filter.filterForDate(selectedDate)
+//                                } else {
+//                                    dataController.selectedFilter = Filter.all
+//                                }
+//                                
+//                            }
+//                            ) {
+//                                HStack {
+//                                    Text("All")
+//                                    Spacer()
+//                                    
+//                                    if dataController.selectedFilter?.tag == nil {
+//                                        Image(systemName: "checkmark")
+//                                    }
+//                                }
+//                            }
+//                            
+//                            ForEach(tagFilters, id: \.self) { filter in
+//                                Button(action: {
+//                                    dataController.selectedFilter = filter
+//                                }) {
+//                                    HStack {
+//                                        Text(filter.name)
+//                                        Spacer()
+//                                        if dataController.selectedFilter?.tag == filter.tag {
+//                                            Image(systemName: "checkmark")
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        } label: {
+//                            Image(systemName: dataController.selectedFilter?.tag == nil ? "fork.knife.circle" : "fork.knife.circle.fill")
+//                        }
+//                        
+//                        
+//                        Menu {
+//                            Picker("Sort Order", selection: $dataController.sortNewestFirst) {
+//                                Text("Newest to Oldest").tag(true)
+//                                Text("Oldest to Newest").tag(false)
+//                            }
+//                        } label: {
+//                            Label("Sort by", systemImage: "arrow.up.arrow.down")
+//                        }
+//                        
+//                        Button(action: {
+//                            showCalendarSheet = true
+//                        }) {
+//                            Image(systemName: dataController.selectedDate == nil ? "calendar" : "calendar.circle.fill")
+//                            
+//                        }
+//                    }
+                    
+//                    ToolbarItem(placement: .navigationBarLeading) {
+//                       
+//                        Menu{
+//                            Section {
+//                                Button(action: {
+//                                    showCalendarSheet = true
+//                                }) {
+//                                    HStack {
+//                                        Text("Select Date")
+//                                        Spacer()
+//                                        Image(systemName: dataController.selectedDate == nil ? "calendar" : "calendar.circle.fill")
+//                                    }
+//                                }
+//                                
+//                            }
+//                            // Quality Filter Options
+//                            Section {
+//                                Label("Quality", systemImage: dataController.selectedFilter?.quality == -1 ? "star" : "star.fill")
+//                                    .font(.caption)
+//                                let filterOptions: [(label: String, filter: Filter)] = [
+//                                    ("All", .all),
+//                                    ("Healthy", .healthy),
+//                                    ("Moderate", .moderate),
+//                                    ("Unhealthy", .unhealthy)
+//                                ]
+//                                
+//                                ForEach(filterOptions, id: \.filter) { option in
+//                                    Button {
+//                                        dataController.selectedFilter = option.filter
+//                                    } label: {
+//                                        HStack {
+//                                            Text(option.label)
+//                                            Spacer()
+//                                            if dataController.selectedFilter == option.filter ||
+//                                                (dataController.selectedFilter?.quality == -1 && option.filter == .all) {
+//                                                Image(systemName: "checkmark")
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                            //if mealtime not tags:
+////                            Section {
+////                                Label("Mealtime", systemImage: dataController.selectedFilter?.mealtime == nil ? "clock" : "clock.fill")
+////                                    .font(.caption)
+////                                let filterOptions: [(label: String, filter: Filter)] = [
+////                                    ("All", .all),
+////                                    ("Breakfast", .breakfast),
+////                                    ("Morning snack", .morningSnack),
+////                                    ("Day snack", .daySnack),
+////                                    ("Dinner", .dinner),
+////                                    ("Evening snack", .eveningSnack),
+////                                    ("Extra meal", .extraMeal)
+////                                    
+////                                ]
+////                                
+////                                ForEach(filterOptions, id: \.filter) { option in
+////                                    Button {
+////                                        dataController.selectedFilter = option.filter
+////                                    } label: {
+////                                        HStack {
+////                                            Text(option.label)
+////                                            Spacer()
+////                                            if dataController.selectedFilter == option.filter ||
+////                                                (dataController.selectedFilter?.quality == nil && option.filter == .all) {
+////                                                Image(systemName: "checkmark")
+////                                            }
+////                                        }
+////                                    }
+////                                }
+////                            }
+//                            
+//                            // Tag Filter Options
+//                            Section {
+//                               
+//                               Label("Tags", systemImage: dataController.selectedFilter?.tag == nil ? "fork.knife.circle" : "fork.knife.circle.fill")
+//                            
+//                                Button(action: {
+//                                    dataController.selectedFilter?.tag = nil
+//                                    if let selectedDate = dataController.selectedDate {
+//                                        dataController.selectedFilter = Filter.filterForDate(selectedDate)
+//                                    } else {
+//                                        dataController.selectedFilter = Filter.all
+//                                    }
+//                                }) {
+//                                    HStack {
+//                                        Text("All")
+//                                        Spacer()
+//                                        if dataController.selectedFilter?.tag == nil {
+//                                            HStack{
+//                                                Image(systemName: "checkmark")
+//                                               
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                                
+//                                ForEach(tagFilters, id: \.self) { filter in
+//                                    Button(action: {
+//                                        dataController.selectedFilter = filter
+//                                    }) {
+//                                        HStack {
+//                                            Text(filter.name)
+//                                            Spacer()
+//                                            if dataController.selectedFilter?.tag == filter.tag {
+//                                                Image(systemName: "checkmark")
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                            
+//                            Section {
+//                               // Label("Sort order", systemImage: "arrow.up.arrow.down")
+//                                Button(action: {
+//                                    dataController.sortNewestFirst = true
+//                                }) {
+//                                    HStack {
+//                                        Text("Newest to Oldest")
+//                                        Spacer()
+//                                        if dataController.sortNewestFirst {
+//                                            Image(systemName: "checkmark")
+//                                        }
+//                                    }
+//                                }
+//                                
+//                                Button(action: {
+//                                    dataController.sortNewestFirst = false
+//                                }) {
+//                                    HStack {
+//                                        Text("Oldest to Newest")
+//                                        Spacer()
+//                                        if !dataController.sortNewestFirst {
+//                                            Image(systemName: "checkmark")
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        } label: {
+//                        Label("Filters", systemImage: dataController.selectedFilter == .all ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+//                    }
+//                       
+//                        
+//                            
+//                        
+//                       
+//                          
+//                    }
+                    
+                    
                     ToolbarItemGroup(placement: .navigationBarTrailing){
-                        Button(action: {
-                            dataController.newPlate()
-                            isNewPlateCreated = true
-                            
-                        }) {
-                            Label("New Plate", systemImage: "square.and.pencil")
-                        }
-                        .padding()
                         
                         Button(action: {
                             showPDFSheet = true
@@ -249,11 +410,16 @@ struct ContentView: View {
             SettingsView()  
         }
         .sheet(isPresented: $showPDFSheet){
-            PDFSheetShare()
+            PDFSheetShareView()
         }
         .sheet(isPresented: $showCalendarSheet){
             CalendarSheetView()
         }
+       
+                           
+                        
+        
+        
         .onChange(of: dataController.selectedDate) {
             if let date = dataController.selectedDate{
                 // If a date is selected, keep the existing filters (quality and tag) and add the date filter

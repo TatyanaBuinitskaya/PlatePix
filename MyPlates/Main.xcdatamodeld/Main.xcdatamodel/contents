@@ -4,15 +4,17 @@
         <attribute name="cloudRecordID" optional="YES" attributeType="String"/>
         <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="mealtime" optional="YES" attributeType="String"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="String"/>
         <attribute name="quality" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="tag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="plates" inverseEntity="Tag"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="plates" inverseEntity="Tag"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="plates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plate" inverseName="tag" inverseEntity="Plate"/>
+        <relationship name="plates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plate" inverseName="tags" inverseEntity="Plate"/>
     </entity>
 </model>

@@ -10,6 +10,8 @@ import SwiftUI
 struct PDFSheetShare: View {
     @EnvironmentObject var dataController: DataController
     @State private var pdfURL: URL?
+    @State private var plateImages: [UUID: UIImage] = [:]
+
     
     // Maximum number of columns for the grid
     private let maxColumns = 6
@@ -17,8 +19,8 @@ struct PDFSheetShare: View {
     var body: some View {
         VStack {
             HStack{
-                Text(dataController.dynamicTitle)
-                    .font(.title3)
+              //  Text(dataController.dynamicTitle)
+              //      .font(.title3)
                 Spacer()
                 Button {
                     captureAndCreatePDF()
@@ -40,8 +42,42 @@ struct PDFSheetShare: View {
                 let gridItems = generateGridItems(for: plates.count)
 //                let cellSize = calculateCellSize(geometry: geometry, itemCount: plates.count, columnCount: gridItems.count)
                 
+                
+                   
+                       
+               
+                
                     LazyVGrid(columns: gridItems, spacing: 10) {
                         ForEach(plates, id: \.id) { plate in
+//                            let key = String(describing: ObjectIdentifier(plate))
+//
+//                            if let image = plateImages[key] {
+//                                // Use the fetched image
+//                                Image(uiImage: image)
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fill)
+//                                    .frame(width: 100, height: 100)
+//                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+//                            } else {
+//                                // Placeholder while loading image
+//                                Rectangle()
+//                                    .fill(Color.gray.opacity(0.3))
+//                                    .frame(width: 100, height: 100)
+//                                    .overlay(Text("Loading..."))
+//                                    .onAppear {
+//                                        Task {
+//                                            // Fetch image logic
+//                                            if let imagePath = plate.photo,
+//                                               let fetchedImage = UIImage(contentsOfFile: imagePath) {
+//                                                DispatchQueue.main.async {
+//                                                    plateImages[key] = fetchedImage
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                            }
+                        
+                            
                             if let photoPath = plate.photo, let image = loadImage(from: photoPath) {
                                 Image(uiImage: image)
                                     .resizable()
@@ -195,7 +231,32 @@ struct PDFSheetShare: View {
         }
     }
     
-   
+//    private func loadImageForPlate(_ plate: Plate) async {
+//        let key = UUID(uuidString: "\(ObjectIdentifier(plate))") ?? UUID()
+//   
+//        if let cloudRecordID = plate.cloudRecordID {
+//            // Try fetching from CloudKit
+//            if let fetchedImage = await dataController.fetchImageFromCloudKit(recordID: cloudRecordID) {
+//                DispatchQueue.main.async {
+//                    plateImages[plate.key] = fetchedImage
+//                }
+//                return
+//            } else {
+//                print("Failed to fetch image from CloudKit.")
+//            }
+//        }
+//        
+//        // Attempt to load locally if CloudKit fetch failed
+//        if let photoPath = plate.photo {
+//            if let localImage = dataController.fetchImageFromFileSystem(imagePath: photoPath) {
+//                DispatchQueue.main.async {
+//                    plateImages[plate.id] = localImage
+//                }
+//            } else {
+//                print("Failed to load image from local path: \(photoPath)")
+//            }
+//        }
+//    }
 }
 
 #Preview {

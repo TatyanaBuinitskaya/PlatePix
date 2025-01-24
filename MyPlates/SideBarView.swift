@@ -12,8 +12,17 @@ struct SideBarView: View {
     @EnvironmentObject var dataController: DataController
   //  let smartFilters: [Filter] = [.all, .filterForDate(Date())] // Smart filters: "All" and "Today"
     let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
+    //if mealtime not tags:
+    let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
     
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
+    
+    var tagFilters: [Filter] {
+        tags.map { tag in
+            Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
+        }
+    }
+
     
     @State private var tagToRename: Tag?
     @State private var renamingTag = false
@@ -21,81 +30,153 @@ struct SideBarView: View {
     
     @State private var showingAwards = false
     @State private var showCalendarSheet = false
-    
-    var tagFilters: [Filter] {
-        tags.map { tag in
-            Filter(id: tag.tagID, name: tag.tagName, icon: "fork.knife.circle", tag: tag)
-        }
-    }
+    @State private var showTagFilterList = false
+    @State private var showMealtimeFilterList = false
     
     var body: some View {
         List(selection: $dataController.selectedFilter) {
             Section("Date Filters") {
-//                ForEach(smartFilters) { filter in
-//                    NavigationLink(value: filter) {
-//                        HStack {
-//                            Label(filter.name, systemImage: filter.icon)
-//                            Spacer()
-//                            if filter == Filter.all {
-//                                Text("\(dataController.allPlatesCount)")
-//                                    .foregroundColor(.secondary)
-//                            }
-//                        }
-//                    }
-//                }
                 Button {
                     dataController.selectedFilter = Filter.all
                     dataController.selectedDate = nil
                 } label: {
-                    Label("All plates", systemImage: "calendar")
+                    HStack{
+                        Label("All plates", systemImage: "calendar")
+                        Spacer()
+                        Text("\(dataController.allPlatesCount)")
+                            .foregroundColor(.secondary)
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.secondary)
+                            .font(.footnote)
+                    }
                 }
                 
                 Button {
                     dataController.selectedFilter = Filter.filterForDate(Date())
                     dataController.selectedDate = Date()
                 } label: {
-                    Label("Today", systemImage: "1.square")
+                    HStack{
+                        Label("Today", systemImage: "1.square")
+                        Spacer()
+                        let date = dataController.selectedDate ?? Date()
+                        Text("\(dataController.countSelectedDatePlates(for: date))")
+                            .foregroundColor(.secondary)
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.secondary)
+                            .font(.footnote)
+                    }
                 }
                 
                 Button {
                     showCalendarSheet = true
                 } label: {
-                    Label("Select date", systemImage: "calendar.circle")
+                    HStack{
+                        Label("Select date", systemImage: "calendar.badge.plus")
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(.secondary)
+                            .font(.footnote)
+                    }
                 }
             }
             
             Section("Tags") {
-                if tagFilters.isEmpty {
-                    Button {
-                        let context = dataController.container.viewContext
-                        dataController.createDefaultTags(context: context)
-                    } label: {
-                        Label("Create default tags", systemImage: "plus.square.on.square")
-                    }
-                }
                 
-                ForEach(tagFilters) { filter in
-                    NavigationLink(value: filter) {
-                        Label(filter.name, systemImage: filter.icon)
-                          //  .badge(filter.tag?.tagTodayPlates.count ?? 0)
-                            .contextMenu {
-                                Button {
-                                    rename(filter)
-                                } label: {
-                                    Label("Rename", systemImage: "pencil")
-                                }
-                                Button(role: .destructive) {
-                                    delete(filter)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+                
+                //                Menu {
+                //                    ForEach(tagFilters) { filter in
+                //                        let plateCount = String(dataController.countTagPlates(for: filter.name))
+                //                        NavigationLink(value: filter) {
+                //                            HStack {
+                //                                Text(filter.name + " " + plateCount)
+                //                                Spacer()
+                //                            }
+                //                        }
+                //                    }
+                //                } label: {
+                //                    HStack {
+                //                        Image(systemName: "tag")
+                //                        Text("Choose a Food tag filter")
+                //                            .foregroundColor(.primary)
+                //                        Spacer()
+                //                        Image(systemName: "chevron.down")
+                //
+                //                    }
+                //                }
+                //            }
+                Button{
+                    withAnimation {
+                        showTagFilterList.toggle()
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "tag")
+                            .foregroundColor(.blue)
+                        Text("Choose a Food tag filter")
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .rotationEffect(.degrees(showTagFilterList ? 180 : 0)) // Rotate arrow based on state
+                            .foregroundColor(.secondary)
+                            .font(.footnote)
+                            .animation(.easeInOut(duration: 0.3), value: showTagFilterList)
                     }
                 }
-                .onDelete(perform: delete)
+                if showTagFilterList {
+                    
+                    ForEach(tagFilters) { filter in
+                        NavigationLink(value: filter){
+                            HStack {
+                                Text(filter.name)
+                                Spacer()
+                                Text("\(dataController.countTagPlates(for: filter.name))")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                }
             }
+            .animation(.easeInOut(duration: 0.3), value: showTagFilterList)
             
-            Section("Quality Filters") {
+            Section("Mealtime filters") {
+                Button{
+                    withAnimation {
+                        showMealtimeFilterList.toggle()
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "clock")
+                            .foregroundColor(.blue)
+                        Text("Choose a Mealtime filter")
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .rotationEffect(.degrees(showMealtimeFilterList ? 180 : 0)) // Rotate arrow based on state
+                            .foregroundColor(.secondary)
+                            .font(.footnote)
+                            .animation(.easeInOut(duration: 0.3), value: showMealtimeFilterList)
+                    }
+                }
+                if showMealtimeFilterList {
+                    
+                    ForEach(mealtimeFilters) { filter in
+                        let mealtime = filter.mealtime ?? "" // Provide fallback for optional mealtime
+                        let plateCount = dataController.countMealtimePlates(for: mealtime)
+                        
+                        NavigationLink(value: filter) {
+                            HStack {
+                                Text(filter.name)
+                                Spacer()
+                                Text("\(plateCount)")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                }
+            }
+            .animation(.easeInOut(duration: 0.3), value: showTagFilterList)
+            
+            Section("Quality filters") {
                 ForEach(qualityFilters) { filter in
                     NavigationLink(value: filter) {
                         HStack {
@@ -103,17 +184,17 @@ struct SideBarView: View {
                                 .foregroundColor(filter.quality == 0 ? .red : filter.quality == 1 ? .yellow : .green)
                             Text(filter.name)
                             Spacer()
-                            Text("\(dataController.countPlates(for: filter.quality))")
+                            Text("\(dataController.countQualityPlates(for: filter.quality))")
                                 .foregroundColor(.secondary)
                         }
                     }
                 }
                 
-                if dataController.countPlates(for: 2) > dataController.countPlates(for: 0) && dataController.countPlates(for: 2) > dataController.countPlates(for: 1) {
+                if dataController.countQualityPlates(for: 2) > dataController.countQualityPlates(for: 0) && dataController.countQualityPlates(for: 2) > dataController.countQualityPlates(for: 1) {
                     Text("You're doing great! Keep up with the healthy choices!")
                         .foregroundColor(.green)
                         .italic()
-                } else if dataController.countPlates(for: 0) > dataController.countPlates(for: 2) && dataController.countPlates(for: 0) > dataController.countPlates(for: 1) {
+                } else if dataController.countQualityPlates(for: 0) > dataController.countQualityPlates(for: 2) && dataController.countQualityPlates(for: 0) > dataController.countQualityPlates(for: 1) {
                     Text("You may want to focus on eating healthier.")
                         .foregroundColor(.red)
                         .italic()
@@ -123,11 +204,14 @@ struct SideBarView: View {
                         .italic()
                 }
             }
+            
+          
+            
         }
         .toolbar {
-            Button(action: dataController.newTag) {
-                Label("Add tag", systemImage: "plus")
-            }
+//            Button(action: dataController.newTag) {
+//                Label("Add tag", systemImage: "plus")
+//            }
             
             Button {
                 showingAwards.toggle()
@@ -143,6 +227,7 @@ struct SideBarView: View {
         .sheet(isPresented: $showingAwards, content: AwardsView.init)
         .sheet(isPresented: $showCalendarSheet, content: CalendarSheetView.init)
         .navigationTitle("Filters")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
 

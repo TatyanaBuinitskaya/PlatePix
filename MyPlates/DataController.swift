@@ -8,10 +8,7 @@ import CloudKit
 import CoreData
 import UIKit
 
-//enum SortType: String {
-//    case dateCreated = "creationDate"
-//   // case dateModified = "modificationDate"
-//}
+
 
 class DataController: ObservableObject {
     let container: NSPersistentCloudKitContainer
@@ -19,10 +16,11 @@ class DataController: ObservableObject {
     @Published var selectedFilter: Filter? = Filter.filterForDate(Date()) 
     @Published var selectedPlate: Plate?
     @Published var filterText = ""
-    @Published var filterTokens = [Tag]()
+  //  @Published var filterTokens = [Tag]()
     
     @Published var filterQuality = -1
-  //  @Published var sortType = SortType.dateCreated
+    @Published var filterMealtime: String? = nil
+
     @Published var sortNewestFirst = true
     // m
     @Published var selectedImage: UIImage?
@@ -30,6 +28,7 @@ class DataController: ObservableObject {
     @Published var currentAward: Award = .example
     
     @Published var selectedDate: Date? = Date()
+   
     
     @Published var showNotes: Bool {
            didSet {
@@ -48,8 +47,22 @@ class DataController: ObservableObject {
                UserDefaults.standard.set(showQuality, forKey: "showQuality")
            }
        }
-   
- 
+    @Published var showTags: Bool {
+        didSet {
+            UserDefaults.standard.set(showTags, forKey: "showTags")
+        }
+    }
+    
+    
+    let mealtimeDictionary: [String: String] = [
+        "breakfast": "Breakfast",
+        "morningSnack": "Morning Snack",
+        "lunch": "Lunch",
+        "daySnack": "Day Snack",
+        "dinner": "Dinner",
+        "eveningSnack": "Evening Snack",
+        "anytimeMeal": "Anytime Meal"
+    ]
     
     private var saveTask: Task<Void, Error>?
     
@@ -78,6 +91,19 @@ class DataController: ObservableObject {
                     title += " Healthy"
                 }
             }
+            
+            if let filter = selectedFilter, let mealtime = filter.mealtime {
+                if let mealtimeTitle = mealtimeDictionary[mealtime] {
+                    title += " \(mealtimeTitle)"
+                }
+            }
+            
+//            if let filter = selectedFilter, let mealtime = filter.mealtime {
+//                if let mealtimeTitle = mealtimeArray.first(where: { $0.0 == mealtime })?.1 {
+//                    title += " \(mealtimeTitle)"
+//                }
+//            }
+            
 
             // If there's a tag filter, add it at the end of the title
             if let tag = selectedFilter?.tag {
@@ -110,6 +136,12 @@ class DataController: ObservableObject {
                 return "Healthy"
             }
         }
+        
+        if let filter = selectedFilter{
+            if let mealtime = filter.mealtime {
+                return mealtimeDictionary[mealtime] ?? "Unknown"
+            }
+        }
 
         // If no filter is selected, return "All Plates" or fallback to default
         return "All Plates"
@@ -134,12 +166,31 @@ class DataController: ObservableObject {
             }
         }
     }
+    // many tags
+//    var suggestedFilterTokens: [Tag] {
+//        guard filterText.starts(with: "#") else {
+//            return []
+//        }
+//
+//        let trimmedFilterText = String(filterText.dropFirst()).trimmingCharacters(in: .whitespaces)
+//        let request = Tag.fetchRequest()
+//
+//        if trimmedFilterText.isEmpty == false {
+//            request.predicate = NSPredicate(format: "name CONTAINS[c] %@", trimmedFilterText)
+//        }
+//
+//        return (try? container.viewContext.fetch(request).sorted()) ?? []
+//    }
+    
+   
+    
+    
     
     init(inMemory: Bool = false) {
         self.showNotes = UserDefaults.standard.bool(forKey: "showNotes")
         self.showMealTime = UserDefaults.standard.bool(forKey: "showMealTime")
         self.showQuality = UserDefaults.standard.bool(forKey: "showQuality")
-        
+        self.showTags = UserDefaults.standard.bool(forKey: "showTags")
         
         container = NSPersistentCloudKitContainer(name: "Main")
         
@@ -156,18 +207,9 @@ class DataController: ObservableObject {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
         }
-        //m
-//        let context = container.viewContext
-//        createDefaultTags(context: context)
-        
-        
-       
     }
     
   
-    
-   
-    
     func remoteStoreChanged(_ notification: Notification) {
         objectWillChange.send()
     }
@@ -175,7 +217,7 @@ class DataController: ObservableObject {
    
     // m
     func createDefaultTags(context: NSManagedObjectContext) {
-        let defaultTagNames = ["Breakfast", "Lunch", "Dinner", "Snack"]
+        let defaultTagNames = defaultTags
         
         for tagName in defaultTagNames {
             let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
@@ -191,10 +233,7 @@ class DataController: ObservableObject {
         try? context.save()
     }
     
-   
-     
-  
-    
+
     func save() {
         saveTask?.cancel()
         
@@ -238,15 +277,15 @@ class DataController: ObservableObject {
         save()
     }
     
-    // 1 tag
+    // many tags
     func missingTags(from plate: Plate) -> [Tag] {
         let request = Tag.fetchRequest()
         let allTags = (try? container.viewContext.fetch(request)) ?? []
-        
-        guard let plateTag = plate.tag else {
-            return allTags.sorted()
-        }
-        return allTags.filter { $0 != plateTag }.sorted()
+
+        let allTagsSet = Set(allTags)
+        let difference = allTagsSet.symmetricDifference(plate.plateTags)
+
+        return difference.sorted()
     }
     
     
@@ -270,13 +309,24 @@ class DataController: ObservableObject {
         }
 
         // Apply tag filter if there is a selected tag
+        // 1 tag
+//        if let tag = filter.tag {
+//            predicates.append(NSPredicate(format: "tag.name == %@", tag.tagName))
+//        }
+        // many tags
         if let tag = filter.tag {
-            predicates.append(NSPredicate(format: "tag.name == %@", tag.tagName))
-        }
+               let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
+               predicates.append(tagPredicate)
+           }
 
         // Apply quality filter if a quality is selected
         if filter.quality >= 0 {
             predicates.append(NSPredicate(format: "quality = %d", filter.quality))
+        }
+        
+        // Apply mealtime filter if a mealtime is selected
+        if let mealtime = filter.mealtime {
+            predicates.append(NSPredicate(format: "mealtime = %@", mealtime))
         }
 
         // Apply filter text if it exists
@@ -286,7 +336,24 @@ class DataController: ObservableObject {
             let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
             predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate]))
         }
-
+        // many tags
+//        if filterTokens.isEmpty == false {
+//            let tokenPredicate = NSPredicate(format: "ANY tags IN %@", filterTokens)
+//            predicates.append(tokenPredicate)
+//        }
+        // or this
+//        if filterTokens.isEmpty == false {
+//            for filterToken in filterTokens {
+//                let tokenPredicate = NSPredicate(format: "tags CONTAINS %@", filterToken)
+//                predicates.append(tokenPredicate)
+//            }
+//        }
+//        if !filterTokens.isEmpty {
+//            let tokenPredicate = NSPredicate(format: "ANY tags IN %@", filterTokens)
+//            predicates.append(tokenPredicate)
+//        }
+        
+        
         // Combine all predicates (AND logic between date, quality, etc.)
         let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
 
@@ -304,6 +371,8 @@ class DataController: ObservableObject {
         
         return (try? container.viewContext.fetch(fetchRequest)) ?? []
     }
+    
+   
     
     // m
     func saveImageToFileSystem(image: UIImage) -> String? {
@@ -325,31 +394,6 @@ class DataController: ObservableObject {
         return nil
     }
     
-   
-   
-    
-//    func saveImageToiCloud(image: UIImage, imageName: String) -> String? {
-//        // Correctly construct the iCloud path without duplication
-//        guard let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)?
-//                .appendingPathComponent("Documents")
-//                .appendingPathComponent("\(imageName).jpg") else {
-//            print("Error: iCloud URL is invalid.")
-//            return nil
-//        }
-//        
-//        if let imageData = image.jpegData(compressionQuality: 0.8) {
-//            do {
-//                try imageData.write(to: iCloudURL)
-//                print("Image successfully saved to iCloud at path: \(iCloudURL.path)")
-//                return iCloudURL.path
-//            } catch {
-//                print("Error saving image to iCloud: \(error.localizedDescription)")
-//            }
-//        } else {
-//            print("Failed to generate JPEG data for the image.")
-//        }
-//        return nil
-//    }
     
     func saveImageToCloudKit(image: UIImage, imageName: String) async -> CKRecord.ID? {
         // Convert UIImage to Data (JPEG format)
@@ -391,58 +435,6 @@ class DataController: ObservableObject {
             return nil
         }
     }
-
-//    func saveCloudKitRecordID(recordID: CKRecord.ID?) {
-//        guard let recordID = recordID else {
-//            print("Invalid record ID.")
-//            return
-//        }
-//
-//        // Get the context from your Core Data container
-//        let context = container.viewContext
-//
-//        // Fetch the PlateEntity object you want to update or create a new one
-//        let plateEntity = Plate(context: context)
-//        
-//        
-//        // Save the CloudKit record ID as a string (we're using the record's ID, which is a String)
-//        plateEntity.cloudRecordID = recordID.recordName // Save the record ID as a string
-//
-//        // Optionally, store the photo attribute (image URL or path) as well
-//        plateEntity.photo = "YourImagePathOrURLHere" // Example: URL or local file path for the photo
-//
-//        do {
-//            // Save the context to persist the data
-//            try context.save()
-//            print("CloudKit record ID saved to Core Data.")
-//        } catch {
-//            print("Failed to save CloudKit record ID to Core Data: \(error.localizedDescription)")
-//        }
-//    }
-
-//    func fetchImageFromiCloud(imagePath: String) -> UIImage? {
-//        // Check if the provided imagePath already contains the directory path.
-//        // If so, we should only append the image file name to the Documents directory
-//        let imageFileName = imagePath.components(separatedBy: "/").last ?? imagePath
-//        
-//        // Correctly construct the iCloud URL without duplicating path components
-//        guard let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)?
-//                .appendingPathComponent("Documents")
-//                .appendingPathComponent(imageFileName) else {
-//            print("Error: iCloud URL is invalid or file not found.")
-//            return nil
-//        }
-//        
-//        print("iCloud file URL: \(iCloudURL.path)")  // Log the constructed iCloud path
-//        
-//        // Use fileExistsAtPath to confirm if the file exists in iCloud
-//        guard FileManager.default.fileExists(atPath: iCloudURL.path) else {
-//            print("Image not found in iCloud at path: \(iCloudURL.path)")
-//            return nil
-//        }
-//
-//        return UIImage(contentsOfFile: iCloudURL.path)
-//    }
     
     func fetchImageFromCloudKit(recordID: String) async -> UIImage? {
         // Check if the recordID is non-empty.
@@ -503,9 +495,41 @@ class DataController: ObservableObject {
     }
     
     
-    func countPlates(for quality: Int) -> Int {
+    func countQualityPlates(for quality: Int) -> Int {
         let request: NSFetchRequest<Plate> = Plate.fetchRequest()
         request.predicate = NSPredicate(format: "quality = %d", quality)
+        return (try? container.viewContext.count(for: request)) ?? 0
+    }
+   //  if mealtime not tags
+    func countMealtimePlates(for mealtime: String) -> Int {
+        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
+        request.predicate = NSPredicate(format: "mealtime = %@", mealtime) // Use %@ for strings
+        return (try? container.viewContext.count(for: request)) ?? 0
+    }
+
+//    func countPlates(for tag: Tag) -> Int {
+//        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
+//        request.predicate = NSPredicate(format: "ANY tags = %@", tag)
+//        return (try? container.viewContext.count(for: request)) ?? 0
+//    }
+    func countTagPlates(for tagName: String) -> Int {
+        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
+        // Use the name of the tag for comparison
+        request.predicate = NSPredicate(format: "ANY tags.name == %@", tagName)
+        return (try? container.viewContext.count(for: request)) ?? 0
+    }
+    
+    func countSelectedDatePlates(for date: Date) -> Int {
+        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
+        
+        // Get the start and end of the given day
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .second, value: 86399, to: startOfDay) ?? startOfDay
+
+        // Use a range for comparison
+        request.predicate = NSPredicate(format: "creationDate >= %@ AND creationDate <= %@", startOfDay as NSDate, endOfDay as NSDate)
+        
         return (try? container.viewContext.count(for: request)) ?? 0
     }
     
@@ -528,11 +552,20 @@ class DataController: ObservableObject {
            }
    
         plate.quality = 1
-     
+        // Set the mealtime attribute from the selected filter, defaulting to "breakfast" if no mealtime is selected
+        plate.mealtime = "anytimeMeal"
         plate.photo = nil
-        if let tag = selectedFilter?.tag {
-            plate.tag = tag
-        }
+        
+     // 1 tag
+//        if let tag = selectedFilter?.tag {
+//            plate.tag = tag
+//        }
+        
+        // many tags
+//        if let tag = selectedFilter?.tag {
+//            plate.addToTags(tag)
+//        }
+        
         
         selectedPlate = plate
 
@@ -546,8 +579,15 @@ class DataController: ObservableObject {
     func newTag() {
         let tag = Tag(context: container.viewContext)
         tag.id = UUID()
-        tag.name = "New tag"
+        tag.name = " New Tag"
+        tag.creationDate = Date()
         save()
+    }
+    
+    func isTagRecentlyCreated(tag: Tag) -> Bool {
+        guard let creationDate = tag.creationDate else { return false }
+        let timeInterval = Date().timeIntervalSince(creationDate)
+        return timeInterval <= 3600 // 3600 seconds = 1 hour
     }
     
     func count<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
@@ -562,22 +602,9 @@ class DataController: ObservableObject {
             let awardCount = count(for: fetchRequest)
             return awardCount >= award.value
             
-            //        case "closed":
-            //            // returns true if they closed a certain number of issues
-            //            let fetchRequest = Plate.fetchRequest()
-            //            fetchRequest.predicate = NSPredicate(format: "completed = true")
-            //            let awardCount = count(for: fetchRequest)
-            //            return awardCount >= award.value
-            
-            //        case "tags":
-            //            // return true if they created a certain number of tags
-            //            let fetchRequest = Tag.fetchRequest()
-            //            let awardCount = count(for: fetchRequest)
-            //            return awardCount >= award.value
             
         default:
-            // an unknown award criterion; this should never be allowed
-            // fatalError("Unknown award criterion: \(award.criterion)")
+            
             return false
         }
     }

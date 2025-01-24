@@ -69,10 +69,13 @@ struct CalendarSheetView: View {
             .padding()
 
                    if let selectedDate = dataController.selectedDate {
-                     
-                       Text("Selected Date: \(selectedDate, formatter: dateFormatter)")
-                           .fontWeight(.semibold)
-                           .padding()
+                       VStack{
+                           Text("Selected Date: \(selectedDate, formatter: dateFormatter)")
+                               .fontWeight(.semibold)
+                           
+                           Text("Plates: \(dataController.countSelectedDatePlates(for: selectedDate))")
+                       }
+                       .padding()
                    } else {
                        Text("No Date Selected")
                            .fontWeight(.semibold)
