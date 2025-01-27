@@ -47,7 +47,7 @@ struct TagListView: View {
                     }
                 }
    
-                Text("Press and hold or swipe left on a tag to rename or delete it.")
+                Text("Press and hold or swipe left on a tag to rename or delete it")
                     .font(.caption)
                 List{
                     Section("Current Tags"){

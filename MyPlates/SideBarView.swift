@@ -42,36 +42,41 @@ struct SideBarView: View {
                 } label: {
                     HStack{
                         Label("All plates", systemImage: "calendar")
-                        Spacer()
-                        Text("\(dataController.allPlatesCount)")
-                            .foregroundColor(.secondary)
+                            .badge("\(dataController.allPlatesCount)")
+                           
                         Image(systemName: "chevron.right")
                             .foregroundColor(.secondary)
                             .font(.footnote)
                     }
+                    .accessibilityElement()
+                    .accessibilityLabel("All plates")
+                    .accessibilityHint("\(dataController.allPlatesCount) plates")
+              
                 }
                 
                 Button {
                     dataController.selectedFilter = Filter.filterForDate(Date())
                     dataController.selectedDate = Date()
                 } label: {
+                    let date = dataController.selectedDate ?? Date()
                     HStack{
                         Label("Today", systemImage: "1.square")
-                        Spacer()
-                        let date = dataController.selectedDate ?? Date()
-                        Text("\(dataController.countSelectedDatePlates(for: date))")
-                            .foregroundColor(.secondary)
+                            .badge("\(dataController.countSelectedDatePlates(for: date))")
+                            
                         Image(systemName: "chevron.right")
                             .foregroundColor(.secondary)
                             .font(.footnote)
                     }
+                    .accessibilityElement()
+                    .accessibilityLabel("Today")
+                    .accessibilityHint("\(dataController.countSelectedDatePlates(for: date)) plates")
                 }
                 
                 Button {
                     showCalendarSheet = true
                 } label: {
                     HStack{
-                        Label("Select date", systemImage: "calendar.badge.plus")
+                        Label("Select a Date", systemImage: "calendar.badge.plus")
                         Spacer()
                         Image(systemName: "chevron.down")
                             .foregroundColor(.secondary)
@@ -125,12 +130,11 @@ struct SideBarView: View {
                     
                     ForEach(tagFilters) { filter in
                         NavigationLink(value: filter){
-                            HStack {
-                                Text(filter.name)
-                                Spacer()
-                                Text("\(dataController.countTagPlates(for: filter.name))")
-                                    .foregroundColor(.secondary)
-                            }
+                                Text(LocalizedStringKey(filter.name))
+                                    .badge("\(dataController.countTagPlates(for: filter.name))")
+                                    .accessibilityElement()
+                                    .accessibilityLabel(filter.name)
+                                    .accessibilityHint("\(dataController.countTagPlates(for: filter.name)) plates")
                         }
                     }
                     .transition(.move(edge: .top).combined(with: .opacity))
@@ -163,12 +167,11 @@ struct SideBarView: View {
                         let plateCount = dataController.countMealtimePlates(for: mealtime)
                         
                         NavigationLink(value: filter) {
-                            HStack {
-                                Text(filter.name)
-                                Spacer()
-                                Text("\(plateCount)")
-                                    .foregroundColor(.secondary)
-                            }
+                                Text(LocalizedStringKey(filter.name))
+                                    .badge("\(plateCount)")
+                                    .accessibilityElement()
+                                    .accessibilityLabel(filter.name)
+                                    .accessibilityHint("\(plateCount) plates")
                         }
                     }
                     .transition(.move(edge: .top).combined(with: .opacity))
@@ -182,11 +185,12 @@ struct SideBarView: View {
                         HStack {
                             Image(systemName: filter.icon)
                                 .foregroundColor(filter.quality == 0 ? .red : filter.quality == 1 ? .yellow : .green)
-                            Text(filter.name)
-                            Spacer()
-                            Text("\(dataController.countQualityPlates(for: filter.quality))")
-                                .foregroundColor(.secondary)
+                            Text(LocalizedStringKey(filter.name))
+                                .badge("\(dataController.countQualityPlates(for: filter.quality))")
                         }
+                        .accessibilityElement()
+                        .accessibilityLabel(filter.name)
+                        .accessibilityHint("\(dataController.countQualityPlates(for: filter.quality)) plates")
                     }
                 }
                 

@@ -55,13 +55,13 @@ class DataController: ObservableObject {
     
     
     let mealtimeDictionary: [String: String] = [
-        "breakfast": "Breakfast",
-        "morningSnack": "Morning Snack",
-        "lunch": "Lunch",
-        "daySnack": "Day Snack",
-        "dinner": "Dinner",
-        "eveningSnack": "Evening Snack",
-        "anytimeMeal": "Anytime Meal"
+        "breakfast": NSLocalizedString("Breakfast", comment: "Mealtime: Breakfast"),
+        "morningSnack": NSLocalizedString("Morning snack", comment: "Mealtime: Morning Snack"),
+        "lunch": NSLocalizedString("Lunch", comment: "Mealtime: Lunch"),
+        "daySnack": NSLocalizedString("Day snack", comment: "Mealtime: Day Snack"),
+        "dinner": NSLocalizedString("Dinner", comment: "Mealtime: Dinner"),
+        "eveningSnack": NSLocalizedString("Evening snack", comment: "Mealtime: Evening Snack"),
+        "anytimeMeal": NSLocalizedString("Anytime meal", comment: "Mealtime: Anytime Meal"),
     ]
     
     private var saveTask: Task<Void, Error>?
@@ -84,11 +84,11 @@ class DataController: ObservableObject {
             // If there's a quality filter, add it after the date
             if let filter = selectedFilter, filter.quality >= 0 {
                 if filter.quality == 0 {
-                    title += " Unhealthy"
+                    title += NSLocalizedString(" Unhealthy", comment: "Unhealthy quality filter")
                 } else if filter.quality == 1 {
-                    title += " Moderate"
+                    title += NSLocalizedString(" Moderate", comment: "Moderate quality filter")
                 } else if filter.quality == 2 {
-                    title += " Healthy"
+                    title += NSLocalizedString(" Healthy", comment: "Healthy quality filter")
                 }
             }
             
@@ -107,7 +107,7 @@ class DataController: ObservableObject {
 
             // If there's a tag filter, add it at the end of the title
             if let tag = selectedFilter?.tag {
-                title += " \(tag.name ?? "Filtered Plates")"
+                title += " \(tag.name ?? NSLocalizedString("Filtered Plates", comment: "Fallback tag name"))"
             }
 
             return title
@@ -123,28 +123,28 @@ class DataController: ObservableObject {
 
         // If no date is selected and there is a tag filter selected, show the tag name
         if let tag = selectedFilter?.tag {
-            return tag.name ?? "Filtered Plates"
+            return tag.name ?? NSLocalizedString("Filtered Plates", comment: "Fallback tag name")
         }
 
         // If no date is selected and there is a quality filter selected (even with "All" plates), show quality
         if let filter = selectedFilter, filter.quality >= 0 {
             if filter.quality == 0 {
-                return "Unhealthy"
+                return NSLocalizedString("Unhealthy", comment: "Unhealthy quality filter")
             } else if filter.quality == 1 {
-                return "Moderate"
+                return NSLocalizedString("Moderate", comment: "Moderate quality filter")
             } else if filter.quality == 2 {
-                return "Healthy"
+                return NSLocalizedString("Healthy", comment: "Healthy quality filter")
             }
         }
         
         if let filter = selectedFilter{
             if let mealtime = filter.mealtime {
-                return mealtimeDictionary[mealtime] ?? "Unknown"
+                return mealtimeDictionary[mealtime] ?? NSLocalizedString("Unknown", comment: "Unknown mealtime")
             }
         }
 
         // If no filter is selected, return "All Plates" or fallback to default
-        return "All Plates"
+        return NSLocalizedString("All Plates", comment: "Fallback title for all plates")
     }
     
     var allPlatesCount: Int {
@@ -537,7 +537,20 @@ class DataController: ObservableObject {
     func newPlate() {
         
         let plate = Plate(context: container.viewContext)
-        plate.title = "Plate " + (plate.creationDate ?? .now).formatted()
+      // Format the date for localization
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long // Adjust to .short, .medium, or .full as needed
+        dateFormatter.timeStyle = .none // Only include the date, no time
+        dateFormatter.locale = Locale.current // Respect the user's locale settings
+        
+        let localizedDateString = dateFormatter.string(from: plate.creationDate ?? .now)
+
+        // Construct the localized title
+        plate.title = String(
+            format: NSLocalizedString("Plate-%@", comment: "Title with creation date"),
+          localizedDateString
+        )
+    //    plate.title = NSLocalizedString("Plate ", comment: "Part of title") + (plate.creationDate ?? .now).formatted
         
         // plate.creationDate = .now
         

@@ -138,7 +138,7 @@ struct ContentView: View {
                     }
                 }
             }
-                .navigationTitle(dataController.dynamicTitle)
+                .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
 //                    ToolbarItemGroup(placement: .navigationBarLeading){
@@ -455,10 +455,19 @@ struct ContentView: View {
 }
     
     
-#Preview {
+#Preview("English") {
     ContentView()
         .environmentObject(DataController.preview)
+        .environment(\.locale, Locale(identifier: "EN"))
 
 }
 
+#Preview("Russian") {
+    ContentView()
+        .environmentObject(DataController.preview)
+        .environment(\.locale, Locale(identifier: "RU"))
 
+}
+
+// instead of type String - LocalizedStringKey or resource
+// different tables LocaliedStringKey("text", table: "extratable")

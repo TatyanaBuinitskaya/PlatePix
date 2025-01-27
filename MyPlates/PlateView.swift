@@ -29,7 +29,7 @@ struct PlateView: View {
         
         VStack {
             if isDeleted {
-                Text("This plate has been deleted.")
+                Text("This plate has been deleted")
                     .foregroundColor(.red)
             } else {
                 ZStack{
