@@ -15,6 +15,7 @@
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="plates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plate" inverseName="tags" inverseEntity="Plate"/>
     </entity>
 </model>

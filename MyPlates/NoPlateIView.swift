@@ -11,10 +11,9 @@ struct NoPlateIView: View {
     @EnvironmentObject var dataController: DataController
     var body: some View {
         Text("No Plate Selected")
-                   .font(.title)
-                   .foregroundStyle(.secondary)
-
-               Button("New Plate", action: dataController.newPlate)
+            .font(.title)
+            .foregroundStyle(.secondary)
+        Button("New Plate", action: dataController.newPlate)
     }
 }
 

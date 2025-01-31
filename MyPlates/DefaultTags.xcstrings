@@ -26,8 +26,14 @@
     "Apple Juice" : {
       "comment" : "A drink"
     },
+    "April" : {
+      "comment" : "The fourth month of the year"
+    },
     "Asparagus" : {
       "comment" : "A vegetable"
+    },
+    "August" : {
+      "comment" : "The eighth month of the year"
     },
     "Avocado" : {
       "comment" : "A vegetable",
@@ -136,6 +142,9 @@
     "Cucumber" : {
       "comment" : "A vegetable"
     },
+    "December" : {
+      "comment" : "The twelfth month of the year"
+    },
     "Duck" : {
       "comment" : "A protein source"
     },
@@ -144,6 +153,9 @@
     },
     "Eggplant" : {
       "comment" : "A vegetable"
+    },
+    "February" : {
+      "comment" : "The second month of the year"
     },
     "Flour" : {
       "comment" : "A staple food"
@@ -169,6 +181,15 @@
     "Jam" : {
       "comment" : "A spread"
     },
+    "January" : {
+      "comment" : "The first month of the year"
+    },
+    "July" : {
+      "comment" : "The seventh month of the year"
+    },
+    "June" : {
+      "comment" : "The sixth month of the year"
+    },
     "Ketchup" : {
       "comment" : "A condiment"
     },
@@ -186,6 +207,12 @@
     },
     "Mango" : {
       "comment" : "A fruit"
+    },
+    "March" : {
+      "comment" : "The third month of the year"
+    },
+    "May" : {
+      "comment" : "The fifth month of the year"
     },
     "Mayonnaise" : {
       "comment" : "A condiment"
@@ -205,8 +232,14 @@
     "Noodles" : {
       "comment" : "A staple food"
     },
+    "November" : {
+      "comment" : "The eleventh month of the year"
+    },
     "Oats" : {
       "comment" : "A staple food"
+    },
+    "October" : {
+      "comment" : "The tenth month of the year"
     },
     "Onion" : {
       "comment" : "A vegetable"
@@ -273,6 +306,9 @@
     },
     "Salmon" : {
       "comment" : "A protein source"
+    },
+    "September" : {
+      "comment" : "The ninth month of the year"
     },
     "Shrimp" : {
       "comment" : "A protein source"

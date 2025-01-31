@@ -185,6 +185,7 @@
       }
     },
     "All plates" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -235,6 +236,7 @@
       }
     },
     "Available Tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -316,6 +318,7 @@
       }
     },
     "Choose a Food tag filter" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -332,6 +335,7 @@
       }
     },
     "Choose a Mealtime filter" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -380,6 +384,7 @@
       }
     },
     "Create default tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -394,6 +399,9 @@
           }
         }
       }
+    },
+    "Create or delete default tags" : {
+
     },
     "Current Tags" : {
       "localizations" : {
@@ -493,6 +501,9 @@
         }
       }
     },
+    "Dismiss award details" : {
+
+    },
     "Enter the plate description here" : {
       "localizations" : {
         "en" : {
@@ -576,6 +587,7 @@
       }
     },
     "Food tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -590,6 +602,9 @@
           }
         }
       }
+    },
+    "Food Tags" : {
+
     },
     "Healthy" : {
       "comment" : "Healthy quality filter",
@@ -788,6 +803,7 @@
       }
     },
     "New name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -802,6 +818,9 @@
           }
         }
       }
+    },
+    "New Name" : {
+
     },
     "New Plate" : {
       "localizations" : {
@@ -818,6 +837,12 @@
           }
         }
       }
+    },
+    "New Type" : {
+
+    },
+    "No awards earned yet." : {
+
     },
     "No Date Selected" : {
       "localizations" : {
@@ -852,6 +877,7 @@
       }
     },
     "notes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -884,6 +910,7 @@
       }
     },
     "Ok" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -954,6 +981,7 @@
       }
     },
     "Plates: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1002,6 +1030,7 @@
       }
     },
     "quality" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1082,6 +1111,7 @@
       }
     },
     "Rename tag" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1096,6 +1126,9 @@
           }
         }
       }
+    },
+    "Rename Tag" : {
+
     },
     "Restore purchases" : {
       "localizations" : {
@@ -1162,6 +1195,7 @@
       }
     },
     "Selected Date: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1242,6 +1276,7 @@
       }
     },
     "tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1322,6 +1357,7 @@
       }
     },
     "time" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1338,6 +1374,7 @@
       }
     },
     "Today" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1386,6 +1423,9 @@
           }
         }
       }
+    },
+    "Unlocked" : {
+
     },
     "Unlocked: %@" : {
       "localizations" : {

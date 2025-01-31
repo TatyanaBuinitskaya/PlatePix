@@ -11,10 +11,9 @@ import SwiftUI
 struct MyPlatesApp: App {
     @StateObject var dataController = DataController()
     @Environment(\.scenePhase) var scenePhase
-    
     var body: some Scene {
         WindowGroup {
-            NavigationSplitView{
+            NavigationSplitView {
                 SideBarView()
             } content: {
                 ContentView()
@@ -23,13 +22,11 @@ struct MyPlatesApp: App {
             }
                 .environment(\.managedObjectContext, dataController.container.viewContext)
                 .environmentObject(dataController)
-                .onChange(of: scenePhase) { 
+                .onChange(of: scenePhase) {
                     if scenePhase != .active {
                         dataController.save()
                     }
                 }
-                
         }
-        
     }
 }

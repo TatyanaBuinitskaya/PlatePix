@@ -20,7 +20,7 @@
         "description": "Add 20 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value": 5,
+        "value": 12,
         "image": "20.square"
     },
     {
@@ -28,7 +28,7 @@
         "description": "Add 50 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value": 50,
+        "value":13,
         "image": "50.square"
     },
     {
@@ -36,7 +36,7 @@
         "description": "Add 100 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value": 100,
+        "value": 14,
         "image": "hand.thumbsup"
     },
     {
@@ -70,5 +70,22 @@
         "criterion": "unlock",
         "value": 0,
         "image": "dollarsign.square.fill"
+    }
+    
+    {
+        "name": "First day",
+        "description": "Great start",
+        "color": "A Yellow",
+        "criterion": "days",
+        "value": 1,
+        "image": "1.square"
+    }
+    {
+        "name": "Second day",
+        "description": "Great start",
+        "color": "A Yellow",
+        "criterion": "days",
+        "value": 2,
+        "image": "1.square"
     }
 ]

@@ -10,103 +10,107 @@ import SwiftUI
 struct CalendarSheetView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.dismiss) var dismiss
-   
     var body: some View {
         VStack {
-            Button{
-                // Clear the selected date without modifying the applied tag filter
+            headerSection
+            datePickerSection
+            selectedDateInfo
+            okButton
+        }
+        .padding()
+    }
+    private var headerSection: some View {
+        VStack(spacing: 16) {
+            Button {
                 dataController.selectedDate = nil
                 dataController.selectedFilter = .all
-                // If no filter exists, ensure the default "All" filter is applied
-//                if dataController.selectedFilter == nil {
-//                    dataController.selectedFilter = Filter.all
-//                }
-
                 dismiss()
             } label: {
-                Text("All plates")
+                Text("All Plates")
                     .font(.title2)
+                    .foregroundColor(.blue)
             }
-                   Text("Select a Date")
-                        .fontWeight(.semibold)
-                       .padding()
-
-//                   DatePicker(
-//                       "Select a Date",
-//                       selection: Binding(
-//                           $dataController.selectedDate,
-//                           replacingNilWith: Date()
-//                   //        dataController.selectedFilter = Filter.filterForDate($dataController.selectedDate)
-//                       ),
-//                       displayedComponents: [.date]
-//                   )
-//                   .datePickerStyle(GraphicalDatePickerStyle())
-//                   .padding()
-            
-            DatePicker(
-                "Select a Date",
-                selection: Binding(
-                    get: {
-                        dataController.selectedDate ?? Date() // Default to today if no date is selected
-                    },
-                    set: { newDate in
-                        // Update the selected date in the data controller
-                        dataController.selectedDate = newDate
-
-                        // Update the filter while preserving the tag
-                        if var currentFilter = dataController.selectedFilter {
-                            currentFilter.selectedDate = newDate // Update only the date
-                            dataController.selectedFilter = currentFilter // Reassign to trigger UI updates
-                        } else {
-                            // If no filter exists, create a new one with the selected date
-                            dataController.selectedFilter = Filter.filterForDate(newDate)
-                        }
+            Text("Select a Date")
+                .font(.headline)
+                .padding(.top)
+        }
+    }
+    private var datePickerSection: some View {
+        DatePicker(
+            "Select a Date",
+            selection: Binding(
+                get: {
+                    dataController.selectedDate ?? Date()
+                },
+                set: { newDate in
+                    dataController.selectedDate = newDate
+                    if let currentFilter = dataController.selectedFilter {
+                        var updatedFilter = currentFilter
+                        updatedFilter.selectedDate = newDate
+                        dataController.selectedFilter = updatedFilter
+                    } else {
+                        dataController.selectedFilter = Filter.filterForDate(newDate)
                     }
-                ),
-                displayedComponents: [.date]
-            )
-            .datePickerStyle(GraphicalDatePickerStyle())
-            .padding()
+                }
+            ),
+            displayedComponents: [.date]
+        )
+        .datePickerStyle(GraphicalDatePickerStyle())
+        .padding()
+    }
 
-                   if let selectedDate = dataController.selectedDate {
-                       VStack{
-                           Text("Selected Date: \(selectedDate, formatter: dateFormatter)")
-                               .fontWeight(.semibold)
-                           
-                           Text("Plates: \(dataController.countSelectedDatePlates(for: selectedDate))")
-                       }
-                       .padding()
-                   } else {
-                       Text("No Date Selected")
-                           .fontWeight(.semibold)
-                           .padding()
-                   }
-            Button{
-                dismiss()
-            } label: {
-                Text("Ok")
-                    .font(.title2)
+    private var selectedDateInfo: some View {
+        Group {
+            if let selectedDate = dataController.selectedDate {
+                VStack {
+                    SelectedDateRow(
+                        label: "Selected Date:",
+                        value: dataController.formattedDate(selectedDate) // Format the date explicitly
+                    )
+                    SelectedDateRow(
+                        label: "Plates:",
+                        value: "\(dataController.countSelectedDatePlates(for: selectedDate))"
+                    )
+                }
+            } else {
+                Text("No Date Selected")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                    .padding(.top)
             }
-           
-               }
-           }
+        }
+    }
 
-           // A date formatter to display the selected date in a readable format.
-           private var dateFormatter: DateFormatter {
-               let formatter = DateFormatter()
-               formatter.dateStyle = .medium
-               return formatter
-           }
+    private var okButton: some View {
+        Button {
+            dismiss()
+        } label: {
+            Text("OK")
+                .font(.title2)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+        }
+        .padding()
+    }
 }
 
-//extension Binding {
-//    init<T>(_ source: Binding<T?>, replacingNilWith defaultValue: T) where Value == T {
-//        self.init(
-//            get: { source.wrappedValue ?? defaultValue },
-//            set: { newValue in source.wrappedValue = newValue }
-//        )
-//    }
-//}
+struct SelectedDateRow: View {
+    let label: String
+    let value: String
+    var body: some View {
+        HStack {
+            Text(label)
+                .fontWeight(.semibold)
+            Spacer()
+            Text(value)
+                .foregroundColor(.blue)
+        }
+        .padding(.horizontal)
+    }
+}
 
 extension Binding where Value: Equatable {
     init(_ source: Binding<Value?>, replacingNilWith defaultValue: Value) {

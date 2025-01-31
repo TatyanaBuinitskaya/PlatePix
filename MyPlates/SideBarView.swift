@@ -7,76 +7,52 @@
 
 import SwiftUI
 
-
 struct SideBarView: View {
     @EnvironmentObject var dataController: DataController
-  //  let smartFilters: [Filter] = [.all, .filterForDate(Date())] // Smart filters: "All" and "Today"
-    let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
-    //if mealtime not tags:
-    let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
-    
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
-    
+    @State private var showCalendarSheet = false
+    @State private var showTagFilterList = false
+    @State private var showMonthTagFilterList = false
+    @State private var showFoodTagFilterList = false
+    @State private var showReactionTagFilterList = false
+    @State private var showEmotionTagFilterList = false
+    @State private var showTagTypeFilters: [String: Bool] = [:]
+    @State private var expandedGroups: Set<String> = [] // Track expanded groups
+    @State private var showMealtimeFilterList = false
     var tagFilters: [Filter] {
         tags.map { tag in
             Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
         }
     }
-
-    
-    @State private var tagToRename: Tag?
-    @State private var renamingTag = false
-    @State private var tagName = ""
-    
-    @State private var showingAwards = false
-    @State private var showCalendarSheet = false
-    @State private var showTagFilterList = false
-    @State private var showMealtimeFilterList = false
-    
+    let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
+    let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
     var body: some View {
         List(selection: $dataController.selectedFilter) {
             Section("Date Filters") {
-                Button {
+                dateFilterButton(
+                    label: "All plates",
+                    systemImage: "calendar",
+                    plateCount: dataController.allPlatesCount,
+                    accessibilityHint: "\(dataController.allPlatesCount) plates"
+                ) {
                     dataController.selectedFilter = Filter.all
                     dataController.selectedDate = nil
-                } label: {
-                    HStack{
-                        Label("All plates", systemImage: "calendar")
-                            .badge("\(dataController.allPlatesCount)")
-                           
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.secondary)
-                            .font(.footnote)
-                    }
-                    .accessibilityElement()
-                    .accessibilityLabel("All plates")
-                    .accessibilityHint("\(dataController.allPlatesCount) plates")
-              
                 }
-                
-                Button {
+                dateFilterButton(
+                    label: "Today",
+                    systemImage: "1.square",
+                    plateCount: dataController.countSelectedDatePlates(for: Date()),
+                    accessibilityHint: "\(dataController.countSelectedDatePlates(for: Date())) plates"
+                ) {
                     dataController.selectedFilter = Filter.filterForDate(Date())
                     dataController.selectedDate = Date()
-                } label: {
-                    let date = dataController.selectedDate ?? Date()
-                    HStack{
-                        Label("Today", systemImage: "1.square")
-                            .badge("\(dataController.countSelectedDatePlates(for: date))")
-                            
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.secondary)
-                            .font(.footnote)
-                    }
-                    .accessibilityElement()
-                    .accessibilityLabel("Today")
-                    .accessibilityHint("\(dataController.countSelectedDatePlates(for: date)) plates")
                 }
-                
                 Button {
                     showCalendarSheet = true
                 } label: {
-                    HStack{
-                        Label("Select a Date", systemImage: "calendar.badge.plus")
+                    HStack {
+                        let selectedDate = dataController.formattedDate(dataController.selectedDate ?? Date())
+                        Label("Select date" + " (" + selectedDate + ")", systemImage: "calendar.badge.plus")
                         Spacer()
                         Image(systemName: "chevron.down")
                             .foregroundColor(.secondary)
@@ -84,193 +60,206 @@ struct SideBarView: View {
                     }
                 }
             }
-            
             Section("Tags") {
-                
-                
-                //                Menu {
-                //                    ForEach(tagFilters) { filter in
-                //                        let plateCount = String(dataController.countTagPlates(for: filter.name))
-                //                        NavigationLink(value: filter) {
-                //                            HStack {
-                //                                Text(filter.name + " " + plateCount)
-                //                                Spacer()
-                //                            }
-                //                        }
-                //                    }
-                //                } label: {
-                //                    HStack {
-                //                        Image(systemName: "tag")
-                //                        Text("Choose a Food tag filter")
-                //                            .foregroundColor(.primary)
-                //                        Spacer()
-                //                        Image(systemName: "chevron.down")
-                //
-                //                    }
-                //                }
-                //            }
-                Button{
-                    withAnimation {
-                        showTagFilterList.toggle()
-                    }
-                } label: {
-                    HStack {
-                        Image(systemName: "tag")
-                            .foregroundColor(.blue)
-                        Text("Choose a Food tag filter")
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .rotationEffect(.degrees(showTagFilterList ? 180 : 0)) // Rotate arrow based on state
-                            .foregroundColor(.secondary)
-                            .font(.footnote)
-                            .animation(.easeInOut(duration: 0.3), value: showTagFilterList)
-                    }
-                }
-                if showTagFilterList {
-                    
-                    ForEach(tagFilters) { filter in
-                        NavigationLink(value: filter){
-                                Text(LocalizedStringKey(filter.name))
-                                    .badge("\(dataController.countTagPlates(for: filter.name))")
-                                    .accessibilityElement()
-                                    .accessibilityLabel(filter.name)
-                                    .accessibilityHint("\(dataController.countTagPlates(for: filter.name)) plates")
-                        }
-                    }
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                }
+                expandableFilterSection(
+                    label: "Choose a tag filter",
+                    systemImage: "tag",
+                    isExpanded: $showTagFilterList,
+                    items: generateTagFilters()
+                )
             }
-            .animation(.easeInOut(duration: 0.3), value: showTagFilterList)
-            
             Section("Mealtime filters") {
-                Button{
-                    withAnimation {
-                        showMealtimeFilterList.toggle()
-                    }
-                } label: {
-                    HStack {
-                        Image(systemName: "clock")
-                            .foregroundColor(.blue)
-                        Text("Choose a Mealtime filter")
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .rotationEffect(.degrees(showMealtimeFilterList ? 180 : 0)) // Rotate arrow based on state
-                            .foregroundColor(.secondary)
-                            .font(.footnote)
-                            .animation(.easeInOut(duration: 0.3), value: showMealtimeFilterList)
-                    }
-                }
-                if showMealtimeFilterList {
-                    
-                    ForEach(mealtimeFilters) { filter in
-                        let mealtime = filter.mealtime ?? "" // Provide fallback for optional mealtime
-                        let plateCount = dataController.countMealtimePlates(for: mealtime)
-                        
+                expandableFilterSection(
+                    label: "Choose a Mealtime filter",
+                    systemImage: "clock",
+                    isExpanded: $showMealtimeFilterList,
+                    items: mealtimeFilters.map { filter in
                         NavigationLink(value: filter) {
-                                Text(LocalizedStringKey(filter.name))
-                                    .badge("\(plateCount)")
-                                    .accessibilityElement()
-                                    .accessibilityLabel(filter.name)
-                                    .accessibilityHint("\(plateCount) plates")
-                        }
-                    }
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                }
-            }
-            .animation(.easeInOut(duration: 0.3), value: showTagFilterList)
-            
-            Section("Quality filters") {
-                ForEach(qualityFilters) { filter in
-                    NavigationLink(value: filter) {
-                        HStack {
-                            Image(systemName: filter.icon)
-                                .foregroundColor(filter.quality == 0 ? .red : filter.quality == 1 ? .yellow : .green)
+                            let mealtime = filter.mealtime ?? ""
+                            let plateCount = dataController.countMealtimePlates(for: mealtime)
                             Text(LocalizedStringKey(filter.name))
-                                .badge("\(dataController.countQualityPlates(for: filter.quality))")
+                                .badge("\(plateCount)")
+                                .accessibilityLabel(filter.name)
+                                .accessibilityHint("\(plateCount) plates")
                         }
-                        .accessibilityElement()
-                        .accessibilityLabel(filter.name)
-                        .accessibilityHint("\(dataController.countQualityPlates(for: filter.quality)) plates")
                     }
-                }
-                
-                if dataController.countQualityPlates(for: 2) > dataController.countQualityPlates(for: 0) && dataController.countQualityPlates(for: 2) > dataController.countQualityPlates(for: 1) {
-                    Text("You're doing great! Keep up with the healthy choices!")
-                        .foregroundColor(.green)
-                        .italic()
-                } else if dataController.countQualityPlates(for: 0) > dataController.countQualityPlates(for: 2) && dataController.countQualityPlates(for: 0) > dataController.countQualityPlates(for: 1) {
-                    Text("You may want to focus on eating healthier.")
-                        .foregroundColor(.red)
-                        .italic()
-                } else {
-                    Text("You're balancing your choices well!")
-                        .foregroundColor(.orange)
-                        .italic()
-                }
+                )
             }
-            
-          
-            
-        }
-        .toolbar {
-//            Button(action: dataController.newTag) {
-//                Label("Add tag", systemImage: "plus")
-//            }
-            
-            Button {
-                showingAwards.toggle()
-            } label: {
-                Label("Show awards", systemImage: "rosette")
+            Section("Quality filters") {
+                QualityFiltersSection(
+                    qualityFilters: qualityFilters,
+                    countQualityPlates: dataController.countQualityPlates(for:)
+                )
             }
         }
-        .alert("Rename tag", isPresented: $renamingTag) {
-            Button("OK", action: completeRename)
-            Button("Cancel", role: .cancel) { }
-            TextField("New name", text: $tagName)
-        }
-        .sheet(isPresented: $showingAwards, content: AwardsView.init)
-        .sheet(isPresented: $showCalendarSheet, content: CalendarSheetView.init)
         .navigationTitle("Filters")
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-
-
-    
-    func delete(_ offsets: IndexSet) {
-        for offset in offsets {
-            let item = tags[offset]
-            dataController.delete(item)
+        .toolbar(content: SideBarViewToolBar.init)
+        .sheet(isPresented: $showCalendarSheet, content: CalendarSheetView.init)
+//        .onAppear {
+//            for tagType in dataController.availableTagTypes {
+//                   if showTagTypeFilters[tagType] == nil {
+//                       showTagTypeFilters[tagType] = false
+//                   }
+//               }
+//        }
+        .onAppear {
+            for tagType in dataController.availableTagTypes where showTagTypeFilters[tagType] == nil {
+                showTagTypeFilters[tagType] = false
+            }
         }
     }
-    
-    func delete(_ filter: Filter) {
-        guard let tag = filter.tag else { return }
-        dataController.delete(tag)
-        dataController.save()
+    private func generateTagFilters() -> [AnyView] {
+        let groupedTags = Dictionary(grouping: tagFilters) { $0.tag?.type ?? "Other" }
+       // return groupedTags.keys.sorted().flatMap { type -> [AnyView] in
+        return groupedTags.keys.sorted(by: dataController.sortTags).flatMap { type -> [AnyView] in
+            var views: [AnyView] = []
+            // Only show section if the tag type exists in availableTagTypes
+            if dataController.availableTagTypes.contains(type) {
+                // Header for each tag type
+                views.append(AnyView(dataController.tagHeaderView(for: type)))
+                // Show items if expanded
+                if dataController.shouldShowTags(for: type) {
+                    views.append(contentsOf: tagFilterList(for: groupedTags[type, default: []]))
+                }
+            }
+            return views
+        }
     }
-    
-    func rename(_ filter: Filter) {
-        tagToRename = filter.tag
-        tagName = filter.name
-        renamingTag = true
+    private func tagFilterList(for filters: [Filter]) -> [AnyView] {
+        filters.map { filter in
+            AnyView(
+                NavigationLink(value: filter) {
+                    Text(LocalizedStringKey(filter.name))
+                        .fontWeight(.light)
+                        .badge("\(dataController.countTagPlates(for: filter.name))")
+                        .accessibilityLabel(filter.name)
+                        .accessibilityHint("\(dataController.countTagPlates(for: filter.name)) plates")
+                }
+            )
+        }
     }
-    func completeRename() {
-        tagToRename?.name = tagName
-        dataController.save()
-    }
-    
-    // Ensure the filter changes are reflected properly when selecting "All" or "Today"
-       private func resetFilters() {
-           if dataController.selectedFilter == Filter.all {
-               dataController.selectedDate = nil
-           } else if dataController.selectedFilter == Filter.filterForDate(Date()) {
-               dataController.selectedDate = Date()
-           }
-       }
-   }
+}
 
 #Preview {
     SideBarView()
         .environmentObject(DataController.preview)
+}
+
+@ViewBuilder
+private func dateFilterButton(
+    label: String,
+    systemImage: String,
+    plateCount: Int,
+    accessibilityHint: String,
+    action: @escaping () -> Void
+) -> some View {
+    Button(action: action) {
+        HStack {
+            Label(label, systemImage: systemImage)
+                .badge("\(plateCount)")
+            Image(systemName: "chevron.right")
+                .foregroundColor(.secondary)
+                .font(.footnote)
+        }
+        .accessibilityElement()
+        .accessibilityLabel(label)
+        .accessibilityHint(accessibilityHint)
+    }
+}
+
+@ViewBuilder
+private func expandableFilterSection(
+    label: String,
+    systemImage: String,
+    isExpanded: Binding<Bool>,
+    items: [some View]
+) -> some View {
+    Button {
+        withAnimation {
+            isExpanded.wrappedValue.toggle()
+        }
+    } label: {
+        HStack {
+            Image(systemName: systemImage)
+                .foregroundColor(.blue)
+            Text(label)
+            Spacer()
+            Image(systemName: "chevron.down")
+                .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0))
+                .foregroundColor(.secondary)
+                .font(.footnote)
+                .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue)
+        }
+    }
+    if isExpanded.wrappedValue {
+        ForEach(items.indices, id: \.self) { index in
+            items[index]
+                .transition(.move(edge: .top).combined(with: .opacity))
+        }
+    }
+}
+
+struct QualityFiltersSection: View {
+    let qualityFilters: [Filter]
+    let countQualityPlates: (Int) -> Int
+    var body: some View {
+        Section("Quality filters") {
+            ForEach(qualityFilters) { filter in
+                NavigationLink(value: filter) {
+                    qualityFilterRow(filter: filter)
+                }
+            }
+            qualitySummaryText(
+                goodCount: countQualityPlates(2),
+                averageCount: countQualityPlates(1),
+                badCount: countQualityPlates(0)
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func qualityFilterRow(filter: Filter) -> some View {
+        HStack {
+            Image(systemName: filter.icon)
+                .foregroundColor(
+                    filter.quality == 0 ? .red :
+                    filter.quality == 1 ? .yellow : .green
+                )
+            Text(LocalizedStringKey(filter.name))
+                .badge("\(countQualityPlates(filter.quality))")
+        }
+        .accessibilityElement()
+        .accessibilityLabel(filter.name)
+        .accessibilityHint("\(countQualityPlates(filter.quality)) plates")
+    }
+
+    @ViewBuilder
+    private func qualitySummaryText(goodCount: Int, averageCount: Int, badCount: Int) -> some View {
+        if goodCount > badCount && goodCount > averageCount {
+            Text("You're doing great! Keep up with the healthy choices!")
+                .foregroundColor(.green)
+                .italic()
+        } else if badCount > goodCount && badCount > averageCount {
+            Text("You may want to focus on eating healthier.")
+                .foregroundColor(.red)
+                .italic()
+        } else {
+            Text("You're balancing your choices well!")
+                .foregroundColor(.orange)
+                .italic()
+        }
+    }
+}
+
+struct SideBarViewToolBar: View {
+    @State private var showAwards = false
+    var body: some View {
+        Button {
+            showAwards.toggle()
+        } label: {
+            Label("Show awards", systemImage: "rosette")
+        }
+        .sheet(isPresented: $showAwards, content: AwardsView.init)
+    }
 }

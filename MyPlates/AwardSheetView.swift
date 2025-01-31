@@ -10,39 +10,57 @@ import SwiftUI
 struct AwardSheetView: View {
     @EnvironmentObject var dataController: DataController
     @Environment(\.dismiss) var dismiss
-    
+    private let imageSize: CGFloat = 100
+    private let buttonPadding: CGFloat = 15
+    private let buttonCornerRadius: CGFloat = 8
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text("Congratulations!")
                 .font(.title)
                 .fontWeight(.bold)
-                .padding()
-            
+                .padding(.top)
             Text("You've earned the following awards:")
-                .padding()
-            
+                .padding(.horizontal)
             if let lastAward = dataController.congratulatedAwards.last {
-                Text("\(lastAward.name) Award!")
-                Image(systemName: lastAward.image)
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                    .frame(width: 100, height: 100)
-                Text("\(lastAward.value)")
-                
-                Button(action: {
-                    dataController.showCongratulations = false
-                    dismiss()
-                }) {
-                    Text("OK")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
+                awardContent(for: lastAward)
+            } else {
+                Text("No awards earned yet.")
+                    .font(.body)
+                    .foregroundColor(.gray)
             }
         }
-        .padding()
+    }
+    @ViewBuilder
+    private func awardContent(for award: Award) -> some View {
+        VStack {
+            Text("\(award.name) Award!")
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(.bottom)
+            Image(systemName: award.image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: imageSize, height: imageSize)
+                .padding(.bottom)
+            Text("\(award.value)")
+                .font(.title3)
+                .foregroundColor(.secondary)
+            Button {
+                dataController.showCongratulations = false
+                dismiss()
+            } label: {
+                Text("OK")
+                    .fontWeight(.semibold)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(buttonCornerRadius)
+                    .padding(.top, 15)
+                    .padding()
+            }
+            .accessibilityLabel("Dismiss award details")
+        }
     }
 }
 

@@ -34,6 +34,9 @@
 		EB7922502D43CEAF00BF97D7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB79224F2D43CEAF00BF97D7 /* Localizable.xcstrings */; };
 		EB7922532D43E83400BF97D7 /* Awards.json in Resources */ = {isa = PBXBuildFile; fileRef = EB7922522D43E83400BF97D7 /* Awards.json */; };
 		EB7922562D4588E900BF97D7 /* DefaultTags.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB7922552D4588E900BF97D7 /* DefaultTags.xcstrings */; };
+		EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */; };
+		EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */; };
+		EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922612D48F17800BF97D7 /* PlateImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +71,9 @@
 		EB7922512D43E83400BF97D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Awards.json; sourceTree = "<group>"; };
 		EB7922542D43E8A000BF97D7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ru; path = ru.lproj/Awards.json; sourceTree = "<group>"; };
 		EB7922552D4588E900BF97D7 /* DefaultTags.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultTags.xcstrings; sourceTree = "<group>"; };
+		EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		EB7922612D48F17800BF97D7 /* PlateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,22 +110,25 @@
 				EB22501F2D156A3500E002D7 /* MyPlates.entitlements */,
 				EB22500C2D1457FE00E002D7 /* MyPlatesApp.swift */,
 				EB2250252D156DB600E002D7 /* Filter.swift */,
+				EB22501D2D146E9600E002D7 /* DataController.swift */,
 				EB2250212D156C5A00E002D7 /* SideBarView.swift */,
 				EB22500E2D1457FE00E002D7 /* ContentView.swift */,
-				EB22504A2D2D4B7700E002D7 /* SettingsView.swift */,
 				EB22502F2D197B8B00E002D7 /* PlateBox.swift */,
 				EB2250232D156C6800E002D7 /* DetailView.swift */,
-				EB22501D2D146E9600E002D7 /* DataController.swift */,
 				EB2250312D198AD000E002D7 /* PlateView.swift */,
+				EB7922612D48F17800BF97D7 /* PlateImageView.swift */,
+				EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */,
+				EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */,
 				EB2250332D198AE300E002D7 /* NoPlateIView.swift */,
+				EB22504A2D2D4B7700E002D7 /* SettingsView.swift */,
 				EB2250292D1599C800E002D7 /* Plate-CoreDataHelpers.swift */,
 				EB22502D2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift */,
 				EB2250352D1ADA5C00E002D7 /* Bundle-Decodable.swift */,
 				EB7922522D43E83400BF97D7 /* Awards.json */,
-				EB79224D2D410E2F00BF97D7 /* Tags.swift */,
 				EB22503B2D1ADDAB00E002D7 /* Award.swift */,
-				EB2250482D28FEA300E002D7 /* AwardSheetView.swift */,
 				EB22503D2D1ADE7300E002D7 /* AwardsView.swift */,
+				EB2250482D28FEA300E002D7 /* AwardSheetView.swift */,
+				EB79224D2D410E2F00BF97D7 /* Tags.swift */,
 				EB7922452D3FDBDA00BF97D7 /* TagListView.swift */,
 				EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */,
 				EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */,
@@ -218,8 +227,10 @@
 			files = (
 				EB2250262D156DB600E002D7 /* Filter.swift in Sources */,
 				EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */,
+				EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */,
 				EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */,
 				EB22503C2D1ADDAB00E002D7 /* Award.swift in Sources */,
+				EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */,
 				EB22503E2D1ADE7300E002D7 /* AwardsView.swift in Sources */,
 				EB22502E2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift in Sources */,
 				EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */,
@@ -233,6 +244,7 @@
 				EB2250302D197B8B00E002D7 /* PlateBox.swift in Sources */,
 				EB2250222D156C5A00E002D7 /* SideBarView.swift in Sources */,
 				EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */,
+				EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */,
 				EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */,
 				EB22500D2D1457FE00E002D7 /* MyPlatesApp.swift in Sources */,
 				EB2250322D198AD100E002D7 /* PlateView.swift in Sources */,

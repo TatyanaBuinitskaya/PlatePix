@@ -7,13 +7,12 @@
 
 import Foundation
 
-
-let defaultTags: [String] = [
+let defaultFoodTags: [String] = [
     NSLocalizedString("Apple", tableName: "DefaultTags", comment: "A fruit"),
     NSLocalizedString("Banana", tableName: "DefaultTags", comment: "A fruit"),
     NSLocalizedString("Orange", tableName: "DefaultTags", comment: "A fruit"),
     NSLocalizedString("Grapes", tableName: "DefaultTags", comment: "A fruit"),
-    NSLocalizedString("Strawberry",tableName: "DefaultTags", comment: "A fruit"),
+    NSLocalizedString("Strawberry", tableName: "DefaultTags", comment: "A fruit"),
     NSLocalizedString("Blueberry", tableName: "DefaultTags", comment: "A fruit"),
     NSLocalizedString("Pineapple", tableName: "DefaultTags", comment: "A fruit"),
     NSLocalizedString("Mango", tableName: "DefaultTags", comment: "A fruit"),
@@ -63,7 +62,7 @@ let defaultTags: [String] = [
     NSLocalizedString("Salmon", tableName: "DefaultTags", comment: "A protein source"),
     NSLocalizedString("Tuna", tableName: "DefaultTags", comment: "A protein source"),
     NSLocalizedString("Cod", tableName: "DefaultTags", comment: "A protein source"),
-    NSLocalizedString("Shrimp",tableName: "DefaultTags", comment: "A protein source"),
+    NSLocalizedString("Shrimp", tableName: "DefaultTags", comment: "A protein source"),
     NSLocalizedString("Crab", tableName: "DefaultTags", comment: "A protein source"),
     NSLocalizedString("Lobster", tableName: "DefaultTags", comment: "A protein source"),
     NSLocalizedString("Mackerel", tableName: "DefaultTags", comment: "A protein source"),
@@ -110,7 +109,22 @@ let defaultTags: [String] = [
     NSLocalizedString("Mustard", tableName: "DefaultTags", comment: "A condiment")
 ]
 
-//let defaultTags: [String] = [
+// let defaultMonthTags: [String] = [
+//       NSLocalizedString("January", tableName: "DefaultTags", comment: "The first month of the year"),
+//       NSLocalizedString("February", tableName: "DefaultTags", comment: "The second month of the year"),
+//       NSLocalizedString("March", tableName: "DefaultTags", comment: "The third month of the year"),
+//       NSLocalizedString("April", tableName: "DefaultTags", comment: "The fourth month of the year"),
+//       NSLocalizedString("May", tableName: "DefaultTags", comment: "The fifth month of the year"),
+//       NSLocalizedString("June", tableName: "DefaultTags", comment: "The sixth month of the year"),
+//       NSLocalizedString("July", tableName: "DefaultTags", comment: "The seventh month of the year"),
+//       NSLocalizedString("August", tableName: "DefaultTags", comment: "The eighth month of the year"),
+//       NSLocalizedString("September", tableName: "DefaultTags", comment: "The ninth month of the year"),
+//       NSLocalizedString("October", tableName: "DefaultTags", comment: "The tenth month of the year"),
+//       NSLocalizedString("November", tableName: "DefaultTags", comment: "The eleventh month of the year"),
+//       NSLocalizedString("December", tableName: "DefaultTags", comment: "The twelfth month of the year")
+//   ]
+
+// let defaultTags: [String] = [
 //    "Apple",
 //    "Banana",
 //    "Orange",
@@ -210,4 +224,4 @@ let defaultTags: [String] = [
 //    "Ketchup",
 //    "Mayonnaise",
 //    "Mustard"
-//]
+// ]
