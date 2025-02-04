@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// A list of default food tags used for categorizing or labeling food items within the app.
+/// These tags are localized to support multiple languages, enhancing the app's international usability.
 let defaultFoodTags: [String] = [
     NSLocalizedString("Apple", tableName: "DefaultTags", comment: "A fruit"),
     NSLocalizedString("Banana", tableName: "DefaultTags", comment: "A fruit"),

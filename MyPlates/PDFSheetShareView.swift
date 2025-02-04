@@ -7,17 +7,25 @@
 
 import SwiftUI
 
+/// A view responsible for displaying plates and providing PDF sharing functionality.
 struct PDFSheetShareView: View {
+    /// The shared data controller that manages plate data.
     @EnvironmentObject var dataController: DataController
+    /// The fetched tags sorted by name to be used as filters.
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
+    /// The filters generated from the fetched tags.
     private var tagFilters: [Filter] {
         tags.map { tag in
             Filter(id: tag.tagID, name: tag.tagName, icon: "fork.knife.circle", tag: tag)
         }
     }
+    /// The captured screenshot of the plate view to be included in the PDF.
     @State var imagePlateView: UIImage?
-    @State private var pdfURL: URL? // URL for the generated PDF
-    private let maxColumns = 6 // Maximum columns for the grid
+    /// The URL of the generated PDF for sharing.
+    @State private var pdfURL: URL?
+    /// The maximum number of columns allowed in the grid layout.
+    private let maxColumns = 6
+
     var body: some View {
         VStack {
             header
@@ -42,7 +50,8 @@ struct PDFSheetShareView: View {
             }
         }
     }
-    // MARK: - Header View
+
+    /// A header view displaying the dynamic title and a PDF sharing button.
     private var header: some View {
         HStack {
             Text(dataController.dynamicTitle)
@@ -54,7 +63,12 @@ struct PDFSheetShareView: View {
             }
         }
     }
-    // MARK: - Grid Configuration
+
+    /// Generates an array of grid items based on the number of plates.
+        ///
+        /// This helps to dynamically adjust the layout depending on the plate count.
+        /// - Parameter itemCount: The total number of plates.
+        /// - Returns: An array of `GridItem` for the grid layout.
     private func generateGridItems(for itemCount: Int) -> [GridItem] {
         let columnCount: Int
         switch itemCount {
@@ -71,7 +85,8 @@ struct PDFSheetShareView: View {
         }
         return Array(repeating: GridItem(.flexible()), count: columnCount)
     }
-    // MARK: - PDF Generation Workflow
+
+    /// Captures a screenshot of the current view and initiates PDF creation.
     private func captureAndCreatePDF() {
         guard let screenshotImage = captureScreenshot() else {
             print("Failed to capture screenshot.")
@@ -85,6 +100,9 @@ struct PDFSheetShareView: View {
             }
         }
     }
+
+    /// Captures a screenshot of the app's root view.
+       /// - Returns: A `UIImage` representing the captured screenshot.
     private func captureScreenshot() -> UIImage? {
         guard let rootView = UIApplication.shared
                 .connectedScenes
@@ -99,6 +117,12 @@ struct PDFSheetShareView: View {
         UIGraphicsEndImageContext()
         return screenshot
     }
+
+    /// Creates a PDF from a provided image with additional text.
+       /// - Parameters:
+       ///   - image: The image to be included in the PDF.
+       ///   - text: The descriptive text to appear below the image.
+       /// - Returns: The generated PDF data.
     private func createPDF(from image: UIImage, withText text: String) -> Data {
         let pdfData = NSMutableData()
         let pageBounds = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height + 50)
@@ -121,6 +145,11 @@ struct PDFSheetShareView: View {
         UIGraphicsEndPDFContext()
         return pdfData as Data
     }
+
+    /// Saves the generated PDF data to a temporary file and provides the file URL.
+        /// - Parameters:
+        ///   - pdfData: The PDF data to be saved.
+        ///   - completion: A closure that returns the URL of the saved PDF.
     private func savePDF(pdfData: Data, completion: @escaping (URL) -> Void) {
         let fileManager = FileManager.default
         let tempDirectory = fileManager.temporaryDirectory
@@ -132,7 +161,10 @@ struct PDFSheetShareView: View {
             print("Error saving PDF: \(error.localizedDescription)")
         }
     }
-    // MARK: - Helper
+
+    /// Formats a given date to a medium-style string.
+        /// - Parameter date: The date to be formatted.
+        /// - Returns: A formatted date string.
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

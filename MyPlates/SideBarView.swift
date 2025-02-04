@@ -7,27 +7,41 @@
 
 import SwiftUI
 
+/// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
 struct SideBarView: View {
+    /// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
     @EnvironmentObject var dataController: DataController
+    /// The fetched results for tags, sorted by name.
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
+    /// State variable to control the presentation of the calendar sheet.
     @State private var showCalendarSheet = false
+    /// State variables to control the visibility of various filter lists.
     @State private var showTagFilterList = false
     @State private var showMonthTagFilterList = false
     @State private var showFoodTagFilterList = false
     @State private var showReactionTagFilterList = false
     @State private var showEmotionTagFilterList = false
+    /// A dictionary to track whether each tag type filter should be shown.
     @State private var showTagTypeFilters: [String: Bool] = [:]
-    @State private var expandedGroups: Set<String> = [] // Track expanded groups
+    /// A set to track which filter groups are expanded.
+    @State private var expandedGroups: Set<String> = []
+    /// State variable to control the visibility of the mealtime filter list.
     @State private var showMealtimeFilterList = false
+    /// A computed property that maps tags into `Filter` objects for easier processing.
     var tagFilters: [Filter] {
         tags.map { tag in
             Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
         }
     }
+    /// A predefined set of mealtime filters for the sidebar.
     let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
     let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
+    /// A predefined set of quality filters for the sidebar.
+
     var body: some View {
         List(selection: $dataController.selectedFilter) {
+
+            // Section for date-based filters.
             Section("Date Filters") {
                 dateFilterButton(
                     label: "All plates",
@@ -35,6 +49,7 @@ struct SideBarView: View {
                     plateCount: dataController.allPlatesCount,
                     accessibilityHint: "\(dataController.allPlatesCount) plates"
                 ) {
+                    // Set filter to "All Plates"
                     dataController.selectedFilter = Filter.all
                     dataController.selectedDate = nil
                 }
@@ -44,10 +59,12 @@ struct SideBarView: View {
                     plateCount: dataController.countSelectedDatePlates(for: Date()),
                     accessibilityHint: "\(dataController.countSelectedDatePlates(for: Date())) plates"
                 ) {
+                    // Set filter to today's date
                     dataController.selectedFilter = Filter.filterForDate(Date())
                     dataController.selectedDate = Date()
                 }
                 Button {
+                    // Show calendar sheet to select a custom date
                     showCalendarSheet = true
                 } label: {
                     HStack {
@@ -60,6 +77,8 @@ struct SideBarView: View {
                     }
                 }
             }
+
+            // Section for tag-based filters.
             Section("Tags") {
                 expandableFilterSection(
                     label: "Choose a tag filter",
@@ -68,6 +87,8 @@ struct SideBarView: View {
                     items: generateTagFilters()
                 )
             }
+
+            // Section for mealtime filters.
             Section("Mealtime filters") {
                 expandableFilterSection(
                     label: "Choose a Mealtime filter",
@@ -85,6 +106,8 @@ struct SideBarView: View {
                     }
                 )
             }
+
+            // Section for quality filters.
             Section("Quality filters") {
                 QualityFiltersSection(
                     qualityFilters: qualityFilters,
@@ -104,21 +127,25 @@ struct SideBarView: View {
 //               }
 //        }
         .onAppear {
+            // Initialize any missing tag type filters when the view appears.
             for tagType in dataController.availableTagTypes where showTagTypeFilters[tagType] == nil {
                 showTagTypeFilters[tagType] = false
             }
         }
     }
+
+    /// A function to generate tag filters by grouping them by type and creating viewable filters.
     private func generateTagFilters() -> [AnyView] {
+        // Group the tag filters by their type.
         let groupedTags = Dictionary(grouping: tagFilters) { $0.tag?.type ?? "Other" }
-       // return groupedTags.keys.sorted().flatMap { type -> [AnyView] in
+        // Return sorted views for each tag type.
         return groupedTags.keys.sorted(by: dataController.sortTags).flatMap { type -> [AnyView] in
             var views: [AnyView] = []
-            // Only show section if the tag type exists in availableTagTypes
+            // Only show the section if the tag type exists in availableTagTypes
             if dataController.availableTagTypes.contains(type) {
                 // Header for each tag type
                 views.append(AnyView(dataController.tagHeaderView(for: type)))
-                // Show items if expanded
+                // Show items if the tag type should be displayed
                 if dataController.shouldShowTags(for: type) {
                     views.append(contentsOf: tagFilterList(for: groupedTags[type, default: []]))
                 }
@@ -126,6 +153,8 @@ struct SideBarView: View {
             return views
         }
     }
+
+    /// A function to generate the list of tag filters for a specific tag type.
     private func tagFilterList(for filters: [Filter]) -> [AnyView] {
         filters.map { filter in
             AnyView(
@@ -146,6 +175,13 @@ struct SideBarView: View {
         .environmentObject(DataController.preview)
 }
 
+/// Creates a button view for a date filter that displays the filter label, a badge with plate count, and an arrow to indicate selection.
+/// - Parameters:
+///   - label: The label of the filter button (e.g., "All plates" or "Today").
+///   - systemImage: The system image to be used for the button's icon (e.g., "calendar").
+///   - plateCount: The number of plates associated with this filter.
+///   - accessibilityHint: A description for accessibility purposes (e.g., "5 plates").
+///   - action: The action to be performed when the button is pressed. This is passed as a closure.
 @ViewBuilder
 private func dateFilterButton(
     label: String,
@@ -156,18 +192,27 @@ private func dateFilterButton(
 ) -> some View {
     Button(action: action) {
         HStack {
+            // Display the label with the system image, followed by a badge showing the plate count.
             Label(label, systemImage: systemImage)
-                .badge("\(plateCount)")
+                .badge("\(plateCount)") // Adds a badge showing the plate count.
+            // Chevron icon to indicate that this is a button that leads to further options.
             Image(systemName: "chevron.right")
                 .foregroundColor(.secondary)
                 .font(.footnote)
         }
+        // Makes the button accessible with the label and hint for users with screen readers.
         .accessibilityElement()
         .accessibilityLabel(label)
         .accessibilityHint(accessibilityHint)
     }
 }
 
+/// Creates a button view that allows expanding or collapsing a filter section. The expansion/collapse is animated and displays items when expanded.
+/// - Parameters:
+///   - label: The label for the filter section (e.g., "Tags", "Quality").
+///   - systemImage: The system image for the section (e.g., "tag").
+///   - isExpanded: A binding to track whether the section is expanded or collapsed.
+///   - items: A list of views (items) to be shown when the section is expanded. This can be dynamic content such as filter options.
 @ViewBuilder
 private func expandableFilterSection(
     label: String,
@@ -176,40 +221,53 @@ private func expandableFilterSection(
     items: [some View]
 ) -> some View {
     Button {
+        // Toggle the expanded state with animation when the section header is tapped.
         withAnimation {
             isExpanded.wrappedValue.toggle()
         }
     } label: {
         HStack {
+            // Display the system image and label for the section header.
             Image(systemName: systemImage)
-                .foregroundColor(.blue)
-            Text(label)
-            Spacer()
+                .foregroundColor(.blue) // Sets the image color to blue.
+            Text(label) // The label text of the section.
+            Spacer() // Pushes the chevron icon to the right of the label.
+            // Chevron icon indicating the expanded or collapsed state.
             Image(systemName: "chevron.down")
-                .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0))
+                .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0)) // Rotates the chevron based on expansion state.
                 .foregroundColor(.secondary)
                 .font(.footnote)
-                .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue)
+                .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue) // Adds smooth rotation animation.
         }
     }
+    // If the section is expanded, show the items inside the section.
     if isExpanded.wrappedValue {
+        // Use `ForEach` to render the items inside the expanded section.
         ForEach(items.indices, id: \.self) { index in
+            // Each item is shown with a move-and-opacity transition when the section is expanded.
             items[index]
                 .transition(.move(edge: .top).combined(with: .opacity))
         }
     }
 }
 
+/// A section in the sidebar to display and handle quality-based filters.
+/// - Properties:
+///   - qualityFilters: The available quality filters to be displayed in the section.
+///   - countQualityPlates: A function that takes a quality value (e.g., 0, 1, or 2) and returns the count of plates matching that quality.
 struct QualityFiltersSection: View {
     let qualityFilters: [Filter]
     let countQualityPlates: (Int) -> Int
+    
     var body: some View {
+        // Iterate over the available quality filters and create navigation links.
         Section("Quality filters") {
             ForEach(qualityFilters) { filter in
                 NavigationLink(value: filter) {
                     qualityFilterRow(filter: filter)
                 }
             }
+            // Display the summary text for quality filter results.
             qualitySummaryText(
                 goodCount: countQualityPlates(2),
                 averageCount: countQualityPlates(1),
@@ -218,9 +276,11 @@ struct QualityFiltersSection: View {
         }
     }
 
+    /// A helper function to create a row for each quality filter.
     @ViewBuilder
     private func qualityFilterRow(filter: Filter) -> some View {
         HStack {
+            // Display the icon for the filter with color based on quality.
             Image(systemName: filter.icon)
                 .foregroundColor(
                     filter.quality == 0 ? .red :
@@ -234,8 +294,10 @@ struct QualityFiltersSection: View {
         .accessibilityHint("\(countQualityPlates(filter.quality)) plates")
     }
 
+    /// A helper function to display the summary text for the quality filters.
     @ViewBuilder
     private func qualitySummaryText(goodCount: Int, averageCount: Int, badCount: Int) -> some View {
+        // Display different messages depending on the counts of good, average, and bad plates.
         if goodCount > badCount && goodCount > averageCount {
             Text("You're doing great! Keep up with the healthy choices!")
                 .foregroundColor(.green)
@@ -252,12 +314,17 @@ struct QualityFiltersSection: View {
     }
 }
 
+/// A toolbar view for the sidebar with a button to show the awards sheet.
+/// - Properties:
+///   - showAwards: A state variable that tracks whether the awards sheet is displayed or not.
 struct SideBarViewToolBar: View {
     @State private var showAwards = false
     var body: some View {
         Button {
+            // Toggle showing the awards sheet when pressed.
             showAwards.toggle()
         } label: {
+            // Label for the button with an icon for "Show awards."
             Label("Show awards", systemImage: "rosette")
         }
         .sheet(isPresented: $showAwards, content: AwardsView.init)

@@ -7,22 +7,35 @@
 
 import SwiftUI
 
+/// A view that displays a list of tags and allows users to add, remove, or manage default tags.
 struct TagListView: View {
+    /// The data controller responsible for managing tag data.
     @EnvironmentObject var dataController: DataController
+    /// The plate to which tags are associated.
     @ObservedObject var plate: Plate
+    /// The environment dismiss action to close the view.
     @Environment(\.dismiss) var dismiss
+    /// The search query input by the user for filtering tags.
     @State private var searchQuery = ""
+    /// The set of selected tags to be added to the plate.
     @State private var selectedTags = Set<Tag>()
+    /// The set of tag groups that are currently expanded in the UI.
     @State private var expandedGroups: Set<String> = []
+    /// A flag indicating whether default month tags should be shown.
     @AppStorage("showDedaultMonthTags") var showDedaultMonthTags: Bool = false
+    /// A flag indicating whether default food tags should be shown.
     @AppStorage("showDedaultFoodTags") var showDedaultFoodTags: Bool = false
+    /// A flag indicating whether default emotion tags should be shown.
     @AppStorage("showDedaultEmotionTags") var showDedaultEmotionTags: Bool = false
+    /// A flag indicating whether default reaction tags should be shown.
     @AppStorage("showDedaultReactionTags") var showDedaultReactionTags: Bool = false
+    /// The list of filtered tags based on the search query.
     private var filteredTags: [Tag] {
         searchQuery.isEmpty ?
         dataController.missingTags(from: plate) :
         dataController.missingTags(from: plate).filter { $0.tagName.lowercased().contains(searchQuery.lowercased()) }
     }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -77,7 +90,6 @@ struct TagListView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button(action: dataController.newTag) {
-                   // Label("Add Tag", systemImage: "plus")
                     HStack {
                         Text("Add tag")
                         Image(systemName: "plus")
@@ -86,10 +98,12 @@ struct TagListView: View {
             }
         }
         .onAppear {
-            // Force reload of the fetch request when the view appears
+            // Reload fetch request when the view appears to ensure data consistency.
             try? dataController.container.viewContext.save()
         }
     }
+
+    /// Toggles the selection status of a tag.
     func toggleSelection(for tag: Tag) {
         if selectedTags.contains(tag) {
             selectedTags.remove(tag)
@@ -97,6 +111,8 @@ struct TagListView: View {
             selectedTags.insert(tag)
         }
     }
+
+    /// Adds selected tags to the plate.
     func addSelectedTagsToPlate() {
         for tag in selectedTags {
             plate.addToTags(tag)
@@ -104,10 +120,14 @@ struct TagListView: View {
         dataController.save()
         selectedTags.removeAll()
     }
+
+    /// Removes a tag from the plate.
     func removeTagFromPlate(_ tag: Tag) {
         plate.removeFromTags(tag)
         dataController.save()
     }
+
+    /// A view containing toggles for default tags.
     private var defaultTagsToggles: some View {
         HStack {
             tagToggle(label: "Emotion", isOn: $showDedaultEmotionTags, type: "emotion")
@@ -118,57 +138,15 @@ struct TagListView: View {
         .padding(5)
         .background(Capsule().fill(Color.blue))
     }
-//    private func tagToggle(label: String, isOn: Binding<Bool>, type: String) -> some View {
-//        HStack {
-//            Text(label)
-//                .font(.caption)
-//                .foregroundColor(.secondary)
-//            Button {
-//                isOn.wrappedValue.toggle() // Toggle the button's state
-//            } label: {
-//                Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
-//                    .foregroundColor(.white)
-//                    .font(.title2)
-//            }
-//        }
-//        .onChange(of: isOn.wrappedValue) {
-//            if isOn.wrappedValue {
-//                switch type {
-//                case "month":
-//                    dataController.createDefaultMonthTags(
-//                        context: dataController.container.viewContext)
-//                case "food":
-//                    dataController.createDefaultFoodTags(context: dataController.container.viewContext)
-//                case "emotion":
-//                    dataController.createDefaultEmotionTags(context: dataController.container.viewContext)
-//                case "reaction":
-//                    dataController.createDefaultReactionTags(context: dataController.container.viewContext)
-//                default:
-//                    break
-//                }
-//            } else {
-//                switch type {
-//                case "month":
-//                    dataController.deleteDefaultMonthTags(context: dataController.container.viewContext)
-//                case "food":
-//                    dataController.deleteDefaultFoodTags(context: dataController.container.viewContext)
-//                case "emotion":
-//                    dataController.deleteDefaultEmotionTags(context: dataController.container.viewContext)
-//                case "reaction":
-//                    dataController.deleteDefaultReactionTags(context: dataController.container.viewContext)
-//                default:
-//                    break
-//                }
-//            }
-//        }
-//    }
+
+    /// A toggle button for managing default tags.
     private func tagToggle(label: String, isOn: Binding<Bool>, type: String) -> some View {
         HStack {
             Text(label)
                 .font(.caption)
                 .foregroundColor(.secondary)
             Button {
-                isOn.wrappedValue.toggle() // Toggle the button's state
+                isOn.wrappedValue.toggle()
             } label: {
                 Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
                     .foregroundColor(.white)
@@ -179,7 +157,8 @@ struct TagListView: View {
             handleTagChange(for: type, isOn: isOn.wrappedValue)
         }
     }
-    // New method to handle tag creation and deletion
+
+    /// Handles tag creation or deletion based on toggle state.
     private func handleTagChange(for type: String, isOn: Bool) {
         if isOn {
             createDefaultTags(for: type)
@@ -187,7 +166,8 @@ struct TagListView: View {
             deleteDefaultTags(for: type)
         }
     }
-    // New method to handle tag creation
+
+    /// Creates default tags of a specific type.
     private func createDefaultTags(for type: String) {
         switch type {
         case "month":
@@ -202,7 +182,8 @@ struct TagListView: View {
             break
         }
     }
-    // New method to handle tag deletion
+
+    /// Deletes default tags of a specific type.
     private func deleteDefaultTags(for type: String) {
         switch type {
         case "month":
@@ -219,21 +200,34 @@ struct TagListView: View {
     }
 }
 
+/// A SwiftUI view that displays an individual tag with options to edit or delete.
+/// This view handles tag display, selection state, and provides context menus for tag management.
 struct TagRow: View {
+    /// The data controller managing the tag data.
     @EnvironmentObject var dataController: DataController
+    /// The tag currently being edited, if any.
     @State private var tagToEdit: Tag?
+    /// A Boolean value indicating whether the tag is in editing mode.
     @State private var editingTag = false
+    /// The name of the tag to be edited.
     @State private var tagName = ""
+    /// The type of the tag to be edited.
     @State private var tagType = ""
+    /// The set of selected tags, used to display a checkmark for selected tags.
     var selectedTags: Set<Tag>?
+    /// The tag represented by this view.
     var tag: Tag
+    /// An optional closure that defines an action to remove the tag.
     var removeAction: (() -> Void)?
+
     var body: some View {
         HStack {
+            // Displays the tag name with a color indicating if it was recently created.
             Text(tag.tagName)
                 .fontWeight(.light)
                 .foregroundColor(dataController.isTagRecentlyCreated(tag: tag) ? .green : .black)
             Spacer()
+            // Conditionally displays a "Remove" button if `removeAction` is provided.
             if let removeAction = removeAction {
                 Button(action: removeAction) {
                     HStack {
@@ -243,10 +237,12 @@ struct TagRow: View {
                     .foregroundColor(.red)
                 }
             } else if selectedTags?.contains(tag) == true {
+                // Shows a checkmark if the tag is part of the selected tags.
                 Image(systemName: "checkmark")
             }
         }
         .contextMenu {
+            // Provides options to rename or delete the tag when long-pressed.
             Button {
                 edit(tag)
             } label: {
@@ -259,6 +255,7 @@ struct TagRow: View {
             }
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            // Allows quick swipe actions to rename or delete the tag.
             Button {
                 edit(tag)
             } label: {
@@ -273,18 +270,25 @@ struct TagRow: View {
             }
         }
         .alert("Rename Tag", isPresented: $editingTag) {
+            // Displays an alert for renaming the tag with input fields for name and type.
             TextField("New Name", text: $tagName)
             TextField("New Type", text: $tagType)
             Button("OK", action: completeEdit)
             Button("Cancel", role: .cancel) { }
         }
     }
+
+    /// Initiates the editing process for the specified tag.
+        /// - Parameter tag: The tag to be edited.
     func edit(_ tag: Tag) {
         tagToEdit = tag
         tagName = tag.tagName
         tagType = tag.tagType
         editingTag = true
     }
+
+    /// Completes the editing process by saving the updated tag name and type.
+       /// Ensures the new tag type is added to the available types if not already present.
     func completeEdit() {
            tagToEdit?.name = tagName
            tagToEdit?.type = tagType
@@ -293,9 +297,12 @@ struct TagRow: View {
             }
            dataController.save()
        }
+
+    /// Deletes the specified tag from the data source and saves the changes.
+        /// - Parameter tag: The tag to be deleted.
     func delete(_ tag: Tag) {
-        dataController.delete(tag)  // Make sure this deletes the tag from the data source
-        dataController.save()  // Save the changes
+        dataController.delete(tag)
+        dataController.save()  
     }
 }
 

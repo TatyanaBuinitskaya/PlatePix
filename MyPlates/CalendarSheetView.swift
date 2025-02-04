@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+/// A view that presents a calendar sheet allowing the user to select a date and filter data accordingly.
 struct CalendarSheetView: View {
+    /// The data controller that manages the application's data and state.
     @EnvironmentObject var dataController: DataController
+    /// An environment variable used to dismiss the current view.
     @Environment(\.dismiss) var dismiss
+
     var body: some View {
         VStack {
             headerSection
@@ -19,9 +23,12 @@ struct CalendarSheetView: View {
         }
         .padding()
     }
+
+    /// The header section containing navigation and title elements.
     private var headerSection: some View {
         VStack(spacing: 16) {
             Button {
+                // Resets the date selection and filter, then dismisses the view.
                 dataController.selectedDate = nil
                 dataController.selectedFilter = .all
                 dismiss()
@@ -35,6 +42,8 @@ struct CalendarSheetView: View {
                 .padding(.top)
         }
     }
+
+    /// A section displaying the graphical date picker for selecting a date.
     private var datePickerSection: some View {
         DatePicker(
             "Select a Date",
@@ -43,6 +52,7 @@ struct CalendarSheetView: View {
                     dataController.selectedDate ?? Date()
                 },
                 set: { newDate in
+                    // Updates the selected date and applies the corresponding filter.
                     dataController.selectedDate = newDate
                     if let currentFilter = dataController.selectedFilter {
                         var updatedFilter = currentFilter
@@ -59,6 +69,7 @@ struct CalendarSheetView: View {
         .padding()
     }
 
+    /// Displays information about the selected date, including the formatted date and plate count.
     private var selectedDateInfo: some View {
         Group {
             if let selectedDate = dataController.selectedDate {
@@ -73,6 +84,7 @@ struct CalendarSheetView: View {
                     )
                 }
             } else {
+                // Displays a message when no date is selected.
                 Text("No Date Selected")
                     .font(.subheadline)
                     .foregroundColor(.gray)
@@ -81,8 +93,10 @@ struct CalendarSheetView: View {
         }
     }
 
+    /// The button to confirm the selection and dismiss the calendar sheet.
     private var okButton: some View {
         Button {
+            // Dismisses the calendar sheet view.
             dismiss()
         } label: {
             Text("OK")
@@ -97,9 +111,13 @@ struct CalendarSheetView: View {
     }
 }
 
+/// A view representing a row that displays a label and its corresponding value.
 struct SelectedDateRow: View {
+    /// The label describing the value.
     let label: String
+    /// The value associated with the label.
     let value: String
+
     var body: some View {
         HStack {
             Text(label)
@@ -112,11 +130,17 @@ struct SelectedDateRow: View {
     }
 }
 
+/// An extension to `Binding` providing an initializer that replaces `nil` values with a default.
 extension Binding where Value: Equatable {
+    /// Initializes a binding that replaces `nil` values with a default value.
+    /// - Parameters:
+    ///   - source: The optional binding source.
+    ///   - defaultValue: The default value to use when the source is `nil`.
     init(_ source: Binding<Value?>, replacingNilWith defaultValue: Value) {
         self.init(
             get: { source.wrappedValue ?? defaultValue },
             set: { newValue in
+                // Converts the default value back to `nil` when unselected.
                 source.wrappedValue = (newValue == defaultValue) ? nil : newValue
             }
         )

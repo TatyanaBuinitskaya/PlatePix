@@ -7,34 +7,44 @@
 
 import SwiftUI
 
+/// The main view for displaying plates, including a motivational text, a grid of plates,
+/// and floating controls for selecting which information about plates to show and adding new plates.
 struct ContentView: View {
+    /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
+    /// A state variable that tracks whether a new plate is created.
     @State private var isNewPlateCreated = false
+    /// The layout of the grid used for displaying plates. It contains two flexible columns.
     let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+
     var body: some View {
           NavigationStack {
               ZStack {
                   VStack {
-                      motivation
-                      plateGrid
+                      motivation // Displays the motivational text.
+                      plateGrid // Displays the grid of plates.
                   }
                   .padding()
-                  floatingControls
+                  floatingControls  // Displays the floating controls for interacting with the plates.
               }
+              // Set the title of the navigation bar to be dynamic based on the selected title in the dataController.
               .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
               .navigationBarTitleDisplayMode(.inline)
               .toolbar(content: ContentViewToolBar.init)
+              // Sets the navigation destination for Plate objects.
               .navigationDestination(for: Plate.self) { plate in
-                  PlateView(plate: plate)
+                  PlateView(plate: plate) // Navigates to the PlateView when a plate is selected.
               }
+              // Navigates to a new plate view when a new plate is created.
               .navigationDestination(isPresented: $isNewPlateCreated) {
                   if let newPlate = dataController.selectedPlate {
                       PlateView(plate: newPlate)
                   }
               }
+              // Applies the selected date filter when the date changes.
               .onChange(of: dataController.selectedDate) {
                   applyDateFilter()
               }
@@ -55,65 +65,79 @@ struct ContentView: View {
 }
 
 extension ContentView {
+    /// A view displaying the motivational text at the top of the screen.
     private var motivation: some View {
         Text("You can become who you want")
             .font(.headline)
             .padding(.bottom, 8)
     }
+
+    /// A view displaying the grid of plates with search functionality.
     private var plateGrid: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
+                // Iterate over the plates returned by the selected filter and display them.
                 ForEach(dataController.platesForSelectedFilter()) { plate in
                     NavigationLink(value: plate) {
-                        PlateBox(plate: plate)
+                        PlateBox(plate: plate) // Displays each plate in a PlateBox view.
                     }
                 }
             }
+            // Adds search functionality to filter plates by text.
             .searchable(
                 text: $dataController.filterText,
                 prompt: "Filter plates"
             )
         }
     }
+
+    /// A view displaying floating controls for selecting which information about plates to show and adding new plates.
     private var floatingControls: some View {
         VStack {
-            Spacer()
+            Spacer() // Pushes the controls to the bottom of the screen.
             HStack {
-                filterToggles
+                plateInfoToggles // Displays the plate info toggles.
                 Spacer()
-                addPlateButton
+                addPlateButton // Displays the button to add a new plate.
             }
         }
         .padding()
     }
-    private var filterToggles: some View {
+    
+    /// A view displaying toggle buttons for various plate finfo.
+    private var plateInfoToggles: some View {
         HStack {
-            filterToggle(label: "time", isOn: $dataController.showMealTime)
-            filterToggle(label: "quality", isOn: $dataController.showQuality)
-            filterToggle(label: "notes", isOn: $dataController.showNotes)
-            filterToggle(label: "tags", isOn: $dataController.showTags)
+            // For each info, create a toggle button with the appropriate label.
+            plateInfoToggle(label: "time", isOn: $dataController.showMealTime)
+            plateInfoToggle(label: "quality", isOn: $dataController.showQuality)
+            plateInfoToggle(label: "notes", isOn: $dataController.showNotes)
+            plateInfoToggle(label: "tags", isOn: $dataController.showTags)
         }
         .padding(5)
         .background(Capsule().fill(Color.blue))
     }
-    private func filterToggle(label: String, isOn: Binding<Bool>) -> some View {
+
+    /// A toggle button for a specific info with a label and a checkbox icon.
+    private func plateInfoToggle(label: String, isOn: Binding<Bool>) -> some View {
         HStack {
-            Text(label)
+            Text(label)  // Displays the info label.
                 .font(.caption)
                 .foregroundColor(.secondary)
             Button {
-                isOn.wrappedValue.toggle()
+                isOn.wrappedValue.toggle() // Toggles the info state when the button is pressed.
             } label: {
                 Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(.white)
-                    .font(.title2)
+                    .foregroundColor(.white) // Makes the icon white.
+                    .font(.title2) // Sets the icon size.
             }
         }
     }
+
+    /// A button that triggers the creation of a new plate.
     private var addPlateButton: some View {
         Button {
-            dataController.newPlate()
-            isNewPlateCreated = true
+            dataController.newPlate() // Calls the method to create a new plate in the dataController.
+            isNewPlateCreated = true // Marks that a new plate has been created.
         } label: {
             Image(systemName: "plus")
                 .font(.title2)
@@ -124,6 +148,8 @@ extension ContentView {
                 .shadow(radius: 5)
         }
     }
+// TODO: combine with mealtime filter too
+    /// Applies the date filter to the current data.
     private func applyDateFilter() {
         if let date = dataController.selectedDate {
             if let currentFilter = dataController.selectedFilter {
@@ -142,25 +168,33 @@ extension ContentView {
     }
 }
 
+/// A toolbar view for the `ContentView`, allowing sharing and navigation to settings.
 struct ContentViewToolBar: View {
+    /// A boolean that tracks whether the PDF sheet is shown.
     @State private var showPDFSheet = false
+    /// A boolean that tracks whether the settings screen is being navigated to.
     @State private var isNavigatingToSettings = false
+
     var body: some View {
+        // Create a button to share the content as a PDF.
         Button {
-            showPDFSheet = true
+            showPDFSheet = true // Show the PDF sheet when pressed.
         } label: {
             Image(systemName: "square.and.arrow.up")
         }
-        .sheet(isPresented: $showPDFSheet) {
+        .sheet(isPresented: $showPDFSheet) { // Shows the PDF share view as a sheet.
             PDFSheetShareView()
         }
+
+        // Create a button to navigate to the settings view.
         Button {
-            isNavigatingToSettings = true
+            isNavigatingToSettings = true // Trigger navigation to settings when pressed.
         } label: {
-            Image(systemName: "gear")
+            Image(systemName: "gear") // Gear icon for settings.
         }
+        // Navigate to the settings view when 'isNavigatingToSettings' is true.
         .navigationDestination(isPresented: $isNavigatingToSettings) {
-            SettingsView()
+            SettingsView() // Navigate to the settings view.
         }
     }
 }

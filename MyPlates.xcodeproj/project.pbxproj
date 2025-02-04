@@ -11,7 +11,6 @@
 		EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22500E2D1457FE00E002D7 /* ContentView.swift */; };
 		EB2250112D14580100E002D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB2250102D14580100E002D7 /* Assets.xcassets */; };
 		EB2250142D14580100E002D7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB2250132D14580100E002D7 /* Preview Assets.xcassets */; };
-		EB22501C2D14588900E002D7 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB22501A2D14588900E002D7 /* Main.xcdatamodeld */; };
 		EB22501E2D146E9600E002D7 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22501D2D146E9600E002D7 /* DataController.swift */; };
 		EB2250222D156C5A00E002D7 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250212D156C5A00E002D7 /* SideBarView.swift */; };
 		EB2250242D156C6800E002D7 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250232D156C6800E002D7 /* DetailView.swift */; };
@@ -37,6 +36,7 @@
 		EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */; };
 		EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */; };
 		EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922612D48F17800BF97D7 /* PlateImageView.swift */; };
+		EBB2C9482D4D8C48008FA818 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EBB2C9462D4D8C48008FA818 /* Main.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +45,6 @@
 		EB22500E2D1457FE00E002D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EB2250102D14580100E002D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB2250132D14580100E002D7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		EB22501B2D14588900E002D7 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		EB22501D2D146E9600E002D7 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		EB22501F2D156A3500E002D7 /* MyPlates.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyPlates.entitlements; sourceTree = "<group>"; };
 		EB2250202D156A7100E002D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 		EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		EB7922612D48F17800BF97D7 /* PlateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageView.swift; sourceTree = "<group>"; };
+		EBB2C9472D4D8C48008FA818 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,7 +135,7 @@
 				EB79224F2D43CEAF00BF97D7 /* Localizable.xcstrings */,
 				EB7922552D4588E900BF97D7 /* DefaultTags.xcstrings */,
 				EB2250442D1D753900E002D7 /* example.jpg */,
-				EB22501A2D14588900E002D7 /* Main.xcdatamodeld */,
+				EBB2C9462D4D8C48008FA818 /* Main.xcdatamodeld */,
 				EB2250102D14580100E002D7 /* Assets.xcassets */,
 				EB2250122D14580100E002D7 /* Preview Content */,
 			);
@@ -178,7 +178,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					EB2250082D1457FE00E002D7 = {
 						CreatedOnToolsVersion = 15.4;
@@ -229,13 +229,13 @@
 				EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */,
 				EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */,
 				EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */,
+				EBB2C9482D4D8C48008FA818 /* Main.xcdatamodeld in Sources */,
 				EB22503C2D1ADDAB00E002D7 /* Award.swift in Sources */,
 				EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */,
 				EB22503E2D1ADE7300E002D7 /* AwardsView.swift in Sources */,
 				EB22502E2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift in Sources */,
 				EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */,
 				EB7922442D3E236300BF97D7 /* PDFSheetShareView.swift in Sources */,
-				EB22501C2D14588900E002D7 /* Main.xcdatamodeld in Sources */,
 				EB2250242D156C6800E002D7 /* DetailView.swift in Sources */,
 				EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */,
 				EB2250362D1ADA5C00E002D7 /* Bundle-Decodable.swift in Sources */,
@@ -272,6 +272,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -336,6 +337,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -407,6 +409,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -439,6 +442,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -476,14 +480,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		EB22501A2D14588900E002D7 /* Main.xcdatamodeld */ = {
+		EBB2C9462D4D8C48008FA818 /* Main.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				EB22501B2D14588900E002D7 /* Main.xcdatamodel */,
+				EBB2C9472D4D8C48008FA818 /* Main.xcdatamodel */,
 			);
-			currentVersion = EB22501B2D14588900E002D7 /* Main.xcdatamodel */;
-			name = Main.xcdatamodeld;
-			path = "/Users/tatyanabuinitskaya/Documents/SWIFT EDUCATION PROJECTS/MyPlates/MyPlates/Main.xcdatamodeld";
+			currentVersion = EBB2C9472D4D8C48008FA818 /* Main.xcdatamodel */;
+			path = Main.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

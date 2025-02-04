@@ -8,17 +8,29 @@
 import PhotosUI
 import SwiftUI
 
+/// A view that displays detailed information about a specific plate, including images, meal time, quality, tags and notes.
 struct PlateView: View {
+    /// The data controller responsible for managing Core Data and related operations.
     @EnvironmentObject var dataController: DataController
+    /// The plate object being displayed and edited.
     @ObservedObject var plate: Plate
+    /// The environment property used to dismiss the current view..
     @Environment(\.dismiss) var dismiss
+    /// The fetched results of tags, sorted by name.
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
+    /// A list of selected photo picker items.
     @State private var pickerItems = [PhotosPickerItem]()
+    /// The image to display for the plate.
     @State private var imagePlateView: UIImage?
+    /// A Boolean value that tracks whether the camera view is presented.
     @State private var isCameraPresented = false
+    /// A Boolean value indicating if iCloud is unavailable.
     @State private var showICloudUnavailableAlert = false
+    /// A Boolean value tracking whether the plate has been deleted.
     @State private var isPlateDeleted = false
+    /// A Boolean value that tracks whether the tag selection view is presented.
     @State private var showTagList = false
+
     var body: some View {
         VStack {
             if isPlateDeleted {
@@ -81,6 +93,8 @@ struct PlateView: View {
             plateToolbar
         }
     }
+
+    /// Displays the mealtime selection view for the plate.
     private var plateMealtimeView: some View {
         HStack {
             Image(systemName: "clock")
@@ -104,6 +118,8 @@ struct PlateView: View {
             }
         }
     }
+
+    /// Displays the meal quality selection view for the plate.
     private var plateQualityView: some View {
         HStack {
             Image(systemName: "star.fill")
@@ -121,6 +137,8 @@ struct PlateView: View {
             }
         }
     }
+
+    /// Displays the tag selection and currently selected tags for the plate.
     private var plateTagView: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -139,6 +157,8 @@ struct PlateView: View {
             TagListView(plate: plate)
         }
     }
+
+    /// Displays the notes section for the plate.
     private var plateNotesView: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -160,6 +180,8 @@ struct PlateView: View {
             )
         }
     }
+
+    /// Displays the buttons for accessing the camera and photo library.
     private var cameraAndLibraryButtonsView: some View {
         VStack {
             Spacer()
@@ -193,6 +215,8 @@ struct PlateView: View {
             .padding(.horizontal)
         }
     }
+
+    /// Displays the toolbar with actions for the plate.
     private var plateToolbar: some View {
         Button {
             dataController.delete(plate)
@@ -203,6 +227,9 @@ struct PlateView: View {
                 .foregroundColor(.red)
         }
     }
+
+    /// Saves an image captured from the camera.
+    /// - Parameter image: The image captured from the camera.
     func saveImageFromCamera(image: UIImage) {
         let normalizedImage = image.fixedOrientation() // Correct orientation
         if let croppedImage = cropToSquare(image: normalizedImage) {
@@ -233,6 +260,10 @@ struct PlateView: View {
             }
         }
     }
+
+    /// Crops an image to a square format.
+    /// - Parameter image: The image to be cropped.
+    /// - Returns: A square-cropped version of the image, if successful.
     func cropToSquare(image: UIImage) -> UIImage? {
         let imageWidth = image.size.width
         let imageHeight = image.size.height
@@ -245,6 +276,8 @@ struct PlateView: View {
         }
         return UIImage(cgImage: cgImage)
     }
+
+    /// Handles the selection of images from the photo library.
     func handleImageSelection() {
         guard let item = pickerItems.first else { return }
         Task {
