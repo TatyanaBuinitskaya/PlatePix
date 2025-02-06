@@ -12,7 +12,7 @@
         "description": "Add 10 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value": 3,
+        "value": 10,
         "image": "10.square"
     },
     {
@@ -20,7 +20,7 @@
         "description": "Add 20 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value": 12,
+        "value": 20,
         "image": "20.square"
     },
     {
@@ -28,7 +28,7 @@
         "description": "Add 50 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value":13,
+        "value":50,
         "image": "50.square"
     },
     {
@@ -36,7 +36,7 @@
         "description": "Add 100 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value": 14,
+        "value": 100,
         "image": "hand.thumbsup"
     },
     {
@@ -51,41 +51,16 @@
         "name": "Star Performer",
         "description": "Add 500 plates",
         "color": "A Light Blue",
-        "criterion": "issues",
+        "criterion": "plates",
         "value": 500,
         "image": "star.circle.fill"
     },
     {
         "name": "Champion Performer",
-        "description": "Add 1000 issues",
+        "description": "Add 1000 plates",
         "color": "A Light Blue",
         "criterion": "plates",
         "value": 1000,
         "image": "crown.fill"
-    },
-    {
-        "name": "Supporter",
-        "description": "You bought the premium unlock",
-        "color": "A Purple",
-        "criterion": "unlock",
-        "value": 0,
-        "image": "dollarsign.square.fill"
-    }
-    
-    {
-        "name": "First day",
-        "description": "Great start",
-        "color": "A Yellow",
-        "criterion": "days",
-        "value": 1,
-        "image": "1.square"
-    }
-    {
-        "name": "Second day",
-        "description": "Great start",
-        "color": "A Yellow",
-        "criterion": "days",
-        "value": 2,
-        "image": "1.square"
     }
 ]

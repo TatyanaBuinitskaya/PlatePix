@@ -48,6 +48,7 @@ struct PlateImageView: View {
                     .clipShape(Rectangle())
             }
         }
+        .accessibilityIdentifier("plateView") 
         .onAppear {
             // Fetches the image when the view appears if it's not already loaded.
             fetchImage()

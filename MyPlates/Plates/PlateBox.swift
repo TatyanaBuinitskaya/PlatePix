@@ -32,6 +32,7 @@ struct PlateBox: View {
                     )
             .frame(maxWidth: 200, maxHeight: 300)
         }
+        .accessibilityIdentifier(plate.plateTitle)
     }
 }
 

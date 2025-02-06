@@ -162,6 +162,28 @@ class DataController: ObservableObject {
             }
         }
     }
+
+    /// A static property that initializes and provides the Core Data managed object model.
+    ///
+    /// This model is essential for defining the structure of the app's persistent data, including
+    /// entities, attributes, and relationships. It is loaded from the compiled `.momd` file
+    /// located in the app bundle.
+    static let model: NSManagedObjectModel = {
+        // Attempt to locate the compiled Core Data model file named "Main.momd" in the app bundle.
+        guard let url = Bundle.main.url(forResource: "Main", withExtension: "momd") else {
+            // If the model file cannot be found, terminate the app with an error message.
+            // This ensures the app does not continue running in an inconsistent state.
+            fatalError("Failed to locate model file.")
+        }
+        // Attempt to load the managed object model from the located file URL.
+        guard let managedObjectModel = NSManagedObjectModel(contentsOf: url) else {
+            // If loading the model fails, terminate the app to prevent issues with data handling.
+            fatalError("Failed to load model file.")
+        }
+        // Return the successfully loaded managed object model to be used throughout the app.
+        return managedObjectModel
+    }()
+
     /// Initializes a data controller, either in memory (for temporary use such as testing and previewing),
     /// or on permanent storage (for use in regular app runs.)
     ///
@@ -173,7 +195,9 @@ class DataController: ObservableObject {
         self.showQuality = UserDefaults.standard.bool(forKey: "showQuality")
         self.showTags = UserDefaults.standard.bool(forKey: "showTags")
         self.availableTagTypes = UserDefaults.standard.stringArray(forKey: "availableTagTypes") ?? []
-        container = NSPersistentCloudKitContainer(name: "Main")
+   //     container = NSPersistentCloudKitContainer(name: "Main")
+        container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
+
         // For testing and previewing purposes, we create a
         // temporary, in-memory database by writing to /dev/null
         // so our data is destroyed after the app finishes running.
@@ -198,6 +222,12 @@ class DataController: ObservableObject {
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
+            #if DEBUG
+            if CommandLine.arguments.contains("enable-testing") {
+                self.deleteAll()
+            }
+            UIView.setAnimationsEnabled(false)
+            #endif
         }
     }
 
@@ -850,6 +880,24 @@ class DataController: ObservableObject {
         formatter.dateStyle = .medium
         return formatter
     }
+
+    func createSampleData() {
+        let viewContext = container.viewContext
+        for i in 1...5 {
+            let tag = Tag(context: viewContext)
+            tag.id = UUID()
+            tag.name = "Tag \(i)"
+
+            for j in 1...10 {
+                let plate = Plate(context: viewContext)
+                plate.title = "Issue \(i)-\(j)"
+                plate.creationDate = .now
+                tag.addToPlates(plate)
+            }
+        }
+
+        try? viewContext.save()
+    }
 }
 
 /// An extension to `Date` that provides a computed property for getting the start of the day.
@@ -863,4 +911,5 @@ extension Date {
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)
     }
+    
 }

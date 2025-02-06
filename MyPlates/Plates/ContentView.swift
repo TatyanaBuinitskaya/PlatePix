@@ -80,6 +80,7 @@ extension ContentView {
                 ForEach(dataController.platesForSelectedFilter()) { plate in
                     NavigationLink(value: plate) {
                         PlateBox(plate: plate) // Displays each plate in a PlateBox view.
+                            .accessibilityIdentifier("plateView")
                     }
                 }
             }
@@ -99,6 +100,7 @@ extension ContentView {
                 plateInfoToggles // Displays the plate info toggles.
                 Spacer()
                 addPlateButton // Displays the button to add a new plate.
+                    .accessibilityIdentifier("New Plate")
             }
         }
         .padding()
@@ -170,6 +172,9 @@ extension ContentView {
 
 /// A toolbar view for the `ContentView`, allowing sharing and navigation to settings.
 struct ContentViewToolBar: View {
+    /// The shared `DataController` object that manages the data.
+    @EnvironmentObject var dataController: DataController
+    @State private var isNewPlateCreated = false
     /// A boolean that tracks whether the PDF sheet is shown.
     @State private var showPDFSheet = false
     /// A boolean that tracks whether the settings screen is being navigated to.

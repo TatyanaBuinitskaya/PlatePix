@@ -19,6 +19,7 @@ struct NoPlateIView: View {
             .foregroundStyle(.secondary)
         // Provides a button that allows the user to create a new plate.
         Button("New Plate", action: dataController.newPlate)
+            .accessibilityIdentifier("New Plate")
     }
 }
 

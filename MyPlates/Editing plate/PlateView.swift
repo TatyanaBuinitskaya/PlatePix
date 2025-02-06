@@ -90,8 +90,23 @@ struct PlateView: View {
             AwardSheetView()
         }
         .toolbar {
-            plateToolbar
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss() // Dismiss the current view
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Plates") // Back button label
+                    }
+                }
+                .accessibilityIdentifier("Plates") // Add accessibility identifier
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                plateToolbar // Existing delete button
+            }
         }
+        .navigationBarBackButtonHidden(true) // Hide the default back button
     }
 
     /// Displays the mealtime selection view for the plate.
