@@ -42,7 +42,7 @@ struct PDFSheetShareView: View {
                 LazyVGrid(columns: gridItems, spacing: 10) {
                     ForEach(plates) { plate in
                         NavigationLink(value: plate) {
-                            PlateBox(plate: plate, showOverlay: false)
+                            PlateBox(plate: plate)
                         }
                     }
                 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 /// A view that displays a list of tags and allows users to add, remove, or manage default tags.
 struct TagListView: View {
@@ -35,12 +36,19 @@ struct TagListView: View {
         dataController.missingTags(from: plate) :
         dataController.missingTags(from: plate).filter { $0.tagName.lowercased().contains(searchQuery.lowercased()) }
     }
+    
+//    /// The list of available tag types. Updates are persisted using UserDefaults.
+//    @State var availableTagTypes: [String] = [] {
+//    didSet {
+//        UserDefaults.standard.set(availableTagTypes, forKey: "availableTagTypes")
+//    }
+//}
 
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
-                  Text("Create or delete default tags")
+                    Text("Create or delete default tags")
                     defaultTagsToggles
                     Text("Press and hold or swipe left on a tag to rename or delete it")
                         .font(.caption)
@@ -103,6 +111,7 @@ struct TagListView: View {
         }
     }
 
+    
     /// Toggles the selection status of a tag.
     func toggleSelection(for tag: Tag) {
         if selectedTags.contains(tag) {
@@ -126,7 +135,7 @@ struct TagListView: View {
         plate.removeFromTags(tag)
         dataController.save()
     }
-
+    
     /// A view containing toggles for default tags.
     private var defaultTagsToggles: some View {
         HStack {
@@ -144,12 +153,12 @@ struct TagListView: View {
         HStack {
             Text(label)
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
             Button {
                 isOn.wrappedValue.toggle()
             } label: {
                 Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .font(.title2)
             }
         }
@@ -171,13 +180,13 @@ struct TagListView: View {
     private func createDefaultTags(for type: String) {
         switch type {
         case "month":
-            dataController.createDefaultMonthTags(context: dataController.container.viewContext)
+            createDefaultMonthTags(context: dataController.container.viewContext)
         case "food":
-            dataController.createDefaultFoodTags(context: dataController.container.viewContext)
+            createDefaultFoodTags(context: dataController.container.viewContext)
         case "emotion":
-            dataController.createDefaultEmotionTags(context: dataController.container.viewContext)
+            createDefaultEmotionTags(context: dataController.container.viewContext)
         case "reaction":
-            dataController.createDefaultReactionTags(context: dataController.container.viewContext)
+            createDefaultReactionTags(context: dataController.container.viewContext)
         default:
             break
         }
@@ -187,16 +196,158 @@ struct TagListView: View {
     private func deleteDefaultTags(for type: String) {
         switch type {
         case "month":
-            dataController.deleteDefaultMonthTags(context: dataController.container.viewContext)
+            deleteDefaultMonthTags(context: dataController.container.viewContext)
         case "food":
-            dataController.deleteDefaultFoodTags(context: dataController.container.viewContext)
+            deleteDefaultFoodTags(context: dataController.container.viewContext)
         case "emotion":
-            dataController.deleteDefaultEmotionTags(context: dataController.container.viewContext)
+            deleteDefaultEmotionTags(context: dataController.container.viewContext)
         case "reaction":
-            dataController.deleteDefaultReactionTags(context: dataController.container.viewContext)
+            deleteDefaultReactionTags(context: dataController.container.viewContext)
         default:
             break
         }
+    }
+  
+    /// Deletes default tags based on the provided tag type.
+       ///
+       /// - Parameters:
+       ///   - tagType: The tag type (e.g., "Food", "Month") of tags to be deleted.
+       ///   - context: The NSManagedObjectContext used to delete the tags.
+    func deleteDefaultTags(tagType: String, context: NSManagedObjectContext) {
+        let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "type == %@", tagType)
+        do {
+            let tagsToDelete = try context.fetch(fetchRequest)
+            for tag in tagsToDelete {
+                context.delete(tag)
+            }
+            removeTagTypeIfNeeded(tagType)
+            saveContext(context)
+            print("Successfully deleted all \(tagType) tags")
+        } catch {
+            print("Failed to delete \(tagType) tags: \(error)")
+        }
+    }
+        /// Creates default food tags by calling `createDefaultTags` with the appropriate parameters.
+            ///
+            /// - Parameter context: The NSManagedObjectContext used for creating tags.
+        func createDefaultFoodTags(context: NSManagedObjectContext) {
+            createDefaultTags(tagType: "Food", tagNames: defaultFoodTags, context: context)
+        }
+
+        /// Deletes default food tags by calling `deleteDefaultTags` with the appropriate parameters.
+            ///
+            /// - Parameter context: The NSManagedObjectContext used for deleting tags.
+        func deleteDefaultFoodTags(context: NSManagedObjectContext) {
+            deleteDefaultTags(tagType: "Food", context: context)
+        }
+
+        /// Creates default month tags by calling `createDefaultTags` with the appropriate parameters.
+            ///
+            /// - Parameter context: The NSManagedObjectContext used for creating tags.
+        func createDefaultMonthTags(context: NSManagedObjectContext) {
+            let defaultMonthTags = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ].map { NSLocalizedString($0, tableName: "DefaultTags", comment: "Month name") }
+            createDefaultTags(tagType: "Month", tagNames: defaultMonthTags, context: context)
+        }
+
+        /// Deletes default month tags by calling `deleteDefaultTags` with the appropriate parameters.
+            ///
+            /// - Parameter context: The NSManagedObjectContext used for deleting tags.
+        func deleteDefaultMonthTags(context: NSManagedObjectContext) {
+            deleteDefaultTags(tagType: "Month", context: context)
+        }
+
+        /// Creates default emotion tags by calling `createDefaultTags` with the appropriate parameters.
+            ///
+            /// - Parameter context: The NSManagedObjectContext used for creating tags.
+        func createDefaultEmotionTags(context: NSManagedObjectContext) {
+            let defaultEmotionTags = ["Happy", "Stress"].map { NSLocalizedString(
+                $0,
+                tableName: "DefaultTags",
+                comment: "Emotion"
+            ) }
+            createDefaultTags(tagType: "Emotion", tagNames: defaultEmotionTags, context: context)
+        }
+
+        /// Deletes default emotion tags by calling `deleteDefaultTags` with the appropriate parameters.
+           ///
+           /// - Parameter context: The NSManagedObjectContext used for deleting tags.
+        func deleteDefaultEmotionTags(context: NSManagedObjectContext) {
+            deleteDefaultTags(tagType: "Emotion", context: context)
+        }
+
+        /// Creates default reaction tags by calling `createDefaultTags` with the appropriate parameters.
+            ///
+            /// - Parameter context: The NSManagedObjectContext used for creating tags.
+        func createDefaultReactionTags(context: NSManagedObjectContext) {
+            let defaultReactionTags = ["Sick", "Feel good"].map { NSLocalizedString(
+                $0,
+                tableName: "DefaultTags",
+                comment: "Reaction"
+            ) }
+            createDefaultTags(tagType: "Reaction", tagNames: defaultReactionTags, context: context)
+        }
+
+        /// Deletes default reaction tags by calling `deleteDefaultTags` with the appropriate parameters.
+            ///
+            /// - Parameter context: The NSManagedObjectContext used for deleting tags.
+        func deleteDefaultReactionTags(context: NSManagedObjectContext) {
+            deleteDefaultTags(tagType: "Reaction", context: context)
+        }
+    
+    /// Adds a tag type to the list of available tag types if it isn't already present.
+       ///
+       /// - Parameter tagType: The tag type to be added.
+    private func addTagTypeIfNeeded(_ tagType: String) {
+        if !dataController.availableTagTypes.contains(tagType) {
+            dataController.availableTagTypes.append(tagType)
+        }
+    }
+
+    /// Removes a tag type from the list of available tag types if it exists.
+        ///
+        /// - Parameter tagType: The tag type to be removed.
+    private func removeTagTypeIfNeeded(_ tagType: String) {
+        if let index = dataController.availableTagTypes.firstIndex(of: tagType) {
+            dataController.availableTagTypes.remove(at: index)
+        }
+    }
+
+    /// Saves the provided context to Core Data, handling any errors that may occur.
+        ///
+        /// - Parameter context: The NSManagedObjectContext to save.
+    private func saveContext(_ context: NSManagedObjectContext) {
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save context: \(error)")
+        }
+    }
+
+
+    /// Creates default tags if they don't already exist. Each tag is associated with a tag type.
+        ///
+        /// - Parameters:
+        ///   - tagType: The type of the tag to be created (e.g., "Food", "Month").
+        ///   - tagNames: A list of tag names to be created.
+        ///   - context: The NSManagedObjectContext used for saving the tag to the Core Data store.
+    func createDefaultTags(tagType: String, tagNames: [String], context: NSManagedObjectContext) {
+        for tagName in tagNames {
+            let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "name == %@", tagName)
+            // If the tag doesn't exist, create and save it
+            if (try? context.count(for: fetchRequest)) == 0 {
+                let tag = Tag(context: context)
+                tag.id = UUID()
+                tag.name = tagName
+                tag.type = tagType
+                addTagTypeIfNeeded(tagType)
+            }
+        }
+        saveContext(context)
     }
 }
 
@@ -225,7 +376,7 @@ struct TagRow: View {
             // Displays the tag name with a color indicating if it was recently created.
             Text(tag.tagName)
                 .fontWeight(.light)
-                .foregroundColor(dataController.isTagRecentlyCreated(tag: tag) ? .green : .black)
+                .foregroundStyle(isTagRecentlyCreated(tag: tag) ? .green : .black)
             Spacer()
             // Conditionally displays a "Remove" button if `removeAction` is provided.
             if let removeAction = removeAction {
@@ -234,7 +385,7 @@ struct TagRow: View {
                         Text("Remove").font(.caption)
                         Image(systemName: "minus.circle")
                     }
-                    .foregroundColor(.red)
+                    .foregroundStyle(.red)
                 }
             } else if selectedTags?.contains(tag) == true {
                 // Shows a checkmark if the tag is part of the selected tags.
@@ -303,6 +454,14 @@ struct TagRow: View {
     func delete(_ tag: Tag) {
         dataController.delete(tag)
         dataController.save()  
+    }
+    /// Checks if a tag was created within the last hour.
+        /// - Parameter tag: The tag to check.
+        /// - Returns: True if the tag was created within the last hour, otherwise false.
+    func isTagRecentlyCreated(tag: Tag) -> Bool {
+        guard let creationDate = tag.creationDate else { return false }
+        let timeInterval = Date().timeIntervalSince(creationDate)
+        return timeInterval <= 3600 // 3600 seconds = 1 hour
     }
 }
 

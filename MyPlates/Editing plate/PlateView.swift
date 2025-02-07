@@ -7,21 +7,23 @@
 
 import PhotosUI
 import SwiftUI
+import CloudKit
 
 /// A view that displays detailed information about a specific plate, including images, meal time, quality, tags and notes.
 struct PlateView: View {
     /// The data controller responsible for managing Core Data and related operations.
     @EnvironmentObject var dataController: DataController
+ //   @StateObject var viewModel: ViewModel
     /// The plate object being displayed and edited.
     @ObservedObject var plate: Plate
     /// The environment property used to dismiss the current view..
     @Environment(\.dismiss) var dismiss
     /// The fetched results of tags, sorted by name.
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
-    /// A list of selected photo picker items.
-    @State private var pickerItems = [PhotosPickerItem]()
-    /// The image to display for the plate.
-    @State private var imagePlateView: UIImage?
+//    /// A list of selected photo picker items.
+    @State var pickerItems = [PhotosPickerItem]()
+//    /// The image to display for the plate.
+    @State var imagePlateView: UIImage?
     /// A Boolean value that tracks whether the camera view is presented.
     @State private var isCameraPresented = false
     /// A Boolean value indicating if iCloud is unavailable.
@@ -30,12 +32,17 @@ struct PlateView: View {
     @State private var isPlateDeleted = false
     /// A Boolean value that tracks whether the tag selection view is presented.
     @State private var showTagList = false
+    
+//    init(plate: Plate, dataController: DataController) {
+//        let viewModel = ViewModel(plate: plate, dataController: dataController)
+//            _viewModel = StateObject(wrappedValue: viewModel)
+//        }
 
     var body: some View {
         VStack {
             if isPlateDeleted {
                 Text("This plate has been deleted")
-                    .foregroundColor(.red)
+                    .foregroundStyle(.red)
             } else {
                 ZStack {
                     ScrollView {
@@ -138,7 +145,7 @@ struct PlateView: View {
     private var plateQualityView: some View {
         HStack {
             Image(systemName: "star.fill")
-                .foregroundColor(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
+                .foregroundStyle(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
                 .font(.title2)
             Menu {
                 Picker("Meal Quality", selection: $plate.quality) {
@@ -205,7 +212,7 @@ struct PlateView: View {
                 PhotosPicker(selection: $pickerItems, maxSelectionCount: 1, matching: .images) {
                     Image(systemName: "photo.stack")
                         .font(.title2)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .padding()
                         .background(Color.blue)
                         .clipShape(Circle())
@@ -220,7 +227,7 @@ struct PlateView: View {
                 } label: {
                     Image(systemName: "camera")
                         .font(.title2)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.white)
                         .padding()
                         .background(Color.blue)
                         .clipShape(Circle())
@@ -239,7 +246,68 @@ struct PlateView: View {
             dismiss()
         } label: {
             Image(systemName: "trash")
-                .foregroundColor(.red)
+                .foregroundStyle(.red)
+        }
+    }
+
+    /// Saves an image to the local filesystem.
+        /// - Parameter image: The image to be saved.
+        /// - Returns: The file path where the image was saved, or nil if the save failed.
+        /// - Note: The image is saved as a JPEG with 80% quality compression.
+    func saveImageToFileSystem(image: UIImage) -> String? {
+        let photoDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let photoName = UUID().uuidString + ".jpg"
+        let photoURL = photoDirectory.appendingPathComponent(photoName)
+        if let imageData = image.jpegData(compressionQuality: 0.8) {
+            do {
+                try imageData.write(to: photoURL)
+                print("Image successfully saved at path: \(photoURL.path)")
+                return photoURL.path
+            } catch {
+                print("Error saving image: \(error.localizedDescription)")
+            }
+        } else {
+            print("Failed to generate JPEG data for the image.")
+        }
+        return nil
+    }
+
+    /// Saves an image to CloudKit.
+        /// - Parameters:
+        ///   - image: The image to be saved.
+        ///   - imageName: The name for the image file.
+        /// - Returns: The CloudKit record ID of the saved record, or nil if the operation failed.
+        /// - Note: The image is temporarily saved to the local filesystem before uploading to CloudKit to create a CKAsset.
+    func saveImageToCloudKit(image: UIImage, imageName: String) async -> CKRecord.ID? {
+        // Convert UIImage to Data (JPEG format)
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            print("Failed to convert image to JPEG data.")
+            return nil
+        }
+        // Save the image data locally before uploading to CloudKit (in a temporary directory)
+        let fileManager = FileManager.default
+        let temporaryDirectoryURL = fileManager.temporaryDirectory
+        let fileURL = temporaryDirectoryURL.appendingPathComponent(imageName).appendingPathExtension("jpg")
+        do {
+            // Write the image data to the file URL
+            try imageData.write(to: fileURL)
+            // Create a CKAsset from the image file URL
+            let imageAsset = CKAsset(fileURL: fileURL)
+            // Create a CloudKit record to save the asset
+            let record = CKRecord(recordType: "Plate") // Adjust the record type as needed
+            record["imageData"] = imageAsset
+            // Save the record to CloudKit's private database
+            let container = CKContainer.default()
+            let privateDatabase = container.privateCloudDatabase
+            // Save the record and await the result
+            let savedRecord = try await privateDatabase.save(record)
+            // Clean up the local file after uploading it to CloudKit
+            try fileManager.removeItem(at: fileURL)
+            // Return the recordID of the saved record
+            return savedRecord.recordID
+        } catch {
+            print("Error saving image to CloudKit: \(error.localizedDescription)")
+            return nil
         }
     }
 
@@ -252,7 +320,7 @@ struct PlateView: View {
             Task {
                 do {
                     // Attempt to save the image to CloudKit
-                    if let cloudRecordID = await dataController.saveImageToCloudKit(
+                    if let cloudRecordID = await saveImageToCloudKit(
                         image: croppedImage,
                         imageName: imageName
                     ) {
@@ -264,7 +332,7 @@ struct PlateView: View {
                     }
                 } catch {
                     print("CloudKit save failed, attempting local save: \(error)")
-                    if let localPath = dataController.saveImageToFileSystem(image: croppedImage) {
+                    if let localPath = saveImageToFileSystem(image: croppedImage) {
                         plate.photo = localPath
                         imagePlateView = croppedImage
                     } else {
@@ -302,7 +370,7 @@ struct PlateView: View {
                 if let croppedImage = cropToSquare(image: normalizedImage) {
                     let imageName = UUID().uuidString
                     do {
-                        if let recordID = await dataController.saveImageToCloudKit(
+                        if let recordID = await saveImageToCloudKit(
                             image: croppedImage,
                             imageName: imageName
                         ) {
@@ -314,7 +382,7 @@ struct PlateView: View {
                         }
                     } catch {
                         print("CloudKit save failed, attempting local save: \(error)")
-                        if let localPath = dataController.saveImageToFileSystem(image: croppedImage) {
+                        if let localPath = saveImageToFileSystem(image: croppedImage) {
                             plate.photo = localPath
                             imagePlateView = croppedImage
                         } else {

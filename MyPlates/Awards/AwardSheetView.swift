@@ -35,7 +35,7 @@ struct AwardSheetView: View {
                 // Fallback message when no awards are earned yet.
                 Text("No awards earned yet.")
                     .font(.body)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
             }
         }
     }
@@ -56,7 +56,7 @@ struct AwardSheetView: View {
                 .padding(.bottom)
             Text("\(award.value)")
                 .font(.title3)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
             Button {
                 // Dismisses the award sheet and updates the data controller state.
                 dataController.showCongratulations = false
@@ -67,7 +67,7 @@ struct AwardSheetView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .cornerRadius(buttonCornerRadius)
                     .padding(.top, 15)
                     .padding()

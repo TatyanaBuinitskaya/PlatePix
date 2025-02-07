@@ -11,6 +11,7 @@ import SwiftUI
 struct PlateBox: View {
     /// The environment object that provides access to shared data across views.
     @EnvironmentObject var dataController: DataController
+//    @StateObject var viewModel: ViewModel
     /// The plate object that provides data for the plate image and related information.
     @ObservedObject var plate: Plate
     /// The optional image of the plate that will be displayed.
@@ -34,12 +35,17 @@ struct PlateBox: View {
         }
         .accessibilityIdentifier(plate.plateTitle)
     }
+//    init(plate: Plate) {
+//        let viewModel = ViewModel(plate: plate)
+//        _viewModel = StateObject(wrappedValue: viewModel)
+ //   }
 }
 
 /// A view that overlays meal-related information on a plate.
 struct PlateInfoOverlay: View {
     /// The environment object that provides access to shared data across views.
     @EnvironmentObject var dataController: DataController
+    @ObservedObject var userPreferences = UserPreferences.shared // Shared Preferences
     /// The plate object that provides data for the overlay.
     @ObservedObject var plate: Plate
 
@@ -47,22 +53,22 @@ struct PlateInfoOverlay: View {
         VStack {
             HStack {
                 // Show meal time if the dataController indicates it's enabled.
-                if dataController.showMealTime {
+                if userPreferences.showMealTime {
                     mealTimeView
                 }
                 Spacer()
                 // Show quality if the dataController indicates it's enabled.
-                if dataController.showQuality {
+                if userPreferences.showQuality {
                     qualityView
                 }
             }
             .padding(.horizontal, 3)
             .padding(3)
             // Set background color based on whether the meal time is shown.
-            .background(dataController.showMealTime ? Color.black.opacity(0.5) : Color.white.opacity(0.0))
+            .background(userPreferences.showMealTime ? Color.black.opacity(0.5) : Color.white.opacity(0.0))
             Spacer() // Pushes the content to the bottom
             // Show tags if the dataController indicates it's enabled.
-            if dataController.showTags {
+            if userPreferences.showTags {
                 tagsView
                     .background(Color.black.opacity(0.5)) // Background for the tags section
             }
@@ -75,23 +81,23 @@ struct PlateInfoOverlay: View {
             if let displayMealtime = dataController.mealtimeDictionary[plate.plateMealtime] {
                 Text(displayMealtime)
                     .font(.footnote)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
             } else {
                 Text("Unknown") 
                     .font(.footnote)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
             }
             // Display the plate's creation date in a shortened time format.
             Text(plate.plateCreationDate.formatted(date: .omitted, time: .shortened))
                 .font(.footnote)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
         }
     }
 
     /// A computed view that shows the quality of the plate with a star icon.
     private var qualityView: some View {
         Image(systemName: "star.fill")
-            .foregroundColor(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
+            .foregroundStyle(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
             .font(.subheadline)
     }
 
@@ -100,7 +106,7 @@ struct PlateInfoOverlay: View {
         // Display tags or show "No Tags" if none are available.
         Text(plate.tags?.allObjects.compactMap { ($0 as? Tag)?.tagName }.joined(separator: ", ") ?? "No Tags")
             .font(.footnote)
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
     }
 }
 

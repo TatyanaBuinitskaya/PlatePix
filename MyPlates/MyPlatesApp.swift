@@ -14,15 +14,18 @@ struct MyPlatesApp: App {
     @StateObject var dataController = DataController()
     /// The current scene phase of the app, used to detect transitions between active, background, and inactive states.
     @Environment(\.scenePhase) var scenePhase
+    @StateObject var userPreferences = UserPreferences.shared  // Create the shared instance
     
     var body: some Scene {
         WindowGroup {
             NavigationSplitView {
                 /// The sidebar view of the app, providing navigation options for different sections.
-                SideBarView()
+                SideBarView(dataController: dataController)
             } content: {
                 /// The main content view where the primary list of plates is displayed.
+             //   ContentView(dataController: dataController)
                 ContentView()
+                    .environmentObject(userPreferences)  // Pass it down as EnvironmentObject
             } detail: {
                 /// The detail view that shows specific information about a selected plate.
                 DetailView()

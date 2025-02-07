@@ -9,10 +9,9 @@ import SwiftUI
 
 /// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
 struct SideBarView: View {
-    /// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
-    @EnvironmentObject var dataController: DataController
-    /// The fetched results for tags, sorted by name.
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
+//    /// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
+//    @EnvironmentObject var dataController: DataController
+    @StateObject private var viewModel: ViewModel
     /// State variable to control the presentation of the calendar sheet.
     @State private var showCalendarSheet = false
     /// State variables to control the visibility of various filter lists.
@@ -27,52 +26,52 @@ struct SideBarView: View {
     @State private var expandedGroups: Set<String> = []
     /// State variable to control the visibility of the mealtime filter list.
     @State private var showMealtimeFilterList = false
-    /// A computed property that maps tags into `Filter` objects for easier processing.
-    var tagFilters: [Filter] {
-        tags.map { tag in
-            Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
-        }
-    }
+    
     /// A predefined set of mealtime filters for the sidebar.
     let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
     let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
     /// A predefined set of quality filters for the sidebar.
 
+    init(dataController: DataController) {
+        let viewModel = ViewModel(dataController: dataController)
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
-        List(selection: $dataController.selectedFilter) {
+        List(selection: $viewModel.dataController.selectedFilter) {
 
             // Section for date-based filters.
             Section("Date Filters") {
                 dateFilterButton(
                     label: "All plates",
                     systemImage: "calendar",
-                    plateCount: dataController.allPlatesCount,
-                    accessibilityHint: "\(dataController.allPlatesCount) plates"
+                    plateCount: viewModel.allPlatesCount,
+                    accessibilityHint: "\(viewModel.allPlatesCount) plates"
                 ) {
                     // Set filter to "All Plates"
-                    dataController.selectedFilter = Filter.all
-                    dataController.selectedDate = nil
+                    viewModel.dataController.selectedFilter = Filter.all
+                    viewModel.dataController.selectedDate = nil
                 }
                 dateFilterButton(
                     label: "Today",
                     systemImage: "1.square",
-                    plateCount: dataController.countSelectedDatePlates(for: Date()),
-                    accessibilityHint: "\(dataController.countSelectedDatePlates(for: Date())) plates"
+                    plateCount: viewModel.dataController.countSelectedDatePlates(for: Date()),
+                    accessibilityHint: "\(viewModel.dataController.countSelectedDatePlates(for: Date())) plates"
                 ) {
                     // Set filter to today's date
-                    dataController.selectedFilter = Filter.filterForDate(Date())
-                    dataController.selectedDate = Date()
+                    viewModel.dataController.selectedFilter = Filter.filterForDate(Date())
+                    viewModel.dataController.selectedDate = Date()
                 }
                 Button {
                     // Show calendar sheet to select a custom date
                     showCalendarSheet = true
                 } label: {
                     HStack {
-                        let selectedDate = dataController.formattedDate(dataController.selectedDate ?? Date())
+                        let selectedDate = viewModel.dataController.formattedDate(viewModel.dataController.selectedDate ?? Date())
                         Label("Select date" + " (" + selectedDate + ")", systemImage: "calendar.badge.plus")
                         Spacer()
                         Image(systemName: "chevron.down")
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .font(.footnote)
                     }
                 }
@@ -84,7 +83,7 @@ struct SideBarView: View {
                     label: "Choose a tag filter",
                     systemImage: "tag",
                     isExpanded: $showTagFilterList,
-                    items: generateTagFilters()
+                    items: viewModel.generateTagFilters()
                 )
             }
 
@@ -97,7 +96,7 @@ struct SideBarView: View {
                     items: mealtimeFilters.map { filter in
                         NavigationLink(value: filter) {
                             let mealtime = filter.mealtime ?? ""
-                            let plateCount = dataController.countMealtimePlates(for: mealtime)
+                            let plateCount = viewModel.countMealtimePlates(for: mealtime)
                             Text(LocalizedStringKey(filter.name))
                                 .badge("\(plateCount)")
                                 .accessibilityLabel(filter.name)
@@ -111,7 +110,7 @@ struct SideBarView: View {
             Section("Quality filters") {
                 QualityFiltersSection(
                     qualityFilters: qualityFilters,
-                    countQualityPlates: dataController.countQualityPlates(for:)
+                    countQualityPlates: viewModel.countQualityPlates(for:)
                 )
             }
         }
@@ -119,61 +118,20 @@ struct SideBarView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: SideBarViewToolBar.init)
         .sheet(isPresented: $showCalendarSheet, content: CalendarSheetView.init)
-//        .onAppear {
-//            for tagType in dataController.availableTagTypes {
-//                   if showTagTypeFilters[tagType] == nil {
-//                       showTagTypeFilters[tagType] = false
-//                   }
-//               }
-//        }
         .onAppear {
             // Initialize any missing tag type filters when the view appears.
-            for tagType in dataController.availableTagTypes where showTagTypeFilters[tagType] == nil {
+            for tagType in viewModel.dataController.availableTagTypes where showTagTypeFilters[tagType] == nil {
                 showTagTypeFilters[tagType] = false
             }
         }
     }
 
-    /// A function to generate tag filters by grouping them by type and creating viewable filters.
-    private func generateTagFilters() -> [AnyView] {
-        // Group the tag filters by their type.
-        let groupedTags = Dictionary(grouping: tagFilters) { $0.tag?.type ?? "Other" }
-        // Return sorted views for each tag type.
-        return groupedTags.keys.sorted(by: dataController.sortTags).flatMap { type -> [AnyView] in
-            var views: [AnyView] = []
-            // Only show the section if the tag type exists in availableTagTypes
-            if dataController.availableTagTypes.contains(type) {
-                // Header for each tag type
-                views.append(AnyView(dataController.tagHeaderView(for: type)))
-                // Show items if the tag type should be displayed
-                if dataController.shouldShowTags(for: type) {
-                    views.append(contentsOf: tagFilterList(for: groupedTags[type, default: []]))
-                }
-            }
-            return views
-        }
-    }
-
-    /// A function to generate the list of tag filters for a specific tag type.
-    private func tagFilterList(for filters: [Filter]) -> [AnyView] {
-        filters.map { filter in
-            AnyView(
-                NavigationLink(value: filter) {
-                    Text(LocalizedStringKey(filter.name))
-                        .fontWeight(.light)
-                        .badge("\(dataController.countTagPlates(for: filter.name))")
-                        .accessibilityLabel(filter.name)
-                        .accessibilityHint("\(dataController.countTagPlates(for: filter.name)) plates")
-                }
-            )
-        }
-    }
+  
 }
 
 #Preview {
-    SideBarView()
-        .environmentObject(DataController.preview)
-}
+    SideBarView(dataController: .preview)
+   }
 
 /// Creates a button view for a date filter that displays the filter label, a badge with plate count, and an arrow to indicate selection.
 /// - Parameters:
@@ -197,7 +155,7 @@ private func dateFilterButton(
                 .badge("\(plateCount)") // Adds a badge showing the plate count.
             // Chevron icon to indicate that this is a button that leads to further options.
             Image(systemName: "chevron.right")
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .font(.footnote)
         }
         // Makes the button accessible with the label and hint for users with screen readers.
@@ -229,13 +187,13 @@ private func expandableFilterSection(
         HStack {
             // Display the system image and label for the section header.
             Image(systemName: systemImage)
-                .foregroundColor(.blue) // Sets the image color to blue.
+                .foregroundStyle(.blue) // Sets the image color to blue.
             Text(label) // The label text of the section.
             Spacer() // Pushes the chevron icon to the right of the label.
             // Chevron icon indicating the expanded or collapsed state.
             Image(systemName: "chevron.down")
                 .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0)) // Rotates the chevron based on expansion state.
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .font(.footnote)
                 .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue) // Adds smooth rotation animation.
         }
@@ -282,7 +240,7 @@ struct QualityFiltersSection: View {
         HStack {
             // Display the icon for the filter with color based on quality.
             Image(systemName: filter.icon)
-                .foregroundColor(
+                .foregroundStyle(
                     filter.quality == 0 ? .red :
                     filter.quality == 1 ? .yellow : .green
                 )
@@ -300,15 +258,15 @@ struct QualityFiltersSection: View {
         // Display different messages depending on the counts of good, average, and bad plates.
         if goodCount > badCount && goodCount > averageCount {
             Text("You're doing great! Keep up with the healthy choices!")
-                .foregroundColor(.green)
+                .foregroundStyle(.green)
                 .italic()
         } else if badCount > goodCount && badCount > averageCount {
             Text("You may want to focus on eating healthier.")
-                .foregroundColor(.red)
+                .foregroundStyle(.red)
                 .italic()
         } else {
             Text("You're balancing your choices well!")
-                .foregroundColor(.orange)
+                .foregroundStyle(.orange)
                 .italic()
         }
     }

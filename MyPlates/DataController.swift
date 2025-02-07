@@ -44,30 +44,6 @@ class DataController: ObservableObject {
         UserDefaults.standard.set(availableTagTypes, forKey: "availableTagTypes")
     }
 }
-    /// A Boolean value that determines whether notes are shown, persisted in UserDefaults.
-    @Published var showNotes: Bool {
-           didSet {
-               UserDefaults.standard.set(showNotes, forKey: "showNotes")
-           }
-       }
-    /// A Boolean flag indicating if mealtime details should be displayed.
-       @Published var showMealTime: Bool {
-           didSet {
-               UserDefaults.standard.set(showMealTime, forKey: "showMealTime")
-           }
-       }
-    /// A Boolean indicating if the quality information of plates should be shown.
-       @Published var showQuality: Bool {
-           didSet {
-               UserDefaults.standard.set(showQuality, forKey: "showQuality")
-           }
-       }
-    /// A Boolean flag to determine if tags are visible.
-    @Published var showTags: Bool {
-        didSet {
-            UserDefaults.standard.set(showTags, forKey: "showTags")
-        }
-    }
     /// A dictionary that maps mealtime identifiers to localized strings.
     let mealtimeDictionary: [String: String] = [
         "breakfast": NSLocalizedString("Breakfast", comment: "Mealtime: Breakfast"),
@@ -142,12 +118,7 @@ class DataController: ObservableObject {
         // If no filter is selected, return "All Plates" or fallback to default
         return NSLocalizedString("All Plates", comment: "Fallback title for all plates")
     }
-    /// Returns the total count of all plates stored in Core Data.
-    var allPlatesCount: Int {
-        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
-        let count = (try? container.viewContext.count(for: request)) ?? 0
-        return count
-    }
+   
     /// Manages the awards that have been congratulated, persisting the data using UserDefaults.
     var congratulatedAwards: [Award] {
         get {
@@ -190,10 +161,6 @@ class DataController: ObservableObject {
     /// Defaults to permanent storage.
     /// - Parameter inMemory: Whether to store this data in temporary memory or not.
     init(inMemory: Bool = false) {
-        self.showNotes = UserDefaults.standard.bool(forKey: "showNotes")
-        self.showMealTime = UserDefaults.standard.bool(forKey: "showMealTime")
-        self.showQuality = UserDefaults.standard.bool(forKey: "showQuality")
-        self.showTags = UserDefaults.standard.bool(forKey: "showTags")
         self.availableTagTypes = UserDefaults.standard.stringArray(forKey: "availableTagTypes") ?? []
    //     container = NSPersistentCloudKitContainer(name: "Main")
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
@@ -230,152 +197,129 @@ class DataController: ObservableObject {
             #endif
         }
     }
+  
+    /// Runs a fetch request with various predicates that filter the user's plates based
+    /// on tags, mealtime, quality, title and notes.
+    /// - Returns: An array of all matching plates.
+    func platesForSelectedFilter() -> [Plate] {
+        let filter = selectedFilter ?? .all
+        var predicates = [NSPredicate]()
+        
+        // Apply date filter if a selected date exists
+        if let selectedDate = filter.selectedDate ?? selectedDate {
+            let startOfDay = Calendar.current.startOfDay(for: selectedDate)
+            if let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) {
+                predicates.append(NSPredicate(
+                    format: "creationDate >= %@ AND creationDate < %@",
+                    startOfDay as NSDate,
+                    endOfDay as NSDate))
+            }
+        }
+        if let tag = filter.tag {
+            let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
+            predicates.append(tagPredicate)
+        }
+        // Apply quality filter if a quality is selected
+        if filter.quality >= 0 {
+            predicates.append(NSPredicate(format: "quality = %d", filter.quality))
+        }
+        // Apply mealtime filter if a mealtime is selected
+        if let mealtime = filter.mealtime {
+            predicates.append(NSPredicate(format: "mealtime = %@", mealtime))
+        }
+        // Apply filter text if it exists
+        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
+        if !trimmedFilterText.isEmpty {
+            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
+            let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
+            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate]))
+        }
+        // Combine all predicates (AND logic between date, quality, etc.)
+        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
+        if !predicates.isEmpty {
+            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        }
+        // If the filter is "All", no predicate will be applied (fetch all plates)
+        if filter == .all {
+            fetchRequest.predicate = nil
+        }
+        // Sorting plates by creationDate
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
+        return (try? container.viewContext.fetch(fetchRequest)) ?? []
+    }
+
+    /// Creates a new plate and initializes its properties with default values or values from the current selection.
+        /// - Note: The creation date is set to the selected date (or today's date if no date is selected). The quality and mealtime are set to default values.
+    func newPlate() {
+        let plate = Plate(context: container.viewContext)
+      // Format the date for localization
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long // Adjust to .short, .medium, or .full as needed
+        dateFormatter.timeStyle = .none // Only include the date, no time
+        dateFormatter.locale = Locale.current // Respect the user's locale settings
+        let localizedDateString = dateFormatter.string(from: plate.creationDate ?? .now)
+        // Construct the localized title
+        plate.title = String(
+            format: NSLocalizedString("Plate-%@", comment: "Title with creation date"),
+          localizedDateString
+        )
+    //    plate.title = NSLocalizedString("Plate ", comment: "Part of title") + (plate.creationDate ?? .now).formatted
+        // plate.creationDate = .now
+        if let selectedDate = selectedDate {
+               // Set the creation date to the selected date, but keep the time as midnight
+               let calendar = Calendar.current
+               let newDate = calendar.startOfDay(for: selectedDate) // This sets time to midnight
+               plate.creationDate = newDate
+           } else {
+               // If no date is selected, default to today's date and time
+               plate.creationDate = .now
+           }
+        plate.quality = 1
+        // Set the mealtime attribute from the selected filter, defaulting to "breakfast" if no mealtime is selected
+        plate.mealtime = "anytimeMeal"
+        plate.photo = nil
+        selectedPlate = plate
+        save()
+    }
+    
+    /// Creates a new tag with default values and saves it to the context.
+        /// - Note: New tags are added to the available tag types if they do not already exist.
+    func newTag() {
+        let tag = Tag(context: container.viewContext)
+        tag.id = UUID()
+        tag.name = " New Tag"
+        tag.creationDate = Date()
+        tag.type = "User"
+        if !availableTagTypes.contains(tag.type ?? "User") {
+            availableTagTypes.append(tag.type ?? "User")
+            }
+        save()
+        // Add new tag logic
+           hasNewTag = true  // Ensure "User" tags are initially shown
+           showTagTypeFilters["User"] = true
+    }
+    
+    /// Counts the number of plates created on a specific date.
+        /// - Parameter date: The date to filter plates by.
+        /// - Returns: The number of plates created on the given date.
+    func countSelectedDatePlates(for date: Date) -> Int {
+        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
+        // Get the start and end of the given day
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .second, value: 86399, to: startOfDay) ?? startOfDay
+        // Use a range for comparison
+        request.predicate = NSPredicate(
+            format: "creationDate >= %@ AND creationDate <= %@",
+            startOfDay as NSDate,
+            endOfDay as NSDate)
+        return (try? container.viewContext.count(for: request)) ?? 0
+    }
+
 
     /// Called when remote store changes. It triggers a change in the view model.
     func remoteStoreChanged(_ notification: Notification) {
         objectWillChange.send()
-    }
-
-    /// Creates default tags if they don't already exist. Each tag is associated with a tag type.
-        ///
-        /// - Parameters:
-        ///   - tagType: The type of the tag to be created (e.g., "Food", "Month").
-        ///   - tagNames: A list of tag names to be created.
-        ///   - context: The NSManagedObjectContext used for saving the tag to the Core Data store.
-    func createDefaultTags(tagType: String, tagNames: [String], context: NSManagedObjectContext) {
-        for tagName in tagNames {
-            let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "name == %@", tagName)
-            // If the tag doesn't exist, create and save it
-            if (try? context.count(for: fetchRequest)) == 0 {
-                let tag = Tag(context: context)
-                tag.id = UUID()
-                tag.name = tagName
-                tag.type = tagType
-                addTagTypeIfNeeded(tagType)
-            }
-        }
-        saveContext(context)
-    }
-
-    /// Deletes default tags based on the provided tag type.
-       ///
-       /// - Parameters:
-       ///   - tagType: The tag type (e.g., "Food", "Month") of tags to be deleted.
-       ///   - context: The NSManagedObjectContext used to delete the tags.
-    func deleteDefaultTags(tagType: String, context: NSManagedObjectContext) {
-        let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "type == %@", tagType)
-        do {
-            let tagsToDelete = try context.fetch(fetchRequest)
-            for tag in tagsToDelete {
-                context.delete(tag)
-            }
-            removeTagTypeIfNeeded(tagType)
-            saveContext(context)
-            print("Successfully deleted all \(tagType) tags")
-        } catch {
-            print("Failed to delete \(tagType) tags: \(error)")
-        }
-    }
-
-    /// Adds a tag type to the list of available tag types if it isn't already present.
-       ///
-       /// - Parameter tagType: The tag type to be added.
-    private func addTagTypeIfNeeded(_ tagType: String) {
-        if !availableTagTypes.contains(tagType) {
-            availableTagTypes.append(tagType)
-        }
-    }
-
-    /// Removes a tag type from the list of available tag types if it exists.
-        ///
-        /// - Parameter tagType: The tag type to be removed.
-    private func removeTagTypeIfNeeded(_ tagType: String) {
-        if let index = availableTagTypes.firstIndex(of: tagType) {
-            availableTagTypes.remove(at: index)
-        }
-    }
-
-    /// Saves the provided context to Core Data, handling any errors that may occur.
-        ///
-        /// - Parameter context: The NSManagedObjectContext to save.
-    private func saveContext(_ context: NSManagedObjectContext) {
-        do {
-            try context.save()
-        } catch {
-            print("Failed to save context: \(error)")
-        }
-    }
-
-    /// Creates default food tags by calling `createDefaultTags` with the appropriate parameters.
-        ///
-        /// - Parameter context: The NSManagedObjectContext used for creating tags.
-    func createDefaultFoodTags(context: NSManagedObjectContext) {
-        createDefaultTags(tagType: "Food", tagNames: defaultFoodTags, context: context)
-    }
-
-    /// Deletes default food tags by calling `deleteDefaultTags` with the appropriate parameters.
-        ///
-        /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-    func deleteDefaultFoodTags(context: NSManagedObjectContext) {
-        deleteDefaultTags(tagType: "Food", context: context)
-    }
-
-    /// Creates default month tags by calling `createDefaultTags` with the appropriate parameters.
-        ///
-        /// - Parameter context: The NSManagedObjectContext used for creating tags.
-    func createDefaultMonthTags(context: NSManagedObjectContext) {
-        let defaultMonthTags = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ].map { NSLocalizedString($0, tableName: "DefaultTags", comment: "Month name") }
-        createDefaultTags(tagType: "Month", tagNames: defaultMonthTags, context: context)
-    }
-
-    /// Deletes default month tags by calling `deleteDefaultTags` with the appropriate parameters.
-        ///
-        /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-    func deleteDefaultMonthTags(context: NSManagedObjectContext) {
-        deleteDefaultTags(tagType: "Month", context: context)
-    }
-
-    /// Creates default emotion tags by calling `createDefaultTags` with the appropriate parameters.
-        ///
-        /// - Parameter context: The NSManagedObjectContext used for creating tags.
-    func createDefaultEmotionTags(context: NSManagedObjectContext) {
-        let defaultEmotionTags = ["Happy", "Stress"].map { NSLocalizedString(
-            $0,
-            tableName: "DefaultTags",
-            comment: "Emotion"
-        ) }
-        createDefaultTags(tagType: "Emotion", tagNames: defaultEmotionTags, context: context)
-    }
-
-    /// Deletes default emotion tags by calling `deleteDefaultTags` with the appropriate parameters.
-       ///
-       /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-    func deleteDefaultEmotionTags(context: NSManagedObjectContext) {
-        deleteDefaultTags(tagType: "Emotion", context: context)
-    }
-
-    /// Creates default reaction tags by calling `createDefaultTags` with the appropriate parameters.
-        ///
-        /// - Parameter context: The NSManagedObjectContext used for creating tags.
-    func createDefaultReactionTags(context: NSManagedObjectContext) {
-        let defaultReactionTags = ["Sick", "Feel good"].map { NSLocalizedString(
-            $0,
-            tableName: "DefaultTags",
-            comment: "Reaction"
-        ) }
-        createDefaultTags(tagType: "Reaction", tagNames: defaultReactionTags, context: context)
-    }
-
-    /// Deletes default reaction tags by calling `deleteDefaultTags` with the appropriate parameters.
-        ///
-        /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-    func deleteDefaultReactionTags(context: NSManagedObjectContext) {
-        deleteDefaultTags(tagType: "Reaction", context: context)
     }
 
     /// Saves our Core Data context iff there are changes. This silently ignores
@@ -429,411 +373,8 @@ class DataController: ObservableObject {
         save()
     }
 
-    /// Returns a list of tags that are associated with a given plate, but are missing from it.
-        ///
-        /// - Parameter plate: The Plate object to compare against.
-        /// - Returns: An array of missing tags.
-    func missingTags(from plate: Plate) -> [Tag] {
-        let request = Tag.fetchRequest()
-        let allTags = (try? container.viewContext.fetch(request)) ?? []
-        let allTagsSet = Set(allTags)
-        let difference = allTagsSet.symmetricDifference(plate.plateTags)
-        return difference.sorted()
-    }
-
-    /// Fetches all tags from Core Data.
-        ///
-        /// - Returns: An array of all Tag objects.
-    func allTags() -> [Tag] {
-        let request: NSFetchRequest<Tag> = Tag.fetchRequest()
-        return (try? container.viewContext.fetch(request)) ?? []
-    }
+    // MARK: Awards
     
-    /// Runs a fetch request with various predicates that filter the user's plates based
-    /// on tags, mealtime, quality, title and notes.
-    /// - Returns: An array of all matching plates.
-    func platesForSelectedFilter() -> [Plate] {
-        let filter = selectedFilter ?? .all
-        var predicates = [NSPredicate]()
-        
-        // Apply date filter if a selected date exists
-        if let selectedDate = filter.selectedDate ?? selectedDate {
-            let startOfDay = Calendar.current.startOfDay(for: selectedDate)
-            if let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) {
-                predicates.append(NSPredicate(
-                    format: "creationDate >= %@ AND creationDate < %@",
-                    startOfDay as NSDate,
-                    endOfDay as NSDate))
-            }
-        }
-        if let tag = filter.tag {
-            let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
-            predicates.append(tagPredicate)
-        }
-        // Apply quality filter if a quality is selected
-        if filter.quality >= 0 {
-            predicates.append(NSPredicate(format: "quality = %d", filter.quality))
-        }
-        // Apply mealtime filter if a mealtime is selected
-        if let mealtime = filter.mealtime {
-            predicates.append(NSPredicate(format: "mealtime = %@", mealtime))
-        }
-        // Apply filter text if it exists
-        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
-        if !trimmedFilterText.isEmpty {
-            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
-            let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
-            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate]))
-        }
-        // Combine all predicates (AND logic between date, quality, etc.)
-        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
-        if !predicates.isEmpty {
-            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        }
-        // If the filter is "All", no predicate will be applied (fetch all plates)
-        if filter == .all {
-            fetchRequest.predicate = nil
-        }
-        // Sorting plates by creationDate
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
-        return (try? container.viewContext.fetch(fetchRequest)) ?? []
-    }
-
-    /// Saves an image to the local filesystem.
-        /// - Parameter image: The image to be saved.
-        /// - Returns: The file path where the image was saved, or nil if the save failed.
-        /// - Note: The image is saved as a JPEG with 80% quality compression.
-    func saveImageToFileSystem(image: UIImage) -> String? {
-        let photoDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let photoName = UUID().uuidString + ".jpg"
-        let photoURL = photoDirectory.appendingPathComponent(photoName)
-        if let imageData = image.jpegData(compressionQuality: 0.8) {
-            do {
-                try imageData.write(to: photoURL)
-                print("Image successfully saved at path: \(photoURL.path)")
-                return photoURL.path
-            } catch {
-                print("Error saving image: \(error.localizedDescription)")
-            }
-        } else {
-            print("Failed to generate JPEG data for the image.")
-        }
-        return nil
-    }
-
-    /// Saves an image to CloudKit.
-        /// - Parameters:
-        ///   - image: The image to be saved.
-        ///   - imageName: The name for the image file.
-        /// - Returns: The CloudKit record ID of the saved record, or nil if the operation failed.
-        /// - Note: The image is temporarily saved to the local filesystem before uploading to CloudKit to create a CKAsset.
-    func saveImageToCloudKit(image: UIImage, imageName: String) async -> CKRecord.ID? {
-        // Convert UIImage to Data (JPEG format)
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            print("Failed to convert image to JPEG data.")
-            return nil
-        }
-        // Save the image data locally before uploading to CloudKit (in a temporary directory)
-        let fileManager = FileManager.default
-        let temporaryDirectoryURL = fileManager.temporaryDirectory
-        let fileURL = temporaryDirectoryURL.appendingPathComponent(imageName).appendingPathExtension("jpg")
-        do {
-            // Write the image data to the file URL
-            try imageData.write(to: fileURL)
-            // Create a CKAsset from the image file URL
-            let imageAsset = CKAsset(fileURL: fileURL)
-            // Create a CloudKit record to save the asset
-            let record = CKRecord(recordType: "Plate") // Adjust the record type as needed
-            record["imageData"] = imageAsset
-            // Save the record to CloudKit's private database
-            let container = CKContainer.default()
-            let privateDatabase = container.privateCloudDatabase
-            // Save the record and await the result
-            let savedRecord = try await privateDatabase.save(record)
-            // Clean up the local file after uploading it to CloudKit
-            try fileManager.removeItem(at: fileURL)
-            // Return the recordID of the saved record
-            return savedRecord.recordID
-        } catch {
-            print("Error saving image to CloudKit: \(error.localizedDescription)")
-            return nil
-        }
-    }
-
-    /// Fetches an image from CloudKit using the provided record ID.
-        /// - Parameter recordID: The CloudKit record ID of the image.
-        /// - Returns: The fetched image, or nil if the operation failed.
-        /// - Note: The image is fetched as a CKAsset and then converted back into a UIImage.
-    func fetchImageFromCloudKit(recordID: String) async -> UIImage? {
-        // Check if the recordID is non-empty.
-        guard !recordID.isEmpty else {
-            print("Record ID is empty")
-            return nil
-        }
-        let container = CKContainer.default()
-        let privateDatabase = container.privateCloudDatabase
-        let ckRecordID = CKRecord.ID(recordName: recordID)
-        do {
-            let record = try await privateDatabase.record(for: ckRecordID)
-            if let ckAsset = record["imageData"] as? CKAsset, let fileURL = ckAsset.fileURL {
-                let imageData = try Data(contentsOf: fileURL)
-                if let image = UIImage(data: imageData) {
-                    print("Image fetched successfully from CloudKit.")
-                    return image
-                } else {
-                    print("Failed to convert data into an image.")
-                    return nil
-                }
-            } else {
-                print("No image data found for record.")
-                return nil
-            }
-        } catch {
-            print("Failed to fetch record from CloudKit: \(error.localizedDescription)")
-            return nil
-        }
-    }
-
-    /// Fetches an image from the local filesystem using the given image path.
-        /// - Parameter imagePath: The path of the image to be fetched.
-        /// - Returns: The fetched image, or nil if the image is not found.
-        /// - Note: The method attempts to find the image file within the app's document directory.
-    func fetchImageFromFileSystem(imagePath: String) -> UIImage? {
-        // Extract the file name from the image path (if it's a full path or a file name)
-        let imageFileName = imagePath.components(separatedBy: "/").last ?? imagePath
-        // Construct the local file URL by appending the file name to the app's document directory path
-        let fileManager = FileManager.default
-        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            print("Error: Could not find the document directory.")
-            return nil
-        }
-        let localFileURL = documentsURL.appendingPathComponent(imageFileName)
-        print("Local file URL: \(localFileURL.path)")  // Log the constructed local file path
-        // Check if the file exists in the local file system
-        guard fileManager.fileExists(atPath: localFileURL.path) else {
-            print("Image not found in local storage at path: \(localFileURL.path)")
-            return nil
-        }
-        // If the file exists, load the image from the file path
-        return UIImage(contentsOfFile: localFileURL.path)
-    }
-
-    /// Counts the number of plates with the given quality rating.
-        /// - Parameter quality: The quality rating to filter plates by.
-        /// - Returns: The number of plates with the specified quality rating.
-    func countQualityPlates(for quality: Int) -> Int {
-        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
-        request.predicate = NSPredicate(format: "quality = %d", quality)
-        return (try? container.viewContext.count(for: request)) ?? 0
-    }
-
-    /// Counts the number of plates for a specific mealtime.
-       /// - Parameter mealtime: The mealtime filter.
-       /// - Returns: The number of plates associated with the given mealtime.
-    func countMealtimePlates(for mealtime: String) -> Int {
-        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
-        request.predicate = NSPredicate(format: "mealtime = %@", mealtime) // Use %@ for strings
-        return (try? container.viewContext.count(for: request)) ?? 0
-    }
-
-    /// Counts the number of plates associated with a specific tag.
-        /// - Parameter tagName: The name of the tag to filter plates by.
-        /// - Returns: The number of plates with the specified tag.
-    func countTagPlates(for tagName: String) -> Int {
-        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
-        // Use the name of the tag for comparison
-        request.predicate = NSPredicate(format: "ANY tags.name == %@", tagName)
-        return (try? container.viewContext.count(for: request)) ?? 0
-    }
-
-    /// Counts the number of plates created on a specific date.
-        /// - Parameter date: The date to filter plates by.
-        /// - Returns: The number of plates created on the given date.
-    func countSelectedDatePlates(for date: Date) -> Int {
-        let request: NSFetchRequest<Plate> = Plate.fetchRequest()
-        // Get the start and end of the given day
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: date)
-        let endOfDay = calendar.date(byAdding: .second, value: 86399, to: startOfDay) ?? startOfDay
-        // Use a range for comparison
-        request.predicate = NSPredicate(
-            format: "creationDate >= %@ AND creationDate <= %@",
-            startOfDay as NSDate,
-            endOfDay as NSDate)
-        return (try? container.viewContext.count(for: request)) ?? 0
-    }
-
-    /// Creates a new plate and initializes its properties with default values or values from the current selection.
-        /// - Note: The creation date is set to the selected date (or today's date if no date is selected). The quality and mealtime are set to default values.
-    func newPlate() {
-        let plate = Plate(context: container.viewContext)
-      // Format the date for localization
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long // Adjust to .short, .medium, or .full as needed
-        dateFormatter.timeStyle = .none // Only include the date, no time
-        dateFormatter.locale = Locale.current // Respect the user's locale settings
-        let localizedDateString = dateFormatter.string(from: plate.creationDate ?? .now)
-        // Construct the localized title
-        plate.title = String(
-            format: NSLocalizedString("Plate-%@", comment: "Title with creation date"),
-          localizedDateString
-        )
-    //    plate.title = NSLocalizedString("Plate ", comment: "Part of title") + (plate.creationDate ?? .now).formatted
-        // plate.creationDate = .now
-        if let selectedDate = selectedDate {
-               // Set the creation date to the selected date, but keep the time as midnight
-               let calendar = Calendar.current
-               let newDate = calendar.startOfDay(for: selectedDate) // This sets time to midnight
-               plate.creationDate = newDate
-           } else {
-               // If no date is selected, default to today's date and time
-               plate.creationDate = .now
-           }
-        plate.quality = 1
-        // Set the mealtime attribute from the selected filter, defaulting to "breakfast" if no mealtime is selected
-        plate.mealtime = "anytimeMeal"
-        plate.photo = nil
-        selectedPlate = plate
-        save()
-    }
-
-    /// Creates a new tag with default values and saves it to the context.
-        /// - Note: New tags are added to the available tag types if they do not already exist.
-    func newTag() {
-        let tag = Tag(context: container.viewContext)
-        tag.id = UUID()
-        tag.name = " New Tag"
-        tag.creationDate = Date()
-        tag.type = "User"
-        if !availableTagTypes.contains(tag.type ?? "User") {
-            availableTagTypes.append(tag.type ?? "User")
-            }
-        save()
-        // Add new tag logic
-           hasNewTag = true  // Ensure "User" tags are initially shown
-           showTagTypeFilters["User"] = true
-    }
-
-    /// Checks if a tag was created within the last hour.
-        /// - Parameter tag: The tag to check.
-        /// - Returns: True if the tag was created within the last hour, otherwise false.
-    func isTagRecentlyCreated(tag: Tag) -> Bool {
-        guard let creationDate = tag.creationDate else { return false }
-        let timeInterval = Date().timeIntervalSince(creationDate)
-        return timeInterval <= 3600 // 3600 seconds = 1 hour
-    }
-
-    /// Sorts tags based on their type and the default tag types.
-        /// - Parameters:
-        ///   - type1: The first tag type to compare.
-        ///   - type2: The second tag type to compare.
-        /// - Returns: True if `type1` should come before `type2` in the sorted list, otherwise false.
-    func sortTags(_ type1: String, _ type2: String) -> Bool {
-        let defaultTagTypes = ["Month", "Food", "Emotion", "Reaction"]
-        if type1 == "User" {
-            return true
-        } else if type2 == "User" {
-            return false
-        }
-        let isType1Default = defaultTagTypes.contains(type1)
-        let isType2Default = defaultTagTypes.contains(type2)
-        if isType1Default && !isType2Default {
-            return false
-        } else if !isType1Default && isType2Default {
-            return true
-        }
-        return type1 < type2
-    }
-
-    /// Determines if tags of a specific type should be displayed based on user filters.
-        /// - Parameter type: The tag type to check.
-        /// - Returns: True if the tags of the specified type should be shown, otherwise false.
-    func shouldShowTags(for type: String) -> Bool {
-        if type == "User" {
-            return showTagTypeFilters[type] ?? hasNewTag
-        }
-        return showTagTypeFilters[type] ?? false
-    }
-
-    /// Toggles the expansion state of a button.
-        /// - Parameter isExpanded: A binding to the state of the button's expansion.
-        /// - Returns: A view for the toggle button with the appropriate icon.
-    func toggleButton(isExpanded: Binding<Bool>) -> some View {
-        Button {
-            isExpanded.wrappedValue.toggle()
-        } label: {
-            Image(systemName: isExpanded.wrappedValue ? "chevron.down" : "chevron.right")
-                .foregroundColor(.secondary)
-        }
-    }
-
-    /// Retrieves a binding to toggle the expansion of tags based on their type.
-        /// - Parameter type: The tag type to retrieve the binding for.
-        /// - Returns: A binding to the expansion state for the specified tag type.
-    func getToggleBinding(for type: String) -> Binding<Bool> {
-        return Binding<Bool>(
-            get: { self.showTagTypeFilters[type] ?? false },
-            set: { self.showTagTypeFilters[type] = $0 }
-        )
-    }
-
-    /// Provides a header view for a tag section with an appropriate icon and toggle button.
-        /// - Parameter type: The type of the tag to display.
-        /// - Returns: A view for the header of a tag section.
-    func tagHeaderView(for type: String) -> some View {
-        HStack {
-            // Display appropriate icon based on tag type
-            if type == "Food" {
-                Image(systemName: "fork.knife")
-                    .foregroundColor(.blue)
-            } else if type == "Month" {
-                Image(systemName: "30.square")
-                    .foregroundColor(.blue)
-            } else if type == "Emotion" {
-                Image(systemName: "face.smiling")
-                    .foregroundColor(.blue)
-            } else if type == "Reaction" {
-                Image(systemName: "exclamationmark.triangle")
-                    .foregroundColor(.blue)
-            } else {
-                Image(systemName: "tag")
-                    .foregroundColor(.blue)
-            }
-            Text(type.capitalized)
-            Spacer()
-            // Toggle button for expand/collapse
-            if availableTagTypes.contains(type) {
-                toggleButton(isExpanded: getToggleBinding(for: type))
-            }
-        }
-        .padding(.vertical, 4)
-    }
-
-    /// Counts the number of items for a fetch request.
-       /// - Parameter fetchRequest: The fetch request to count.
-       /// - Returns: The count of items for the specified fetch request.
-    func count<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
-        (try? container.viewContext.count(for: fetchRequest)) ?? 0
-    }
-
-    /// Counts the number of unique days on which plates were created.
-        /// - Parameter context: The managed object context to fetch from.
-        /// - Returns: The number of unique days with plates.
-    func countUniqueDays(context: NSManagedObjectContext) -> Int {
-        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
-        do {
-            let plates = try context.fetch(fetchRequest)
-            // Extract unique days from plate creation dates
-            let uniqueDays = Set(plates.compactMap { plate in
-                plate.creationDate?.startOfDay  // Ensure we're only using the date, not time
-            })
-            return uniqueDays.count
-        } catch {
-            print("Failed to fetch plates: \(error)")
-            return 0
-        }
-    }
-
     /// Checks whether a user has earned a specific award.
         /// - Parameter award: The award to check.
         /// - Returns: True if the user has earned the award, otherwise false.
@@ -866,21 +407,139 @@ class DataController: ObservableObject {
         return false
     }
 
-    /// Formats a date using the default date format.
-       /// - Parameter date: The date to format.
-       /// - Returns: The formatted date string.
-   func formattedDate(_ date: Date) -> String {
-        dateFormatter.string(from: date)
+    /// Counts the number of items for a fetch request.
+       /// - Parameter fetchRequest: The fetch request to count.
+       /// - Returns: The count of items for the specified fetch request.
+    func count<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
+        (try? container.viewContext.count(for: fetchRequest)) ?? 0
     }
 
-    /// The date formatter used for formatting dates.
-        /// - Returns: The configured date formatter.
-    var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
+    /// Counts the number of unique days on which plates were created.
+        /// - Parameter context: The managed object context to fetch from.
+        /// - Returns: The number of unique days with plates.
+    func countUniqueDays(context: NSManagedObjectContext) -> Int {
+        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
+        do {
+            let plates = try context.fetch(fetchRequest)
+            // Extract unique days from plate creation dates
+            let uniqueDays = Set(plates.compactMap { plate in
+                plate.creationDate?.startOfDay  // Ensure we're only using the date, not time
+            })
+            return uniqueDays.count
+        } catch {
+            print("Failed to fetch plates: \(error)")
+            return 0
+        }
     }
 
+    // MARK: Tags
+    
+    /// Returns a list of tags that are associated with a given plate, but are missing from it.
+        ///
+        /// - Parameter plate: The Plate object to compare against.
+        /// - Returns: An array of missing tags.
+    func missingTags(from plate: Plate) -> [Tag] {
+        let request = Tag.fetchRequest()
+        let allTags = (try? container.viewContext.fetch(request)) ?? []
+        let allTagsSet = Set(allTags)
+        let difference = allTagsSet.symmetricDifference(plate.plateTags)
+        return difference.sorted()
+    }
+
+    /// Fetches all tags from Core Data.
+        ///
+        /// - Returns: An array of all Tag objects.
+    func allTags() -> [Tag] {
+        let request: NSFetchRequest<Tag> = Tag.fetchRequest()
+        return (try? container.viewContext.fetch(request)) ?? []
+    }
+    
+    /// Provides a header view for a tag section with an appropriate icon and toggle button.
+        /// - Parameter type: The type of the tag to display.
+        /// - Returns: A view for the header of a tag section.
+    func tagHeaderView(for type: String) -> some View {
+        HStack {
+            // Display appropriate icon based on tag type
+            if type == "Food" {
+                Image(systemName: "fork.knife")
+                    .foregroundStyle(.blue)
+            } else if type == "Month" {
+                Image(systemName: "30.square")
+                    .foregroundStyle(.blue)
+            } else if type == "Emotion" {
+                Image(systemName: "face.smiling")
+                    .foregroundStyle(.blue)
+            } else if type == "Reaction" {
+                Image(systemName: "exclamationmark.triangle")
+                    .foregroundStyle(.blue)
+            } else {
+                Image(systemName: "tag")
+                    .foregroundStyle(.blue)
+            }
+            Text(type.capitalized)
+            Spacer()
+            // Toggle button for expand/collapse
+            if availableTagTypes.contains(type) {
+                toggleButton(isExpanded: getToggleBinding(for: type))
+            }
+        }
+        .padding(.vertical, 4)
+    }
+    
+    /// Determines if tags of a specific type should be displayed based on user filters.
+        /// - Parameter type: The tag type to check.
+        /// - Returns: True if the tags of the specified type should be shown, otherwise false.
+    func shouldShowTags(for type: String) -> Bool {
+        if type == "User" {
+            return showTagTypeFilters[type] ?? hasNewTag
+        }
+        return showTagTypeFilters[type] ?? false
+    }
+
+    /// Toggles the expansion state of a button.
+        /// - Parameter isExpanded: A binding to the state of the button's expansion.
+        /// - Returns: A view for the toggle button with the appropriate icon.
+    func toggleButton(isExpanded: Binding<Bool>) -> some View {
+        Button {
+            isExpanded.wrappedValue.toggle()
+        } label: {
+            Image(systemName: isExpanded.wrappedValue ? "chevron.down" : "chevron.right")
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    /// Retrieves a binding to toggle the expansion of tags based on their type.
+        /// - Parameter type: The tag type to retrieve the binding for.
+        /// - Returns: A binding to the expansion state for the specified tag type.
+    func getToggleBinding(for type: String) -> Binding<Bool> {
+        return Binding<Bool>(
+            get: { self.showTagTypeFilters[type] ?? false },
+            set: { self.showTagTypeFilters[type] = $0 }
+        )
+    }
+
+    /// Sorts tags based on their type and the default tag types.
+        /// - Parameters:
+        ///   - type1: The first tag type to compare.
+        ///   - type2: The second tag type to compare.
+        /// - Returns: True if `type1` should come before `type2` in the sorted list, otherwise false.
+    func sortTags(_ type1: String, _ type2: String) -> Bool {
+        let defaultTagTypes = ["Month", "Food", "Emotion", "Reaction"]
+        if type1 == "User" {
+            return true
+        } else if type2 == "User" {
+            return false
+        }
+        let isType1Default = defaultTagTypes.contains(type1)
+        let isType2Default = defaultTagTypes.contains(type2)
+        if isType1Default && !isType2Default {
+            return false
+        } else if !isType1Default && isType2Default {
+            return true
+        }
+        return type1 < type2
+    }
+    // for testing
     func createSampleData() {
         let viewContext = container.viewContext
         for i in 1...5 {
@@ -898,6 +557,21 @@ class DataController: ObservableObject {
 
         try? viewContext.save()
     }
+    /// Formats a date using the default date format.
+       /// - Parameter date: The date to format.
+       /// - Returns: The formatted date string.
+   func formattedDate(_ date: Date) -> String {
+        dateFormatter.string(from: date)
+    }
+
+    /// The date formatter used for formatting dates.
+        /// - Returns: The configured date formatter.
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }
+
 }
 
 /// An extension to `Date` that provides a computed property for getting the start of the day.
@@ -911,5 +585,5 @@ extension Date {
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)
     }
-    
+
 }

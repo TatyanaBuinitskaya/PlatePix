@@ -27,6 +27,11 @@
 		EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250482D28FEA300E002D7 /* AwardSheetView.swift */; };
 		EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504A2D2D4B7700E002D7 /* SettingsView.swift */; };
 		EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */; };
+		EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */; };
+		EB567F6E2D55FB1F002AC274 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6D2D55FB1F002AC274 /* ContentViewModel.swift */; };
+		EB567F702D55FE14002AC274 /* PlateBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6F2D55FE14002AC274 /* PlateBoxViewModel.swift */; };
+		EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F732D562ECF002AC274 /* UserPreferences.swift */; };
+		EB567F762D56490F002AC274 /* PlateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F752D56490F002AC274 /* PlateViewModel.swift */; };
 		EB7922442D3E236300BF97D7 /* PDFSheetShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */; };
 		EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922452D3FDBDA00BF97D7 /* TagListView.swift */; };
 		EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79224D2D410E2F00BF97D7 /* Tags.swift */; };
@@ -80,6 +85,11 @@
 		EB2250482D28FEA300E002D7 /* AwardSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardSheetView.swift; sourceTree = "<group>"; };
 		EB22504A2D2D4B7700E002D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetView.swift; sourceTree = "<group>"; };
+		EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewModel.swift; sourceTree = "<group>"; };
+		EB567F6D2D55FB1F002AC274 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		EB567F6F2D55FE14002AC274 /* PlateBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateBoxViewModel.swift; sourceTree = "<group>"; };
+		EB567F732D562ECF002AC274 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		EB567F752D56490F002AC274 /* PlateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateViewModel.swift; sourceTree = "<group>"; };
 		EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFSheetShareView.swift; sourceTree = "<group>"; };
 		EB7922452D3FDBDA00BF97D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		EB79224D2D410E2F00BF97D7 /* Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
@@ -177,8 +187,9 @@
 		EBB2C94A2D52450D008FA818 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				EB2250212D156C5A00E002D7 /* SideBarView.swift */,
 				EB2250252D156DB600E002D7 /* Filter.swift */,
+				EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */,
+				EB2250212D156C5A00E002D7 /* SideBarView.swift */,
 				EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */,
 			);
 			path = Filters;
@@ -187,9 +198,12 @@
 		EBB2C94B2D524519008FA818 /* Plates */ = {
 			isa = PBXGroup;
 			children = (
+				EB567F6D2D55FB1F002AC274 /* ContentViewModel.swift */,
 				EB22500E2D1457FE00E002D7 /* ContentView.swift */,
 				EB22502F2D197B8B00E002D7 /* PlateBox.swift */,
 				EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */,
+				EB567F6F2D55FE14002AC274 /* PlateBoxViewModel.swift */,
+				EB567F732D562ECF002AC274 /* UserPreferences.swift */,
 			);
 			path = Plates;
 			sourceTree = "<group>";
@@ -203,6 +217,7 @@
 				EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */,
 				EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */,
 				EB2250332D198AE300E002D7 /* NoPlateIView.swift */,
+				EB567F752D56490F002AC274 /* PlateViewModel.swift */,
 			);
 			path = "Editing plate";
 			sourceTree = "<group>";
@@ -410,6 +425,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB2250262D156DB600E002D7 /* Filter.swift in Sources */,
+				EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */,
+				EB567F762D56490F002AC274 /* PlateViewModel.swift in Sources */,
 				EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */,
 				EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */,
 				EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */,
@@ -422,6 +439,8 @@
 				EB7922442D3E236300BF97D7 /* PDFSheetShareView.swift in Sources */,
 				EB2250242D156C6800E002D7 /* DetailView.swift in Sources */,
 				EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */,
+				EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */,
+				EB567F6E2D55FB1F002AC274 /* ContentViewModel.swift in Sources */,
 				EB2250362D1ADA5C00E002D7 /* Bundle-Decodable.swift in Sources */,
 				EB22501E2D146E9600E002D7 /* DataController.swift in Sources */,
 				EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */,
@@ -431,6 +450,7 @@
 				EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */,
 				EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */,
 				EB22500D2D1457FE00E002D7 /* MyPlatesApp.swift in Sources */,
+				EB567F702D55FE14002AC274 /* PlateBoxViewModel.swift in Sources */,
 				EB2250322D198AD100E002D7 /* PlateView.swift in Sources */,
 				EB22502A2D1599C800E002D7 /* Plate-CoreDataHelpers.swift in Sources */,
 			);

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CloudKit
 
 /// A view that displays the image for a plate, with support for loading from both CloudKit and local storage.
 struct PlateImageView: View {
@@ -41,7 +42,7 @@ struct PlateImageView: View {
                 Image(systemName: placeholderIcon)
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .padding()
                     .background(backgroundColor)
                     .frame(maxWidth: maxWidth, maxHeight: maxHeight)
@@ -65,7 +66,7 @@ struct PlateImageView: View {
                Task {
                    // Fetches image from CloudKit if the plate has a `cloudRecordID`.
                    if let cloudRecordID = plate.cloudRecordID {
-                       if let fetchedImage = await dataController.fetchImageFromCloudKit(recordID: cloudRecordID) {
+                       if let fetchedImage = await fetchImageFromCloudKit(recordID: cloudRecordID) {
                            // Successfully fetched image from CloudKit.
                            imagePlateView = fetchedImage
                            return // Exit if image fetched from CloudKit
@@ -75,7 +76,7 @@ struct PlateImageView: View {
                    }
                    // If CloudKit fetch fails or there is no `cloudRecordID`, attempts to load from local storage.
                    if let localPath = plate.photo {
-                       if let localImage = dataController.fetchImageFromFileSystem(imagePath: localPath) {
+                       if let localImage = fetchImageFromFileSystem(imagePath: localPath) {
                            // Successfully fetched image from local storage.
                            imagePlateView = localImage
                        } else {
@@ -87,4 +88,62 @@ struct PlateImageView: View {
                }
            }
        }
-   }
+
+    /// Fetches an image from CloudKit using the provided record ID.
+        /// - Parameter recordID: The CloudKit record ID of the image.
+        /// - Returns: The fetched image, or nil if the operation failed.
+        /// - Note: The image is fetched as a CKAsset and then converted back into a UIImage.
+    func fetchImageFromCloudKit(recordID: String) async -> UIImage? {
+        // Check if the recordID is non-empty.
+        guard !recordID.isEmpty else {
+            print("Record ID is empty")
+            return nil
+        }
+        let container = CKContainer.default()
+        let privateDatabase = container.privateCloudDatabase
+        let ckRecordID = CKRecord.ID(recordName: recordID)
+        do {
+            let record = try await privateDatabase.record(for: ckRecordID)
+            if let ckAsset = record["imageData"] as? CKAsset, let fileURL = ckAsset.fileURL {
+                let imageData = try Data(contentsOf: fileURL)
+                if let image = UIImage(data: imageData) {
+                    print("Image fetched successfully from CloudKit.")
+                    return image
+                } else {
+                    print("Failed to convert data into an image.")
+                    return nil
+                }
+            } else {
+                print("No image data found for record.")
+                return nil
+            }
+        } catch {
+            print("Failed to fetch record from CloudKit: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    /// Fetches an image from the local filesystem using the given image path.
+        /// - Parameter imagePath: The path of the image to be fetched.
+        /// - Returns: The fetched image, or nil if the image is not found.
+        /// - Note: The method attempts to find the image file within the app's document directory.
+    func fetchImageFromFileSystem(imagePath: String) -> UIImage? {
+        // Extract the file name from the image path (if it's a full path or a file name)
+        let imageFileName = imagePath.components(separatedBy: "/").last ?? imagePath
+        // Construct the local file URL by appending the file name to the app's document directory path
+        let fileManager = FileManager.default
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Error: Could not find the document directory.")
+            return nil
+        }
+        let localFileURL = documentsURL.appendingPathComponent(imageFileName)
+        print("Local file URL: \(localFileURL.path)")  // Log the constructed local file path
+        // Check if the file exists in the local file system
+        guard fileManager.fileExists(atPath: localFileURL.path) else {
+            print("Image not found in local storage at path: \(localFileURL.path)")
+            return nil
+        }
+        // If the file exists, load the image from the file path
+        return UIImage(contentsOfFile: localFileURL.path)
+    }
+}

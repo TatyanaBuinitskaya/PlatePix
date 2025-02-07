@@ -38,7 +38,7 @@ struct AwardsView: View {
                                 Text("\(award.value)")
                                     .font(.title2)
                             }
-                            .foregroundColor(color(for: award))
+                            .foregroundStyle(color(for: award))
                         }
                         .accessibilityLabel(
                             label(for: award)
@@ -57,7 +57,7 @@ struct AwardsView: View {
     }
     
     /// The title for the award details alert, indicating whether the award is unlocked.
-    var awardTitle: String {
+    var awardTitle: LocalizedStringKey {
         if dataController.hasEarned(award: selectedAward) {
             return "Unlocked: \(selectedAward.name)"
         } else {

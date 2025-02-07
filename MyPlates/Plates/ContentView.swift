@@ -12,9 +12,13 @@ import SwiftUI
 struct ContentView: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
+//    @StateObject var viewModel: ViewModel
     /// A state variable that tracks whether a new plate is created.
     @State private var isNewPlateCreated = false
     /// The layout of the grid used for displaying plates. It contains two flexible columns.
+    
+    @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
+
     let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -50,15 +54,21 @@ struct ContentView: View {
               }
           }
       }
+//    init(dataController: DataController) {
+//        let viewModel = ViewModel(dataController: dataController)
+//        _viewModel = StateObject(wrappedValue: viewModel)
+//    }
   }
 
 #Preview("English") {
+   // ContentView(dataController: .preview)
     ContentView()
         .environmentObject(DataController.preview)
         .environment(\.locale, Locale(identifier: "EN"))
 }
 
 #Preview("Russian") {
+   // ContentView(dataController: .preview)
     ContentView()
         .environmentObject(DataController.preview)
         .environment(\.locale, Locale(identifier: "RU"))
@@ -110,10 +120,10 @@ extension ContentView {
     private var plateInfoToggles: some View {
         HStack {
             // For each info, create a toggle button with the appropriate label.
-            plateInfoToggle(label: "time", isOn: $dataController.showMealTime)
-            plateInfoToggle(label: "quality", isOn: $dataController.showQuality)
-            plateInfoToggle(label: "notes", isOn: $dataController.showNotes)
-            plateInfoToggle(label: "tags", isOn: $dataController.showTags)
+            plateInfoToggle(label: "time", isOn: $userPreferences.showMealTime)
+            plateInfoToggle(label: "quality", isOn: $userPreferences.showQuality)
+            plateInfoToggle(label: "notes", isOn: $userPreferences.showNotes)
+            plateInfoToggle(label: "tags", isOn: $userPreferences.showTags)
         }
         .padding(5)
         .background(Capsule().fill(Color.blue))
@@ -124,12 +134,14 @@ extension ContentView {
         HStack {
             Text(label)  // Displays the info label.
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
             Button {
+                print("Before Toggle: \(isOn.wrappedValue)")
                 isOn.wrappedValue.toggle() // Toggles the info state when the button is pressed.
+                print("After Toggle: \(isOn.wrappedValue)")
             } label: {
                 Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(.white) // Makes the icon white.
+                    .foregroundStyle(.white) // Makes the icon white.
                     .font(.title2) // Sets the icon size.
             }
         }
@@ -143,7 +155,7 @@ extension ContentView {
         } label: {
             Image(systemName: "plus")
                 .font(.title2)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .padding()
                 .background(Color.blue)
                 .clipShape(Circle())
@@ -157,7 +169,7 @@ extension ContentView {
             if let currentFilter = dataController.selectedFilter {
                 // Combine the date filter with existing quality or tag filters
                 if currentFilter.quality >= 0 || currentFilter.tag != nil {
-                    dataController.selectedFilter = Filter.filterForDate(date)
+                   dataController.selectedFilter = Filter.filterForDate(date)
                         .applyingFilters(from: currentFilter)
                 } else {
                     dataController.selectedFilter = Filter.filterForDate(date)

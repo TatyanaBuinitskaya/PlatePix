@@ -35,7 +35,7 @@ struct CalendarSheetView: View {
             } label: {
                 Text("All Plates")
                     .font(.title2)
-                    .foregroundColor(.blue)
+                    .foregroundStyle(.blue)
             }
             Text("Select a Date")
                 .font(.headline)
@@ -87,7 +87,7 @@ struct CalendarSheetView: View {
                 // Displays a message when no date is selected.
                 Text("No Date Selected")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.gray)
                     .padding(.top)
             }
         }
@@ -104,7 +104,7 @@ struct CalendarSheetView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(Color.blue)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .cornerRadius(8)
         }
         .padding()
@@ -124,7 +124,7 @@ struct SelectedDateRow: View {
                 .fontWeight(.semibold)
             Spacer()
             Text(value)
-                .foregroundColor(.blue)
+                .foregroundStyle(.blue)
         }
         .padding(.horizontal)
     }
