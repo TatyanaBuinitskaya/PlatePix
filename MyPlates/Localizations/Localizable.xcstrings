@@ -540,6 +540,9 @@
         }
       }
     },
+    "Fetching offers…" : {
+
+    },
     "Filter plates" : {
       "localizations" : {
         "en" : {
@@ -609,6 +612,9 @@
     "Food Tags" : {
 
     },
+    "Get the most out of the app" : {
+
+    },
     "Healthy" : {
       "comment" : "Healthy quality filter",
       "localizations" : {
@@ -641,6 +647,9 @@
           }
         }
       }
+    },
+    "In-app purchases are disabled" : {
+
     },
     "Language" : {
       "localizations" : {
@@ -826,6 +835,7 @@
 
     },
     "New Plate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1157,6 +1167,9 @@
         }
       }
     },
+    "Restore Purchases" : {
+
+    },
     "Select a Date" : {
       "localizations" : {
         "en" : {
@@ -1289,6 +1302,9 @@
     "Show reminders" : {
 
     },
+    "Sorry, there was an error loading our store." : {
+
+    },
     "tags" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1407,6 +1423,9 @@
         }
       }
     },
+    "Try Again" : {
+
+    },
     "Unhealthy" : {
       "comment" : "Unhealthy quality filter",
       "localizations" : {
@@ -1460,6 +1479,9 @@
         }
       }
     },
+    "Upgrade Today!" : {
+
+    },
     "You can become who you want" : {
       "localizations" : {
         "en" : {
@@ -1475,6 +1497,9 @@
           }
         }
       }
+    },
+    "You can't purchase the premium unlock because in-app purchases are disabled on this device.\n\nPlease ask whomever manages your device for assistance." : {
+
     },
     "You may want to focus on eating healthier." : {
       "localizations" : {

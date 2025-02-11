@@ -12,19 +12,28 @@ import SwiftUI
 struct ContentView: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
-//    @StateObject var viewModel: ViewModel
+    /// An environment property that provides access to the system's request review action.
+    /// This allows the app to prompt the user for a review at an appropriate time.
+    @Environment(\.requestReview) var requestReview
+    /// An environment object that stores user preferences.
+    /// This enables the app to access and modify user settings across different views.
+    @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
     // spotlight
-    /// A state variable that tracks whether a new plate is created.
-    @State private var isNewPlateCreated = false
     /// A state variable that tracks whether a selected plate should be displayed in `PlateView`.
     @State private var isShowingPlate = false
-  
-    @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
+    /// A state variable that determines whether the store view should be shown.
+    @State private var showingStore = false
+   
     /// The layout of the grid used for displaying plates. It contains two flexible columns.
     let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    /// A computed property that checks if the user has created at least x plates.
+    // If the count of plates reaches x or more, the app may prompt the user for a review.
+    var shouldRequestReview: Bool {
+        dataController.count(for: Plate.fetchRequest()) >= 10
+    }
 
     var body: some View {
           NavigationStack {
@@ -36,6 +45,7 @@ struct ContentView: View {
                   .padding()
                   floatingControls  // Displays the floating controls for interacting with the plates.
               }
+              .onAppear(perform: askForReview)
               // Set the title of the navigation bar to be dynamic based on the selected title in the dataController.
               .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
               .navigationBarTitleDisplayMode(.inline)
@@ -45,7 +55,7 @@ struct ContentView: View {
                   PlateView(plate: plate) // Navigates to the PlateView when a plate is selected.
               }
               // Navigates to a new plate view when a new plate is created.
-              .navigationDestination(isPresented: $isNewPlateCreated) {
+              .navigationDestination(isPresented: $dataController.isNewPlateCreated) {
                   if let newPlate = dataController.selectedPlate {
                       PlateView(plate: newPlate)
                   }
@@ -70,10 +80,11 @@ struct ContentView: View {
               }
           }
       }
-//    init(dataController: DataController) {
-//        let viewModel = ViewModel(dataController: dataController)
-//        _viewModel = StateObject(wrappedValue: viewModel)
-//    }
+    func askForReview() {
+        if shouldRequestReview {
+            requestReview()
+        }
+    }
   }
 
 #Preview("English") {
@@ -175,8 +186,8 @@ extension ContentView {
     /// A button that triggers the creation of a new plate.
     private var addPlateButton: some View {
         Button {
-            dataController.newPlate() // Calls the method to create a new plate in the dataController.
-            isNewPlateCreated = true // Marks that a new plate has been created.
+            tryNewPlate() 
+            dataController.isNewPlateCreated = true // Marks that a new plate has been created.
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
         } label: {
@@ -188,7 +199,21 @@ extension ContentView {
                 .clipShape(Circle())
                 .shadow(radius: 5)
         }
+        .sheet(isPresented: $showingStore, content: StoreView.init)
+
     }
+
+    /// Attempts to create a new plate.
+    /// - If the user has access to adding new plates, it proceeds normally.
+    /// - If the user has reached a limit (e.g., in the free version), it triggers the store view to prompt an upgrade.
+    func tryNewPlate() {
+        // Calls `newPlate()` from `dataController`, which returns `false` if the user cannot add more plates.
+        if dataController.newPlate() == false {
+            // If the user is restricted from adding more plates, show the store to encourage upgrading.
+            showingStore = true
+        }
+    }
+    
 // TODO: combine with mealtime filter too
     /// Applies the date filter to the current data.
     private func applyDateFilter() {

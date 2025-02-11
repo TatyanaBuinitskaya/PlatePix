@@ -6,14 +6,16 @@
 //
 import CloudKit
 import CoreData
-import UIKit
+import StoreKit
 import SwiftUI
+import UIKit
 
 /// An environment singleton responsible for managing the Core Data stack, handling data persistence,
 /// fetch requests, filter management, and tracking user awards within the app.
 class DataController: ObservableObject {
     /// The CloudKit container used to store all Core Data entities in the app.
     let container: NSPersistentCloudKitContainer
+    /// Delegate for handling Core Data and Spotlight search integration.
     var spotlightDelegate: NSCoreDataCoreSpotlightDelegate?
     /// The currently selected filter for viewing plates, initialized with today's date.
     @Published var selectedFilter: Filter? = Filter.filterForDate(Date())
@@ -45,10 +47,17 @@ class DataController: ObservableObject {
         UserDefaults.standard.set(availableTagTypes, forKey: "availableTagTypes")
     }
 }
+    /// A variable that tracks whether a new plate is created.
+    @Published var isNewPlateCreated = false
     /// A Boolean value indicating whether reminders are enabled.
     @Published var reminderEnabled = false
     /// Stores the selected time for daily reminders.
     @Published var reminderTime = Date()
+    /// The UserDefaults suite where we're saving user data.
+    let defaults: UserDefaults
+    /// The StoreKit products we've loaded for the store.
+    @Published var products = [Product]()
+
    
     /// A dictionary that maps mealtime identifiers to localized strings.
     let mealtimeDictionary: [String: String] = [
@@ -60,6 +69,9 @@ class DataController: ObservableObject {
         "eveningSnack": NSLocalizedString("Evening snack", comment: "Mealtime: Evening Snack"),
         "anytimeMeal": NSLocalizedString("Anytime meal", comment: "Mealtime: Anytime Meal")
     ]
+    /// A background task that monitors in-app purchase transactions.
+    /// This ensures that the app properly handles previous purchases and unlocks premium features when needed.
+    private var storeTask: Task<Void, Never>?
     /// A background task responsible for saving changes to Core Data asynchronously.
     private var saveTask: Task<Void, Error>?
     /// A static preview instance of DataController for SwiftUI previews and testing.
@@ -67,6 +79,8 @@ class DataController: ObservableObject {
         let dataController = DataController(inMemory: true)
         return dataController
     }()
+  
+    
     /// Dynamically generates the title based on the selected filters such as date, quality, mealtime, and tags.
     var dynamicTitle: String {
         // If there's a selected date, we start with the date first
@@ -166,10 +180,19 @@ class DataController: ObservableObject {
     ///
     /// Defaults to permanent storage.
     /// - Parameter inMemory: Whether to store this data in temporary memory or not.
-    init(inMemory: Bool = false) {
+    /// - Parameter defaults: The UserDefaults suite where user data should be stored
+    init(inMemory: Bool = false, defaults: UserDefaults = .standard) {
+        // Assigns the provided `UserDefaults` instance (or `.standard` if none is provided).
+        self.defaults = defaults
+
         self.availableTagTypes = UserDefaults.standard.stringArray(forKey: "availableTagTypes") ?? []
    //     container = NSPersistentCloudKitContainer(name: "Main")
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
+        
+        // Starts a background task to monitor App Store transactions.
+        storeTask = Task {
+            await monitorTransactions()
+        }
 
         // For testing and previewing purposes, we create a
         // temporary, in-memory database by writing to /dev/null
@@ -268,7 +291,16 @@ class DataController: ObservableObject {
 
     /// Creates a new plate and initializes its properties with default values or values from the current selection.
         /// - Note: The creation date is set to the selected date (or today's date if no date is selected). The quality and mealtime are set to default values.
-    func newPlate() {
+    func newPlate() -> Bool {
+        var shouldCreate = fullVersionUnlocked
+           if shouldCreate == false {
+               // check how many plates we currently have
+               shouldCreate = count(for: Plate.fetchRequest()) < 3
+           }
+           guard shouldCreate else {
+               return false
+           }
+        
         let plate = Plate(context: container.viewContext)
       // Format the date for localization
         let dateFormatter = DateFormatter()
@@ -298,6 +330,7 @@ class DataController: ObservableObject {
         plate.photo = nil
         selectedPlate = plate
         save()
+        return true
     }
     
     /// Creates a new tag with default values and saves it to the context.
@@ -406,6 +439,9 @@ class DataController: ObservableObject {
 //                let context = container.viewContext
 //               let uniqueDaysCount = countUniqueDays(context: context)
 //               return uniqueDaysCount >= award.value
+            
+        case "unlock":
+            return fullVersionUnlocked
         default:
             return false
         }

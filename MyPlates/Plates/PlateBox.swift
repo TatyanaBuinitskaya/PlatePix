@@ -11,7 +11,6 @@ import SwiftUI
 struct PlateBox: View {
     /// The environment object that provides access to shared data across views.
     @EnvironmentObject var dataController: DataController
-//    @StateObject var viewModel: ViewModel
     /// The plate object that provides data for the plate image and related information.
     @ObservedObject var plate: Plate
     /// The optional image of the plate that will be displayed.
@@ -35,10 +34,6 @@ struct PlateBox: View {
         }
         .accessibilityIdentifier(plate.plateTitle)
     }
-//    init(plate: Plate) {
-//        let viewModel = ViewModel(plate: plate)
-//        _viewModel = StateObject(wrappedValue: viewModel)
- //   }
 }
 
 /// A view that overlays meal-related information on a plate.
