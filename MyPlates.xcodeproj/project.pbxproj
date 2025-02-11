@@ -32,6 +32,8 @@
 		EB567F702D55FE14002AC274 /* PlateBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6F2D55FE14002AC274 /* PlateBoxViewModel.swift */; };
 		EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F732D562ECF002AC274 /* UserPreferences.swift */; };
 		EB567F762D56490F002AC274 /* PlateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F752D56490F002AC274 /* PlateViewModel.swift */; };
+		EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F792D5A2599002AC274 /* RemindersSheetView.swift */; };
+		EB567F7C2D5A2751002AC274 /* DataController-Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */; };
 		EB7922442D3E236300BF97D7 /* PDFSheetShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */; };
 		EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922452D3FDBDA00BF97D7 /* TagListView.swift */; };
 		EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79224D2D410E2F00BF97D7 /* Tags.swift */; };
@@ -90,6 +92,8 @@
 		EB567F6F2D55FE14002AC274 /* PlateBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateBoxViewModel.swift; sourceTree = "<group>"; };
 		EB567F732D562ECF002AC274 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		EB567F752D56490F002AC274 /* PlateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateViewModel.swift; sourceTree = "<group>"; };
+		EB567F792D5A2599002AC274 /* RemindersSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersSheetView.swift; sourceTree = "<group>"; };
+		EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Notifications.swift"; sourceTree = "<group>"; };
 		EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFSheetShareView.swift; sourceTree = "<group>"; };
 		EB7922452D3FDBDA00BF97D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		EB79224D2D410E2F00BF97D7 /* Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 				EBB2C9522D5246B2008FA818 /* Configuration */,
 				EB22500C2D1457FE00E002D7 /* MyPlatesApp.swift */,
 				EB22501D2D146E9600E002D7 /* DataController.swift */,
+				EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */,
 				EB2250442D1D753900E002D7 /* example.jpg */,
 				EB2250102D14580100E002D7 /* Assets.xcassets */,
 				EB2250122D14580100E002D7 /* Preview Content */,
@@ -265,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				EB22504A2D2D4B7700E002D7 /* SettingsView.swift */,
+				EB567F792D5A2599002AC274 /* RemindersSheetView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -426,6 +432,7 @@
 			files = (
 				EB2250262D156DB600E002D7 /* Filter.swift in Sources */,
 				EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */,
+				EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */,
 				EB567F762D56490F002AC274 /* PlateViewModel.swift in Sources */,
 				EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */,
 				EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */,
@@ -439,6 +446,7 @@
 				EB7922442D3E236300BF97D7 /* PDFSheetShareView.swift in Sources */,
 				EB2250242D156C6800E002D7 /* DetailView.swift in Sources */,
 				EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */,
+				EB567F7C2D5A2751002AC274 /* DataController-Notifications.swift in Sources */,
 				EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */,
 				EB567F6E2D55FB1F002AC274 /* ContentViewModel.swift in Sources */,
 				EB2250362D1ADA5C00E002D7 /* Bundle-Decodable.swift in Sources */,

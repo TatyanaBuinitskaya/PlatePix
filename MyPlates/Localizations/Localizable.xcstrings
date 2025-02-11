@@ -317,6 +317,9 @@
         }
       }
     },
+    "Check Settings" : {
+
+    },
     "Choose a Food tag filter" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -910,7 +913,6 @@
       }
     },
     "Ok" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -941,6 +943,9 @@
           }
         }
       }
+    },
+    "Oops!" : {
+
     },
     "Personalize" : {
       "localizations" : {
@@ -1064,6 +1069,9 @@
           }
         }
       }
+    },
+    "Reminder time" : {
+
     },
     "Reminders" : {
       "localizations" : {
@@ -1278,6 +1286,9 @@
         }
       }
     },
+    "Show reminders" : {
+
+    },
     "tags" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1342,6 +1353,9 @@
           }
         }
       }
+    },
+    "There was a problem setting your notification. Please check you have notifications enabled." : {
+
     },
     "This plate has been deleted" : {
       "localizations" : {

@@ -14,6 +14,7 @@ import SwiftUI
 class DataController: ObservableObject {
     /// The CloudKit container used to store all Core Data entities in the app.
     let container: NSPersistentCloudKitContainer
+    var spotlightDelegate: NSCoreDataCoreSpotlightDelegate?
     /// The currently selected filter for viewing plates, initialized with today's date.
     @Published var selectedFilter: Filter? = Filter.filterForDate(Date())
     /// The currently selected plate, if any, for detailed viewing or editing.
@@ -44,6 +45,11 @@ class DataController: ObservableObject {
         UserDefaults.standard.set(availableTagTypes, forKey: "availableTagTypes")
     }
 }
+    /// A Boolean value indicating whether reminders are enabled.
+    @Published var reminderEnabled = false
+    /// Stores the selected time for daily reminders.
+    @Published var reminderTime = Date()
+   
     /// A dictionary that maps mealtime identifiers to localized strings.
     let mealtimeDictionary: [String: String] = [
         "breakfast": NSLocalizedString("Breakfast", comment: "Mealtime: Breakfast"),
@@ -185,13 +191,25 @@ class DataController: ObservableObject {
             queue: .main,
             using: remoteStoreChanged
         )
-        container.loadPersistentStores { _, error in
+        container.loadPersistentStores { [weak self] _, error in
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
+            if let description = self?.container.persistentStoreDescriptions.first {
+                description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            
+            if let coordinator = self?.container.persistentStoreCoordinator {
+                self?.spotlightDelegate = NSCoreDataCoreSpotlightDelegate(
+                    forStoreWith: description,
+                    coordinator: coordinator
+                )
+                
+                self?.spotlightDelegate?.startSpotlightIndexing()            }
+        }
+
             #if DEBUG
             if CommandLine.arguments.contains("enable-testing") {
-                self.deleteAll()
+                self?.deleteAll()
             }
             UIView.setAnimationsEnabled(false)
             #endif
@@ -557,6 +575,19 @@ class DataController: ObservableObject {
 
         try? viewContext.save()
     }
+    
+    func plate(with uniqueIdentifier: String) -> Plate? {
+        guard let url = URL(string: uniqueIdentifier) else {
+            return nil
+        }
+
+        guard let id = container.persistentStoreCoordinator.managedObjectID(forURIRepresentation: url) else {
+            return nil
+        }
+
+        return try? container.viewContext.existingObject(with: id) as? Plate
+    }
+
     /// Formats a date using the default date format.
        /// - Parameter date: The date to format.
        /// - Returns: The formatted date string.

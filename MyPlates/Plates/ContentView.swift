@@ -13,12 +13,14 @@ struct ContentView: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
 //    @StateObject var viewModel: ViewModel
+    // spotlight
     /// A state variable that tracks whether a new plate is created.
     @State private var isNewPlateCreated = false
-    /// The layout of the grid used for displaying plates. It contains two flexible columns.
-    
+    /// A state variable that tracks whether a selected plate should be displayed in `PlateView`.
+    @State private var isShowingPlate = false
+  
     @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
-
+    /// The layout of the grid used for displaying plates. It contains two flexible columns.
     let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -48,7 +50,21 @@ struct ContentView: View {
                       PlateView(plate: newPlate)
                   }
               }
-              // Applies the selected date filter when the date changes.
+              // spotlight
+              // Dynamically navigates to PlateView when a plate is selected
+              .navigationDestination(isPresented: $isShowingPlate) {
+                              if let selectedPlate = dataController.selectedPlate {
+                                  PlateView(plate: selectedPlate)
+                              }
+                          }
+              // spotlight
+              // Observes changes in selectedPlate and triggers navigation
+              .onChange(of: dataController.selectedPlate) {
+                              if dataController.selectedPlate != nil {
+                                  isShowingPlate = true
+                              }
+                          }
+//              // Applies the selected date filter when the date changes.
               .onChange(of: dataController.selectedDate) {
                   applyDateFilter()
               }
@@ -136,13 +152,22 @@ extension ContentView {
                 .font(.caption)
                 .foregroundStyle(.secondary)
             Button {
-                print("Before Toggle: \(isOn.wrappedValue)")
                 isOn.wrappedValue.toggle() // Toggles the info state when the button is pressed.
-                print("After Toggle: \(isOn.wrappedValue)")
+               // for iOS less 17
+//                if isOn.wrappedValue {
+//                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+//                }
             } label: {
                 Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
                     .foregroundStyle(.white) // Makes the icon white.
                     .font(.title2) // Sets the icon size.
+            }
+            .sensoryFeedback(trigger: isOn.wrappedValue) { oldValue, newValue in
+                if newValue {
+                    .success
+                } else {
+                    nil
+                }
             }
         }
     }
@@ -152,6 +177,8 @@ extension ContentView {
         Button {
             dataController.newPlate() // Calls the method to create a new plate in the dataController.
             isNewPlateCreated = true // Marks that a new plate has been created.
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
         } label: {
             Image(systemName: "plus")
                 .font(.title2)

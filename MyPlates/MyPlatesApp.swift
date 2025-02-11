@@ -5,6 +5,7 @@
 //  Created by Tatyana Buinitskaya on 19.12.2024.
 //
 
+import CoreSpotlight
 import SwiftUI
 
 /// The main entry point of the MyPlates application, responsible for initializing the app's environment and managing its lifecycle.
@@ -14,7 +15,11 @@ struct MyPlatesApp: App {
     @StateObject var dataController = DataController()
     /// The current scene phase of the app, used to detect transitions between active, background, and inactive states.
     @Environment(\.scenePhase) var scenePhase
+    /// The shared instance of user preferences, used to store UI settings persistently.
     @StateObject var userPreferences = UserPreferences.shared  // Create the shared instance
+    /// A state variable that tracks whether a plate is opened via Spotlight search.
+    /// When this is `true`, the UI updates to show the selected plate.
+    @State private var openSpotlightPlate = false  // Track Spotlight navigation
     
     var body: some Scene {
         WindowGroup {
@@ -26,6 +31,13 @@ struct MyPlatesApp: App {
              //   ContentView(dataController: dataController)
                 ContentView()
                     .environmentObject(userPreferences)  // Pass it down as EnvironmentObject
+                // Detect changes to `openSpotlightPlate` and reset after handling.
+                    .onChange(of: openSpotlightPlate) {
+                                           if openSpotlightPlate {
+                                               openSpotlightPlate = false
+                                           }
+                                       }
+                //
             } detail: {
                 /// The detail view that shows specific information about a selected plate.
                 DetailView()
@@ -39,6 +51,27 @@ struct MyPlatesApp: App {
                 if scenePhase != .active {
                     dataController.save()
                 }
+            }
+            .onContinueUserActivity(CSSearchableItemActionType, perform: loadSpotlightItem)
+        }
+    }
+// spotlight
+//    func loadSpotlightItem(_ userActivity: NSUserActivity) {
+//        if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+//            dataController.selectedPlate = dataController.plate(with: uniqueIdentifier)
+//            dataController.selectedFilter = .all
+//        }
+//    }
+    /// Handles Spotlight search selection.
+        ///
+        /// - Parameter userActivity: The user activity that triggered the app from Spotlight search.
+    func loadSpotlightItem(_ userActivity: NSUserActivity) {
+        // Retrieve the unique identifier stored in Spotlight's metadata.
+        if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+            // Find the corresponding plate in Core Data.
+            if let plate = dataController.plate(with: uniqueIdentifier) {
+                dataController.selectedPlate = plate
+                openSpotlightPlate = true  // Trigger UI update
             }
         }
     }

@@ -4,6 +4,12 @@
     "Almonds" : {
       "comment" : "A snack",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Almonds"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15,6 +21,12 @@
     "Apple" : {
       "comment" : "A fruit",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

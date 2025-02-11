@@ -380,7 +380,11 @@ struct TagRow: View {
             Spacer()
             // Conditionally displays a "Remove" button if `removeAction` is provided.
             if let removeAction = removeAction {
-                Button(action: removeAction) {
+                Button {
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.success) // Haptic feedback when removing a tag
+                    removeAction()
+                } label: {
                     HStack {
                         Text("Remove").font(.caption)
                         Image(systemName: "minus.circle")
@@ -390,16 +394,24 @@ struct TagRow: View {
             } else if selectedTags?.contains(tag) == true {
                 // Shows a checkmark if the tag is part of the selected tags.
                 Image(systemName: "checkmark")
+                    .onAppear {
+                        let generator = UIImpactFeedbackGenerator(style: .light)
+                        generator.impactOccurred() // Light haptic when selecting a tag
+                            }
             }
         }
         .contextMenu {
             // Provides options to rename or delete the tag when long-pressed.
             Button {
+                let generator = UIImpactFeedbackGenerator(style: .medium)
+                generator.impactOccurred() // Medium haptic for renaming
                 edit(tag)
             } label: {
                 Label("Rename", systemImage: "pencil")
             }
             Button(role: .destructive) {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.error) // Strong haptic for deleting
                 delete(tag)
             } label: {
                 Label("Delete", systemImage: "trash")
@@ -408,6 +420,8 @@ struct TagRow: View {
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             // Allows quick swipe actions to rename or delete the tag.
             Button {
+                let generator = UIImpactFeedbackGenerator(style: .medium)
+                generator.impactOccurred() // Medium haptic for renaming
                 edit(tag)
             } label: {
                 Label("Rename", systemImage: "pencil")
@@ -415,6 +429,8 @@ struct TagRow: View {
             .tint(.blue)
 
             Button(role: .destructive) {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.error) // Strong haptic for deleting
                 delete(tag)
             } label: {
                 Label("Delete", systemImage: "trash")
@@ -424,7 +440,11 @@ struct TagRow: View {
             // Displays an alert for renaming the tag with input fields for name and type.
             TextField("New Name", text: $tagName)
             TextField("New Type", text: $tagType)
-            Button("OK", action: completeEdit)
+            Button("OK", action: {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.success) // Success haptic when renaming
+                completeEdit()
+            })
             Button("Cancel", role: .cancel) { }
         }
     }

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24C101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
-    <entity name="Plate" representedClassName="Plate" syncable="YES" codeGenerationType="class">
+    <entity name="Plate" representedClassName="Plate" syncable="YES" codeGenerationType="class" coreSpotlightDisplayNameExpression="notes">
         <attribute name="cloudRecordID" optional="YES" attributeType="String"/>
-        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="mealtime" optional="YES" attributeType="String"/>
-        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String" spotlightIndexingEnabled="YES"/>
         <attribute name="photo" optional="YES" attributeType="String"/>
         <attribute name="quality" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String" spotlightIndexingEnabled="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="plates" inverseEntity="Tag"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">

@@ -9,8 +9,13 @@ import SwiftUI
 
 /// The settings screen that allows users to personalize app preferences and access app-related information.
 struct SettingsView: View {
+    /// The shared `DataController` object that manages the data.
+    @EnvironmentObject var dataController: DataController
     /// The environment property used to dismiss the current view when the back button is tapped.
     @Environment(\.dismiss) var dismiss
+    @State var showRemindersSheet = false
+    @State private var showingNotificationsError = false
+    @Environment(\.openURL) var openURL
 
     var body: some View {
         NavigationView {
@@ -18,7 +23,11 @@ struct SettingsView: View {
                 // A section that provides options to personalize the app's appearance and behavior.
                 Section("Personalize") {
                     Label("Theme", systemImage: "paintpalette")
-                    Label("Reminders", systemImage: "envelope")
+                    Button{
+                        showRemindersSheet = true
+                    } label: {
+                        Label("Reminders", systemImage: "envelope")
+                    }
                     Label("Language", systemImage: "flag")
                     Label("Home Screen Widget", systemImage: "quote.bubble")
                     Label("Lock Screen Widget", systemImage: "text.bubble")
@@ -33,6 +42,11 @@ struct SettingsView: View {
                     Label("Privacy policy", systemImage: "shield")
                 }
             }
+            .sheet(isPresented: $showRemindersSheet) {
+                RemindersSheetView()
+                    .presentationDetents([.medium])
+                    .presentationDetents([.fraction(0.3)])
+            }
         }
         .navigationTitle("Settings")
         .navigationBarBackButtonHidden(true) // Hide the default back button text 
@@ -46,7 +60,42 @@ struct SettingsView: View {
                 }
             }
         }
+        .alert("Oops!", isPresented: $showingNotificationsError) {
+            Button("Check Settings", action: showAppSettings)
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("There was a problem setting your notification. Please check you have notifications enabled.")
+        }
+        .onChange(of: dataController.reminderEnabled) {
+            updateReminder()
+        }
+        .onChange(of: dataController.reminderTime) {
+            updateReminder()
+        }
     }
+    func showAppSettings() {
+        guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {
+            return
+        }
+
+        openURL(settingsURL)
+    }
+
+    func updateReminder() {
+        dataController.removeReminders()
+
+        Task { @MainActor in
+            if dataController.reminderEnabled {
+                let success = await dataController.addReminder()
+
+                if success == false {
+                    dataController.reminderEnabled = false
+                    showingNotificationsError = true
+                }
+            }
+        }
+    }
+
 }
 
 #Preview {
