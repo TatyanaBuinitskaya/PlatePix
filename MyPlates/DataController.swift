@@ -9,6 +9,7 @@ import CoreData
 import StoreKit
 import SwiftUI
 import UIKit
+import WidgetKit
 
 /// An environment singleton responsible for managing the Core Data stack, handling data persistence,
 /// fetch requests, filter management, and tracking user awards within the app.
@@ -57,8 +58,10 @@ class DataController: ObservableObject {
     let defaults: UserDefaults
     /// The StoreKit products we've loaded for the store.
     @Published var products = [Product]()
+    
+    //    /// A unique identifier for the "New Plate" user activity, used for deep linking and shortcuts.
+    //    private let newPlateActivity = "com.TatianaBuinitskaia.MyPlates.newPlate"
 
-   
     /// A dictionary that maps mealtime identifiers to localized strings.
     let mealtimeDictionary: [String: String] = [
         "breakfast": NSLocalizedString("Breakfast", comment: "Mealtime: Breakfast"),
@@ -639,6 +642,12 @@ class DataController: ObservableObject {
         return formatter
     }
 
+    //    /// Handles resuming activity from user actions, such as shortcuts or handoff.
+    //       /// If triggered, it attempts to create a new plate.
+    //       /// - Parameter userActivity: The user activity object containing activity details.
+    //    func resumeActivity(_ userActivity: NSUserActivity) {
+    //        tryNewPlate()
+    //    }
 }
 
 /// An extension to `Date` that provides a computed property for getting the start of the day.

@@ -4,9 +4,10 @@
 //
 //  Created by Tatyana Buinitskaya on 19.12.2024.
 //
-
+import BackgroundTasks
 import CoreSpotlight
 import SwiftUI
+import WidgetKit
 
 /// The main entry point of the MyPlates application, responsible for initializing the app's environment and managing its lifecycle.
 @main
@@ -15,12 +16,14 @@ struct MyPlatesApp: App {
     @StateObject var dataController = DataController()
     /// The current scene phase of the app, used to detect transitions between active, background, and inactive states.
     @Environment(\.scenePhase) var scenePhase
+    /// Adapts `AppDelegate` for use with SwiftUI's application lifecycle.
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     /// The shared instance of user preferences, used to store UI settings persistently.
     @StateObject var userPreferences = UserPreferences.shared  // Create the shared instance
     /// A state variable that tracks whether a plate is opened via Spotlight search.
     /// When this is `true`, the UI updates to show the selected plate.
     @State private var openSpotlightPlate = false  // Track Spotlight navigation
-    
+
     var body: some Scene {
         WindowGroup {
             NavigationSplitView {
@@ -33,11 +36,10 @@ struct MyPlatesApp: App {
                     .environmentObject(userPreferences)  // Pass it down as EnvironmentObject
                 // Detect changes to `openSpotlightPlate` and reset after handling.
                     .onChange(of: openSpotlightPlate) {
-                                           if openSpotlightPlate {
-                                               openSpotlightPlate = false
-                                           }
-                                       }
-                //
+                        if openSpotlightPlate {
+                            openSpotlightPlate = false
+                        }
+                    }
             } detail: {
                 /// The detail view that shows specific information about a selected plate.
                 DetailView()

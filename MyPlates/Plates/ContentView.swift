@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 /// The main view for displaying plates, including a motivational text, a grid of plates,
 /// and floating controls for selecting which information about plates to show and adding new plates.
 struct ContentView: View {
@@ -46,6 +47,12 @@ struct ContentView: View {
                   floatingControls  // Displays the floating controls for interacting with the plates.
               }
               .onAppear(perform: askForReview)
+              .onOpenURL(perform: openURL)
+//              .userActivity(newPlateActivity) { activity in
+//                  activity.isEligibleForPrediction = true
+//                  activity.title = "New Plate"
+//              }
+//              .onContinueUserActivity(newPlateActivity, perform: resumeActivity)
               // Set the title of the navigation bar to be dynamic based on the selected title in the dataController.
               .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
               .navigationBarTitleDisplayMode(.inline)
@@ -80,11 +87,23 @@ struct ContentView: View {
               }
           }
       }
+
+    /// Checks if the review request criteria are met and triggers the review prompt.
     func askForReview() {
         if shouldRequestReview {
             requestReview()
         }
     }
+
+    /// Handles URL opening logic, specifically checking for "newPlate" in the URL.
+        /// If found, it triggers the creation of a new plate.
+        /// - Parameter url: The URL to be processed.
+    func openURL(_ url: URL) {
+        if url.absoluteString.contains("newPlate") {
+            tryNewPlate()
+        }
+    }
+
   }
 
 #Preview("English") {
@@ -104,9 +123,15 @@ struct ContentView: View {
 extension ContentView {
     /// A view displaying the motivational text at the top of the screen.
     private var motivation: some View {
-        Text("You can become who you want")
-            .font(.headline)
-            .padding(.bottom, 8)
+        VStack {
+            // Access the shared UserDefaults from widget using the app group identifier
+            let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.MyPlates")!
+            // Retrieve the saved motivational text, or use a default message if none is found
+            let motivationText = defaults.string(forKey: "lastMotivationText") ?? "Stay motivated!"
+            Text(motivationText)
+                .font(.callout)
+                .multilineTextAlignment(.center)
+        }
     }
 
     /// A view displaying the grid of plates with search functionality.

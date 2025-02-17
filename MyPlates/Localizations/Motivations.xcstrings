@@ -1,0 +1,1559 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Motivation0" : {
+      "comment" : "new",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your dream will never come true if you don't start moving towards it"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твоя мечта никогда не станет реальностью, если ты не начнешь идти к ней"
+          }
+        }
+      }
+    },
+    "Motivation1" : {
+      "comment" : "new",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't wait for the perfect moment, it will never come, just start taking action"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не жди идеального момента, он никогда не наступит, просто начинай действовать "
+          }
+        }
+      }
+    },
+    "Motivation2" : {
+      "comment" : "new",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can achieve even the biggest goal by simply taking a small step every day"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты сможешь достичь даже самой глобальной цели, если просто делать маленький шаг каждый день"
+          }
+        }
+      }
+    },
+    "Motivation3" : {
+      "comment" : "new",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The best way to control what and how much you eat is to record everything in a food diary"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лучший способ контролировать что и сколько ты ешь - это записывать все в пищевой дневник"
+          }
+        }
+      }
+    },
+    "Motivation4" : {
+      "comment" : "new",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stick to a healthy diet, exercise and you will always be ahead of those who do nothing and waste their time"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Соблюдай правильное питание, тренируйся и ты всегда будешь впереди тех, кто ничего не делает и тратит время впустую"
+          }
+        }
+      }
+    },
+    "Motivation5" : {
+      "comment" : "new",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slip-ups in your diet are part of the process, don't blame yourself, just keep moving towards your goal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Срывы - это часть процесса, не вини себя, а просто продолжай двигаться к цели"
+          }
+        }
+      }
+    },
+    "Motivation6" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The first changes will be noticeable in two weeks, and visible results will appear after one or two months, so don’t give up ahead of time"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Первые изменения будут заметны через две недели, а видимые результаты спустя один или два месяца, не сдавайся раньше времени"
+          }
+        }
+      }
+    },
+    "Motivation7" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changing your usual lifestyle is difficult, but it's even harder to spend your whole life wanting to change yourself and never actually doing it"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сложно изменить свой привычный образ жизни, но еще тяжелее всю жизнь хотеть себя изменить, но так и не сделать этого"
+          }
+        }
+      }
+    },
+    "Motivation8" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eat more fiber-rich foods, let vegetables, fruits, and greens always be at hand"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ешь больше продуктов богатых клетчаткой, пусть овощи, фрукты и зелень всегда будут под рукой"
+          }
+        }
+      }
+    },
+    "Motivation9" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do at least one thing today that will bring you closer to your dream, and the day will not be wasted"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделай сегодня хотя бы одну вещь, которая приблизит тебя к твоей мечте и день уже будет прожит не зря"
+          }
+        }
+      }
+    },
+    "Motivation10" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Love your body now, not when you lose weight, because this is your dream body, it's just still in progress"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Люби свое тело сейчас, а не когда похудеешь, ведь это и есть твое тело мечты, просто оно еще в процессе"
+          }
+        }
+      }
+    },
+    "Motivation11" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Look at those people who have managed to lose weight, you're just as capable as they are, if they could do it, so can you"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посмотри на тех людей, которым удалось похудеть, ты такой же человек, если смогли они, то сможешь и ты"
+          }
+        }
+      }
+    },
+    "Motivation12" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inner confidence and discipline will inevitably lead you to your goal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внутренняя уверенность и дисциплина обязательно приведут тебя к цели"
+          }
+        }
+      }
+    },
+    "Motivation13" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The extra kilograms didn't appear overnight, so don't expect them to disappear instantly, give yourself time and patience"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лишние килограммы не появились за одну ночь, поэтому не ожидай, что они исчезнут мгновенно, дай себе время и терпение"
+          }
+        }
+      }
+    },
+    "Motivation14" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do your best now and you will definitely thank yourself in the future"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Делай сейчас все, что в твоих силах и ты обязательно скажешь себе спасибо в будущем"
+          }
+        }
+      }
+    },
+    "Motivation15" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The accessibility and convenience of products define the basis of nutrition. Make sure that healthy and low-calorie foods are always in your kitchen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступность и удобство продуктов, определяют основу питания, пусть полезные и низкокалорийные продукты всегда будут на твоей кухне"
+          }
+        }
+      }
+    },
+    "Motivation16" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motivation is what gets you moving, starts the change, gives you a push, but then daily actions and discipline are needed"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мотивация – это то, что заставляет сдвинуться с места, начать меняться, дает толчок, а дальше нужны ежедневные действия и дисциплина"
+          }
+        }
+      }
+    },
+    "Motivation17" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The pleasure from eating a bun lasts for 5 minutes, but you can enjoy your magnificent reflection in the mirror constantly"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удовольствие от съеденной булочки длится 5 минут, а своим шикарным отражением в зеркале можно наслаждаться постоянно "
+          }
+        }
+      }
+    },
+    "Motivation18" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instead of sitting and looking at how great others look on social media, it's better to get up and do something to look great yourself"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вместо того, чтобы сидеть и смотреть в социальных сетях как шикарно выглядят другие, лучше встать и сделать что то, чтобы самой выглядеть шикарно "
+          }
+        }
+      }
+    },
+    "Motivation19" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A slip-up is not the end, but just a temporary delay on the way to your goal, so just keep going"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Срыв - это не конец, а лишь временная задержка на пути к своей цели, просто продолжай"
+          }
+        }
+      }
+    },
+    "Motivation20" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't do what's easy, do what will lead you to a beautiful body"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не делай то, что легче, делай то, что приведет тебя к красивому телу"
+          }
+        }
+      }
+    },
+    "Motivation21" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your journey to a healthy weight is a marathon, not a sprint, perseverance and consistency will lead you to success"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твой путь к здоровому весу - это марафон, а не спринт, упорство и постоянство приведут тебя к успеху"
+          }
+        }
+      }
+    },
+    "Motivation22" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you're looking at your phone and chewing something right now, put aside your phone and enjoy your meal, then return to other tasks"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если ты сейчас смотришь в телефон и что-то жуешь, то отложи телефон и насладись едой, а потом возвращайся к другим делам"
+          }
+        }
+      }
+    },
+    "Motivation23" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't regret not starting to lose weight earlier, just do it now, so you won't have reason to regret it in the future"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не жалей, что не начала худеть раньше, просто делай это сейчас, чтобы в будущем не было повода для сожалений"
+          }
+        }
+      }
+    },
+    "Motivation24" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get ready for a smooth and prolonged process, don't chase quick results"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настраивайся на плавный и продолжительный процесс, не гонись за быстрыми результатами"
+          }
+        }
+      }
+    },
+    "Motivation25" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't listen to anyone who says you can't do it, believe in yourself, prove to everyone that you're capable of more"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не слушай никого, кто говорит, что у тебя не получится, верь в себя, докажи всем, что ты способна на большее"
+          }
+        }
+      }
+    },
+    "Motivation26" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every step, no matter how small, brings you closer to your goal, even if progress seems slow, it's still progress"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый шаг, даже самый маленький, приближает тебя к цели, даже если прогресс кажется медленным, он все равно есть"
+          }
+        }
+      }
+    },
+    "Motivation27" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Load up your menu with vitamins and minerals, the more varied your diet, the better you'll feel"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузи свое меню витаминами и минералами, чем разнообразнее твое питание, тем лучше твое самочувствие"
+          }
+        }
+      }
+    },
+    "Motivation28" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't forget to drink water, it helps maintain your body in good condition and reduces appetite"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не забывай пить воду, она помогает поддерживать организм в хорошем состоянии и снижает аппетит"
+          }
+        }
+      }
+    },
+    "Motivation29" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every day when you make a choice in favor of a healthy lifestyle, you're investing in your future"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый день, когда ты делаешь выбор в пользу здорового образа жизни, ты делаешь вклад в свое будущее"
+          }
+        }
+      }
+    },
+    "Motivation30" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There will always be someone slimmer or more successful than you, so compare yourself not to them, but to yourself in the past"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всегда будет кто-то стройнее или успешнее тебя, поэтому сравнивай себя не с ними, а с собой в прошлом"
+          }
+        }
+      }
+    },
+    "Motivation31" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every refusal of sweets is a victory over yourself and one more step towards your goal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый отказ от сладостей - это победа над собой и плюс один шаг к цели"
+          }
+        }
+      }
+    },
+    "Motivation32" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you had started losing weight half a year ago, today you would already have a beautiful and toned body, don't waste time"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если бы ты начала худеть еще полгода назад, то сегодня у тебя бы уже было красивое и подтянутое тело, не теряй время"
+          }
+        }
+      }
+    },
+    "Motivation33" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Even if you only lose a small portion of your excess weight, it's still a positive step towards your goal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Даже если ты сбросишь только небольшую часть своего лишнего веса, это все равно положительный шаг к твоей цели"
+          }
+        }
+      }
+    },
+    "Motivation34" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loving yourself means feeding yourself with delicious and nutritious food, not with sugar and fast food that simply harm your body"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любить себя значит кормить себя вкусной и полезной пищей, а не сахаром и фастфудом, которые просто разрушают твой организм"
+          }
+        }
+      }
+    },
+    "Motivation35" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's not about whether you slip up or not, it's about how quickly you can get back to the right eating habits"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Важно не то, сорвешься ты или нет, а как быстро сможешь вернуться к правильному режиму питания"
+          }
+        }
+      }
+    },
+    "Motivation36" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do a workout instead of watching TV shows or browsing social media, it will be much more beneficial"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Делай тренировку вместо просмотра сериалов или социальных сетей, от этого будет гораздо больше пользы"
+          }
+        }
+      }
+    },
+    "Motivation37" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Life is too short to live in a body you don't like"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жизнь слишком коротка, чтобы жить в теле, которое тебе не нравится"
+          }
+        }
+      }
+    },
+    "Motivation38" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you're tired and have no strength to continue, just take a break, rest, distract yourself, but make sure to come back to your set goal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если ты устала и нет сил продолжать, просто сделай перерыв, отдохни, отвлекись, но обязательно возвращайся к намеченной цели"
+          }
+        }
+      }
+    },
+    "Motivation39" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If going for a walk outdoors isn't part of your plans today, think of how you can combine it with a trip to the store or your journey home"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если прогулка на свежем воздухе не входит в твои сегодняшние планы, то придумай как ее совместить с походом в магазин или дорогой домой"
+          }
+        }
+      }
+    },
+    "Motivation40" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy only healthy and low-calorie food, and there will be no risk of eating something harmful"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупай только полезную и низкокалорийную еду и не будет риска съесть что-то вредное"
+          }
+        }
+      }
+    },
+    "Motivation41" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stand up straight, square your shoulders, pull in your stomach, you already look slimmer and more confident"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стань прямо, расправь плечи, втяни живот, ты уже выглядишь стройнее и увереннее"
+          }
+        }
+      }
+    },
+    "Motivation42" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stay focused on your goal as much as possible, no external factors should deter you from your path"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оставайся максимально сосредоточенной на своей цели, никакие внешние факторы не должны сбить тебя с пути"
+          }
+        }
+      }
+    },
+    "Motivation43" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't give up halfway, otherwise all your efforts will be in vain, just keep moving towards your goal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не сдавайся на полпути, иначе все твои старания пропадут зря, просто продолжай идти к цели"
+          }
+        }
+      }
+    },
+    "Motivation44" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You deserve to feel confident and comfortable in your own body"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты заслуживаешь почувствовать себя уверенно и комфортно в своем теле"
+          }
+        }
+      }
+    },
+    "Motivation45" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't waste time regretting how you look, instead, focus on how slim you will become"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не трать время на сожаления о том, как ты выглядишь, лучше направь свой фокус на то, какой стройной ты станешь"
+          }
+        }
+      }
+    },
+    "Motivation46" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Train yourself to think before eating something, stop mindless eating out of boredom or frustration"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приучи себя думать перед тем как что-то съесть, прекрати бессознательные приемы пищи от скуки или от обиды"
+          }
+        }
+      }
+    },
+    "Motivation47" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't pay attention to people who drink alcohol and eat a lot of unhealthy food, just do what will lead you to your goal, not theirs"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не обращай внимания на людей, которые пьют алкоголь и едят много вредной пищи, просто делай то, что приведет тебя к твоей, а не их цели"
+          }
+        }
+      }
+    },
+    "Motivation48" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vegetables and fruits are your best friends, they are rich in vitamins and minerals, as well as low in calories"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Овощи и фрукты - твои лучшие друзья, они богаты витаминами и минералами, а также низкокалорийные"
+          }
+        }
+      }
+    },
+    "Motivation49" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moderation is the key to success, don't restrict yourself too much, but remember about portion control"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умеренность - ключ к успеху, не ограничивай себя слишком сильно, но помни о порциях"
+          }
+        }
+      }
+    },
+    "Motivation50" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physical activity isn't just about going to the gym, it's also walking to work or taking the stairs instead of the elevator"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Физическая активность - это не только занятия в спортзале, но и ходьба на работу или замена лифта на лестницу"
+          }
+        }
+      }
+    },
+    "Motivation51" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A healthy lifestyle is a long-term investment in your well-being and happiness"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Здоровый образ жизни - это долгосрочное вложение в твое благополучие и счастье"
+          }
+        }
+      }
+    },
+    "Motivation52" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't skip meals, regular eating helps keep your metabolism active and controls appetite"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не пропускай приемы пищи, регулярное питание помогает удерживать метаболизм в тонусе и контролировать аппетит"
+          }
+        }
+      }
+    },
+    "Motivation53" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight loss is not about restriction, but about freeing yourself from excess weight and self-doubt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Похудение - это не ограничение, а освобождение от лишнего веса и неуверенности в себе"
+          }
+        }
+      }
+    },
+    "Motivation54" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every kilogram shed brings you closer to a long, active, and fulfilling life"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый сброшенный килограмм приближает тебя к долгой, активной и полной жизни"
+          }
+        }
+      }
+    },
+    "Motivation55" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are stronger than you think, give yourself a chance"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты сильнее, чем думаешь, дай себе шанс"
+          }
+        }
+      }
+    },
+    "Motivation56" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visualize the moment when you meet your old friends or someone you like, and you've already lost weight and look fabulous"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Визуализируй момент, как ты встречаешься со своими старыми друзьями или тем, кто тебе нравится, при этом ты уже похудела и выглядишь великолепно"
+          }
+        }
+      }
+    },
+    "Motivation57" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you shed those extra kilograms, you'll improve not only your appearance but also the quality of your life"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда ты сбросишь лишние кг, ты улучшишь не только свою внешность, но и качество жизни"
+          }
+        }
+      }
+    },
+    "Motivation58" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Believe in yourself, you can achieve anything you set your mind to"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поверь в себя, ты можешь добиться всего, что захочешь"
+          }
+        }
+      }
+    },
+    "Motivation59" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make your health and your desires a priority, you are the most important person in your life"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделай приоритетом свое здоровье и свои желания, ты самый важный человек в своей жизни"
+          }
+        }
+      }
+    },
+    "Motivation60" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can't make your body younger, but you can make it healthier and more beautiful"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты не можешь сделать свое тело моложе, но ты можешь сделать его более здоровым и красивым"
+          }
+        }
+      }
+    },
+    "Motivation61" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sooner you start working on your body, the longer you'll look fabulous"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чем раньше начнёшь работать над своим телом, тем дольше будешь выглядеть великолепно"
+          }
+        }
+      }
+    },
+    "Motivation62" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The weight loss journey isn't easy, but just think about the amazing body waiting for you at the end of the road"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Путь похудения не легкий, но зато какое потрясающее тело тебя ждет в конце пути"
+          }
+        }
+      }
+    },
+    "Motivation63" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take control of your thoughts and actions, finally become the person you want to be"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Возьми под контроль свои мысли и свои действия, стань наконец такой, какой ты хочешь быть"
+          }
+        }
+      }
+    },
+    "Motivation64" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The longer you postpone your weight loss, the longer and more difficult the journey of transformation will be"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чем дольше ты откладываешь свое похудение, тем дольше и сложнее будет путь твоего преображения"
+          }
+        }
+      }
+    },
+    "Motivation65" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set small goals for yourself, work towards them, celebrate the results, praise yourself, and be inspired by your success"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ставь перед собой маленькие цели, иди к ним, радуйся результатам, хвали себя и вдохновляйся своим успехом"
+          }
+        }
+      }
+    },
+    "Motivation66" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you love rewarding yourself with something tasty or soothing your negative emotions with food, make sure that treat is healthy and low-calorie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если любишь вознаграждать себя чем-то вкусненьким, позаботься о том, чтобы это вкусненькое было полезным и низкокалорийный"
+          }
+        }
+      }
+    },
+    "Motivation67" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take an example only from those whom you want to be like, copy their way of life, once they also came a long way"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бери пример только с тех, на кого ты хочешь быть похожа, копируй их образ жизни, когда-то они тоже проделали большой путь "
+          }
+        }
+      }
+    },
+    "Motivation68" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physically active people don't look for where to get energy for their next workout, on the contrary, they gain energy from their activities"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Физически активные люди не ищут где взять энергию на очередную тренировку, они наоборот получают энергию из своих занятий, просто попробуй начать"
+          }
+        }
+      }
+    },
+    "Motivation69" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every day gives you the opportunity to change something in your life and become better, the choice remains yours - whether to use this opportunity or no"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый день дарит тебе возможность что-то изменить в своей жизни и стать лучше, выбор остается за тобой - использовать эту возможность или нет"
+          }
+        }
+      }
+    },
+    "Motivation70" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's important to make healthy eating and physical activity a lifestyle, not temporary restrictions"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Важно правильное питание и физическую активность сделать своим образом жизни, а не временными ограничениями"
+          }
+        }
+      }
+    },
+    "Motivation71" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't postpone your life in a beautiful body for later, later may never come"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не откладывай на потом свою жизнь в красивом теле, потом может не наступить никогда"
+          }
+        }
+      }
+    },
+    "Motivation72" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take gradual steps, be patient, and the results will come for sure"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Действуй постепенно, наберись терпения и результат обязательно будет"
+          }
+        }
+      }
+    },
+    "Motivation73" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you constantly consume alcohol, sugar, refined flour, and at the same time eat little fiber, your body will simply stop coping, and health problems will arise"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если постоянно употреблять алкоголь, сахар, мучное и при этом есть мало клетчатки, то организм просто перестанет справляться и начнутся проблемы со здоровьем"
+          }
+        }
+      }
+    },
+    "Motivation74" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Be active in all areas of your life, go for walks, socialize with friends, dance, love, and then you simply won't have time for endless eating"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь активна во всех сферах своей жизни, гуляй, общайся с друзьями, танцуй, люби и тогда просто не останется времени на бесконечное употребление пищи"
+          }
+        }
+      }
+    },
+    "Motivation75" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every step towards improving your health and appearance is a step towards a new version of yourself"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый шаг к улучшению своего здоровья и внешности - это шаг к новой версии себя"
+          }
+        }
+      }
+    },
+    "Motivation76" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you reach your weight loss goal, you'll not only become slim but also energetic, happy, and confident"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда ты достигнешь своей цели по похудею ты станешь не только стройной, но и  энергичной, счастливой и уверенной в себе"
+          }
+        }
+      }
+    },
+    "Motivation77" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill your day with healthy snacks like fruits, nuts, or vegetables"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заполни свой день здоровыми закусками, например, фруктами, орехами или овощами"
+          }
+        }
+      }
+    },
+    "Motivation78" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight loss is not only about appearance but also about your overall health and well-being"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Похудение - это не только о внешности, но и о твоем общем здоровье и благополучии"
+          }
+        }
+      }
+    },
+    "Motivation79" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regular workouts help reduce stress and improve mood"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регулярные тренировки помогают снижать стресс и улучшают настроение"
+          }
+        }
+      }
+    },
+    "Motivation80" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Improving posture not only beautifies your body but also enhances your health"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Улучшение осанки не только украшает твое тело, но и улучшает твое здоровье"
+          }
+        }
+      }
+    },
+    "Motivation81" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutrition is your fuel, give your body the best so it can give you its best"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Питание - это твое топливо, дай своему телу лучшее, чтобы оно могло дать тебе свое лучшее"
+          }
+        }
+      }
+    },
+    "Motivation82" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't settle for what you've achieved, keep moving forward, constantly striving for new heights"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не останавливайся на достигнутом, постоянно двигайся вперед, стремясь к новым вершинам"
+          }
+        }
+      }
+    },
+    "Motivation83" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success doesn't come to those who wait, but to those who act"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Успех приходит не к тем, кто ждет, а к тем, кто действует"
+          }
+        }
+      }
+    },
+    "Motivation84" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The best way to predict the future is to create it, invest your time and energy today in taking care of your body"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лучший способ предсказать будущее - создать его, вложи сегодня свое время и энергию в заботу о своем теле"
+          }
+        }
+      }
+    },
+    "Motivation85" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every step towards healthy eating and physical activity brings you closer to the best version of yourself"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый шаг к здоровому питанию и физической активности приближает тебя к лучшей версии себя"
+          }
+        }
+      }
+    },
+    "Motivation86" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You deserve to be slim, beautiful, healthy, and happy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты заслуживаешь быть стройной, красивой, здоровой и счастливой"
+          }
+        }
+      }
+    },
+    "Motivation87" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every day is a new opportunity to become better"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый день - это новая возможность стать лучше"
+          }
+        }
+      }
+    },
+    "Motivation88" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "May your before-and-after photos inspire and motivate others, just as you were once inspired by others"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пусть твоими фото До/После восхищаются и вдохновляются другие, как ты когда-то вдохновлялась другими"
+          }
+        }
+      }
+    },
+    "Motivation89" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caring for your body is an expression of self-love and self-respect"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Забота о своем теле - это проявление самолюбия и уважения к себе"
+          }
+        }
+      }
+    },
+    "Motivation90" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Once you've reached your goal, remember that maintaining the results is just as important as achieving them"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Достигнув своей цели, помни, что поддержание результатов так важно, как и их достижение"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

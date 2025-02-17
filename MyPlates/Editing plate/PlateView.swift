@@ -13,7 +13,6 @@ import CloudKit
 struct PlateView: View {
     /// The data controller responsible for managing Core Data and related operations.
     @EnvironmentObject var dataController: DataController
- //   @StateObject var viewModel: ViewModel
     /// The plate object being displayed and edited.
     @ObservedObject var plate: Plate
     /// The environment property used to dismiss the current view..
@@ -32,11 +31,6 @@ struct PlateView: View {
     @State private var isPlateDeleted = false
     /// A Boolean value that tracks whether the tag selection view is presented.
     @State private var showTagList = false
-    
-//    init(plate: Plate, dataController: DataController) {
-//        let viewModel = ViewModel(plate: plate, dataController: dataController)
-//            _viewModel = StateObject(wrappedValue: viewModel)
-//        }
 
     var body: some View {
         VStack {

@@ -17,5 +17,9 @@
 	<array>
 		<string>iCloud.com.TatianaBuinitskaia.MyPlates</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.TatianaBuinitskaia.MyPlates</string>
+	</array>
 </dict>
 </plist>
