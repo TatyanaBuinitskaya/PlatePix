@@ -92,7 +92,7 @@ struct PlateInfoOverlay: View {
     /// A computed view that shows the quality of the plate with a star icon.
     private var qualityView: some View {
         Image(systemName: "star.fill")
-            .foregroundStyle(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
+            .foregroundStyle(plate.quality == 0 ? Color("RedBerry") : plate.quality == 1 ? Color("SunnyYellow") : Color("LeafGreen"))
             .font(.subheadline)
     }
 

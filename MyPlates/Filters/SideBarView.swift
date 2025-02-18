@@ -11,6 +11,9 @@ import SwiftUI
 struct SideBarView: View {
 //    /// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
 //    @EnvironmentObject var dataController: DataController
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
+    /// The view model responsible for managing the state and logic of this view.
     @StateObject private var viewModel: ViewModel
     /// State variable to control the presentation of the calendar sheet.
     @State private var showCalendarSheet = false
@@ -83,7 +86,8 @@ struct SideBarView: View {
                     label: "Choose a tag filter",
                     systemImage: "tag",
                     isExpanded: $showTagFilterList,
-                    items: viewModel.generateTagFilters()
+                    items: viewModel.generateTagFilters(),
+                    colorManager: colorManager
                 )
             }
 
@@ -102,7 +106,8 @@ struct SideBarView: View {
                                 .accessibilityLabel(filter.name)
                                 .accessibilityHint("\(plateCount) plates")
                         }
-                    }
+                    },
+                    colorManager: colorManager
                 )
             }
 
@@ -114,6 +119,7 @@ struct SideBarView: View {
                 )
             }
         }
+        .accentColor(colorManager.selectedColor.color)
         .navigationTitle("Filters")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: SideBarViewToolBar.init)
@@ -176,8 +182,10 @@ private func expandableFilterSection(
     label: String,
     systemImage: String,
     isExpanded: Binding<Bool>,
-    items: [some View]
+    items: [some View],
+    colorManager: AppColorManager // Pass colorManager explicitly as a parameter
 ) -> some View {
+
     Button {
         // Toggle the expanded state with animation when the section header is tapped.
         withAnimation {
@@ -187,7 +195,7 @@ private func expandableFilterSection(
         HStack {
             // Display the system image and label for the section header.
             Image(systemName: systemImage)
-                .foregroundStyle(.blue) // Sets the image color to blue.
+                .foregroundStyle(colorManager.selectedColor.color) 
             Text(label) // The label text of the section.
             Spacer() // Pushes the chevron icon to the right of the label.
             // Chevron icon indicating the expanded or collapsed state.
@@ -241,8 +249,8 @@ struct QualityFiltersSection: View {
             // Display the icon for the filter with color based on quality.
             Image(systemName: filter.icon)
                 .foregroundStyle(
-                    filter.quality == 0 ? .red :
-                    filter.quality == 1 ? .yellow : .green
+                    filter.quality == 0 ? Color("RedBerry") :
+                    filter.quality == 1 ? Color("SunnyYellow") : Color("LeafGreen")
                 )
             Text(LocalizedStringKey(filter.name))
                 .badge("\(countQualityPlates(filter.quality))")
@@ -258,15 +266,15 @@ struct QualityFiltersSection: View {
         // Display different messages depending on the counts of good, average, and bad plates.
         if goodCount > badCount && goodCount > averageCount {
             Text("You're doing great! Keep up with the healthy choices!")
-                .foregroundStyle(.green)
+                .foregroundStyle(Color("LeafGreen"))
                 .italic()
         } else if badCount > goodCount && badCount > averageCount {
             Text("You may want to focus on eating healthier.")
-                .foregroundStyle(.red)
+                .foregroundStyle(Color("RedBerry"))
                 .italic()
         } else {
             Text("You're balancing your choices well!")
-                .foregroundStyle(.orange)
+                .foregroundStyle(Color("SunnyYellow"))
                 .italic()
         }
     }
@@ -276,7 +284,11 @@ struct QualityFiltersSection: View {
 /// - Properties:
 ///   - showAwards: A state variable that tracks whether the awards sheet is displayed or not.
 struct SideBarViewToolBar: View {
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
+    /// Controls the visibility of the awards screen.
     @State private var showAwards = false
+
     var body: some View {
         Button {
             // Toggle showing the awards sheet when pressed.
@@ -285,6 +297,8 @@ struct SideBarViewToolBar: View {
             // Label for the button with an icon for "Show awards."
             Label("Show awards", systemImage: "rosette")
         }
+        .tint(colorManager.selectedColor.color)
         .sheet(isPresented: $showAwards, content: AwardsView.init)
+
     }
 }

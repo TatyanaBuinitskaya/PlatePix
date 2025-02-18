@@ -11,23 +11,28 @@ import SwiftUI
 struct SettingsView: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The environment property used to dismiss the current view when the back button is tapped.
     @Environment(\.dismiss) var dismiss
     @State var showRemindersSheet = false
     @State private var showingNotificationsError = false
     @Environment(\.openURL) var openURL
 
+  
+
     var body: some View {
         NavigationView {
-            Form {
-                // A section that provides options to personalize the app's appearance and behavior.
+            List {
                 Section("Personalize") {
-                    Label("Theme", systemImage: "paintpalette")
+                    ColorPickerView()
+                    
                     Button{
                         showRemindersSheet = true
                     } label: {
                         Label("Reminders", systemImage: "envelope")
                     }
+                    .buttonStyle(PlainButtonStyle())
                     Label("Language", systemImage: "flag")
                     Label("Home Screen Widget", systemImage: "quote.bubble")
                     Label("Lock Screen Widget", systemImage: "text.bubble")
@@ -35,12 +40,14 @@ struct SettingsView: View {
                 // A section containing options related to app support, legal information, and feedback.
                 Section("About App") {
                     Label("Leave a review", systemImage: "hand.thumbsup")
+                    
                     Label("Share", systemImage: "square.and.arrow.up")
                     Label("Contact us", systemImage: "at")
                     Label("Restore purchases", systemImage: "arrow.circlepath")
                     Label("Terms and conditions", systemImage: "doc.text")
                     Label("Privacy policy", systemImage: "shield")
                 }
+               
             }
             .sheet(isPresented: $showRemindersSheet) {
                 RemindersSheetView()
@@ -48,6 +55,7 @@ struct SettingsView: View {
                     .presentationDetents([.fraction(0.3)])
             }
         }
+        .accentColor(colorManager.selectedColor.color)
         .navigationTitle("Settings")
         .navigationBarBackButtonHidden(true) // Hide the default back button text 
         .toolbar {
@@ -73,6 +81,7 @@ struct SettingsView: View {
             updateReminder()
         }
     }
+       
     func showAppSettings() {
         guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {
             return
@@ -101,3 +110,4 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
 }
+

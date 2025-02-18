@@ -13,6 +13,8 @@ struct AwardSheetView: View {
     @EnvironmentObject var dataController: DataController
     /// The dismiss environment property to close the sheet view.
     @Environment(\.dismiss) var dismiss
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The constant size for the award image.
     private let imageSize: CGFloat = 100
     /// The padding applied to buttons for consistent spacing.
@@ -66,13 +68,13 @@ struct AwardSheetView: View {
                     .fontWeight(.semibold)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.blue)
                     .foregroundStyle(.white)
                     .cornerRadius(buttonCornerRadius)
                     .padding(.top, 15)
                     .padding()
             }
             .accessibilityLabel("Dismiss award details")
+            accentColor(colorManager.selectedColor.color)
         }
     }
 }

@@ -17,6 +17,8 @@ struct PlateView: View {
     @ObservedObject var plate: Plate
     /// The environment property used to dismiss the current view..
     @Environment(\.dismiss) var dismiss
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The fetched results of tags, sorted by name.
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
 //    /// A list of selected photo picker items.
@@ -115,6 +117,7 @@ struct PlateView: View {
         HStack {
             Image(systemName: "clock")
                 .font(.title2)
+                .foregroundColor(colorManager.selectedColor.color)
             Menu {
                 Picker("Mealtime", selection: $plate.mealtime) {
                     ForEach(dataController.mealtimeDictionary.keys.sorted(), id: \.self) { key in
@@ -132,14 +135,14 @@ struct PlateView: View {
                         .font(.title3)
                 }
             }
-        }
+            .buttonStyle(PlainButtonStyle())        }
     }
 
     /// Displays the meal quality selection view for the plate.
     private var plateQualityView: some View {
         HStack {
             Image(systemName: "star.fill")
-                .foregroundStyle(plate.quality == 0 ? .red : plate.quality == 1 ? .yellow : .green)
+                .foregroundStyle(plate.quality == 0 ? Color("RedBerry") : plate.quality == 1 ? Color("SunnyYellow") : Color("LeafGreen"))
                 .font(.title2)
             Menu {
                 Picker("Meal Quality", selection: $plate.quality) {
@@ -151,7 +154,7 @@ struct PlateView: View {
                 Text(plate.quality == 0 ? "Unhealthy" : plate.quality == 1 ? "Moderate" : "Healthy")
                     .font(.title3)
             }
-        }
+            .buttonStyle(PlainButtonStyle())        }
     }
 
     /// Displays the tag selection and currently selected tags for the plate.
@@ -162,9 +165,11 @@ struct PlateView: View {
                     showTagList = true
                 } label: {
                     Image(systemName: "tag")
+                        .foregroundColor(colorManager.selectedColor.color)
                     Text("Select Food tag")
                         .font(.title3)
                 }
+                .buttonStyle(PlainButtonStyle())
                 Spacer()
             }
             Text(plate.tags?.allObjects.compactMap { ($0 as? Tag)?.tagName }.joined(separator: ", ") ?? "No Tags")
@@ -208,7 +213,7 @@ struct PlateView: View {
                         .font(.title2)
                         .foregroundStyle(.white)
                         .padding()
-                        .background(Color.blue)
+                        .background(colorManager.selectedColor.color)
                         .clipShape(Circle())
                         .shadow(radius: 5)
                 }
@@ -223,7 +228,7 @@ struct PlateView: View {
                         .font(.title2)
                         .foregroundStyle(.white)
                         .padding()
-                        .background(Color.blue)
+                        .background(colorManager.selectedColor.color)
                         .clipShape(Circle())
                         .shadow(radius: 5)
                 }

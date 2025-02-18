@@ -12,6 +12,8 @@ import CoreData
 struct TagListView: View {
     /// The data controller responsible for managing tag data.
     @EnvironmentObject var dataController: DataController
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The plate to which tags are associated.
     @ObservedObject var plate: Plate
     /// The environment dismiss action to close the view.
@@ -79,6 +81,7 @@ struct TagListView: View {
                             }
                         }
                     }
+                    .accentColor(colorManager.selectedColor.color)
                     .searchable(text: $searchQuery)
                 }
                 VStack {
@@ -145,7 +148,7 @@ struct TagListView: View {
             tagToggle(label: "Reaction", isOn: $showDedaultReactionTags, type: "reaction")
         }
         .padding(5)
-        .background(Capsule().fill(Color.blue))
+        .background(Capsule().fill(colorManager.selectedColor.color))
     }
 
     /// A toggle button for managing default tags.
@@ -356,6 +359,8 @@ struct TagListView: View {
 struct TagRow: View {
     /// The data controller managing the tag data.
     @EnvironmentObject var dataController: DataController
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The tag currently being edited, if any.
     @State private var tagToEdit: Tag?
     /// A Boolean value indicating whether the tag is in editing mode.
@@ -376,7 +381,7 @@ struct TagRow: View {
             // Displays the tag name with a color indicating if it was recently created.
             Text(tag.tagName)
                 .fontWeight(.light)
-                .foregroundStyle(isTagRecentlyCreated(tag: tag) ? .green : .black)
+                .foregroundStyle(isTagRecentlyCreated(tag: tag) ? colorManager.selectedColor.color : .primary)
             Spacer()
             // Conditionally displays a "Remove" button if `removeAction` is provided.
             if let removeAction = removeAction {
@@ -426,7 +431,7 @@ struct TagRow: View {
             } label: {
                 Label("Rename", systemImage: "pencil")
             }
-            .tint(.blue)
+            .tint(colorManager.selectedColor.color)
 
             Button(role: .destructive) {
                 let generator = UINotificationFeedbackGenerator()

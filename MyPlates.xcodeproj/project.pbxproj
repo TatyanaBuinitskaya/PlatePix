@@ -27,6 +27,9 @@
 		EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250482D28FEA300E002D7 /* AwardSheetView.swift */; };
 		EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504A2D2D4B7700E002D7 /* SettingsView.swift */; };
 		EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */; };
+		EB5655E72D63400F00A25751 /* AppColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5655E62D63400F00A25751 /* AppColorManager.swift */; };
+		EB56562B2D63607F00A25751 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB56562A2D63607F00A25751 /* ColorPickerView.swift */; };
+		EB56562C2D6374B300A25751 /* AppColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5655E62D63400F00A25751 /* AppColorManager.swift */; };
 		EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */; };
 		EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F732D562ECF002AC274 /* UserPreferences.swift */; };
 		EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F792D5A2599002AC274 /* RemindersSheetView.swift */; };
@@ -119,6 +122,8 @@
 		EB2250482D28FEA300E002D7 /* AwardSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardSheetView.swift; sourceTree = "<group>"; };
 		EB22504A2D2D4B7700E002D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetView.swift; sourceTree = "<group>"; };
+		EB5655E62D63400F00A25751 /* AppColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorManager.swift; sourceTree = "<group>"; };
+		EB56562A2D63607F00A25751 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewModel.swift; sourceTree = "<group>"; };
 		EB567F732D562ECF002AC274 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		EB567F792D5A2599002AC274 /* RemindersSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersSheetView.swift; sourceTree = "<group>"; };
@@ -227,6 +232,7 @@
 		EB22500B2D1457FE00E002D7 /* MyPlates */ = {
 			isa = PBXGroup;
 			children = (
+				EB56562D2D64B0DB00A25751 /* Controllers */,
 				EB567F882D5CB2BA002AC274 /* Motivations */,
 				EB567F812D5B6361002AC274 /* Store */,
 				EBB2C94A2D52450D008FA818 /* Filters */,
@@ -239,11 +245,6 @@
 				EBB2C9502D5245F0008FA818 /* Localizations */,
 				EBB2C9522D5246B2008FA818 /* Configuration */,
 				EB22500C2D1457FE00E002D7 /* MyPlatesApp.swift */,
-				EB22501D2D146E9600E002D7 /* DataController.swift */,
-				EB567F842D5C6F71002AC274 /* AppDelegate.swift */,
-				EB567F862D5C6F8C002AC274 /* SceneDelegate.swift */,
-				EB567F7F2D5B5E02002AC274 /* DataController-StoreKit.swift */,
-				EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */,
 				EB2250442D1D753900E002D7 /* example.jpg */,
 				EB2250102D14580100E002D7 /* Assets.xcassets */,
 				EB2250122D14580100E002D7 /* Preview Content */,
@@ -257,6 +258,19 @@
 				EB2250132D14580100E002D7 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EB56562D2D64B0DB00A25751 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EB22501D2D146E9600E002D7 /* DataController.swift */,
+				EB5655E62D63400F00A25751 /* AppColorManager.swift */,
+				EB567F842D5C6F71002AC274 /* AppDelegate.swift */,
+				EB567F862D5C6F8C002AC274 /* SceneDelegate.swift */,
+				EB567F7F2D5B5E02002AC274 /* DataController-StoreKit.swift */,
+				EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		EB567F812D5B6361002AC274 /* Store */ = {
@@ -365,6 +379,7 @@
 			children = (
 				EB22504A2D2D4B7700E002D7 /* SettingsView.swift */,
 				EB567F792D5A2599002AC274 /* RemindersSheetView.swift */,
+				EB56562A2D63607F00A25751 /* ColorPickerView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -583,6 +598,7 @@
 				EB567F7C2D5A2751002AC274 /* DataController-Notifications.swift in Sources */,
 				EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */,
 				EB2250362D1ADA5C00E002D7 /* Bundle-Decodable.swift in Sources */,
+				EB5655E72D63400F00A25751 /* AppColorManager.swift in Sources */,
 				EB22501E2D146E9600E002D7 /* DataController.swift in Sources */,
 				EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */,
 				EB2250302D197B8B00E002D7 /* PlateBox.swift in Sources */,
@@ -594,6 +610,7 @@
 				EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */,
 				EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */,
 				EB567F872D5C6F8C002AC274 /* SceneDelegate.swift in Sources */,
+				EB56562B2D63607F00A25751 /* ColorPickerView.swift in Sources */,
 				EB22500D2D1457FE00E002D7 /* MyPlatesApp.swift in Sources */,
 				EB2250322D198AD100E002D7 /* PlateView.swift in Sources */,
 				EB22502A2D1599C800E002D7 /* Plate-CoreDataHelpers.swift in Sources */,
@@ -604,6 +621,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB56562C2D6374B300A25751 /* AppColorManager.swift in Sources */,
 				EBBD6D612D616B00006A3DC2 /* Motivation.swift in Sources */,
 				EBBD6D602D616B00006A3DC2 /* Motivations.swift in Sources */,
 			);

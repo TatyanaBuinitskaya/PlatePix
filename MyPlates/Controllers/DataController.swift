@@ -18,6 +18,8 @@ class DataController: ObservableObject {
     let container: NSPersistentCloudKitContainer
     /// Delegate for handling Core Data and Spotlight search integration.
     var spotlightDelegate: NSCoreDataCoreSpotlightDelegate?
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The currently selected filter for viewing plates, initialized with today's date.
     @Published var selectedFilter: Filter? = Filter.filterForDate(Date())
     /// The currently selected plate, if any, for detailed viewing or editing.
@@ -518,22 +520,17 @@ class DataController: ObservableObject {
         HStack {
             // Display appropriate icon based on tag type
             if type == "Food" {
-                Image(systemName: "fork.knife")
-                    .foregroundStyle(.blue)
+                Label(type.capitalized, systemImage: "fork.knife")
             } else if type == "Month" {
-                Image(systemName: "30.square")
-                    .foregroundStyle(.blue)
+                Label(type.capitalized, systemImage: "30.square")
             } else if type == "Emotion" {
-                Image(systemName: "face.smiling")
-                    .foregroundStyle(.blue)
+                Label(type.capitalized, systemImage: "face.smiling")
             } else if type == "Reaction" {
-                Image(systemName: "exclamationmark.triangle")
-                    .foregroundStyle(.blue)
+                Label(type.capitalized, systemImage: "exclamationmark.triangle")
             } else {
-                Image(systemName: "tag")
-                    .foregroundStyle(.blue)
+                Label(type.capitalized, systemImage: "tag")
             }
-            Text(type.capitalized)
+           // Text(type.capitalized)
             Spacer()
             // Toggle button for expand/collapse
             if availableTagTypes.contains(type) {

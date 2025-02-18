@@ -12,6 +12,8 @@ import CloudKit
 struct PlateImageView: View {
     /// The environment object that provides data for the plate.
     @EnvironmentObject var dataController: DataController
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The observed plate object that holds the data for the specific plate.
     @ObservedObject var plate: Plate
     /// The binding to the UIImage that represents the image for the plate.
@@ -20,8 +22,6 @@ struct PlateImageView: View {
     /// A system image name used as a placeholder when the plate image is not available.
     /// Default value is "fork.knife.circle.fill" to signify a plate-related icon.
     var placeholderIcon: String = "fork.knife.circle.fill"
-    /// The background color of the placeholder image when the plate image is not available.
-    var backgroundColor: Color = .blue
     /// The maximum width that the plate image will occupy.
     /// This ensures that the image adapts to the screen size.
     var maxWidth: CGFloat = UIScreen.main.bounds.width * 1
@@ -44,7 +44,7 @@ struct PlateImageView: View {
                     .scaledToFit()
                     .foregroundStyle(.white)
                     .padding()
-                    .background(backgroundColor)
+                    .background(colorManager.selectedColor.color)
                     .frame(maxWidth: maxWidth, maxHeight: maxHeight)
                     .clipShape(Rectangle())
             }

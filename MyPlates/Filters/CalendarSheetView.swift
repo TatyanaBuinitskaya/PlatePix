@@ -13,6 +13,8 @@ struct CalendarSheetView: View {
     @EnvironmentObject var dataController: DataController
     /// An environment variable used to dismiss the current view.
     @Environment(\.dismiss) var dismiss
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
 
     var body: some View {
         VStack {
@@ -21,6 +23,7 @@ struct CalendarSheetView: View {
             selectedDateInfo
             okButton
         }
+        .accentColor(colorManager.selectedColor.color)
         .padding()
     }
 
@@ -35,12 +38,13 @@ struct CalendarSheetView: View {
             } label: {
                 Text("All Plates")
                     .font(.title2)
-                    .foregroundStyle(.blue)
             }
+            
             Text("Select a Date")
                 .font(.headline)
                 .padding(.top)
         }
+        .accentColor(colorManager.selectedColor.color)
     }
 
     /// A section displaying the graphical date picker for selecting a date.
@@ -83,6 +87,7 @@ struct CalendarSheetView: View {
                         value: "\(dataController.countSelectedDatePlates(for: selectedDate))"
                     )
                 }
+                .accentColor(colorManager.selectedColor.color)
             } else {
                 // Displays a message when no date is selected.
                 Text("No Date Selected")
@@ -91,6 +96,7 @@ struct CalendarSheetView: View {
                     .padding(.top)
             }
         }
+        
     }
 
     /// The button to confirm the selection and dismiss the calendar sheet.
@@ -103,7 +109,7 @@ struct CalendarSheetView: View {
                 .font(.title2)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.blue)
+                .background(colorManager.selectedColor.color)
                 .foregroundStyle(.white)
                 .cornerRadius(8)
         }
@@ -113,10 +119,13 @@ struct CalendarSheetView: View {
 
 /// A view representing a row that displays a label and its corresponding value.
 struct SelectedDateRow: View {
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// The label describing the value.
     let label: String
     /// The value associated with the label.
     let value: String
+    
 
     var body: some View {
         HStack {
@@ -124,7 +133,7 @@ struct SelectedDateRow: View {
                 .fontWeight(.semibold)
             Spacer()
             Text(value)
-                .foregroundStyle(.blue)
+                .foregroundStyle(colorManager.selectedColor.color)
         }
         .padding(.horizontal)
     }

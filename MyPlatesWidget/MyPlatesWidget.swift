@@ -15,7 +15,7 @@ struct Provider: TimelineProvider {
     /// Returns a placeholder view used in widget configuration and previews.
     /// This is shown while the widget data is being loaded.
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), text: "Stay motivated!") // Default placeholder text
+        SimpleEntry(date: Date(), text: "Stay motivated!", color: .watermelonPink) // Default placeholder text
     }
 
     /// Returns a snapshot of the widget's current state.
@@ -25,7 +25,7 @@ struct Provider: TimelineProvider {
         let motivationText = loadTodaysMotivation()
         
         // Create a snapshot entry using the loaded motivation
-        let entry = SimpleEntry(date: Date(), text: motivationText)
+        let entry = SimpleEntry(date: Date(), text: motivationText, color: loadColor())
         completion(entry)
     }
 
@@ -39,7 +39,7 @@ struct Provider: TimelineProvider {
         let currentDate = Date()
 
         // Create an entry for the current day
-        let entry = SimpleEntry(date: currentDate, text: motivationText)
+        let entry = SimpleEntry(date: currentDate, text: motivationText, color: loadColor())
         entries.append(entry)
 
         // Schedule the next update for tomorrow at midnight
@@ -97,12 +97,22 @@ struct Provider: TimelineProvider {
         
         return newMotivation
     }
+    
+    private func loadColor() -> AppColor {
+           if let groupDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.MyPlates"),
+              let rawValue = groupDefaults.string(forKey: "selectedColor"),
+              let color = AppColor(rawValue: rawValue) {
+               return color
+           }
+           return .watermelonPink
+       }
 }
 
 ///  Model for the widget's data.
 struct SimpleEntry: TimelineEntry {
     let date: Date // The date of the entry, required by TimelineEntry protocol
     let text: String // The motivational text to display
+    let color: AppColor
 }
 
 /// MyPlatesWidgetEntryView is responsible for rendering the widget UI.
@@ -118,20 +128,21 @@ struct MyPlatesWidgetEntryView : View {
                 Text(entry.text)
                     .font(.title3)
                     .minimumScaleFactor(0.6)
-                    .foregroundColor(Color.pink)
+                    .foregroundColor(entry.color.color)
                     .lineSpacing(5)
                     .multilineTextAlignment(.center)
-                 //   .containerBackground(Color.blue, for: .widget) // iOS 17+ styling
+                 //   .containerBackground(colorManager.selectedColor.color, for: .widget) // iOS 17+ styling
+                   
             } else {
                 Text(entry.text)
                     .font(.title3)
                     .minimumScaleFactor(0.6)
-                    .foregroundColor(Color.pink)
+                    .foregroundColor(entry.color.color)
                     .lineSpacing(5)
                     .multilineTextAlignment(.center)
 //                    .padding()
 //                    .edgesIgnoringSafeArea(.all)
-//                    .background(Color.pink)
+//                    .background(colorManager.selectedColor.color)
                
             }
         case .accessoryRectangular: // Lock screen widget
@@ -141,6 +152,7 @@ struct MyPlatesWidgetEntryView : View {
         default:
             Text("Not implemented") // Default case for unsupported sizes
         }
+          
     }
 }
 
@@ -173,12 +185,12 @@ struct MyPlatesWidget_Previews: PreviewProvider {
     
     static var previews: some View {
         // Preview for medium widget
-        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText))
+        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .watermelonPink))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .previewDisplayName("Medium")
         
         // Preview for lock screen widget
-        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText))
+        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .watermelonPink))
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
             .previewDisplayName("Rectangular")
     }

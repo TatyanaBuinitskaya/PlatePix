@@ -19,6 +19,8 @@ struct ContentView: View {
     /// An environment object that stores user preferences.
     /// This enables the app to access and modify user settings across different views.
     @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     // spotlight
     /// A state variable that tracks whether a selected plate should be displayed in `PlateView`.
     @State private var isShowingPlate = false
@@ -35,6 +37,8 @@ struct ContentView: View {
     var shouldRequestReview: Bool {
         dataController.count(for: Plate.fetchRequest()) >= 10
     }
+   
+
 
     var body: some View {
           NavigationStack {
@@ -57,6 +61,7 @@ struct ContentView: View {
               .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
               .navigationBarTitleDisplayMode(.inline)
               .toolbar(content: ContentViewToolBar.init)
+              .tint(colorManager.selectedColor.color)
               // Sets the navigation destination for Plate objects.
               .navigationDestination(for: Plate.self) { plate in
                   PlateView(plate: plate) // Navigates to the PlateView when a plate is selected.
@@ -86,6 +91,8 @@ struct ContentView: View {
                   applyDateFilter()
               }
           }
+         
+
       }
 
     /// Checks if the review request criteria are met and triggers the review prompt.
@@ -178,7 +185,7 @@ extension ContentView {
             plateInfoToggle(label: "tags", isOn: $userPreferences.showTags)
         }
         .padding(5)
-        .background(Capsule().fill(Color.blue))
+        .background(Capsule().fill(colorManager.selectedColor.color))
     }
 
     /// A toggle button for a specific info with a label and a checkbox icon.
@@ -220,7 +227,7 @@ extension ContentView {
                 .font(.title2)
                 .foregroundStyle(.white)
                 .padding()
-                .background(Color.blue)
+                .background(colorManager.selectedColor.color)
                 .clipShape(Circle())
                 .shadow(radius: 5)
         }

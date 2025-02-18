@@ -18,6 +18,8 @@ extension SideBarView {
     class ViewModel: NSObject, ObservableObject, NSFetchedResultsControllerDelegate {
         /// A reference to the `DataController`, which manages Core Data operations.
         var dataController: DataController
+        /// An environment variable that manages the app's selected color.
+        @EnvironmentObject var colorManager: AppColorManager
         /// A fetched results controller for managing `Tag` entities from Core Data.
         /// It fetches tags from the database and updates the UI when changes occur.
         private let tagsController: NSFetchedResultsController<Tag>

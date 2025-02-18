@@ -10,6 +10,8 @@ import SwiftUI
 
 /// A view that displays the store where users can purchase the premium version of the app.
 struct StoreView: View {
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
     /// Enum representing the loading state of data.
     enum LoadState {
         case loading, loaded, error
@@ -44,7 +46,7 @@ struct StoreView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(20)
-                .background(.blue.gradient)
+                .background(colorManager.selectedColor.color.gradient)
 
                 // Scrollable content section
                 ScrollView {

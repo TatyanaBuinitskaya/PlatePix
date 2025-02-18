@@ -23,6 +23,8 @@ struct MyPlatesApp: App {
     /// A state variable that tracks whether a plate is opened via Spotlight search.
     /// When this is `true`, the UI updates to show the selected plate.
     @State private var openSpotlightPlate = false  // Track Spotlight navigation
+    /// The color manager that keeps track of the selected theme color and updates the UI accordingly.
+    @StateObject var colorManager = AppColorManager()
 
     var body: some Scene {
         WindowGroup {
@@ -48,6 +50,8 @@ struct MyPlatesApp: App {
             .environment(\.managedObjectContext, dataController.container.viewContext)
             // Injects the data controller into the environment, providing shared access to app-wide data operations.
             .environmentObject(dataController)
+            .environmentObject(colorManager)
+            .tint(colorManager.selectedColor.color)
             // Saves data automatically when the app moves to the background or becomes inactive.
             .onChange(of: scenePhase) {
                 if scenePhase != .active {
