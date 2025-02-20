@@ -50,7 +50,7 @@ struct ContentView: View {
                   .padding()
                   floatingControls  // Displays the floating controls for interacting with the plates.
               }
-              .onAppear(perform: askForReview)
+         //     .onAppear(perform: askForReview)
               .onOpenURL(perform: openURL)
 //              .userActivity(newPlateActivity) { activity in
 //                  activity.isEligibleForPrediction = true

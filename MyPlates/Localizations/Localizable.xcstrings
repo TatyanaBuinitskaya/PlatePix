@@ -136,6 +136,74 @@
         }
       }
     },
+    "1. Touch and hold an empty area on the Home Screen until the apps jiggle." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Touch and hold an empty area on the Home Screen until the apps jiggle."
+          }
+        }
+      }
+    },
+    "1. Touch and hold anywhere on your lock screen, tap Customize and choose Lock Screen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Touch and hold anywhere on your lock screen, tap Customize and choose Lock Screen"
+          }
+        }
+      }
+    },
+    "2. Long press the widget area under the time to view available widgets, scroll to Elixir Widget and choose it." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Long press the widget area under the time to view available widgets, scroll to Elixir Widget and choose it."
+          }
+        }
+      }
+    },
+    "2. Long press the widget area under the time to view available widgets, scroll to MyPlates Widget and choose it." : {
+
+    },
+    "2. Tap the + button in the upper left corner to view available widgets, scroll or search for Elixir widget and choose small, medium or large format." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Tap the + button in the upper left corner to view available widgets, scroll or search for Elixir widget and choose small, medium or large format."
+          }
+        }
+      }
+    },
+    "2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for MyPlates widget." : {
+
+    },
+    "3. Press Add Widget button and place widget in the position you want, then tap the empty area to finish." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Press Add Widget button and place widget in the position you want, then tap the empty area to finish."
+          }
+        }
+      }
+    },
+    "3. Tap or drag to add widget, then close the window and press Done." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Tap or drag to add widget, then close the window and press Done."
+          }
+        }
+      }
+    },
     "About App" : {
       "localizations" : {
         "en" : {
@@ -422,6 +490,9 @@
         }
       }
     },
+    "daily motivations on your" : {
+
+    },
     "Date Filters" : {
       "localizations" : {
         "en" : {
@@ -592,6 +663,9 @@
         }
       }
     },
+    "Follow instructions to reach" : {
+
+    },
     "Food tags" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -632,6 +706,9 @@
         }
       }
     },
+    "HOME SCREEN" : {
+
+    },
     "Home Screen Widget" : {
       "localizations" : {
         "en" : {
@@ -649,6 +726,9 @@
       }
     },
     "In-app purchases are disabled" : {
+
+    },
+    "Just a few steps to get" : {
 
     },
     "Language" : {
@@ -682,6 +762,9 @@
           }
         }
       }
+    },
+    "LOCK SCREEN" : {
+
     },
     "Lock Screen Widget" : {
       "localizations" : {
@@ -1080,6 +1163,12 @@
         }
       }
     },
+    "Reading motivations" : {
+
+    },
+    "regulary will help" : {
+
+    },
     "Reminder time" : {
 
     },
@@ -1152,6 +1241,7 @@
 
     },
     "Restore purchases" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1300,6 +1390,9 @@
       }
     },
     "Show reminders" : {
+
+    },
+    "Small doses of motivation can make a big difference in your life" : {
 
     },
     "Sorry, there was an error loading our store." : {
@@ -1518,6 +1611,9 @@
         }
       }
     },
+    "you to reach your goal" : {
+
+    },
     "You're balancing your choices well!" : {
       "localizations" : {
         "en" : {
@@ -1565,6 +1661,9 @@
           }
         }
       }
+    },
+    "your motivations even on your" : {
+
     }
   },
   "version" : "1.0"
