@@ -36,6 +36,7 @@
 		EB5656352D64D2F300A25751 /* DeviceModels.json in Resources */ = {isa = PBXBuildFile; fileRef = EB5656342D64D2F300A25751 /* DeviceModels.json */; };
 		EB5656372D65FEEA00A25751 /* HomeScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5656362D65FEEA00A25751 /* HomeScreenWidgetView.swift */; };
 		EB5656392D660B8A00A25751 /* LockScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5656382D660B8A00A25751 /* LockScreenWidgetView.swift */; };
+		EB56563B2D676F2A00A25751 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB56563A2D676F2A00A25751 /* SplashScreenView.swift */; };
 		EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */; };
 		EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F732D562ECF002AC274 /* UserPreferences.swift */; };
 		EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F792D5A2599002AC274 /* RemindersSheetView.swift */; };
@@ -136,6 +137,7 @@
 		EB5656342D64D2F300A25751 /* DeviceModels.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DeviceModels.json; sourceTree = "<group>"; };
 		EB5656362D65FEEA00A25751 /* HomeScreenWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenWidgetView.swift; sourceTree = "<group>"; };
 		EB5656382D660B8A00A25751 /* LockScreenWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidgetView.swift; sourceTree = "<group>"; };
+		EB56563A2D676F2A00A25751 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewModel.swift; sourceTree = "<group>"; };
 		EB567F732D562ECF002AC274 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		EB567F792D5A2599002AC274 /* RemindersSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersSheetView.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				EB22502F2D197B8B00E002D7 /* PlateBox.swift */,
 				EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */,
 				EB567F732D562ECF002AC274 /* UserPreferences.swift */,
+				EB56563A2D676F2A00A25751 /* SplashScreenView.swift */,
 			);
 			path = Plates;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */,
 				EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */,
 				EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */,
+				EB56563B2D676F2A00A25751 /* SplashScreenView.swift in Sources */,
 				EB567F872D5C6F8C002AC274 /* SceneDelegate.swift in Sources */,
 				EB56562B2D63607F00A25751 /* ColorPickerView.swift in Sources */,
 				EB5656332D64D13100A25751 /* UIDeviceForEmail.swift in Sources */,

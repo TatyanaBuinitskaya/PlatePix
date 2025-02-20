@@ -27,7 +27,7 @@
         {
           "description" : "Открой полный функционал приложения",
           "displayName" : "Премиум доступ",
-          "locale" : "ar"
+          "locale" : "ru"
         }
       ],
       "productID" : "com.TatianaBuinitskaia.MyPlates.premiumUnlock",

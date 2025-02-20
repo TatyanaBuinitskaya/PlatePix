@@ -15,7 +15,7 @@ struct Provider: TimelineProvider {
     /// Returns a placeholder view used in widget configuration and previews.
     /// This is shown while the widget data is being loaded.
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), text: "Stay motivated!", color: .watermelonPink) // Default placeholder text
+        SimpleEntry(date: Date(), text: "Stay motivated!", color: .lavenderRaf) // Default placeholder text
     }
 
     /// Returns a snapshot of the widget's current state.
@@ -104,7 +104,7 @@ struct Provider: TimelineProvider {
               let color = AppColor(rawValue: rawValue) {
                return color
            }
-           return .watermelonPink
+           return .lavenderRaf
        }
 }
 
@@ -185,12 +185,12 @@ struct MyPlatesWidget_Previews: PreviewProvider {
     
     static var previews: some View {
         // Preview for medium widget
-        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .watermelonPink))
+        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .lavenderRaf))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .previewDisplayName("Medium")
         
         // Preview for lock screen widget
-        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .watermelonPink))
+        MyPlatesWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .lavenderRaf))
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
             .previewDisplayName("Rectangular")
     }

@@ -4,7 +4,7 @@
 //
 //  Created by Tatyana Buinitskaya on 19.12.2024.
 //
-import BackgroundTasks
+
 import CoreSpotlight
 import SwiftUI
 import WidgetKit
@@ -18,11 +18,11 @@ struct MyPlatesApp: App {
     @Environment(\.scenePhase) var scenePhase
     /// Adapts `AppDelegate` for use with SwiftUI's application lifecycle.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    /// The shared instance of user preferences, used to store UI settings persistently.
-    @StateObject var userPreferences = UserPreferences.shared  // Create the shared instance
-    /// A state variable that tracks whether a plate is opened via Spotlight search.
-    /// When this is `true`, the UI updates to show the selected plate.
-    @State private var openSpotlightPlate = false  // Track Spotlight navigation
+//    /// The shared instance of user preferences, used to store UI settings persistently.
+//    @StateObject var userPreferences = UserPreferences.shared  // Create the shared instance
+//    /// A state variable that tracks whether a plate is opened via Spotlight search.
+//    /// When this is `true`, the UI updates to show the selected plate.
+//    @State private var openSpotlightPlate = false  // Track Spotlight navigation
     /// The color manager that keeps track of the selected theme color and updates the UI accordingly.
     @StateObject var colorManager = AppColorManager()
 
@@ -33,15 +33,15 @@ struct MyPlatesApp: App {
                 SideBarView(dataController: dataController)
             } content: {
                 /// The main content view where the primary list of plates is displayed.
-             //   ContentView(dataController: dataController)
-                ContentView()
-                    .environmentObject(userPreferences)  // Pass it down as EnvironmentObject
-                // Detect changes to `openSpotlightPlate` and reset after handling.
-                    .onChange(of: openSpotlightPlate) {
-                        if openSpotlightPlate {
-                            openSpotlightPlate = false
-                        }
-                    }
+             //   ContentView()
+                SplashScreenView()
+//                    .environmentObject(userPreferences)  // Pass it down as EnvironmentObject
+//                // Detect changes to `openSpotlightPlate` and reset after handling.
+//                    .onChange(of: openSpotlightPlate) {
+//                        if openSpotlightPlate {
+//                            openSpotlightPlate = false
+//                        }
+//                    }
             } detail: {
                 /// The detail view that shows specific information about a selected plate.
                 DetailView()
@@ -58,7 +58,7 @@ struct MyPlatesApp: App {
                     dataController.save()
                 }
             }
-            .onContinueUserActivity(CSSearchableItemActionType, perform: loadSpotlightItem)
+//            .onContinueUserActivity(CSSearchableItemActionType, perform: loadSpotlightItem)
         }
     }
 // spotlight
@@ -68,17 +68,17 @@ struct MyPlatesApp: App {
 //            dataController.selectedFilter = .all
 //        }
 //    }
-    /// Handles Spotlight search selection.
-        ///
-        /// - Parameter userActivity: The user activity that triggered the app from Spotlight search.
-    func loadSpotlightItem(_ userActivity: NSUserActivity) {
-        // Retrieve the unique identifier stored in Spotlight's metadata.
-        if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-            // Find the corresponding plate in Core Data.
-            if let plate = dataController.plate(with: uniqueIdentifier) {
-                dataController.selectedPlate = plate
-                openSpotlightPlate = true  // Trigger UI update
-            }
-        }
-    }
+//    /// Handles Spotlight search selection.
+//        ///
+//        /// - Parameter userActivity: The user activity that triggered the app from Spotlight search.
+//    func loadSpotlightItem(_ userActivity: NSUserActivity) {
+//        // Retrieve the unique identifier stored in Spotlight's metadata.
+//        if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+//            // Find the corresponding plate in Core Data.
+//            if let plate = dataController.plate(with: uniqueIdentifier) {
+//                dataController.selectedPlate = plate
+//                openSpotlightPlate = true  // Trigger UI update
+//            }
+//        }
+//    }
 }

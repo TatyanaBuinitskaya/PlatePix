@@ -11,7 +11,7 @@ import SwiftUICore
 /// Enum representing the available app colors.
 /// Each case corresponds to a named color in the asset catalog.
 enum AppColor: String, CaseIterable {
-    case redBerry, watermelonPink, orangeFruit, sunnyYellow, appleGreen, leafGreen, coolMint, blueSky, appleBlue, coldBlue, purpleBluberry, girlsPink
+    case redBerry, watermelonPink, orangeFruit, sunnyYellow, appleGreen, leafGreen, coolMint, blueSky, appleBlue, coldBlue, lavenderRaf, girlsPink
     
     /// Maps each enum case to its corresponding Color value.
     /// - Returns: A SwiftUI Color defined in the asset catalog.
@@ -37,8 +37,8 @@ enum AppColor: String, CaseIterable {
             return Color("AppleBlue")
         case .coldBlue:
             return Color("ColdBlue")
-        case .purpleBluberry:
-            return Color("PurpleBluberry")
+        case .lavenderRaf:
+            return Color("LavenderRaf")
         case .girlsPink:
             return Color("GirlsPink")
         }
@@ -50,7 +50,7 @@ enum AppColor: String, CaseIterable {
 class AppColorManager: ObservableObject {
     /// The currently selected color.
     /// Updating this property triggers UI updates and saves the selection to UserDefaults.
-    @Published var selectedColor: AppColor = .watermelonPink {
+    @Published var selectedColor: AppColor = .lavenderRaf {
         didSet {
             saveColor() // Save the new selection when it changes.
         }

@@ -16,6 +16,8 @@ struct ContentView: View {
     /// An environment property that provides access to the system's request review action.
     /// This allows the app to prompt the user for a review at an appropriate time.
     @Environment(\.requestReview) var requestReview
+    /// A variable that counts the number of plates created
+    @State var counter = 0
     /// An environment object that stores user preferences.
     /// This enables the app to access and modify user settings across different views.
     @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
@@ -50,7 +52,6 @@ struct ContentView: View {
                   .padding()
                   floatingControls  // Displays the floating controls for interacting with the plates.
               }
-         //     .onAppear(perform: askForReview)
               .onOpenURL(perform: openURL)
 //              .userActivity(newPlateActivity) { activity in
 //                  activity.isEligibleForPrediction = true
@@ -222,6 +223,10 @@ extension ContentView {
             dataController.isNewPlateCreated = true // Marks that a new plate has been created.
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
+            counter += 1
+            if counter == 20 || counter.isMultiple(of: 300) {
+                requestReview()
+            }
         } label: {
             Image(systemName: "plus")
                 .font(.title2)
