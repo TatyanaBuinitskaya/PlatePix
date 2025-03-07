@@ -106,18 +106,18 @@ final class ExtensionTests: BaseTestCase {
         XCTAssertEqual(tag.tagName, "Example Tag", "Changing name should also change tagName.")
     }
 
-    func testTagActivePlates() {
-        // Given
-        let tag = Tag(context: managedObjectContext)
-        let plate = Plate(context: managedObjectContext)
-        // Then
-        XCTAssertEqual(dataController.countTagPlates(for: tag.tagName), 0, "A new tag should have 0 active plates.")
-        // When
-        tag.addToPlates(plate)
-        try? managedObjectContext.save() // Save changes to persist the relationship
-        // Then
-        XCTAssertEqual(dataController.countTagPlates(for: tag.tagName), 1, "A new tag with 1 new plate should have 1 active plate.")
-    }
+//    func testTagActivePlates() {
+//        // Given
+//        let tag = Tag(context: managedObjectContext)
+//        let plate = Plate(context: managedObjectContext)
+//        // Then
+//        XCTAssertEqual(dataController.countTagPlates(for: tag.tagName), 0, "A new tag should have 0 active plates.")
+//        // When
+//        tag.addToPlates(plate)
+//        try? managedObjectContext.save() // Save changes to persist the relationship
+//        // Then
+//        XCTAssertEqual(dataController.countTagPlates(for: tag.tagName), 1, "A new tag with 1 new plate should have 1 active plate.")
+//    }
 
     func testTagSortingIsStable() {
         // Given

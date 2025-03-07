@@ -22,10 +22,10 @@ struct Provider: TimelineProvider {
     /// Used for previews and when the widget is displayed for the first time.
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         // Load today's motivation text
-        let motivationText = loadTodaysMotivation()
-        
+        let index = loadTodaysMotivationIndex()
+        let motivation = Motivations.motivations[index]
         // Create a snapshot entry using the loaded motivation
-        let entry = SimpleEntry(date: Date(), text: motivationText, color: loadColor())
+        let entry = SimpleEntry(date: Date(), text: motivation.localizedText, color: loadColor())
         completion(entry)
     }
 
@@ -33,13 +33,14 @@ struct Provider: TimelineProvider {
     /// It refreshes once a day with a new motivational message.
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
         // Load today's motivation text
-        let motivationText = loadTodaysMotivation()
+        let index = loadTodaysMotivationIndex()
+        let motivation = Motivations.motivations[index]
 
         var entries: [SimpleEntry] = []
         let currentDate = Date()
 
         // Create an entry for the current day
-        let entry = SimpleEntry(date: currentDate, text: motivationText, color: loadColor())
+        let entry = SimpleEntry(date: currentDate, text: motivation.localizedText, color: loadColor())
         entries.append(entry)
 
         // Schedule the next update for tomorrow at midnight
@@ -51,51 +52,45 @@ struct Provider: TimelineProvider {
         completion(timeline)
     }
 
-    /// Loads today's motivational message, ensuring it's refreshed daily.
-    /// This function uses shared `UserDefaults` to store the last shown message.
-    func loadTodaysMotivation() -> String {
-        // Access the shared UserDefaults using App Group identifier
+    func loadTodaysMotivationIndex() -> Int {
         if let sharedDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.MyPlates") {
             let lastDate = sharedDefaults.object(forKey: "lastMotivationDate") as? Date ?? Date.distantPast
             let calendar = Calendar.current
             
-            // Check if the stored date is today.
-            if calendar.isDateInToday(lastDate),
-               let savedID = sharedDefaults.value(forKey: "lastMotivationID") as? Int {
-                // Same day: Load saved motivation
-                if let savedMotivation = Motivations.motivations.first(where: { $0.id == savedID }) {
-                    return savedMotivation.localizedText
+            if calendar.isDateInToday(lastDate) {
+                if let _ = sharedDefaults.object(forKey: "lastMotivationIndex") {
+                    return sharedDefaults.integer(forKey: "lastMotivationIndex")
                 }
             }
             
-            // New day: Pick a new random motivation
-            let newMotivation = pickNewRandomMotivation()
-            
-            // Save the new date and motivation ID and text
-            sharedDefaults.set(Date(), forKey: "lastMotivationDate")
-            sharedDefaults.set(newMotivation.id, forKey: "lastMotivationID")
-            sharedDefaults.set(newMotivation.localizedText, forKey: "lastMotivationText")
-            sharedDefaults.synchronize()
-            
-            return newMotivation.localizedText
-            
+            let newMotivationIndex = pickNewRandomMotivationIndex()
+            saveMotivationIndexToDefaults(newMotivationIndex)
+            return newMotivationIndex
         } else {
             print("Failed to access shared UserDefaults")
-            return "Stay motivated!"
+            return 0
         }
     }
-
-    /// Picks a new random motivation ensuring it's different from the last one.
+    
+    /// Saves the generated motivation index  to `UserDefaults`
+    private func saveMotivationIndexToDefaults(_ index: Int) {
+        let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.MyPlates")!
+        defaults.set(index, forKey: "lastMotivationIndex")
+        defaults.set(Date(), forKey: "lastMotivationDate")
+        defaults.synchronize()
+    }
+    
+    /// Picks a new random motivation  index ensuring it's different from the last one.
     /// Prevents showing the same message consecutively.
-    func pickNewRandomMotivation() -> Motivation {
-        var newMotivation: Motivation
+    func pickNewRandomMotivationIndex() -> Int {
+        var newMotivationIndex: Int
         
         // Repeat until a different motivation is chosen
         repeat {
-            newMotivation = Motivations.motivations.randomElement()!
-        } while newMotivation.id == UserDefaults.standard.integer(forKey: "lastMotivationID")
+            newMotivationIndex = Motivations.motivations.randomElement()!.id
+        } while newMotivationIndex == UserDefaults.standard.integer(forKey: "lastMotivationIndex")
         
-        return newMotivation
+        return newMotivationIndex
     }
     
     private func loadColor() -> AppColor {
@@ -125,14 +120,16 @@ struct MyPlatesWidgetEntryView : View {
             
         case .systemMedium: // Medium widget size
             if #available(iOS 17.0, *) {
-                Text(entry.text)
-                    .font(.title3)
-                    .minimumScaleFactor(0.6)
-                    .foregroundColor(entry.color.color)
-                    .lineSpacing(5)
-                    .multilineTextAlignment(.center)
-                 //   .containerBackground(colorManager.selectedColor.color, for: .widget) // iOS 17+ styling
-                   
+                VStack {
+                    Text(entry.text)
+                        .font(.title3)
+                        .minimumScaleFactor(0.6)
+                    //  .foregroundStyle(entry.color.color)
+                        .foregroundStyle(Color(uiColor: .systemBackground))
+                        .lineSpacing(5)
+                        .multilineTextAlignment(.center)
+                     //   .containerBackground(entry.color.color, for: .widget) // iOS 17+ styling
+                }
             } else {
                 Text(entry.text)
                     .font(.title3)
@@ -164,7 +161,8 @@ struct MyPlatesWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
                     MyPlatesWidgetEntryView(entry: entry)
-                        .containerBackground(.fill.tertiary, for: .widget) // iOS 17+ background
+                     //   .containerBackground(.fill.tertiary, for: .widget) // iOS 17+ background
+                        .containerBackground(entry.color.color, for: .widget) // iOS 17+ styling
 
             } else {
                 MyPlatesWidgetEntryView(entry: entry)

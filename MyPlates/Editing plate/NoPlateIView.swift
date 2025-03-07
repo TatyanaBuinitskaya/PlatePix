@@ -23,6 +23,16 @@ struct NoPlateIView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     NoPlateIView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    NoPlateIView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

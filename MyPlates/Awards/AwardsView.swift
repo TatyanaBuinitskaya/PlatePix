@@ -17,7 +17,8 @@ struct AwardsView: View {
     @State private var showingAwardDetails = false
     /// The layout configuration for the grid, adapting between a minimum and maximum width.
     var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: 100, maximum: 150))]
+      //  [GridItem(.adaptive(minimum: 100, maximum: 150))]
+        [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     }
 
     var body: some View {
@@ -30,15 +31,13 @@ struct AwardsView: View {
                             showingAwardDetails = true
                         } label: {
                             VStack {
-                                Image(systemName: award.image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding(.horizontal)
-                                    .frame(width: 100, height: 100)
-                                Text("\(award.value)")
-                                    .font(.title2)
+                                AwardIcon(award: award, size: 85, color: color(for: award))
+                                
+                                Text(award.name)
+                                    .font(.caption)
+                                    .lineLimit(1)
+                                    .foregroundStyle(color(for: award))
                             }
-                            .foregroundStyle(color(for: award))
                         }
                         .accessibilityLabel(
                             label(for: award)
@@ -48,7 +47,9 @@ struct AwardsView: View {
                     }
                 }
             }
+            .padding(.horizontal)
             .navigationTitle("Awards")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .alert(awardTitle, isPresented: $showingAwardDetails) {
         } message: {
@@ -80,6 +81,16 @@ struct AwardsView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     AwardsView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    AwardsView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

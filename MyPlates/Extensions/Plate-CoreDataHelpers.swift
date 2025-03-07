@@ -49,7 +49,7 @@ extension Plate {
         let plate = Plate(context: viewContext)
         plate.creationDate = .now
         plate.quality = 2
-        plate.mealtime = "anytimeMeal"
+        plate.mealtime = "Anytime Meal"
         plate.title = "Plate " + Date().formatted()
         plate.notes = "plus cup of coffee with milk"
         plate.photo = Bundle.main.path(forResource: "example", ofType: "jpg")

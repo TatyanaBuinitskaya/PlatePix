@@ -25,7 +25,7 @@ final class AwardsTests: BaseTestCase {
     }
     
     func testCreatingPlatesUnlocksAwards() {
-        let values = [1, 10, 20, 50, 100, 250, 500, 1000] // The milestone values for unlocking awards.
+        let values = [10, 25, 50, 100, 500, 1000, 5000, 10000] // The milestone values for unlocking awards.
 
         for (count, value) in values.enumerated() {
             var plates = [Plate]() // The list to hold created plates.

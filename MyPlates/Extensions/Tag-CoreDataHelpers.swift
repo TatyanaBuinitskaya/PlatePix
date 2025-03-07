@@ -19,7 +19,7 @@ extension Tag {
     }
     /// The type of the tag, indicating whether it is user-defined or system-generated. Defaults to "User" if not specified.
     var tagType: String {
-        type ?? "User"
+        type ?? "My"
     }
     /// The creation date of the tag. Defaults to the current date if not set to avoid `nil` values.
     var tagCreationDate: Date {
@@ -38,6 +38,9 @@ extension Tag {
         tag.creationDate = .now
         return tag
     }
+    var localizedTagName: String {
+           return NSLocalizedString(self.tagName, comment: "")
+       }
 }
 
 /// Extends the `Tag` model to conform to the `Comparable` protocol, allowing tags to be compared based on their names and IDs.
@@ -50,7 +53,7 @@ extension Tag: Comparable {
         let left = lhs.tagName.localizedLowercase
         let right = rhs.tagName.localizedLowercase
         if left == right {
-            return lhs.tagID.uuidString < rhs.tagID.uuidString
+            return lhs.tagID < rhs.tagID
         } else {
             return left < right
         }

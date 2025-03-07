@@ -20,7 +20,8 @@ struct SplashScreenView: View {
     /// A state variable that tracks whether a plate is opened via Spotlight search.
     /// When this is `true`, the UI updates to show the selected plate.
     @State private var openSpotlightPlate = false  // Track Spotlight navigation
-
+    @State var animationState = false
+    
     var body: some View {
         if isActive {
             /// The main content view where the primary list of plates is displayed.
@@ -35,25 +36,35 @@ struct SplashScreenView: View {
                 .onContinueUserActivity(CSSearchableItemActionType, perform: loadSpotlightItem)
         } else {
             ZStack {
-                Color("LavenderRaf") // Background color
+                LinearGradient(colors: [Color("LavenderRaf"), Color("GirlsPink")], startPoint: .bottom, endPoint: .top)
                     .ignoresSafeArea()
-                VStack{
+                VStack(alignment: .center, spacing: 0) {
                     Spacer()
                     Text("PlatePix")
-                        .font(.title.bold())
+                        .font(.system(size: 50, weight: .bold))
                         .fontDesign(.rounded)
                         .foregroundStyle(.white)
-                    Text("Snap, save, and relive your daily plates!")
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                        .padding()
-                    Image("Logo") // Replace with your logo
+                        
+                    Image("Logo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 200, height: 200)
+                        .frame(width: 200)
+                          
+                    Text("Track Your Meals and Lose Weight, Stay Motivated and Improve Your Health!")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                   
                     Spacer()
                     Spacer()
                 }
+                .opacity(animationState ? 1 : 0)
+                   .scaleEffect(animationState ? 1 : 0.8)
+                   .animation(.easeOut(duration: 1), value: animationState)
+                   .onAppear {
+                       animationState = true
+                   }
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -80,6 +91,16 @@ struct SplashScreenView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     SplashScreenView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    SplashScreenView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

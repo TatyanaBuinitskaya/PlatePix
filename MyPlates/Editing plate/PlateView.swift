@@ -33,6 +33,10 @@ struct PlateView: View {
     @State private var isPlateDeleted = false
     /// A Boolean value that tracks whether the tag selection view is presented.
     @State private var showTagList = false
+    /// A flag indicating whether the congratulations screen should be shown.
+    @State var showCongratulations: Bool = false
+   
+
 
     var body: some View {
         VStack {
@@ -54,6 +58,7 @@ struct PlateView: View {
                                 maxWidth: UIScreen.main.bounds.width * 1, // Larger size
                                 maxHeight: 600
                             )
+                            .padding(.vertical, 10)
                             .onTapGesture {
                                 isCameraPresented = true
                             }
@@ -74,7 +79,7 @@ struct PlateView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             if dataController.checkAwards() {
-                dataController.showCongratulations = true
+                showCongratulations = true
             }
         }
         .onChange(of: plate) {
@@ -89,7 +94,8 @@ struct PlateView: View {
                 saveImageFromCamera(image: image)
             }
         }
-        .sheet(isPresented: $dataController.showCongratulations) {
+        .sheet(isPresented: $showCongratulations) {
+           
             AwardSheetView()
         }
         .toolbar {
@@ -120,20 +126,16 @@ struct PlateView: View {
                 .foregroundColor(colorManager.selectedColor.color)
             Menu {
                 Picker("Mealtime", selection: $plate.mealtime) {
-                    ForEach(dataController.mealtimeDictionary.keys.sorted(), id: \.self) { key in
-                        Text(dataController.mealtimeDictionary[key] ?? key)
-                            .tag(key)
+                    ForEach(dataController.mealtimeArray, id: \.self) { mealtime in
+                        Text(NSLocalizedString(mealtime, comment: "Mealtime") )
+                            .tag(mealtime)
                     }
                 }
             } label: {
                 let mealtime = plate.mealtime ?? ""
-                if let selectedMealtime = dataController.mealtimeDictionary[mealtime] {
+                let selectedMealtime = NSLocalizedString(mealtime, comment: "Mealtime")
                     Text(selectedMealtime)
                         .font(.title3)
-                } else {
-                    Text("Select Mealtime")
-                        .font(.title3)
-                }
             }
             .buttonStyle(PlainButtonStyle())        }
     }
@@ -146,9 +148,11 @@ struct PlateView: View {
                 .font(.title2)
             Menu {
                 Picker("Meal Quality", selection: $plate.quality) {
-                    Text("Unhealthy").tag(Int16(0))
-                    Text("Moderate").tag(Int16(1))
-                    Text("Healthy").tag(Int16(2))
+                    Group {
+                        Text("Unhealthy").tag(Int16(0))
+                        Text("Moderate").tag(Int16(1))
+                        Text("Healthy").tag(Int16(2))
+                    }
                 }
             } label: {
                 Text(plate.quality == 0 ? "Unhealthy" : plate.quality == 1 ? "Moderate" : "Healthy")
@@ -166,13 +170,29 @@ struct PlateView: View {
                 } label: {
                     Image(systemName: "tag")
                         .foregroundColor(colorManager.selectedColor.color)
-                    Text("Select Food tag")
+                    Text("Tags")
                         .font(.title3)
                 }
                 .buttonStyle(PlainButtonStyle())
                 Spacer()
             }
-            Text(plate.tags?.allObjects.compactMap { ($0 as? Tag)?.tagName }.joined(separator: ", ") ?? "No Tags")
+            Text(
+                plate.tags?.allObjects
+                    .compactMap { tag in
+                        // Ensure each tag is of type Tag, then get its localized name
+                        if let tag = tag as? Tag {
+                            // Pass the tag's name (which should be a localization key) to NSLocalizedString
+                            return NSLocalizedString(
+                                tag.tagName,
+                                tableName: dataController.tableNameForTagType(tag.type),
+                                comment: "")
+                        }
+                        return nil
+                    }
+                    .joined(separator: ", ") ?? NSLocalizedString("No Tags", comment: "Fallback text when no tags are assigned")
+            )
+            .fontWeight(.light)
+            .padding(.top, 5)
         }
         .sheet(isPresented: $showTagList) {
             TagListView(plate: plate)
@@ -183,17 +203,26 @@ struct PlateView: View {
     private var plateNotesView: some View {
         VStack(alignment: .leading) {
             HStack {
+                Image(systemName: "square.and.pencil")
+                    .foregroundStyle(colorManager.selectedColor.color)
+                    .font(.title3)
                 Text("Notes:")
                     .font(.title3)
             }
-            TextField(
-                "Enter the plate description here",
-                text: $plate.plateNotes,
-                axis: .vertical
-            )
-            .padding(8)
+            ZStack(alignment: .topLeading) {
+                if plate.plateNotes.isEmpty {
+                    Text("Add notes about your plate\nYour text will be searchable")
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 8)
+                }
+                
+                TextField("", text: $plate.plateNotes, axis: .vertical)
+                    .padding(8)
+            }
+           // .padding(8)
             .frame(maxWidth: .infinity, minHeight: 100, maxHeight: 150, alignment: .top) // Scales for larger devices
-            .background(Color.white)
+            .background(Color(uiColor: .systemBackground))
             .cornerRadius(8)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
@@ -215,7 +244,6 @@ struct PlateView: View {
                         .padding()
                         .background(colorManager.selectedColor.color)
                         .clipShape(Circle())
-                        .shadow(radius: 5)
                 }
                 .padding(.horizontal)
                 .onChange(of: pickerItems) {
@@ -227,10 +255,9 @@ struct PlateView: View {
                     Image(systemName: "camera")
                         .font(.title2)
                         .foregroundStyle(.white)
-                        .padding()
+                        .padding(15)
                         .background(colorManager.selectedColor.color)
                         .clipShape(Circle())
-                        .shadow(radius: 5)
                 }
             }
             .padding(.horizontal)
@@ -395,7 +422,16 @@ struct PlateView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     PlateView(plate: .example)
         .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    PlateView(plate: .example)
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

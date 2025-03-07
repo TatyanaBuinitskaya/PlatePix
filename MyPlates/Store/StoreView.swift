@@ -178,6 +178,16 @@ struct StoreView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     StoreView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+                           
+#Preview("Russian") {
+    StoreView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

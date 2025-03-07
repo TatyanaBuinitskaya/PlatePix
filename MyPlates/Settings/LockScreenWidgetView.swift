@@ -13,9 +13,26 @@ struct LockScreenWidgetView: View {
     @EnvironmentObject var colorManager: AppColorManager
     
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading) {
+            Spacer()
             VStack {
+                Text("Follow instructions to reach")
+                Text("your motivations even on your")
+            }
+            .font(.headline)
+            .foregroundStyle(Color.primary)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding()
+        
+                Text("LOCK SCREEN")
+                    .font(.title.bold())
+                    .fontDesign(.rounded)
+                    .frame(maxWidth: .infinity)
+                    .frame(alignment: .center)
                 // Lock Screen Widget example section
+            HStack {
+                Spacer()
                 VStack(spacing:0){
                     // Display current date
                     let currentDate = getCurrentDate()
@@ -30,7 +47,7 @@ struct LockScreenWidgetView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
                         .padding(0)
-                    // Motivational message inside RoundedRectangle stroke
+                    // Motivational message
                     HStack {
                         VStack(alignment: .leading, spacing: 0) {
                             Text("Reading motivations")
@@ -39,48 +56,40 @@ struct LockScreenWidgetView: View {
                         }
                         .font(.footnote)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        
                         Spacer()
                     }
                     .padding()
                     .frame(maxWidth: .infinity)
                     .frame(height: 80)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 3)
-                            .foregroundColor(.white.opacity(0.7)))
+//                    .background(
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .stroke(lineWidth: 3)
+//                            .foregroundColor(.white.opacity(0.7)))
                     .multilineTextAlignment(.center)
+                    
                 }
-                .padding(.vertical, 20)
-                VStack {
-                    Text("Follow instructions to reach")
-                    Text("your motivations even on your")
-                }
-                .font(.headline)
-                .foregroundColor(Color.white)
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 10)
-                
-                Text("LOCK SCREEN")
-                    .font(.title.bold())
-                    .fontDesign(.rounded)
-                    .foregroundColor(Color.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(alignment: .center)
-                    .padding(0)
+                .padding(20)
+                .frame(maxWidth: 350)
+                .background(
+                    LinearGradient(colors: [Color("LavenderRaf"), Color("GirlsPink")], startPoint: .bottom, endPoint: .top)
+                )
+                .padding(.horizontal)
+                Spacer()
             }
-            .padding(20)
-            .background(Color(colorManager.selectedColor.color))
-            
+          
             // Instructions for Adding Widget
             // TODO: Change name of app and localize properly!
             VStack(alignment: .leading, spacing: 20) {
-                Text("1. Touch and hold anywhere on your lock screen, tap Customize and choose Lock Screen")
+                Text("1. Touch and hold anywhere on your lock screen, tap Customize and choose Lock Screen.")
                 Text("2. Long press the widget area under the time to view available widgets, scroll to MyPlates Widget and choose it.")
                 Text("3. Tap or drag to add widget, then close the window and press Done.")
             }
             .font(.callout)
             .fontWeight(.regular)
             .padding(20)
+            Spacer()
             Spacer()
         }
     }
@@ -102,6 +111,16 @@ struct LockScreenWidgetView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     LockScreenWidgetView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    LockScreenWidgetView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

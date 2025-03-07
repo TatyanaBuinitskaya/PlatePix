@@ -22,8 +22,6 @@ struct Award: Codable, Identifiable {
     var criterion: String
     /// The value associated with the criterion, representing the threshold for earning the award.
     var value: Int
-    /// The name of the image associated with the award.
-    var image: String
     /// A static property that loads all awards from the `Awards.json` file within the app bundle.
     static let allAwards = Bundle.main.decode("Awards.json", as: [Award].self)
     /// A static property providing an example award, typically used for previews or testing.

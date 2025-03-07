@@ -1,0 +1,244 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Anger" : {
+      "comment" : "Feeling upset or enraged",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anger"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Гнев"
+          }
+        }
+      }
+    },
+    "Anxiety" : {
+      "comment" : "Feeling uneasy or worried",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anxiety"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тревога"
+          }
+        }
+      }
+    },
+    "Boredom" : {
+      "comment" : "Feeling uninterested or disengaged",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boredom"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скука"
+          }
+        }
+      }
+    },
+    "Celebration" : {
+      "comment" : "Feeling festive or celebratory",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celebration"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Праздничное настроение"
+          }
+        }
+      }
+    },
+    "Disappointment" : {
+      "comment" : "Feeling let down or unfulfilled",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disappointment"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Разочарование"
+          }
+        }
+      }
+    },
+    "Euphoria" : {
+      "comment" : "Feeling intense happiness or bliss",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Euphoria"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эйфория"
+          }
+        }
+      }
+    },
+    "Happiness" : {
+      "comment" : "Feeling content or joyful",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Happiness"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Счастье"
+          }
+        }
+      }
+    },
+    "Insecurity" : {
+      "comment" : "Feeling uncertain or vulnerable",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insecurity"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неуверенность"
+          }
+        }
+      }
+    },
+    "Joy" : {
+      "comment" : "Feeling great pleasure or delight",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Радость"
+          }
+        }
+      }
+    },
+    "Loneliness" : {
+      "comment" : "Feeling isolated or alone",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loneliness"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Одиночество"
+          }
+        }
+      }
+    },
+    "Longing" : {
+      "comment" : "Feeling a deep desire or craving",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longing"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тоска "
+          }
+        }
+      }
+    },
+    "Nervousness" : {
+      "comment" : "Feeling uneasy or apprehensive",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nervousness"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нервозность"
+          }
+        }
+      }
+    },
+    "Sadness" : {
+      "comment" : "Feeling sorrowful or down",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadness"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Грусть"
+          }
+        }
+      }
+    },
+    "Stress" : {
+      "comment" : "Feeling overwhelmed or under pressure",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stress"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Стресс"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

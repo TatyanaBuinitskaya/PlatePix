@@ -20,6 +20,7 @@ class DataController: ObservableObject {
     var spotlightDelegate: NSCoreDataCoreSpotlightDelegate?
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
+    @Environment(\.colorScheme) var colorScheme
     /// The currently selected filter for viewing plates, initialized with today's date.
     @Published var selectedFilter: Filter? = Filter.filterForDate(Date())
     /// The currently selected plate, if any, for detailed viewing or editing.
@@ -34,8 +35,8 @@ class DataController: ObservableObject {
     @Published var sortNewestFirst = true
     /// The currently selected image, typically for display or upload.
     @Published var selectedImage: UIImage?
-    /// A flag indicating whether the congratulations screen should be shown.
-    @Published var showCongratulations: Bool = false
+//    /// A flag indicating whether the congratulations screen should be shown.
+//    @Published var showCongratulations: Bool = false
     /// The award currently being tracked or displayed.
     @Published var currentAward: Award = .example
     /// The date selected for filtering plates, initialized with the current date.
@@ -64,16 +65,18 @@ class DataController: ObservableObject {
     //    /// A unique identifier for the "New Plate" user activity, used for deep linking and shortcuts.
     //    private let newPlateActivity = "com.TatianaBuinitskaia.MyPlates.newPlate"
 
-    /// A dictionary that maps mealtime identifiers to localized strings.
-    let mealtimeDictionary: [String: String] = [
-        "breakfast": NSLocalizedString("Breakfast", comment: "Mealtime: Breakfast"),
-        "morningSnack": NSLocalizedString("Morning snack", comment: "Mealtime: Morning Snack"),
-        "lunch": NSLocalizedString("Lunch", comment: "Mealtime: Lunch"),
-        "daySnack": NSLocalizedString("Day snack", comment: "Mealtime: Day Snack"),
-        "dinner": NSLocalizedString("Dinner", comment: "Mealtime: Dinner"),
-        "eveningSnack": NSLocalizedString("Evening snack", comment: "Mealtime: Evening Snack"),
-        "anytimeMeal": NSLocalizedString("Anytime meal", comment: "Mealtime: Anytime Meal")
+
+    /// Array of predefined meal times for filtering plates and UI selection, to be localized.
+    let mealtimeArray: [String] = [
+        "Breakfast",
+        "Morning Snack",
+        "Lunch",
+        "Day Snack",
+        "Dinner",
+        "Evening Snack",
+        "Anytime Meal"
     ]
+    
     /// A background task that monitors in-app purchase transactions.
     /// This ensures that the app properly handles previous purchases and unlocks premium features when needed.
     private var storeTask: Task<Void, Never>?
@@ -97,20 +100,19 @@ class DataController: ObservableObject {
             // If there's a quality filter, add it after the date
             if let filter = selectedFilter, filter.quality >= 0 {
                 if filter.quality == 0 {
-                    title += NSLocalizedString(" Unhealthy", comment: "Unhealthy quality filter")
+                    title += NSLocalizedString(" Unhealthy", comment: "Quality")
                 } else if filter.quality == 1 {
-                    title += NSLocalizedString(" Moderate", comment: "Moderate quality filter")
+                    title += NSLocalizedString(" Moderate", comment: "Quality")
                 } else if filter.quality == 2 {
-                    title += NSLocalizedString(" Healthy", comment: "Healthy quality filter")
+                    title += NSLocalizedString(" Healthy", comment: "Quality")
                 }
             }
             if let filter = selectedFilter, let mealtime = filter.mealtime {
-                if let mealtimeTitle = mealtimeDictionary[mealtime] {
+                let mealtimeTitle = NSLocalizedString(mealtime, comment: "Mealtime")
                     title += " \(mealtimeTitle)"
-                }
             }
             if let tag = selectedFilter?.tag {
-                title += " \(tag.name ?? NSLocalizedString("Filtered Plates", comment: "Fallback tag name"))"
+                title += " \(tag.name ?? NSLocalizedString("Filtered Plates", comment: ""))"
             }
             return title
         }
@@ -128,20 +130,20 @@ class DataController: ObservableObject {
         // If no date is selected and there is a quality filter selected (even with "All" plates), show quality
         if let filter = selectedFilter, filter.quality >= 0 {
             if filter.quality == 0 {
-                return NSLocalizedString("Unhealthy", comment: "Unhealthy quality filter")
+                return NSLocalizedString("Unhealthy", comment: "Quality")
             } else if filter.quality == 1 {
-                return NSLocalizedString("Moderate", comment: "Moderate quality filter")
+                return NSLocalizedString("Moderate", comment: "Quality")
             } else if filter.quality == 2 {
-                return NSLocalizedString("Healthy", comment: "Healthy quality filter")
+                return NSLocalizedString("Healthy", comment: "Quality")
             }
         }
         if let filter = selectedFilter {
             if let mealtime = filter.mealtime {
-                return mealtimeDictionary[mealtime] ?? NSLocalizedString("Unknown", comment: "Unknown mealtime")
+                return NSLocalizedString(mealtime, comment: "Mealtime")
             }
         }
         // If no filter is selected, return "All Plates" or fallback to default
-        return NSLocalizedString("All Plates", comment: "Fallback title for all plates")
+        return NSLocalizedString("All Plates", comment: "")
     }
    
     /// Manages the awards that have been congratulated, persisting the data using UserDefaults.
@@ -242,15 +244,63 @@ class DataController: ObservableObject {
             UIView.setAnimationsEnabled(false)
             #endif
         }
+        
     }
   
     /// Runs a fetch request with various predicates that filter the user's plates based
     /// on tags, mealtime, quality, title and notes.
     /// - Returns: An array of all matching plates.
+//    func platesForSelectedFilter() -> [Plate] {
+//        let filter = selectedFilter ?? .all
+//        var predicates = [NSPredicate]()
+//        
+//        // Apply date filter if a selected date exists
+//        if let selectedDate = filter.selectedDate ?? selectedDate {
+//            let startOfDay = Calendar.current.startOfDay(for: selectedDate)
+//            if let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) {
+//                predicates.append(NSPredicate(
+//                    format: "creationDate >= %@ AND creationDate < %@",
+//                    startOfDay as NSDate,
+//                    endOfDay as NSDate))
+//            }
+//        }
+//        if let tag = filter.tag {
+//            let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
+//            predicates.append(tagPredicate)
+//        }
+//        // Apply quality filter if a quality is selected
+//        if filter.quality >= 0 {
+//            predicates.append(NSPredicate(format: "quality = %d", filter.quality))
+//        }
+//        // Apply mealtime filter if a mealtime is selected
+//        if let mealtime = filter.mealtime {
+//            predicates.append(NSPredicate(format: "mealtime = %@", mealtime))
+//        }
+//        // Apply filter text if it exists
+//        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
+//        if !trimmedFilterText.isEmpty {
+//            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
+//            let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
+//            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate]))
+//        }
+//        // Combine all predicates (AND logic between date, quality, etc.)
+//        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
+//        if !predicates.isEmpty {
+//            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+//        }
+//        // If the filter is "All", no predicate will be applied (fetch all plates)
+//        if filter == .all {
+//            fetchRequest.predicate = nil
+//        }
+//        // Sorting plates by creationDate
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
+//        return (try? container.viewContext.fetch(fetchRequest)) ?? []
+//    }
+    
     func platesForSelectedFilter() -> [Plate] {
         let filter = selectedFilter ?? .all
         var predicates = [NSPredicate]()
-        
+
         // Apply date filter if a selected date exists
         if let selectedDate = filter.selectedDate ?? selectedDate {
             let startOfDay = Calendar.current.startOfDay(for: selectedDate)
@@ -261,36 +311,44 @@ class DataController: ObservableObject {
                     endOfDay as NSDate))
             }
         }
+        
+        // Apply tag filter
         if let tag = filter.tag {
             let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
             predicates.append(tagPredicate)
         }
-        // Apply quality filter if a quality is selected
+        
+        // Apply quality filter if selected
         if filter.quality >= 0 {
             predicates.append(NSPredicate(format: "quality = %d", filter.quality))
         }
-        // Apply mealtime filter if a mealtime is selected
+        
+        // Apply mealtime filter if selected
         if let mealtime = filter.mealtime {
             predicates.append(NSPredicate(format: "mealtime = %@", mealtime))
         }
+        
         // Apply filter text if it exists
         let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
         if !trimmedFilterText.isEmpty {
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
             let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
-            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate]))
+            let textSearchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate])
+            predicates.append(textSearchPredicate)
         }
-        // Combine all predicates (AND logic between date, quality, etc.)
+
         let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
-        if !predicates.isEmpty {
+
+        // If the filter is "All", only apply the search filter (if any)
+        if filter == .all {
+            fetchRequest.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        } else {
             fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         }
-        // If the filter is "All", no predicate will be applied (fetch all plates)
-        if filter == .all {
-            fetchRequest.predicate = nil
-        }
+
         // Sorting plates by creationDate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
+        
         return (try? container.viewContext.fetch(fetchRequest)) ?? []
     }
 
@@ -300,26 +358,27 @@ class DataController: ObservableObject {
         var shouldCreate = fullVersionUnlocked
            if shouldCreate == false {
                // check how many plates we currently have
-               shouldCreate = count(for: Plate.fetchRequest()) < 3
+               shouldCreate = count(for: Plate.fetchRequest()) < 35
            }
            guard shouldCreate else {
                return false
            }
         
         let plate = Plate(context: container.viewContext)
-      // Format the date for localization
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long // Adjust to .short, .medium, or .full as needed
-        dateFormatter.timeStyle = .none // Only include the date, no time
-        dateFormatter.locale = Locale.current // Respect the user's locale settings
-        let localizedDateString = dateFormatter.string(from: plate.creationDate ?? .now)
-        // Construct the localized title
-        plate.title = String(
-            format: NSLocalizedString("Plate-%@", comment: "Title with creation date"),
-          localizedDateString
-        )
-    //    plate.title = NSLocalizedString("Plate ", comment: "Part of title") + (plate.creationDate ?? .now).formatted
-        // plate.creationDate = .now
+        
+        // Get the current count of plates to use as part of the name
+        var plateCount = count(for: Plate.fetchRequest())
+
+        var plateTitle: String
+
+            repeat {
+                // Generate a new title with the current count
+                plateTitle = String(format: NSLocalizedString("Plate - %d", comment: "Title with plate number"), plateCount)
+                plateCount += 1
+            } while plateExists(with: plateTitle)  // Keep incrementing until we find a unique name
+
+            plate.title = plateTitle
+   
         if let selectedDate = selectedDate {
                // Set the creation date to the selected date, but keep the time as midnight
                let calendar = Calendar.current
@@ -331,11 +390,25 @@ class DataController: ObservableObject {
            }
         plate.quality = 1
         // Set the mealtime attribute from the selected filter, defaulting to "breakfast" if no mealtime is selected
-        plate.mealtime = "anytimeMeal"
+        plate.mealtime = "Anytime Meal"
         plate.photo = nil
         selectedPlate = plate
         save()
         return true
+    }
+    
+    /// Check if a plate with the same title already exists
+    private func plateExists(with title: String) -> Bool {
+        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "title == %@", title)
+        
+        do {
+            let count = try container.viewContext.count(for: fetchRequest)
+            return count > 0
+        } catch {
+            print("Error checking for existing plate: \(error)")
+            return false
+        }
     }
     
     /// Creates a new tag with default values and saves it to the context.
@@ -345,14 +418,14 @@ class DataController: ObservableObject {
         tag.id = UUID()
         tag.name = " New Tag"
         tag.creationDate = Date()
-        tag.type = "User"
-        if !availableTagTypes.contains(tag.type ?? "User") {
-            availableTagTypes.append(tag.type ?? "User")
+        tag.type = "My"
+        if !availableTagTypes.contains(tag.type ?? "My") {
+            availableTagTypes.append(tag.type ?? "My")
             }
         save()
         // Add new tag logic
            hasNewTag = true  // Ensure "User" tags are initially shown
-           showTagTypeFilters["User"] = true
+           showTagTypeFilters["My"] = true
     }
     
     /// Counts the number of plates created on a specific date.
@@ -431,27 +504,39 @@ class DataController: ObservableObject {
 
     // MARK: Awards
     
+//    /// Checks whether a user has earned a specific award.
+//        /// - Parameter award: The award to check.
+//        /// - Returns: True if the user has earned the award, otherwise false.
+//    func hasEarned(award: Award) -> Bool {
+//        switch award.criterion {
+//        case "plates":
+//            let fetchRequest = Plate.fetchRequest()
+//            let awardCount = count(for: fetchRequest)
+//            return awardCount >= award.value
+////        case "days":
+////                let context = container.viewContext
+////               let uniqueDaysCount = countUniqueDays(context: context)
+////               return uniqueDaysCount >= award.value
+//            
+//        case "unlock":
+//            return fullVersionUnlocked
+//        default:
+//            return false
+//        }
+//    }
+
     /// Checks whether a user has earned a specific award.
         /// - Parameter award: The award to check.
         /// - Returns: True if the user has earned the award, otherwise false.
     func hasEarned(award: Award) -> Bool {
-        switch award.criterion {
-        case "plates":
+        if award.criterion == "plates" {
             let fetchRequest = Plate.fetchRequest()
             let awardCount = count(for: fetchRequest)
             return awardCount >= award.value
-//        case "days":
-//                let context = container.viewContext
-//               let uniqueDaysCount = countUniqueDays(context: context)
-//               return uniqueDaysCount >= award.value
-            
-        case "unlock":
-            return fullVersionUnlocked
-        default:
-            return false
         }
+        return false
     }
-
+    
     /// Checks if any awards have been earned.
        /// - Returns: True if any awards have been earned, otherwise false.
     func checkAwards() -> Bool {
@@ -516,22 +601,25 @@ class DataController: ObservableObject {
     /// Provides a header view for a tag section with an appropriate icon and toggle button.
         /// - Parameter type: The type of the tag to display.
         /// - Returns: A view for the header of a tag section.
-    func tagHeaderView(for type: String) -> some View {
-        HStack {
+    func tagHeaderView(for type: String, colorScheme: ColorScheme) -> some View {
+        let localizedType = NSLocalizedString(type, comment: "Tag category") // Localize type name
+       
+        return HStack {
             // Display appropriate icon based on tag type
             if type == "Food" {
-                Label(type.capitalized, systemImage: "fork.knife")
+                Label(localizedType.capitalized, systemImage: "fork.knife.circle")
             } else if type == "Month" {
-                Label(type.capitalized, systemImage: "30.square")
+                Label(localizedType.capitalized, systemImage: "30.square")
             } else if type == "Emotion" {
-                Label(type.capitalized, systemImage: "face.smiling")
+                Label(localizedType.capitalized, systemImage: colorScheme == .dark ? "face.smiling.inverse" : "face.smiling")
             } else if type == "Reaction" {
-                Label(type.capitalized, systemImage: "exclamationmark.triangle")
+                Label(localizedType.capitalized, systemImage: "heart.text.square")
             } else {
-                Label(type.capitalized, systemImage: "tag")
+                Label(localizedType.capitalized, systemImage: "tag")
             }
-           // Text(type.capitalized)
+
             Spacer()
+
             // Toggle button for expand/collapse
             if availableTagTypes.contains(type) {
                 toggleButton(isExpanded: getToggleBinding(for: type))
@@ -544,7 +632,7 @@ class DataController: ObservableObject {
         /// - Parameter type: The tag type to check.
         /// - Returns: True if the tags of the specified type should be shown, otherwise false.
     func shouldShowTags(for type: String) -> Bool {
-        if type == "User" {
+        if type == "My" {
             return showTagTypeFilters[type] ?? hasNewTag
         }
         return showTagTypeFilters[type] ?? false
@@ -579,9 +667,10 @@ class DataController: ObservableObject {
         /// - Returns: True if `type1` should come before `type2` in the sorted list, otherwise false.
     func sortTags(_ type1: String, _ type2: String) -> Bool {
         let defaultTagTypes = ["Month", "Food", "Emotion", "Reaction"]
-        if type1 == "User" {
+        
+        if type1 == "My" {
             return true
-        } else if type2 == "User" {
+        } else if type2 == "My" {
             return false
         }
         let isType1Default = defaultTagTypes.contains(type1)
@@ -593,7 +682,9 @@ class DataController: ObservableObject {
         }
         return type1 < type2
     }
-    // for testing
+
+    /// Creates sample data for testing purposes.
+    /// - This method populates Core Data with test tags and plates.
     func createSampleData() {
         let viewContext = container.viewContext
         for i in 1...5 {
@@ -611,7 +702,10 @@ class DataController: ObservableObject {
 
         try? viewContext.save()
     }
-    
+
+    /// Retrieves a `Plate` object using its unique identifier.
+    /// - Parameter uniqueIdentifier: The string representation of the plate’s unique identifier.
+    /// - Returns: A `Plate` object if found, otherwise `nil`.
     func plate(with uniqueIdentifier: String) -> Plate? {
         guard let url = URL(string: uniqueIdentifier) else {
             return nil
@@ -622,6 +716,24 @@ class DataController: ObservableObject {
         }
 
         return try? container.viewContext.existingObject(with: id) as? Plate
+    }
+    
+    /// Determines the appropriate localization table name based on the tag type.
+    /// - Parameter tagType: The type of the tag (e.g., "Month", "Emotion", etc.).
+    /// - Returns: The corresponding localization table name as a `String`.
+    func tableNameForTagType(_ tagType: String?) -> String {
+        switch tagType {
+        case "Month":
+            return "DefaultMonths"
+        case "Emotion":
+            return "DefaultEmotions"
+        case "Reaction":
+            return "DefaultReactions"
+        case "Food":
+            return "DefaultFoodTags"
+        default:
+            return "Localizable" // Fallback in case no specific table is found
+        }
     }
 
     /// Formats a date using the default date format.
@@ -635,6 +747,7 @@ class DataController: ObservableObject {
         /// - Returns: The configured date formatter.
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
+      //  formatter.locale = Locale.current
         formatter.dateStyle = .medium
         return formatter
     }

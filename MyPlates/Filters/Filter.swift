@@ -32,19 +32,19 @@ struct Filter: Identifiable, Hashable {
     /// A filter representing unhealthy plates (quality = 0), used when only unhealthy plates should be displayed.
     static let unhealthy = Filter(id: UUID(), name: "Unhealthy", icon: "star.fill", quality: 0)
     /// A filter representing breakfast plates, used when only breakfast plates should be displayed.
-    static let breakfast = Filter(id: UUID(), name: "Breakfast", icon: "clock", mealtime: "breakfast")
+    static let breakfast = Filter(id: UUID(), name: "Breakfast", icon: "clock", mealtime: "Breakfast")
     /// A filter representing morning snack plates, used when only morning snack plates should be displayed.
-    static let morningSnack = Filter(id: UUID(), name: "Morning snack", icon: "clock", mealtime: "morningSnack")
+    static let morningSnack = Filter(id: UUID(), name: "Morning Snack", icon: "clock", mealtime: "Morning Snack")
     /// A filter representing lunch plates, used when only lunch plates should be displayed.
-    static let lunch = Filter(id: UUID(), name: "Lunch", icon: "clock", mealtime: "lunch")
+    static let lunch = Filter(id: UUID(), name: "Lunch", icon: "clock", mealtime: "Lunch")
     /// A filter representing day snack plates, used when only day snack plates should be displayed.
-    static let daySnack = Filter(id: UUID(), name: "Day snack", icon: "clock", mealtime: "daySnack")
+    static let daySnack = Filter(id: UUID(), name: "Day Snack", icon: "clock", mealtime: "Day Snack")
     /// A filter representing dinner plates, used when only dinner plates should be displayed.
-    static let dinner = Filter(id: UUID(), name: "Dinner", icon: "clock", mealtime: "dinner")
+    static let dinner = Filter(id: UUID(), name: "Dinner", icon: "clock", mealtime: "Dinner")
     /// A filter representing evening snack plates, used when only evening snack plates should be displayed.
-    static let eveningSnack = Filter(id: UUID(), name: "Evening snack", icon: "clock", mealtime: "eveningSnack")
+    static let eveningSnack = Filter(id: UUID(), name: "Evening Snack", icon: "clock", mealtime: "Evening Snack")
     /// A filter representing anytime meal plates, used when plates can be consumed at any time.
-    static let anytimeMeal = Filter(id: UUID(), name: "Anytime meal", icon: "clock", mealtime: "anytimeMeal")
+    static let anytimeMeal = Filter(id: UUID(), name: "Anytime Meal", icon: "clock", mealtime: "Anytime Meal")
     
     /// Creates a filter for a specific date, useful for filtering plates based on a selected day.
     /// - Parameter date: The date for which the filter is applied.

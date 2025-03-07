@@ -14,45 +14,44 @@ struct HomeScreenWidgetView: View {
     
     var body: some View {
         VStack(alignment: .leading){
+            Spacer()
+            VStack {
+                Text("Just a few steps to get")
+                Text("daily motivations on your")
+            }
+            .font(.headline)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.top)
+           
             VStack{
+                Text("HOME SCREEN")
+                    .font(.title.bold())
+                    .fontDesign(.rounded)
+                    .frame(maxWidth: .infinity)
+                    .frame(alignment: .center)
+    
                 // Home Screen Widget example section
                 ZStack{
                     // A rounded rectangle with a shadow to create a card effect
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.white) // Fill with white color
-                        .frame(height: 170)
+                        .fill(Color(colorManager.selectedColor.color)) // Fill with white color
+                        .frame(height: 150)
+                        .frame(maxWidth: 300)
                         .shadow(radius: 5)
                     // Motivational message displayed inside the card
                     Text("Small doses of motivation can make a big difference in your life")
                         .font(.title3)
                         .fontWeight(.regular)
                         .lineSpacing(5)
-                        .foregroundColor(colorManager.selectedColor.color)
+                        .foregroundColor(Color(uiColor: .systemBackground))
+                        .frame(maxWidth: 300)
                         .padding(15)
-                        .frame(maxWidth: .infinity)
                         .multilineTextAlignment(.center)
                 }
-                .padding(.vertical, 20)
-                
-                VStack {
-                    Text("Just a few steps to get")
-                    Text("daily motivations on your")
-                }
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.white)
-                .padding(.bottom, 10)
-                
-                Text("HOME SCREEN")
-                    .font(.title.bold())
-                    .fontDesign(.rounded)
-                    .frame(maxWidth: .infinity)
-                    .frame(alignment: .center)
-                    .foregroundColor(.white)
             }
-            .padding(20)
-            .background(Color(colorManager.selectedColor.color))
+            .padding(.horizontal)
+            .padding()
             
             // Instructions for Adding Widget
             // TODO: Change name of app and localize properly!
@@ -65,10 +64,21 @@ struct HomeScreenWidgetView: View {
             .fontWeight(.regular)
             .padding(20)
             Spacer()
+            Spacer()
         }
     }
 }
 
-#Preview {
+#Preview("English") {
     HomeScreenWidgetView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    HomeScreenWidgetView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

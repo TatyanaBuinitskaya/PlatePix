@@ -1,0 +1,346 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "A Bit Heavy" : {
+      "comment" : "Feeling slightly sluggish",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Bit Heavy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Небольшая тяжесть"
+          }
+        }
+      }
+    },
+    "Acid Reflux" : {
+      "comment" : "Burning sensation in the throat",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acid Reflux"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изжога"
+          }
+        }
+      }
+    },
+    "Allergic Reaction" : {
+      "comment" : "Experiencing symptoms of an allergy",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allergic Reaction"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аллергическая реакция"
+          }
+        }
+      }
+    },
+    "Bloating" : {
+      "comment" : "Uncomfortable swelling in the stomach",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bloating"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вздутие"
+          }
+        }
+      }
+    },
+    "Boosted Mood" : {
+      "comment" : "Feeling happier",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boosted Mood"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хорошее настроение"
+          }
+        }
+      }
+    },
+    "Dizzy" : {
+      "comment" : "Feeling dizzy",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dizzy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Головокружение"
+          }
+        }
+      }
+    },
+    "Drowsy" : {
+      "comment" : "Feeling sleepy",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drowsy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сонливость"
+          }
+        }
+      }
+    },
+    "Energized" : {
+      "comment" : "Feeling full of energy",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Energized"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Энергичность"
+          }
+        }
+      }
+    },
+    "Feeling Light" : {
+      "comment" : "Feeling good and light",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feeling Light"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Легкость"
+          }
+        }
+      }
+    },
+    "Food Poisoning" : {
+      "comment" : "Severe illness",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Food Poisoning"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пищевое отравление"
+          }
+        }
+      }
+    },
+    "Intense Fatigue" : {
+      "comment" : "Extreme tiredness",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intense Fatigue"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сильная усталость"
+          }
+        }
+      }
+    },
+    "Mildly Bloated" : {
+      "comment" : "Slight bloating",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mildly Bloated"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Небольшая вздутие"
+          }
+        }
+      }
+    },
+    "Nauseous" : {
+      "comment" : "Feeling like you might vomit",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nauseous"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тошнота"
+          }
+        }
+      }
+    },
+    "No Issues" : {
+      "comment" : "No noticeable effects",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Issues"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Без изменений"
+          }
+        }
+      }
+    },
+    "Satisfied" : {
+      "comment" : "Feeling content and full",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satisfied"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сытость"
+          }
+        }
+      }
+    },
+    "Severe Stomach Pain" : {
+      "comment" : "Intense pain in the stomach",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Severe Stomach Pain"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сильные боли в животе"
+          }
+        }
+      }
+    },
+    "Sluggish" : {
+      "comment" : "Feeling slow and low energy",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sluggish"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Легкая вялость"
+          }
+        }
+      }
+    },
+    "Stomach Ache" : {
+      "comment" : "Mild to moderate stomach pain",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stomach Ache"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Боль в животе"
+          }
+        }
+      }
+    },
+    "Thirsty" : {
+      "comment" : "Feeling unusually thirsty",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thirsty"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чувство жажды"
+          }
+        }
+      }
+    },
+    "Too Full" : {
+      "comment" : "Feeling uncomfortably full",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too Full"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чувство переполненности"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

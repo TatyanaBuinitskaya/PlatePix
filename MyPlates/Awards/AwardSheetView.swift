@@ -21,64 +21,70 @@ struct AwardSheetView: View {
     private let buttonPadding: CGFloat = 15
     /// The corner radius applied to buttons for rounded edges.
     private let buttonCornerRadius: CGFloat = 8
-
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Congratulations!")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.top)
-            Text("You've earned the following awards:")
-                .padding(.horizontal)
-            if let lastAward = dataController.congratulatedAwards.last {
-                // Display the most recently earned award.
-                awardContent(for: lastAward)
-            } else {
-                // Fallback message when no awards are earned yet.
-                Text("No awards earned yet.")
-                    .font(.body)
-                    .foregroundStyle(.gray)
-            }
-        }
-    }
-
-    /// Creates and displays the content for a specific award.
-       /// - Parameter award: The award to display.
-    @ViewBuilder
-    private func awardContent(for award: Award) -> some View {
-        VStack {
-            Text("\(award.name) Award!")
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding(.bottom)
-            Image(systemName: award.image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: imageSize, height: imageSize)
-                .padding(.bottom)
-            Text("\(award.value)")
-                .font(.title3)
-                .foregroundStyle(.secondary)
-            Button {
-                // Dismisses the award sheet and updates the data controller state.
-                dataController.showCongratulations = false
-                dismiss()
-            } label: {
-                Text("OK")
-                    .fontWeight(.semibold)
+        if let lastAward = dataController.congratulatedAwards.last {
+            VStack(spacing: 10) {
+                VStack {
+                    HStack {
+                        Image(systemName: "party.popper.fill")
+                            .font(.system(size: 60))
+                            .scaleEffect(x: -1, y: 1)
+                        Image(systemName: "party.popper.fill")
+                            .font(.system(size: 60))
+                    }
+                    .padding(.vertical)
+                    Text("Congratulations!")
+                        .font(.title.bold())
+                        .fontDesign(.rounded)
+                }
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .frame(maxHeight: 250)
+                .background(Color(colorManager.selectedColor.color).gradient)
+                Spacer()
+                Text("You've earned award:")
+                    .font(.headline)
                     .padding()
-                    .frame(maxWidth: .infinity)
-                    .foregroundStyle(.white)
-                    .cornerRadius(buttonCornerRadius)
-                    .padding(.top, 15)
-                    .padding()
+                Text("\(lastAward.name)")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.bottom)
+                AwardIcon(award: lastAward, size: 125, color: Color(lastAward.color))
+                Spacer()
+                Spacer()
+                Button {
+                    dismiss()
+                } label: {
+                    Text("OK")
+                        .font(.title2)
+                        .padding(5)
+                        .padding(.horizontal, 20)
+                        .background(Capsule().fill(Color(colorManager.selectedColor.color)))
+                        .foregroundStyle(.white)
+                }
+                .padding()
+                Spacer()
             }
-            .accessibilityLabel("Dismiss award details")
-            accentColor(colorManager.selectedColor.color)
+        } else {
+            // Fallback message when no awards are earned yet.
+            Text("No awards earned yet")
+                .font(.body)
+                .foregroundStyle(.gray)
         }
     }
 }
 
-#Preview {
+#Preview("English") {
     AwardSheetView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    AwardSheetView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

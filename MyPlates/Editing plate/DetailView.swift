@@ -27,8 +27,16 @@ struct DetailView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     DetailView()
         .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
 
+#Preview("Russian") {
+    DetailView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

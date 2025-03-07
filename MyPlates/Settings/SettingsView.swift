@@ -38,7 +38,7 @@ struct SettingsView: View {
         NavigationView {
             List {
                 // Section for UI customization settings.
-                Section("Personalize") {
+                Section("Personalization") {
 
                     // Allows user to choose a theme color
                     ColorPickerView()
@@ -47,7 +47,11 @@ struct SettingsView: View {
                     Button{
                         showRemindersSheet = true
                     } label: {
+                        HStack {
                         Label("Reminders", systemImage: "envelope")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
                     }
 
                     // Button to open the app language settings.
@@ -56,14 +60,22 @@ struct SettingsView: View {
                             UIApplication.shared.open(url)
                         }
                     } label: {
+                        HStack {
                         Label("Language", systemImage: "flag")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
                     }
 
                     // Button to show the home screen widget settings.
                     Button {
                         showHomeScreenWidgetSheet.toggle()
                     } label: {
+                        HStack {
                         Label("Home Screen Widget", systemImage: "quote.bubble")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
                     }
                     .sheet(isPresented: $showHomeScreenWidgetSheet, content: {
                         HomeScreenWidgetView()
@@ -73,7 +85,11 @@ struct SettingsView: View {
                     Button {
                         showLockScreenWidgetSheet.toggle()
                     } label: {
+                        HStack {
                         Label("Lock Screen Widget", systemImage: "text.bubble")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
                     }
                     .sheet(isPresented: $showLockScreenWidgetSheet, content: {
                         LockScreenWidgetView()
@@ -89,20 +105,32 @@ struct SettingsView: View {
                             openURL(link)
                         }
                     } label: {
+                        HStack {
                         Label("Leave a review", systemImage: "hand.thumbsup")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
                     }
 
                     // TODO: Add real app MyPlates ID from AppStore !!!
                     // Button to share the app link.
                     ShareLink(item: URL(string: "https://apps.apple.com/app/id6499429063")!) {
+                        HStack {
                         Label("Share", systemImage: "square.and.arrow.up")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
                     }
 
                     // Button to send a support email.
                     Button {
                         email.send(openURL: openURL)
                     } label: {
+                        HStack {
                         Label("Contact us", systemImage: "at")
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
                     }
 
                     // Button to open the terms and conditions page.
@@ -111,27 +139,40 @@ struct SettingsView: View {
                             openURL(urlTerms)
                         }
                     } label: {
-                        Label("Terms and conditions", systemImage: "doc.text")
+                        HStack {
+                            Label("Terms and conditions", systemImage: "doc.text")
+                            Spacer()
+                        }
+                        .contentShape(Rectangle())
                     }
 
                     // Button to open the privacy policy page.
-                    Button {
-                        if let urlPolicy = URL(string:  "https://tatyanabuinitskaya.github.io/PlatePixPrivacyPolicy/") {
-                            openURL(urlPolicy)
+                    
+                    
+                    
+                        Button {
+                            if let urlPolicy = URL(string:  "https://tatyanabuinitskaya.github.io/PlatePixPrivacyPolicy/") {
+                                openURL(urlPolicy)
+                            }
+                        } label: {
+                            HStack {
+                            Label("Privacy policy", systemImage: "shield")
+                            Spacer()
                         }
-                    } label: {
-                        Label("Privacy policy", systemImage: "shield")
-                    }
+                        .contentShape(Rectangle())
+                        }
+                    
+                    
                 }
             }
             .buttonStyle(PlainButtonStyle())
+            .accentColor(colorManager.selectedColor.color)
             .sheet(isPresented: $showRemindersSheet) {
                 RemindersSheetView()
-                    .presentationDetents([.medium])
-                    .presentationDetents([.fraction(0.3)])
+                    // .presentationDetents([.medium])
+                    .presentationDetents([.fraction(0.4)])
             }
         }
-        .accentColor(colorManager.selectedColor.color)
         .navigationTitle("Settings")
         .navigationBarBackButtonHidden(true) // Hide the default back button text
         .toolbar {
@@ -144,7 +185,7 @@ struct SettingsView: View {
                 }
             }
         }
-        .alert("Oops!", isPresented: $showingNotificationsError) {
+        .alert("Notifications are not enabled", isPresented: $showingNotificationsError) {
             Button("Check Settings", action: showAppSettings)
             Button("Cancel", role: .cancel) { }
         } message: {
@@ -181,7 +222,16 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     SettingsView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
 }
 
+#Preview("Russian") {
+    SettingsView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
+}

@@ -20,6 +20,9 @@ extension SideBarView {
         var dataController: DataController
         /// An environment variable that manages the app's selected color.
         @EnvironmentObject var colorManager: AppColorManager
+        /// The current color scheme of the app (light or dark mode).
+        @Environment(\.colorScheme) var colorScheme
+
         /// A fetched results controller for managing `Tag` entities from Core Data.
         /// It fetches tags from the database and updates the UI when changes occur.
         private let tagsController: NSFetchedResultsController<Tag>
@@ -29,7 +32,11 @@ extension SideBarView {
         /// A computed property that maps tags into `Filter` objects for easier processing.
         var tagFilters: [Filter] {
             tags.map { tag in
-                Filter(id: tag.tagID, name: tag.tagName, icon: "tag", tag: tag)
+                Filter(
+                    id: tag.tagID,
+                    name: NSLocalizedString(tag.tagName, tableName: dataController.tableNameForTagType(tag.type), comment: ""),
+                    icon: "tag",
+                    tag: tag)
             }
         }
         /// Returns the total count of all plates stored in Core Data.
@@ -75,7 +82,7 @@ extension SideBarView {
         }
 
         /// A function to generate tag filters by grouping them by type and creating viewable filters.
-        func generateTagFilters() -> [AnyView] {
+        func generateTagFilters(colorScheme: ColorScheme) -> [AnyView] {
             // Group the tag filters by their type.
             let groupedTags = Dictionary(grouping: tagFilters) { $0.tag?.type ?? "Other" }
             // Return sorted views for each tag type.
@@ -84,7 +91,7 @@ extension SideBarView {
                 // Only show the section if the tag type exists in availableTagTypes
                 if dataController.availableTagTypes.contains(type) {
                     // Header for each tag type
-                    views.append(AnyView(dataController.tagHeaderView(for: type)))
+                    views.append(AnyView(dataController.tagHeaderView(for: type, colorScheme: colorScheme)))
                     // Show items if the tag type should be displayed
                     if dataController.shouldShowTags(for: type) {
                         views.append(contentsOf: tagFilterList(for: groupedTags[type, default: []]))

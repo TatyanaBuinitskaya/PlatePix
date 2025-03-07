@@ -37,6 +37,10 @@
 		EB5656372D65FEEA00A25751 /* HomeScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5656362D65FEEA00A25751 /* HomeScreenWidgetView.swift */; };
 		EB5656392D660B8A00A25751 /* LockScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5656382D660B8A00A25751 /* LockScreenWidgetView.swift */; };
 		EB56563B2D676F2A00A25751 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB56563A2D676F2A00A25751 /* SplashScreenView.swift */; };
+		EB5656A22D6DC1C000A25751 /* AwardIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5656A12D6DC1C000A25751 /* AwardIcon.swift */; };
+		EB5656C52D6E0D3100A25751 /* DefaultReactions.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB5656C42D6E0D3100A25751 /* DefaultReactions.xcstrings */; };
+		EB5656C72D6E0E3700A25751 /* DefaultEmotions.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB5656C62D6E0E3700A25751 /* DefaultEmotions.xcstrings */; };
+		EB5656C92D6E5F0C00A25751 /* DefaultMonths.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB5656C82D6E5F0C00A25751 /* DefaultMonths.xcstrings */; };
 		EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */; };
 		EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F732D562ECF002AC274 /* UserPreferences.swift */; };
 		EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F792D5A2599002AC274 /* RemindersSheetView.swift */; };
@@ -52,12 +56,12 @@
 		EB567FB12D5E100A002AC274 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB567FB02D5E100A002AC274 /* WidgetKit.framework */; };
 		EB567FB32D5E100A002AC274 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB567FB22D5E100A002AC274 /* SwiftUI.framework */; };
 		EB567FC02D5E100C002AC274 /* MyPlatesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EB567FAE2D5E100A002AC274 /* MyPlatesWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		EB7922442D3E236300BF97D7 /* PDFSheetShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */; };
+		EB5FF6AB2D75FAC600249F07 /* PDFShareOneDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */; };
 		EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922452D3FDBDA00BF97D7 /* TagListView.swift */; };
 		EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79224D2D410E2F00BF97D7 /* Tags.swift */; };
 		EB7922502D43CEAF00BF97D7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB79224F2D43CEAF00BF97D7 /* Localizable.xcstrings */; };
 		EB7922532D43E83400BF97D7 /* Awards.json in Resources */ = {isa = PBXBuildFile; fileRef = EB7922522D43E83400BF97D7 /* Awards.json */; };
-		EB7922562D4588E900BF97D7 /* DefaultTags.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB7922552D4588E900BF97D7 /* DefaultTags.xcstrings */; };
+		EB7922562D4588E900BF97D7 /* DefaultFoodTags.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB7922552D4588E900BF97D7 /* DefaultFoodTags.xcstrings */; };
 		EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */; };
 		EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */; };
 		EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922612D48F17800BF97D7 /* PlateImageView.swift */; };
@@ -138,6 +142,10 @@
 		EB5656362D65FEEA00A25751 /* HomeScreenWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenWidgetView.swift; sourceTree = "<group>"; };
 		EB5656382D660B8A00A25751 /* LockScreenWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidgetView.swift; sourceTree = "<group>"; };
 		EB56563A2D676F2A00A25751 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		EB5656A12D6DC1C000A25751 /* AwardIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardIcon.swift; sourceTree = "<group>"; };
+		EB5656C42D6E0D3100A25751 /* DefaultReactions.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultReactions.xcstrings; sourceTree = "<group>"; };
+		EB5656C62D6E0E3700A25751 /* DefaultEmotions.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultEmotions.xcstrings; sourceTree = "<group>"; };
+		EB5656C82D6E5F0C00A25751 /* DefaultMonths.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultMonths.xcstrings; sourceTree = "<group>"; };
 		EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewModel.swift; sourceTree = "<group>"; };
 		EB567F732D562ECF002AC274 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		EB567F792D5A2599002AC274 /* RemindersSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersSheetView.swift; sourceTree = "<group>"; };
@@ -154,13 +162,13 @@
 		EB567FB02D5E100A002AC274 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		EB567FB22D5E100A002AC274 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		EB567FC62D5E1A3E002AC274 /* MyPlatesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyPlatesWidgetExtension.entitlements; sourceTree = "<group>"; };
-		EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFSheetShareView.swift; sourceTree = "<group>"; };
+		EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFShareOneDayView.swift; sourceTree = "<group>"; };
 		EB7922452D3FDBDA00BF97D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		EB79224D2D410E2F00BF97D7 /* Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
 		EB79224F2D43CEAF00BF97D7 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		EB7922512D43E83400BF97D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = en; path = en.lproj/Awards.json; sourceTree = "<group>"; };
 		EB7922542D43E8A000BF97D7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ru; path = ru.lproj/Awards.json; sourceTree = "<group>"; };
-		EB7922552D4588E900BF97D7 /* DefaultTags.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultTags.xcstrings; sourceTree = "<group>"; };
+		EB7922552D4588E900BF97D7 /* DefaultFoodTags.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultFoodTags.xcstrings; sourceTree = "<group>"; };
 		EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		EB7922612D48F17800BF97D7 /* PlateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageView.swift; sourceTree = "<group>"; };
@@ -329,9 +337,9 @@
 			children = (
 				EB22500E2D1457FE00E002D7 /* ContentView.swift */,
 				EB22502F2D197B8B00E002D7 /* PlateBox.swift */,
-				EB7922432D3E236200BF97D7 /* PDFSheetShareView.swift */,
 				EB567F732D562ECF002AC274 /* UserPreferences.swift */,
 				EB56563A2D676F2A00A25751 /* SplashScreenView.swift */,
+				EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */,
 			);
 			path = Plates;
 			sourceTree = "<group>";
@@ -356,6 +364,7 @@
 				EB22503B2D1ADDAB00E002D7 /* Award.swift */,
 				EB22503D2D1ADE7300E002D7 /* AwardsView.swift */,
 				EB2250482D28FEA300E002D7 /* AwardSheetView.swift */,
+				EB5656A12D6DC1C000A25751 /* AwardIcon.swift */,
 			);
 			path = Awards;
 			sourceTree = "<group>";
@@ -385,8 +394,11 @@
 			isa = PBXGroup;
 			children = (
 				EB79224F2D43CEAF00BF97D7 /* Localizable.xcstrings */,
-				EB7922552D4588E900BF97D7 /* DefaultTags.xcstrings */,
+				EB7922552D4588E900BF97D7 /* DefaultFoodTags.xcstrings */,
 				EB567FA82D5CDD8A002AC274 /* Motivations.xcstrings */,
+				EB5656C42D6E0D3100A25751 /* DefaultReactions.xcstrings */,
+				EB5656C62D6E0E3700A25751 /* DefaultEmotions.xcstrings */,
+				EB5656C82D6E5F0C00A25751 /* DefaultMonths.xcstrings */,
 			);
 			path = Localizations;
 			sourceTree = "<group>";
@@ -559,10 +571,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB5656C72D6E0E3700A25751 /* DefaultEmotions.xcstrings in Resources */,
 				EB567F7E2D5B5A48002AC274 /* Configuration.storekit in Resources */,
 				EB2250142D14580100E002D7 /* Preview Assets.xcassets in Resources */,
+				EB5656C52D6E0D3100A25751 /* DefaultReactions.xcstrings in Resources */,
+				EB5656C92D6E5F0C00A25751 /* DefaultMonths.xcstrings in Resources */,
 				EB7922502D43CEAF00BF97D7 /* Localizable.xcstrings in Resources */,
-				EB7922562D4588E900BF97D7 /* DefaultTags.xcstrings in Resources */,
+				EB7922562D4588E900BF97D7 /* DefaultFoodTags.xcstrings in Resources */,
 				EB2250452D1D753A00E002D7 /* example.jpg in Resources */,
 				EB567FA92D5CDD8A002AC274 /* Motivations.xcstrings in Resources */,
 				EB7922532D43E83400BF97D7 /* Awards.json in Resources */,
@@ -614,13 +629,13 @@
 				EB22502E2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift in Sources */,
 				EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */,
 				EB567F832D5B6380002AC274 /* StoreView.swift in Sources */,
-				EB7922442D3E236300BF97D7 /* PDFSheetShareView.swift in Sources */,
 				EB2250242D156C6800E002D7 /* DetailView.swift in Sources */,
 				EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */,
 				EB567F7C2D5A2751002AC274 /* DataController-Notifications.swift in Sources */,
 				EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */,
 				EB5656392D660B8A00A25751 /* LockScreenWidgetView.swift in Sources */,
 				EB2250362D1ADA5C00E002D7 /* Bundle-Decodable.swift in Sources */,
+				EB5656A22D6DC1C000A25751 /* AwardIcon.swift in Sources */,
 				EB5655E72D63400F00A25751 /* AppColorManager.swift in Sources */,
 				EB22501E2D146E9600E002D7 /* DataController.swift in Sources */,
 				EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */,
@@ -630,6 +645,7 @@
 				EB5656312D64D0BA00A25751 /* BundleForEmail.swift in Sources */,
 				EB56562F2D64CC2400A25751 /* SupportEmail.swift in Sources */,
 				EB567F8E2D5CC8D9002AC274 /* Motivations.swift in Sources */,
+				EB5FF6AB2D75FAC600249F07 /* PDFShareOneDayView.swift in Sources */,
 				EB5656372D65FEEA00A25751 /* HomeScreenWidgetView.swift in Sources */,
 				EB567F802D5B5E02002AC274 /* DataController-StoreKit.swift in Sources */,
 				EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */,
@@ -839,6 +855,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlates/Configuration/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "his app requires access to your camera to allow you to take photos of your meals.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to your photo library to save images to your photo album.\nThis app requires access to your photo library to save images to your photo album.\nThis app requires access to your photo library to save images to your photo album.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -872,6 +889,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlates/Configuration/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "his app requires access to your camera to allow you to take photos of your meals.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to your photo library to save images to your photo album.\nThis app requires access to your photo library to save images to your photo album.\nThis app requires access to your photo library to save images to your photo album.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -69,7 +69,7 @@ struct ColorCircleView: View {
                     .frame(width: 30, height: 30)
                     .overlay(
                         Circle().strokeBorder(
-                            isSelected ? Color.white : Color.clear,
+                            isSelected ? Color(uiColor: .systemBackground) : Color.clear,
                             lineWidth: 2
                         )
                         .padding(2)
@@ -77,7 +77,7 @@ struct ColorCircleView: View {
                 // Checkmark overlay if the color is selected
                 if  isSelected {
                     Image(systemName: "checkmark")
-                        .foregroundColor(.white)
+                        .foregroundStyle(Color(uiColor: .systemBackground))
                         .font(.footnote)
                         .fontWeight(.bold)
                 }
@@ -87,6 +87,16 @@ struct ColorCircleView: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     ColorPickerView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    ColorPickerView()
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

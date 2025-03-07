@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "PlatePixIcon 1.png",
+      "filename" : "PlatePixLogo 2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "PlatePixIcon.png",
+      "filename" : "PlatePixLogo.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "PlatePixIcon 2.png",
+      "filename" : "PlatePixLogo 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

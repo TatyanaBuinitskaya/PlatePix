@@ -14,6 +14,8 @@ struct TagListView: View {
     @EnvironmentObject var dataController: DataController
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
+    /// The current color scheme of the app (light or dark mode).
+    @Environment(\.colorScheme) var colorScheme
     /// The plate to which tags are associated.
     @ObservedObject var plate: Plate
     /// The environment dismiss action to close the view.
@@ -36,77 +38,117 @@ struct TagListView: View {
     private var filteredTags: [Tag] {
         searchQuery.isEmpty ?
         dataController.missingTags(from: plate) :
-        dataController.missingTags(from: plate).filter { $0.tagName.lowercased().contains(searchQuery.lowercased()) }
+        dataController.missingTags(from: plate).filter {
+            let localizedTagName = NSLocalizedString(
+                $0.tagName,
+                tableName: dataController.tableNameForTagType($0.tagType),
+                comment: "")
+            return localizedTagName.lowercased().contains(searchQuery.lowercased())
+        }
     }
-    
-//    /// The list of available tag types. Updates are persisted using UserDefaults.
-//    @State var availableTagTypes: [String] = [] {
-//    didSet {
-//        UserDefaults.standard.set(availableTagTypes, forKey: "availableTagTypes")
-//    }
-//}
 
     var body: some View {
         NavigationStack {
             ZStack {
-                VStack {
-                    Text("Create or delete default tags")
-                    defaultTagsToggles
-                    Text("Press and hold or swipe left on a tag to rename or delete it")
-                        .font(.caption)
-                        .padding()
-                    List {
-                        Section("Current Tags") {
-                            ForEach(plate.plateTags, id: \.self) { tag in
-                                TagRow(selectedTags: nil, tag: tag, removeAction: { removeTagFromPlate(tag) })
-                            }
+                Form {
+                    HStack {
+                        Spacer()
+                        VStack(alignment: .center, spacing: 0) {
+                            defaultTagsToggles
+                            Text("Press and hold or swipe left on a tag to rename or delete it")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.top)
+                                .multilineTextAlignment(.center)
                         }
-                        Section {
-                            let groupedTags = Dictionary(grouping: filteredTags) { $0.type ?? "Other" }
-                            ForEach(groupedTags.keys.sorted(by: dataController.sortTags), id: \.self) { type in
-                                if dataController.availableTagTypes.contains(type) {
-                                    Section {
-                                        dataController.tagHeaderView(for: type)
-                                        if dataController.shouldShowTags(for: type) {
-                                            ForEach(groupedTags[type, default: []], id: \.id) { tag in
-                                                TagRow(selectedTags: selectedTags, tag: tag)
-                                                    .contentShape(Rectangle())
-                                                    .onTapGesture {
-                                                        toggleSelection(for: tag)
+                        .padding(0)
+                        Spacer()
+                    }
+                    .padding(0)
+                    
+                    List {
+                            Section("Current tags") {
+                                if !plate.plateTags.isEmpty {
+                                    ForEach(plate.plateTags, id: \.self) { tag in
+                                        TagRow(selectedTags: nil, tag: tag, removeAction: { removeTagFromPlate(tag) })
+                                    }
+                                } else {
+                                    Text("No tags added yet")
+                                        .fontWeight(.light)
+                                }
+                            }
+                            Section("Add tags") {
+                                let groupedTags = Dictionary(grouping: filteredTags) { $0.type ?? "Other" }
+//                                ForEach(groupedTags.keys.sorted(by: dataController.sortTags), id: \.self) { type in
+//                                    if dataController.availableTagTypes.contains(type) {
+//                                        Section {
+//                                            dataController.tagHeaderView(for: type, colorScheme: colorScheme)
+//                                            if dataController.shouldShowTags(for: type) {
+//                                                ForEach(groupedTags[type, default: []], id: \.id) { tag in
+//                                                    TagRow(selectedTags: selectedTags, tag: tag)
+//                                                        .contentShape(Rectangle())
+//                                                        .onTapGesture {
+//                                                            toggleSelection(for: tag)
+//                                                        }
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+                                ForEach(groupedTags.keys.sorted(by: dataController.sortTags), id: \.self) { type in
+                                    if dataController.availableTagTypes.contains(type) {
+                                        Section {
+                                           
+                                            dataController.tagHeaderView(for: type, colorScheme: colorScheme)
+                            
+                                            if dataController.shouldShowTags(for: type) || expandedGroups.contains(type) {
+                                                    ForEach(groupedTags[type, default: []], id: \.id) { tag in
+                                                        TagRow(selectedTags: selectedTags, tag: tag)
+                                                            .contentShape(Rectangle())
+                                                            .onTapGesture {
+                                                                toggleSelection(for: tag)
+                                                            }
                                                     }
                                             }
                                         }
                                     }
                                 }
                             }
+                        
                         }
                     }
                     .accentColor(colorManager.selectedColor.color)
                     .searchable(text: $searchQuery)
-                }
-                VStack {
-                    Spacer()
-                    Button("Add Selected Tags to Plate") {
-                        addSelectedTagsToPlate()
-                        dismiss()
+                    .onChange(of: searchQuery) {
+                        if searchQuery.isEmpty {
+                                // Collapse all groups when the search query is cleared
+                                expandedGroups.removeAll()
+                            } else {
+                                // Find tags matching the search query and update the expanded groups
+                                let matchingTypes = Set(filteredTags.compactMap { $0.type })
+                                // Expand only groups that contain matching tags
+                                expandedGroups.formUnion(matchingTypes)
+                            }
                     }
-                    .padding()
-                    .background(Capsule().fill(Color.white).stroke(Color.gray))
-                    .disabled(selectedTags.isEmpty)
-                    .padding(.bottom, 20)
+                    
+            
+            VStack {
+                Spacer()
+                Button("Add Selected Tags to Plate") {
+                    addSelectedTagsToPlate()
+                    dismiss()
                 }
+                .foregroundStyle(!selectedTags.isEmpty ? .white : Color(uiColor: .systemBackground))
+                .padding(10)
+                .background(Capsule().fill(!selectedTags.isEmpty ? colorManager.selectedColor.color : (Color.secondary)))
+                .disabled(selectedTags.isEmpty)
+                .padding(.bottom, 20)
             }
-            .background(.gray.opacity(0.1))
-            .navigationTitle("Food Tags")
+        }
+    
+         //   .background(.gray.opacity(0.1))
+            .navigationTitle("Tags")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                Button(action: dataController.newTag) {
-                    HStack {
-                        Text("Add tag")
-                        Image(systemName: "plus")
-                    }
-                }
-            }
         }
         .onAppear {
             // Reload fetch request when the view appears to ensure data consistency.
@@ -142,29 +184,75 @@ struct TagListView: View {
     /// A view containing toggles for default tags.
     private var defaultTagsToggles: some View {
         HStack {
-            tagToggle(label: "Emotion", isOn: $showDedaultEmotionTags, type: "emotion")
-            tagToggle(label: "Food", isOn: $showDedaultFoodTags, type: "food")
-            tagToggle(label: "Month", isOn: $showDedaultMonthTags, type: "month")
-            tagToggle(label: "Reaction", isOn: $showDedaultReactionTags, type: "reaction")
-        }
-        .padding(5)
-        .background(Capsule().fill(colorManager.selectedColor.color))
+            tagToggle(
+                text: NSLocalizedString("Emotion", comment: ""),
+                label: colorScheme == .dark ? "face.smiling.inverse" : "face.smiling",
+                isOn: $showDedaultEmotionTags,
+                type: "emotion")
+            tagToggle(
+                text: NSLocalizedString("Food", comment: ""),
+                label: "fork.knife.circle",
+                isOn: $showDedaultFoodTags,
+                type: "food")
+            tagToggle(
+                text: NSLocalizedString("Month", comment: ""),
+                label: "30.square",
+                isOn: $showDedaultMonthTags,
+                type: "month")
+            tagToggle(
+                text: NSLocalizedString("Reaction", comment: ""),
+                label: "heart.text.square",
+                isOn: $showDedaultReactionTags,
+                type: "reaction")
+            Button {
+                        dataController.newTag()
+                } label: {
+                    VStack(spacing: 3) {
+                        Text("My")
+                            .font(.caption)
+                            .foregroundStyle(.primary)
+                        Image(systemName: "plus")
+                            .foregroundStyle(Color.white)
+                            .font(.title2)
+                            .padding(6)
+                            .background {
+                                Circle()
+                                    .fill(colorManager.selectedColor.color)
+                            }
+                       
+                    }
+                    .frame(width: 60)
+            }
+                .buttonStyle(PlainButtonStyle())
+            }
+          //  .padding(5)
+          //  .frame(maxWidth: .infinity)
+          //  .background(RoundedRectangle(cornerRadius: 10).fill(.gray.opacity(0.1)))
+          //  .padding()
     }
 
     /// A toggle button for managing default tags.
-    private func tagToggle(label: String, isOn: Binding<Bool>, type: String) -> some View {
-        HStack {
-            Text(label)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+    private func tagToggle(text: String, label: String, isOn: Binding<Bool>, type: String) -> some View {
             Button {
                 isOn.wrappedValue.toggle()
             } label: {
-                Image(systemName: isOn.wrappedValue ? "checkmark.circle.fill" : "circle")
-                    .foregroundStyle(.white)
-                    .font(.title2)
-            }
+                VStack(spacing: 3) {
+                    Text(text)
+                        .font(.caption)
+                        .foregroundStyle(isOn.wrappedValue ? .primary : Color.gray)
+                    Image(systemName: label)
+                        .foregroundStyle(isOn.wrappedValue ? Color.white : Color.gray)
+                        .font(.title2)
+                        .padding(5)
+                        .background {
+                            Circle()
+                                .fill(isOn.wrappedValue ? colorManager.selectedColor.color : .clear)
+                        }
+                        .symbolRenderingMode(.monochrome)
+                }
+                .frame(width: 60)
         }
+            .buttonStyle(PlainButtonStyle())
         .onChange(of: isOn.wrappedValue) {
             handleTagChange(for: type, isOn: isOn.wrappedValue)
         }
@@ -249,10 +337,11 @@ struct TagListView: View {
             ///
             /// - Parameter context: The NSManagedObjectContext used for creating tags.
         func createDefaultMonthTags(context: NSManagedObjectContext) {
-            let defaultMonthTags = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ].map { NSLocalizedString($0, tableName: "DefaultTags", comment: "Month name") }
+//            let defaultMonthTags = [
+//                "January", "February", "March", "April", "May", "June",
+//                "July", "August", "September", "October", "November", "December"
+//            ]
+                //.map { NSLocalizedString($0, tableName: "DefaultMonths", comment: "") }
             createDefaultTags(tagType: "Month", tagNames: defaultMonthTags, context: context)
         }
 
@@ -267,11 +356,6 @@ struct TagListView: View {
             ///
             /// - Parameter context: The NSManagedObjectContext used for creating tags.
         func createDefaultEmotionTags(context: NSManagedObjectContext) {
-            let defaultEmotionTags = ["Happy", "Stress"].map { NSLocalizedString(
-                $0,
-                tableName: "DefaultTags",
-                comment: "Emotion"
-            ) }
             createDefaultTags(tagType: "Emotion", tagNames: defaultEmotionTags, context: context)
         }
 
@@ -286,11 +370,6 @@ struct TagListView: View {
             ///
             /// - Parameter context: The NSManagedObjectContext used for creating tags.
         func createDefaultReactionTags(context: NSManagedObjectContext) {
-            let defaultReactionTags = ["Sick", "Feel good"].map { NSLocalizedString(
-                $0,
-                tableName: "DefaultTags",
-                comment: "Reaction"
-            ) }
             createDefaultTags(tagType: "Reaction", tagNames: defaultReactionTags, context: context)
         }
 
@@ -352,6 +431,31 @@ struct TagListView: View {
         }
         saveContext(context)
     }
+    
+//    func createDefaultTags(tagType: String, tagNames: [String], context: NSManagedObjectContext, tableName: String) {
+//        for tagName in tagNames {
+//            let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
+//            fetchRequest.predicate = NSPredicate(format: "name == %@", tagName)
+//
+//            // Fetch the existing tag if it exists
+//            let existingTags = (try? context.fetch(fetchRequest)) ?? []
+//
+//            // If the tag exists, update its name with localized string
+//            if let tag = existingTags.first {
+//                // Update the name with the localized version from the specified table
+//                let localizedTagName = NSLocalizedString(tagName, tableName: tableName, comment: "")
+//                tag.name = localizedTagName
+//            } else {
+//                // If the tag doesn't exist, create a new one
+//                let tag = Tag(context: context)
+//                tag.id = UUID() // Assign a new UUID for the tag
+//                tag.name = NSLocalizedString(tagName, tableName: tableName, comment: "") // Store the localized name
+//                tag.type = tagType
+//                addTagTypeIfNeeded(tagType)
+//            }
+//        }
+//        saveContext(context)
+//    }
 }
 
 /// A SwiftUI view that displays an individual tag with options to edit or delete.
@@ -379,44 +483,34 @@ struct TagRow: View {
     var body: some View {
         HStack {
             // Displays the tag name with a color indicating if it was recently created.
-            Text(tag.tagName)
+            Text(NSLocalizedString(tag.tagName, tableName: dataController.tableNameForTagType(tag.type), comment: ""))
                 .fontWeight(.light)
                 .foregroundStyle(isTagRecentlyCreated(tag: tag) ? colorManager.selectedColor.color : .primary)
             Spacer()
             // Conditionally displays a "Remove" button if `removeAction` is provided.
             if let removeAction = removeAction {
                 Button {
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.success) // Haptic feedback when removing a tag
                     removeAction()
                 } label: {
                     HStack {
-                        Text("Remove").font(.caption)
-                        Image(systemName: "minus.circle")
+                       // Text("Remove").font(.caption)
+                        Image(systemName: "tag.slash")
                     }
-                    .foregroundStyle(.red)
+                    .foregroundStyle(colorManager.selectedColor.color)
                 }
             } else if selectedTags?.contains(tag) == true {
                 // Shows a checkmark if the tag is part of the selected tags.
                 Image(systemName: "checkmark")
-                    .onAppear {
-                        let generator = UIImpactFeedbackGenerator(style: .light)
-                        generator.impactOccurred() // Light haptic when selecting a tag
-                            }
             }
         }
         .contextMenu {
             // Provides options to rename or delete the tag when long-pressed.
             Button {
-                let generator = UIImpactFeedbackGenerator(style: .medium)
-                generator.impactOccurred() // Medium haptic for renaming
                 edit(tag)
             } label: {
                 Label("Rename", systemImage: "pencil")
             }
             Button(role: .destructive) {
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.error) // Strong haptic for deleting
                 delete(tag)
             } label: {
                 Label("Delete", systemImage: "trash")
@@ -425,8 +519,6 @@ struct TagRow: View {
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             // Allows quick swipe actions to rename or delete the tag.
             Button {
-                let generator = UIImpactFeedbackGenerator(style: .medium)
-                generator.impactOccurred() // Medium haptic for renaming
                 edit(tag)
             } label: {
                 Label("Rename", systemImage: "pencil")
@@ -434,20 +526,17 @@ struct TagRow: View {
             .tint(colorManager.selectedColor.color)
 
             Button(role: .destructive) {
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.error) // Strong haptic for deleting
                 delete(tag)
             } label: {
                 Label("Delete", systemImage: "trash")
             }
+            .tint(.red)
         }
         .alert("Rename Tag", isPresented: $editingTag) {
             // Displays an alert for renaming the tag with input fields for name and type.
             TextField("New Name", text: $tagName)
             TextField("New Type", text: $tagType)
             Button("OK", action: {
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.success) // Success haptic when renaming
                 completeEdit()
             })
             Button("Cancel", role: .cancel) { }
@@ -490,6 +579,16 @@ struct TagRow: View {
     }
 }
 
-#Preview {
+#Preview("English") {
     TagListView(plate: .example)
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+}
+
+#Preview("Russian") {
+    TagListView(plate: .example)
+        .environmentObject(DataController.preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
 }

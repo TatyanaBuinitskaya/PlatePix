@@ -10,10 +10,6 @@ import Foundation
 class UserPreferences: ObservableObject {
     static let shared = UserPreferences() // Singleton instance
 
-    @Published var showNotes: Bool {
-        didSet { UserDefaults.standard.set(showNotes, forKey: "showNotes") }
-    }
-
     @Published var showMealTime: Bool {
         didSet { UserDefaults.standard.set(showMealTime, forKey: "showMealTime") }
     }
@@ -27,7 +23,6 @@ class UserPreferences: ObservableObject {
     }
 
     init() {
-        self.showNotes = UserDefaults.standard.bool(forKey: "showNotes")
         self.showMealTime = UserDefaults.standard.bool(forKey: "showMealTime")
         self.showQuality = UserDefaults.standard.bool(forKey: "showQuality")
         self.showTags = UserDefaults.standard.bool(forKey: "showTags")

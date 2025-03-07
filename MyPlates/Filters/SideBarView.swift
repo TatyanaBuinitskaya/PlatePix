@@ -13,6 +13,8 @@ struct SideBarView: View {
 //    @EnvironmentObject var dataController: DataController
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
+    /// The current color scheme of the app (light or dark mode).
+    @Environment(\.colorScheme) var colorScheme
     /// The view model responsible for managing the state and logic of this view.
     @StateObject private var viewModel: ViewModel
     /// State variable to control the presentation of the calendar sheet.
@@ -26,10 +28,11 @@ struct SideBarView: View {
     /// A dictionary to track whether each tag type filter should be shown.
     @State private var showTagTypeFilters: [String: Bool] = [:]
     /// A set to track which filter groups are expanded.
-    @State private var expandedGroups: Set<String> = []
+  //  @State private var expandedGroups: Set<String> = []
     /// State variable to control the visibility of the mealtime filter list.
     @State private var showMealtimeFilterList = false
-    
+    @State var showAlertNoTagsYet = false
+
     /// A predefined set of mealtime filters for the sidebar.
     let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
     let qualityFilters: [Filter] = [.healthy, .moderate, .unhealthy]
@@ -44,9 +47,9 @@ struct SideBarView: View {
         List(selection: $viewModel.dataController.selectedFilter) {
 
             // Section for date-based filters.
-            Section("Date Filters") {
+            Section("Filter by Date") {
                 dateFilterButton(
-                    label: "All plates",
+                    label: LocalizedStringKey("All Plates"),
                     systemImage: "calendar",
                     plateCount: viewModel.allPlatesCount,
                     accessibilityHint: "\(viewModel.allPlatesCount) plates"
@@ -56,7 +59,7 @@ struct SideBarView: View {
                     viewModel.dataController.selectedDate = nil
                 }
                 dateFilterButton(
-                    label: "Today",
+                    label: LocalizedStringKey("Today"),
                     systemImage: "1.square",
                     plateCount: viewModel.dataController.countSelectedDatePlates(for: Date()),
                     accessibilityHint: "\(viewModel.dataController.countSelectedDatePlates(for: Date())) plates"
@@ -71,48 +74,55 @@ struct SideBarView: View {
                 } label: {
                     HStack {
                         let selectedDate = viewModel.dataController.formattedDate(viewModel.dataController.selectedDate ?? Date())
-                        Label("Select date" + " (" + selectedDate + ")", systemImage: "calendar.badge.plus")
+                        Label(NSLocalizedString("Select a Date", comment: ""), systemImage: "calendar.badge.plus")
+                            .fixedSize(horizontal: true, vertical: false)
+                        Text(" (\(selectedDate))")
+                            .font(.footnote)  // Applying a smaller font to selectedDate
+                            .fixedSize(horizontal: true, vertical: false)
                         Spacer()
                         Image(systemName: "chevron.down")
                             .foregroundStyle(.secondary)
                             .font(.footnote)
+                        
                     }
                 }
             }
 
             // Section for tag-based filters.
-            Section("Tags") {
+            Section("Filter by Tag") {
                 expandableFilterSection(
-                    label: "Choose a tag filter",
+                    label: LocalizedStringKey("Select a Tag"),
                     systemImage: "tag",
                     isExpanded: $showTagFilterList,
-                    items: viewModel.generateTagFilters(),
-                    colorManager: colorManager
+                    items: viewModel.generateTagFilters(colorScheme: colorScheme),
+                    colorManager: colorManager,
+                    showAlertNoTags: $showAlertNoTagsYet
                 )
             }
 
             // Section for mealtime filters.
-            Section("Mealtime filters") {
+            Section("Filter by Mealtime") {
                 expandableFilterSection(
-                    label: "Choose a Mealtime filter",
+                    label: LocalizedStringKey("Select a Mealtime"),
                     systemImage: "clock",
                     isExpanded: $showMealtimeFilterList,
                     items: mealtimeFilters.map { filter in
                         NavigationLink(value: filter) {
                             let mealtime = filter.mealtime ?? ""
                             let plateCount = viewModel.countMealtimePlates(for: mealtime)
-                            Text(LocalizedStringKey(filter.name))
+                            Text(NSLocalizedString(filter.name, comment: "Mealtime"))
                                 .badge("\(plateCount)")
                                 .accessibilityLabel(filter.name)
                                 .accessibilityHint("\(plateCount) plates")
                         }
                     },
-                    colorManager: colorManager
+                    colorManager: colorManager,
+                    showAlertNoTags: $showAlertNoTagsYet
                 )
             }
 
             // Section for quality filters.
-            Section("Quality filters") {
+            Section("Filter by Food Quality") {
                 QualityFiltersSection(
                     qualityFilters: qualityFilters,
                     countQualityPlates: viewModel.countQualityPlates(for:)
@@ -135,9 +145,17 @@ struct SideBarView: View {
   
 }
 
-#Preview {
+#Preview("English") {
     SideBarView(dataController: .preview)
-   }
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "EN"))
+        }
+
+#Preview("Russian") {
+    SideBarView(dataController: .preview)
+        .environmentObject(AppColorManager())
+        .environment(\.locale, Locale(identifier: "RU"))
+        }
 
 /// Creates a button view for a date filter that displays the filter label, a badge with plate count, and an arrow to indicate selection.
 /// - Parameters:
@@ -148,7 +166,7 @@ struct SideBarView: View {
 ///   - action: The action to be performed when the button is pressed. This is passed as a closure.
 @ViewBuilder
 private func dateFilterButton(
-    label: String,
+    label: LocalizedStringKey,
     systemImage: String,
     plateCount: Int,
     accessibilityHint: String,
@@ -179,18 +197,25 @@ private func dateFilterButton(
 ///   - items: A list of views (items) to be shown when the section is expanded. This can be dynamic content such as filter options.
 @ViewBuilder
 private func expandableFilterSection(
-    label: String,
+    label: LocalizedStringKey,
     systemImage: String,
     isExpanded: Binding<Bool>,
     items: [some View],
-    colorManager: AppColorManager // Pass colorManager explicitly as a parameter
+    colorManager: AppColorManager, // Pass colorManager explicitly as a parameter
+    showAlertNoTags: Binding<Bool>
 ) -> some View {
+
 
     Button {
         // Toggle the expanded state with animation when the section header is tapped.
-        withAnimation {
-            isExpanded.wrappedValue.toggle()
+        if items.isEmpty {
+            showAlertNoTags.wrappedValue = true
+        } else {
+            withAnimation {
+                isExpanded.wrappedValue.toggle()
+            }
         }
+        
     } label: {
         HStack {
             // Display the system image and label for the section header.
@@ -206,6 +231,14 @@ private func expandableFilterSection(
                 .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue) // Adds smooth rotation animation.
         }
     }
+    .alert("No tags available", isPresented: showAlertNoTags) {
+        Button("OK", role: .cancel) { }
+          
+        } message: {
+            Text("You need to add at least one tag before filtering.")
+        }
+       
+
     // If the section is expanded, show the items inside the section.
     if isExpanded.wrappedValue {
         // Use `ForEach` to render the items inside the expanded section.
@@ -227,7 +260,7 @@ struct QualityFiltersSection: View {
     
     var body: some View {
         // Iterate over the available quality filters and create navigation links.
-        Section("Quality filters") {
+
             ForEach(qualityFilters) { filter in
                 NavigationLink(value: filter) {
                     qualityFilterRow(filter: filter)
@@ -239,7 +272,6 @@ struct QualityFiltersSection: View {
                 averageCount: countQualityPlates(1),
                 badCount: countQualityPlates(0)
             )
-        }
     }
 
     /// A helper function to create a row for each quality filter.
@@ -298,7 +330,9 @@ struct SideBarViewToolBar: View {
             Label("Show awards", systemImage: "rosette")
         }
         .tint(colorManager.selectedColor.color)
-        .sheet(isPresented: $showAwards, content: AwardsView.init)
-
+        .sheet(isPresented: $showAwards) {
+            AwardsView()
+                .presentationDetents([.height(500)])
+        }
     }
 }

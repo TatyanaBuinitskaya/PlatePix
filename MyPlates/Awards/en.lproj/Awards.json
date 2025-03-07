@@ -1,66 +1,65 @@
 [
     {
-        "name": "First Steps",
-        "description": "Add your first plate",
-        "color": "A Light Blue",
-        "criterion": "plates",
-        "value": 1,
-        "image": "1.square"
-    },
-    {
-        "name": "A Great Start",
+        "name": "Beginner",
         "description": "Add 10 plates",
-        "color": "A Light Blue",
+        "color": "WatermelonPink",
         "criterion": "plates",
-        "value": 10,
-        "image": "10.square"
+        "value": 10
     },
     {
-        "name": "Moving On Up",
-        "description": "Add 20 plates",
+        "name": "Master",
+        "description": "Add 25 plates",
         "color": "A Light Blue",
         "criterion": "plates",
-        "value": 20,
-        "image": "20.square"
+        "value": 25
     },
     {
-        "name": "Gathering Speed",
+        "name": "Professional",
         "description": "Add 50 plates",
-        "color": "A Light Blue",
+        "color": "SunnyYellow",
         "criterion": "plates",
-        "value":50,
-        "image": "50.square"
+        "value": 50
     },
     {
-        "name": "Making Waves",
+        "name": "Expert",
         "description": "Add 100 plates",
-        "color": "A Light Blue",
+        "color": "AppleGreen",
         "criterion": "plates",
-        "value": 100,
-        "image": "hand.thumbsup"
+        "value": 100
     },
     {
-        "name": "High Performer",
+        "name": "Guru",
         "description": "Add 250 plates",
-        "color": "A Light Blue",
+        "color": "CoolMint",
         "criterion": "plates",
-        "value": 250,
-        "image": "square.stack.3d.up.fill"
+        "value": 250
     },
     {
-        "name": "Star Performer",
+        "name": "Maestro",
         "description": "Add 500 plates",
-        "color": "A Light Blue",
+        "color": "BlueSky",
         "criterion": "plates",
-        "value": 500,
-        "image": "star.circle.fill"
+        "value": 500
     },
     {
-        "name": "Champion Performer",
+        "name": "Collector",
         "description": "Add 1000 plates",
-        "color": "A Light Blue",
+        "color": "AppleBlue",
         "criterion": "plates",
-        "value": 1000,
-        "image": "crown.fill"
+        "value": 1000
+    },
+    {
+        "name": "Champion",
+        "description": "Add 5000 plates",
+        "color": "LavenderRaf",
+        "criterion": "plates",
+        "value": 5000
+    },
+    {
+        "name": "Legend",
+        "description": "Add 10000 plates",
+        "color": "GirlsPink",
+        "criterion": "plates",
+        "value": 10000
     }
 ]

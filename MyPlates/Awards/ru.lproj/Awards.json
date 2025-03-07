@@ -1,74 +1,65 @@
 [
     {
-        "name": "Первые шаги",
-        "description": "Добавь первую тарелку",
-        "color": "A Light Blue",
-        "criterion": "plates",
-        "value": 1,
-        "image": "1.square"
-    },
-    {
-        "name": "Отличное начало",
+        "name": "Новичок",
         "description": "Добавь 10 тарелок",
-        "color": "A Light Blue",
+        "color": "WatermelonPink",
         "criterion": "plates",
-        "value": 10,
-        "image": "10.square"
+        "value": 10
     },
     {
-        "name": "Двигайся дальше",
-        "description": "Добавь 20 тарелок",
-        "color": "A Light Blue",
+        "name": "Мастер",
+        "description": "Добавь 25 тарелок",
+        "color": "OrangeFruit",
         "criterion": "plates",
-        "value": 20,
-        "image": "20.square"
+        "value": 25
     },
     {
-        "name": "Набирай скорость",
+        "name": "Проффессионал",
         "description": "Добавь 50 тарелок",
-        "color": "A Light Blue",
+        "color": "SunnyYellow",
         "criterion": "plates",
-        "value": 50,
-        "image": "50.square"
+        "value": 50
     },
     {
-        "name": "Потрясающе",
+        "name": "Эксперт",
         "description": "Добавь 100 тарелок",
-        "color": "A Light Blue",
+        "color": "AppleGreen",
         "criterion": "plates",
-        "value": 100,
-        "image": "hand.thumbsup"
+        "value": 100
     },
     {
-        "name": "Высокий Результат",
+        "name": "Гуру",
         "description": "Добавь 250 тарелок",
-        "color": "A Light Blue",
+        "color": "CoolMint",
         "criterion": "plates",
-        "value": 250,
-        "image": "square.stack.3d.up.fill"
+        "value": 250
     },
     {
-        "name": "Звезда",
+        "name": "Маэстро",
         "description": "Добавь 500 тарелок",
-        "color": "A Light Blue",
+        "color": "BlueSky",
+        "criterion": "plates",
+        "value": 500
+    },
+    {
+        "name": "Коллекционер",
+        "description": "Добавь 1000 тарелок",
+        "color": "AppleBlue",
         "criterion": "issues",
-        "value": 500,
-        "image": "star.circle.fill"
+        "value": 1000
     },
     {
         "name": "Чемпион",
-        "description": "Добавь 1000 тарелок",
-        "color": "A Light Blue",
+        "description": "Добавь 5000 тарелок",
+        "color": "LavenderRaf",
         "criterion": "plates",
-        "value": 1000,
-        "image": "crown.fill"
+        "value": 5000
     },
     {
-        "name": "Supporter",
-        "description": "You bought the premium unlock.",
-        "color": "A Purple",
-        "criterion": "unlock",
-        "value": 0,
-        "image": "dollarsign.square.fill"
+        "name": "Легенда",
+        "description": "Добавь 10000 тарелок",
+        "color": "GirlsPink",
+        "criterion": "plates",
+        "value": 10000
     }
 ]
