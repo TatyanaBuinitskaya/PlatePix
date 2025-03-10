@@ -45,8 +45,6 @@
 		EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F732D562ECF002AC274 /* UserPreferences.swift */; };
 		EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F792D5A2599002AC274 /* RemindersSheetView.swift */; };
 		EB567F7C2D5A2751002AC274 /* DataController-Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */; };
-		EB567F7E2D5B5A48002AC274 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = EB567F7D2D5B5A48002AC274 /* Configuration.storekit */; };
-		EB567F802D5B5E02002AC274 /* DataController-StoreKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F7F2D5B5E02002AC274 /* DataController-StoreKit.swift */; };
 		EB567F832D5B6380002AC274 /* StoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F822D5B6380002AC274 /* StoreView.swift */; };
 		EB567F852D5C6F71002AC274 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F842D5C6F71002AC274 /* AppDelegate.swift */; };
 		EB567F872D5C6F8C002AC274 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F862D5C6F8C002AC274 /* SceneDelegate.swift */; };
@@ -57,6 +55,9 @@
 		EB567FB32D5E100A002AC274 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB567FB22D5E100A002AC274 /* SwiftUI.framework */; };
 		EB567FC02D5E100C002AC274 /* PlatePixWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EB567FAE2D5E100A002AC274 /* PlatePixWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EB5FF6AB2D75FAC600249F07 /* PDFShareOneDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */; };
+		EB5FF6F02D7B82F000249F07 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = EB5FF6EF2D7B82F000249F07 /* RevenueCat */; };
+		EB5FF6F22D7B833800249F07 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5FF6F12D7B833800249F07 /* StoreKit.framework */; };
+		EB5FF6F42D7EEA6F00249F07 /* ExtensionRevenueCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5FF6F32D7EEA6F00249F07 /* ExtensionRevenueCat.swift */; };
 		EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922452D3FDBDA00BF97D7 /* TagListView.swift */; };
 		EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79224D2D410E2F00BF97D7 /* Tags.swift */; };
 		EB7922502D43CEAF00BF97D7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB79224F2D43CEAF00BF97D7 /* Localizable.xcstrings */; };
@@ -150,8 +151,6 @@
 		EB567F732D562ECF002AC274 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		EB567F792D5A2599002AC274 /* RemindersSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersSheetView.swift; sourceTree = "<group>"; };
 		EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-Notifications.swift"; sourceTree = "<group>"; };
-		EB567F7D2D5B5A48002AC274 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
-		EB567F7F2D5B5E02002AC274 /* DataController-StoreKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataController-StoreKit.swift"; sourceTree = "<group>"; };
 		EB567F822D5B6380002AC274 /* StoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreView.swift; sourceTree = "<group>"; };
 		EB567F842D5C6F71002AC274 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB567F862D5C6F8C002AC274 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +162,8 @@
 		EB567FB22D5E100A002AC274 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		EB567FC62D5E1A3E002AC274 /* PlatePixWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlatePixWidgetExtension.entitlements; sourceTree = "<group>"; };
 		EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFShareOneDayView.swift; sourceTree = "<group>"; };
+		EB5FF6F12D7B833800249F07 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		EB5FF6F32D7EEA6F00249F07 /* ExtensionRevenueCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionRevenueCat.swift; sourceTree = "<group>"; };
 		EB7922452D3FDBDA00BF97D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		EB79224D2D410E2F00BF97D7 /* Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
 		EB79224F2D43CEAF00BF97D7 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -198,6 +199,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB5FF6F02D7B82F000249F07 /* RevenueCat in Frameworks */,
+				EB5FF6F22D7B833800249F07 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +292,6 @@
 				EB5655E62D63400F00A25751 /* AppColorManager.swift */,
 				EB567F842D5C6F71002AC274 /* AppDelegate.swift */,
 				EB567F862D5C6F8C002AC274 /* SceneDelegate.swift */,
-				EB567F7F2D5B5E02002AC274 /* DataController-StoreKit.swift */,
 				EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */,
 			);
 			path = Controllers;
@@ -299,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				EB567F822D5B6380002AC274 /* StoreView.swift */,
+				EB5FF6F32D7EEA6F00249F07 /* ExtensionRevenueCat.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 		EB567FAF2D5E100A002AC274 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EB5FF6F12D7B833800249F07 /* StoreKit.framework */,
 				EB567FB02D5E100A002AC274 /* WidgetKit.framework */,
 				EB567FB22D5E100A002AC274 /* SwiftUI.framework */,
 			);
@@ -420,7 +424,6 @@
 		EBB2C9522D5246B2008FA818 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				EB567F7D2D5B5A48002AC274 /* Configuration.storekit */,
 				EB2250202D156A7100E002D7 /* Info.plist */,
 				EB22501F2D156A3500E002D7 /* PlatePix.entitlements */,
 				EBB2C9462D4D8C48008FA818 /* Main.xcdatamodeld */,
@@ -554,6 +557,9 @@
 				ru,
 			);
 			mainGroup = EB2250002D1457FE00E002D7;
+			packageReferences = (
+				EB5FF6EE2D7B82F000249F07 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
 			productRefGroup = EB22500A2D1457FE00E002D7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -572,7 +578,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB5656C72D6E0E3700A25751 /* DefaultEmotions.xcstrings in Resources */,
-				EB567F7E2D5B5A48002AC274 /* Configuration.storekit in Resources */,
 				EB2250142D14580100E002D7 /* Preview Assets.xcassets in Resources */,
 				EB5656C52D6E0D3100A25751 /* DefaultReactions.xcstrings in Resources */,
 				EB5656C92D6E5F0C00A25751 /* DefaultMonths.xcstrings in Resources */,
@@ -618,6 +623,7 @@
 				EB2250262D156DB600E002D7 /* Filter.swift in Sources */,
 				EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */,
 				EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */,
+				EB5FF6F42D7EEA6F00249F07 /* ExtensionRevenueCat.swift in Sources */,
 				EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */,
 				EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */,
 				EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */,
@@ -647,7 +653,6 @@
 				EB567F8E2D5CC8D9002AC274 /* Motivations.swift in Sources */,
 				EB5FF6AB2D75FAC600249F07 /* PDFShareOneDayView.swift in Sources */,
 				EB5656372D65FEEA00A25751 /* HomeScreenWidgetView.swift in Sources */,
-				EB567F802D5B5E02002AC274 /* DataController-StoreKit.swift in Sources */,
 				EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */,
 				EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */,
 				EB2250342D198AE300E002D7 /* NoPlateIView.swift in Sources */,
@@ -847,12 +852,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PlatePix/Configuration/PlatePix.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PlatePix/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DMY523XRW6;
+				DEVELOPMENT_TEAM = DMY523XRW6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlatePix/Configuration/Info.plist;
@@ -872,7 +876,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "PlatePix - App Store - 2025";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -885,12 +888,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PlatePix/Configuration/PlatePix.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PlatePix/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DMY523XRW6;
+				DEVELOPMENT_TEAM = DMY523XRW6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlatePix/Configuration/Info.plist;
@@ -910,7 +912,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "PlatePix - App Store - 2025";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -923,6 +924,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = PlatePixWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DMY523XRW6;
@@ -939,6 +941,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix.PlatePixWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -952,6 +955,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = PlatePixWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DMY523XRW6;
@@ -968,6 +972,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix.PlatePixWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1098,6 +1103,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EB5FF6EE2D7B82F000249F07 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.19.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EB5FF6EF2D7B82F000249F07 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB5FF6EE2D7B82F000249F07 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		EBB2C9462D4D8C48008FA818 /* Main.xcdatamodeld */ = {

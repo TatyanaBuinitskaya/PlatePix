@@ -105,6 +105,9 @@
         }
       }
     },
+    "%@ / " : {
+
+    },
     "%lld" : {
       "localizations" : {
         "en" : {
@@ -205,13 +208,12 @@
         }
       }
     },
-    "2. Long press the widget area under the time to view available widgets, scroll to MyPlates Widget and choose it." : {
-      "extractionState" : "stale",
+    "2. Long press the widget area under the time to view available widgets, scroll to PlatePix Widget and choose it." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2. Long press the widget area under the time to view available widgets, scroll to MyPlates Widget and choose it."
+            "value" : "2. Long press the widget area under the time to view available widgets, scroll to PlatePix Widget and choose it."
           }
         },
         "ru" : {
@@ -222,16 +224,12 @@
         }
       }
     },
-    "2. Long press the widget area under the time to view available widgets, scroll to PlatePix Widget and choose it." : {
-
-    },
-    "2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for MyPlates widget." : {
-      "extractionState" : "stale",
+    "2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for PlatePix widget." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for MyPlates widget."
+            "value" : "2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for PlatePix widget."
           }
         },
         "ru" : {
@@ -241,9 +239,6 @@
           }
         }
       }
-    },
-    "2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for PlatePix widget." : {
-
     },
     "3. Press Add Widget button and place widget in the position you want, then tap the empty area to finish." : {
       "localizations" : {
@@ -292,6 +287,9 @@
           }
         }
       }
+    },
+    "Add as many plates as you want!" : {
+
     },
     "Add notes about your plate\nYour text will be searchable" : {
       "localizations" : {
@@ -440,6 +438,9 @@
           }
         }
       }
+    },
+    "Cancel Anytime" : {
+
     },
     "Check Settings" : {
       "localizations" : {
@@ -637,22 +638,6 @@
         }
       }
     },
-    "Fetching offers…" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fetching offers…"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Получение предложений..."
-          }
-        }
-      }
-    },
     "Filter by Date" : {
       "localizations" : {
         "en" : {
@@ -783,6 +768,7 @@
       }
     },
     "Get the most out of the app" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -843,22 +829,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Виджет Главного Экрана"
-          }
-        }
-      }
-    },
-    "In-app purchases are disabled" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In-app purchases are disabled"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Внутренние покупки отключены"
           }
         }
       }
@@ -1354,16 +1324,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Privacy policy"
+            "value" : "Privacy Policy"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Политика конфиденциальности"
           }
         }
       }
+    },
+    "Privacy Policy" : {
+
     },
     "Reaction" : {
       "localizations" : {
@@ -1685,22 +1658,6 @@
         }
       }
     },
-    "Sorry, there was an error loading our store." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sorry, there was an error loading our store."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Извините, произошла ошибка при загрузке нашего магазина."
-          }
-        }
-      }
-    },
     "Tags" : {
       "localizations" : {
         "en" : {
@@ -1722,16 +1679,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terms and conditions"
+            "value" : "Terms And Conditions"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Условия и положения"
           }
         }
       }
+    },
+    "Terms And Conditions" : {
+
     },
     "Theme" : {
       "localizations" : {
@@ -1830,22 +1790,6 @@
         }
       }
     },
-    "Try Again" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Try Again"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Попробуй снова"
-          }
-        }
-      }
-    },
     "Unhealthy" : {
       "comment" : "Quality",
       "localizations" : {
@@ -1881,6 +1825,9 @@
         }
       }
     },
+    "Unlock Premium" : {
+
+    },
     "Unlocked" : {
       "localizations" : {
         "en" : {
@@ -1914,6 +1861,7 @@
       }
     },
     "Upgrade Today!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1925,22 +1873,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обнови сегодня!"
-          }
-        }
-      }
-    },
-    "You can't purchase the premium unlock because in-app purchases are disabled on this device.\n\nPlease ask whomever manages your device for assistance." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can't purchase the premium unlock because in-app purchases are disabled on this device.\n\nPlease ask whomever manages your device for assistance."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вы не можете приобрести Премиум, потому что покупки внутри приложения отключены на этом устройстве. Пожалуйста, обратитесь за помощью к тому, кто управляет вашим устройством."
           }
         }
       }

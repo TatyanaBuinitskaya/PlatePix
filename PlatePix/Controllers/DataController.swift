@@ -10,6 +10,7 @@ import StoreKit
 import SwiftUI
 import UIKit
 import WidgetKit
+import RevenueCat
 
 /// An environment singleton responsible for managing the Core Data stack, handling data persistence,
 /// fetch requests, filter management, and tracking user awards within the app.
@@ -64,6 +65,7 @@ class DataController: ObservableObject {
     
     //    /// A unique identifier for the "New Plate" user activity, used for deep linking and shortcuts.
     //    private let newPlateActivity = "com.TatianaBuinitskaia.PlatePix.newPlate"
+    @Published var isSubscriptionIsActive = false
 
 
     /// Array of predefined meal times for filtering plates and UI selection, to be localized.
@@ -189,6 +191,7 @@ class DataController: ObservableObject {
     /// - Parameter inMemory: Whether to store this data in temporary memory or not.
     /// - Parameter defaults: The UserDefaults suite where user data should be stored
     init(inMemory: Bool = false, defaults: UserDefaults = .standard) {
+      
         // Assigns the provided `UserDefaults` instance (or `.standard` if none is provided).
         self.defaults = defaults
 
@@ -197,9 +200,9 @@ class DataController: ObservableObject {
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
         
         // Starts a background task to monitor App Store transactions.
-        storeTask = Task {
-            await monitorTransactions()
-        }
+//        storeTask = Task {
+//            await monitorTransactions()
+//        }
 
         // For testing and previewing purposes, we create a
         // temporary, in-memory database by writing to /dev/null
@@ -244,58 +247,14 @@ class DataController: ObservableObject {
             UIView.setAnimationsEnabled(false)
             #endif
         }
-        
+        Purchases.shared.getCustomerInfo {(customerInfo, error) in
+                self.isSubscriptionIsActive = customerInfo?.entitlements.all["premium"]?.isActive == true
+            }
     }
   
     /// Runs a fetch request with various predicates that filter the user's plates based
     /// on tags, mealtime, quality, title and notes.
     /// - Returns: An array of all matching plates.
-//    func platesForSelectedFilter() -> [Plate] {
-//        let filter = selectedFilter ?? .all
-//        var predicates = [NSPredicate]()
-//        
-//        // Apply date filter if a selected date exists
-//        if let selectedDate = filter.selectedDate ?? selectedDate {
-//            let startOfDay = Calendar.current.startOfDay(for: selectedDate)
-//            if let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) {
-//                predicates.append(NSPredicate(
-//                    format: "creationDate >= %@ AND creationDate < %@",
-//                    startOfDay as NSDate,
-//                    endOfDay as NSDate))
-//            }
-//        }
-//        if let tag = filter.tag {
-//            let tagPredicate = NSPredicate(format: "tags CONTAINS %@", tag)
-//            predicates.append(tagPredicate)
-//        }
-//        // Apply quality filter if a quality is selected
-//        if filter.quality >= 0 {
-//            predicates.append(NSPredicate(format: "quality = %d", filter.quality))
-//        }
-//        // Apply mealtime filter if a mealtime is selected
-//        if let mealtime = filter.mealtime {
-//            predicates.append(NSPredicate(format: "mealtime = %@", mealtime))
-//        }
-//        // Apply filter text if it exists
-//        let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
-//        if !trimmedFilterText.isEmpty {
-//            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
-//            let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
-//            predicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate]))
-//        }
-//        // Combine all predicates (AND logic between date, quality, etc.)
-//        let fetchRequest: NSFetchRequest<Plate> = Plate.fetchRequest()
-//        if !predicates.isEmpty {
-//            fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-//        }
-//        // If the filter is "All", no predicate will be applied (fetch all plates)
-//        if filter == .all {
-//            fetchRequest.predicate = nil
-//        }
-//        // Sorting plates by creationDate
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
-//        return (try? container.viewContext.fetch(fetchRequest)) ?? []
-//    }
     
     func platesForSelectedFilter() -> [Plate] {
         let filter = selectedFilter ?? .all
@@ -355,10 +314,11 @@ class DataController: ObservableObject {
     /// Creates a new plate and initializes its properties with default values or values from the current selection.
         /// - Note: The creation date is set to the selected date (or today's date if no date is selected). The quality and mealtime are set to default values.
     func newPlate() -> Bool {
-        var shouldCreate = fullVersionUnlocked
+//        var shouldCreate = fullVersionUnlocked
+        var shouldCreate = isSubscriptionIsActive
            if shouldCreate == false {
                // check how many plates we currently have
-               shouldCreate = count(for: Plate.fetchRequest()) < 35
+               shouldCreate = count(for: Plate.fetchRequest()) < 35 // 35
            }
            guard shouldCreate else {
                return false

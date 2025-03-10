@@ -26,7 +26,7 @@ struct SettingsView: View {
     private(set) var reviewLink = URL(string: "https://apps.apple.com/app/id6499429063?action=write-review")
     // TODO: Add real email !
     /// Support email configuration.
-    @State private var email = SupportEmail(toAddress: "elixir.mobileapp@gmail.com",
+    @State private var email = SupportEmail(toAddress: "platepixapp@gmail.com",
                                             subject: "Support Email",
                                             messageHeader: "Please describe your issue or feature below")
     /// A variable that controls whether the home screen widget sheet is displayed.

@@ -6,6 +6,7 @@
 //
 
 import CoreSpotlight
+import RevenueCat
 import SwiftUI
 import WidgetKit
 
@@ -81,4 +82,11 @@ struct PlatePixApp: App {
 //            }
 //        }
 //    }
+    
+    
+    
+    init() {
+        Purchases.logLevel = .debug
+        Purchases.configure(withAPIKey: "appl_XivMTqpJYjMYwMHtKPZXIipMuMP")
+    }
 }
