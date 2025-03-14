@@ -20,8 +20,6 @@ Core Data is utilized for efficient local data storage and management.
 
 SwiftUI is used for declarative UI design, improving code readability and UI responsiveness.
 
-Accessibility features are integrated, ensuring the app is usable for a broader audience.
-
 🧪 Testing
 
 The project includes unit tests focusing on:
