@@ -21,10 +21,8 @@ struct SettingsView: View {
     @State var showRemindersSheet = false
     /// A variable that controls the display of a notifications-related error alert.
     @State private var showingNotificationsError = false
-    // TODO: Add real PlatePix app ID !
     /// URL for leaving a review on the App Store.
-    private(set) var reviewLink = URL(string: "https://apps.apple.com/app/id6499429063?action=write-review")
-    // TODO: Add real email !
+    private(set) var reviewLink = URL(string: "https://apps.apple.com/app/id6743003345?action=write-review")
     /// Support email configuration.
     @State private var email = SupportEmail(toAddress: "platepixapp@gmail.com",
                                             subject: "Support Email",
@@ -33,147 +31,185 @@ struct SettingsView: View {
     @State var showHomeScreenWidgetSheet: Bool = false
     /// A variable that controls whether the lock screen widget sheet is displayed.
     @State var showLockScreenWidgetSheet: Bool = false
+    /// A state variable that determines whether the store view should be shown.
+    @State private var showingStore = false
 
     var body: some View {
         NavigationView {
-            List {
-                // Section for UI customization settings.
-                Section("Personalization") {
-
-                    // Allows user to choose a theme color
-                    ColorPickerView()
-
-                    // Button to open the reminders sheet.
-                    Button{
-                        showRemindersSheet = true
-                    } label: {
-                        HStack {
-                        Label("Reminders", systemImage: "envelope")
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    }
-
-                    // Button to open the app language settings.
-                    Button {
-                        if let url = URL(string: UIApplication.openSettingsURLString) {
-                            UIApplication.shared.open(url)
-                        }
-                    } label: {
-                        HStack {
-                        Label("Language", systemImage: "flag")
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    }
-
-                    // Button to show the home screen widget settings.
-                    Button {
-                        showHomeScreenWidgetSheet.toggle()
-                    } label: {
-                        HStack {
-                        Label("Home Screen Widget", systemImage: "quote.bubble")
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    }
-                    .sheet(isPresented: $showHomeScreenWidgetSheet, content: {
-                        HomeScreenWidgetView()
-                    })
-
-                    // Button to show the lock screen widget settings.
-                    Button {
-                        showLockScreenWidgetSheet.toggle()
-                    } label: {
-                        HStack {
-                        Label("Lock Screen Widget", systemImage: "text.bubble")
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    }
-                    .sheet(isPresented: $showLockScreenWidgetSheet, content: {
-                        LockScreenWidgetView()
-                    })
-                }
-
-                // Section containing app support, feedback, and legal information.
-                Section("About App") {
-                    
-                    // Button to open the App Store review page.
-                    Button {
-                        if let link = reviewLink{
-                            openURL(link)
-                        }
-                    } label: {
-                        HStack {
-                        Label("Leave a review", systemImage: "hand.thumbsup")
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    }
-
-                    // TODO: Add real app PlatePix ID from AppStore !!!
-                    // Button to share the app link.
-                    ShareLink(item: URL(string: "https://apps.apple.com/app/id6499429063")!) {
-                        HStack {
-                        Label("Share", systemImage: "square.and.arrow.up")
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    }
-
-                    // Button to send a support email.
-                    Button {
-                        email.send(openURL: openURL)
-                    } label: {
-                        HStack {
-                        Label("Contact us", systemImage: "at")
-                        Spacer()
-                    }
-                    .contentShape(Rectangle())
-                    }
-
-                    // Button to open the terms and conditions page.
-                    Button {
-                        if let urlTerms = URL(string: "https://tatyanabuinitskaya.github.io/PlatePixTerms/") {
-                            openURL(urlTerms)
-                        }
-                    } label: {
-                        HStack {
-                            Label("Terms and conditions", systemImage: "doc.text")
-                            Spacer()
-                        }
-                        .contentShape(Rectangle())
-                    }
-
-                    // Button to open the privacy policy page.
-                    
-                    
-                    
+            VStack {
+                List {
+                    if !dataController.isSubscriptionIsActive {
+                        // Premium
                         Button {
-                            if let urlPolicy = URL(string:  "https://tatyanabuinitskaya.github.io/PlatePixPrivacyPolicy/") {
+                            showingStore = true
+                        } label: {
+                            HStack {
+                                Image("Logo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(maxWidth: 50)
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("Premium PlatePix")
+                                            .foregroundStyle(Color.white)
+                                            .font(.title3)
+                                            .fontDesign(.rounded)
+                                            .fontWeight(.semibold)
+                                    }
+                                    Text("Get Full Access")
+                                        .foregroundStyle(Color.white)
+                                        .font(.body)
+                                }
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .listRowBackground(LinearGradient(
+                            gradient: Gradient(colors: [
+                                Color("GirlsPink"),
+                                Color("LavenderRaf")
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom))
+                        .sheet(isPresented: $showingStore, content: {
+                            StoreView()}
+                        )
+                    }
+
+                    // Section for UI customization settings.
+                    Section("Personalization") {
+
+                        // Allows user to choose a theme color
+                        ColorPickerView()
+
+                        // Button to open the reminders sheet.
+                        Button {
+                            showRemindersSheet = true
+                        } label: {
+                            HStack {
+                                Label("Reminders", systemImage: "envelope")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+
+                        // Button to open the app language settings.
+                        Button {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                UIApplication.shared.open(url)
+                            }
+                        } label: {
+                            HStack {
+                                Label("Language", systemImage: "flag")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+
+                        // Button to show the home screen widget settings.
+                        Button {
+                            showHomeScreenWidgetSheet.toggle()
+                        } label: {
+                            HStack {
+                                Label("Home Screen Widget", systemImage: "quote.bubble")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .sheet(isPresented: $showHomeScreenWidgetSheet, content: {
+                            HomeScreenWidgetView()
+                        })
+
+                        // Button to show the lock screen widget settings.
+                        Button {
+                            showLockScreenWidgetSheet.toggle()
+                        } label: {
+                            HStack {
+                                Label("Lock Screen Widget", systemImage: "text.bubble")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .sheet(isPresented: $showLockScreenWidgetSheet, content: {
+                            LockScreenWidgetView()
+                        })
+                    }
+
+                    // Section containing app support, feedback, and legal information.
+                    Section("About App") {
+
+                        // Button to open the App Store review page.
+                        Button {
+                            if let link = reviewLink {
+                                openURL(link)
+                            }
+                        } label: {
+                            HStack {
+                                Label("Leave a review", systemImage: "hand.thumbsup")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+
+                        // Button to share the app link.
+                        ShareLink(item: URL(string: "https://apps.apple.com/app/id6743003345")!) {
+                            HStack {
+                                Label("Share", systemImage: "square.and.arrow.up")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+
+                        // Button to send a support email.
+                        Button {
+                            email.send(openURL: openURL)
+                        } label: {
+                            HStack {
+                                Label("Contact us", systemImage: "at")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+
+                        // Button to open the terms and conditions page.
+                        Button {
+                            if let urlTerms = URL(string: "https://tatyanabuinitskaya.github.io/PlatePixTerms/") {
+                                openURL(urlTerms)
+                            }
+                        } label: {
+                            HStack {
+                                Label("Terms and conditions", systemImage: "doc.text")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        // Button to open the privacy policy page.
+                        Button {
+                            if let urlPolicy = URL(
+                                string: "https://tatyanabuinitskaya.github.io/PlatePixPrivacyPolicy/"
+                            ) {
                                 openURL(urlPolicy)
                             }
                         } label: {
                             HStack {
-                            Label("Privacy policy", systemImage: "shield")
-                            Spacer()
+                                Label("Privacy policy", systemImage: "shield")
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
                         }
-                        .contentShape(Rectangle())
-                        }
-                    
-                    
+                    }
                 }
-            }
-            .buttonStyle(PlainButtonStyle())
-            .accentColor(colorManager.selectedColor.color)
-            .sheet(isPresented: $showRemindersSheet) {
-                RemindersSheetView()
-                    // .presentationDetents([.medium])
-                    .presentationDetents([.fraction(0.4)])
+                .buttonStyle(PlainButtonStyle())
+                //  .accentColor(fallbackColorManager.selectedColor.color)
+                .accentColor(colorManager.selectedColor.color)
+                .sheet(isPresented: $showRemindersSheet) {
+                    RemindersSheetView()
+                        .presentationDetents([.fraction(0.4)])
+                }
             }
         }
         .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true) // Hide the default back button text
         .toolbar {
             // Adds a custom back button to the navigation bar for dismissing the settings view.
@@ -198,7 +234,7 @@ struct SettingsView: View {
             updateReminder()
         }
     }
-    
+
     /// Opens app notification settings if there is an issue with reminders.
     func showAppSettings() {
         guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {

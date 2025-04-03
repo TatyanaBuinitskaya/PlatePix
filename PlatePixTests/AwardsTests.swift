@@ -23,7 +23,7 @@ final class AwardsTests: BaseTestCase {
             XCTAssertFalse(dataController.hasEarned(award: award), "New users should have no earned awards")
         }
     }
-    
+
     func testCreatingPlatesUnlocksAwards() {
         let values = [10, 25, 50, 100, 500, 1000, 5000, 10000] // The milestone values for unlocking awards.
 

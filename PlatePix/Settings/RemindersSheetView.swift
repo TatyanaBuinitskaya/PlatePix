@@ -18,15 +18,9 @@ struct RemindersSheetView: View {
 
     var body: some View {
         Form {
-          
-            Section("Reminders") {
-                /// Toggle switch to enable or disable reminders.
-                /// Uses `.animation()` to smoothly show/hide the `DatePicker` when toggled.
+            Section("Motivational Reminders") {
                 Toggle("Show", isOn: $dataController.reminderEnabled.animation())
-                    .sensoryFeedback(trigger: dataController.reminderEnabled) { oldValue, newValue in
-                        newValue ? .success : .warning // Success haptic when enabling, warning when disabling
-                    }
-                /// If reminders are enabled, show the `DatePicker` to allow time selection.
+                // If reminders are enabled, show the `DatePicker` to allow time selection.
                 if dataController.reminderEnabled {
                     DatePicker(
                         "Time",
@@ -34,9 +28,7 @@ struct RemindersSheetView: View {
                         displayedComponents: .hourAndMinute
                     )
                 }
-
             }
-           
             HStack {
                 Spacer()
                 Button {

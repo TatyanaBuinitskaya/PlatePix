@@ -7,66 +7,7 @@
 
 import UIKit
 
-// extension UIImage {
-//    func fixedOrientation() -> UIImage {
-//        guard let cgImage = self.cgImage else {
-//            return self
-//        }
-//        if self.imageOrientation == .up {
-//            return self
-//        }
-//        var transform = CGAffineTransform.identity
-//        switch self.imageOrientation {
-//        case .down, .downMirrored:
-//            transform = transform.translatedBy(x: self.size.width, y: self.size.height)
-//            transform = transform.rotated(by: .pi)
-//        case .left, .leftMirrored:
-//            transform = transform.translatedBy(x: self.size.width, y: 0)
-//            transform = transform.rotated(by: .pi / 2)
-//        case .right, .rightMirrored:
-//            transform = transform.translatedBy(x: 0, y: self.size.height)
-//            transform = transform.rotated(by: -.pi / 2)
-//        default:
-//            break
-//        }
-//        switch self.imageOrientation {
-//        case .upMirrored, .downMirrored:
-//            transform = transform.translatedBy(x: self.size.width, y: 0)
-//            transform = transform.scaledBy(x: -1, y: 1)
-//        case .leftMirrored, .rightMirrored:
-//            transform = transform.translatedBy(x: self.size.height, y: 0)
-//            transform = transform.scaledBy(x: -1, y: 1)
-//        default:
-//            break
-//        }
-//        guard let colorSpace = cgImage.colorSpace,
-//              let context = CGContext(
-//                data: nil,
-//                width: Int(self.size.width),
-//                height: Int(self.size.height),
-//                bitsPerComponent: cgImage.bitsPerComponent,
-//                bytesPerRow: 0,
-//                space: colorSpace,
-//                bitmapInfo: cgImage.bitmapInfo.rawValue
-//              ) else {
-//            return self
-//        }
-//        context.concatenate(transform)
-//        switch self.imageOrientation {
-//        case .left, .leftMirrored, .right, .rightMirrored:
-//            context.draw(cgImage, in: CGRect(x: 0, y: 0, width: self.size.height, height: self.size.width))
-//        default:
-//            context.draw(cgImage, in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
-//        }
-//        guard let newCgImage = context.makeImage() else {
-//            return self
-//        }
-//        return UIImage(cgImage: newCgImage)
-//    }
-//  }
-
 extension UIImage {
-
     /// Fixes the orientation of the image based on its metadata.
     /// This method adjusts the image's orientation by applying the correct transformation.
     /// - Returns: A new UIImage with the corrected orientation.
@@ -140,8 +81,8 @@ extension UIImage {
         // Adjust the drawing rectangle dimensions based on the image's orientation.
         let rect = (imageOrientation == .left || imageOrientation == .leftMirrored ||
                     imageOrientation == .right || imageOrientation == .rightMirrored)
-                    ? CGRect(x: 0, y: 0, width: size.height, height: size.width)
-                    : CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        ? CGRect(x: 0, y: 0, width: size.height, height: size.width)
+        : CGRect(x: 0, y: 0, width: size.width, height: size.height)
         // Draw the image into the context in the calculated rectangle.
         context.draw(cgImage, in: rect)
     }

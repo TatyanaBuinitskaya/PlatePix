@@ -9,11 +9,9 @@ import SwiftUI
 
 /// A view that presents a UIImagePickerController to allow the user to pick an image from their device.
 struct ImagePicker: UIViewControllerRepresentable {
-
     /// The source type of the image picker (e.g., camera or photo library).
     /// This defines where the image should come from.
     var sourceType: UIImagePickerController.SourceType
-
     /// The closure is passed the picked image, allowing the parent view to handle it.
     var onImagePicked: (UIImage) -> Void
 
@@ -64,7 +62,7 @@ struct ImagePicker: UIViewControllerRepresentable {
             if let image = info[.originalImage] as? UIImage {
                 parent.onImagePicked(image) // Calls the callback to handle the picked image.
             }
-            
+
             picker.dismiss(animated: true) // Dismisses the picker after the image is selected.
         }
 

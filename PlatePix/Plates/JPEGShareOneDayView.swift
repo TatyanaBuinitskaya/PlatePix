@@ -1,13 +1,14 @@
 //
-//  PDFShareOneDayView.swift
+//  JPEGShareOneDayView.swift
 //  PlatePix
 //
-//  Created by Tatyana Buinitskaya on 03.03.2025.
+//  Created by Tatyana Buinitskaya on 31.03.2025.
 //
+
 import SwiftUI
 
 /// A view responsible for displaying plates and providing PDF sharing functionality.
-struct PDFShareOneDayView: View {
+struct JPEGShareOneDayView: View {
     /// The shared data controller that manages plate data.
     @EnvironmentObject var dataController: DataController
     /// An environment variable that manages the app's selected color.
@@ -16,6 +17,8 @@ struct PDFShareOneDayView: View {
     @Environment(\.dismiss) var dismiss
     /// An environment variable used to dismiss the current view.
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
+    /// Shared user preferences.
+    @ObservedObject var userPreferences = UserPreferences.shared // Shared Preferences
     /// The filters generated from the fetched tags.
     private var tagFilters: [Filter] {
         tags.map { tag in
@@ -24,12 +27,8 @@ struct PDFShareOneDayView: View {
     }
     /// The captured screenshot of the plate view to be included in the PDF.
     @State var imagePlateView: UIImage?
-    /// The URL of the generated PDF for sharing.
-    @State private var pdfURL: URL?
     /// The maximum number of columns allowed in the grid layout.
     private let maxColumns = 3
-    /// Shared user preferences.
-    @ObservedObject var userPreferences = UserPreferences.shared // Shared Preferences
     /// A variable that tracks if the save button was tapped.
     @State private var saveIsTapped = false
     /// A variable that controls the visibility of the save alert.
@@ -38,39 +37,35 @@ struct PDFShareOneDayView: View {
     @State private var alertMessage = ""
 
     var body: some View {
-        VStack (spacing: 2) {
+        VStack(spacing: 2) {
             let plates = dataController.platesForSelectedFilter()
             let gridItems = generateGridItems(for: plates.count)
             let rowCount = calculateRowCount(for: plates.count, columns: gridItems.count)
-            
-//            if rowCount == 3 {
-//                Spacer()
-//            }
+
             Spacer()
             header
-                .padding(.horizontal, rowCount == 4 ? 40 : 10)
+                .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad  && rowCount == 4 ? 40 : 10)
                 .padding(.top, 5)
             VStack {
-                    LazyVGrid(columns: gridItems, spacing: 2) {
-                        ForEach(plates) { plate in
-                            NavigationLink(value: plate) {
-                                PlateBox(plate: plate)
-                            }
+                LazyVGrid(columns: gridItems, spacing: 2) {
+                    ForEach(plates) { plate in
+                        NavigationLink(value: plate) {
+                            PlateBox(plate: plate)
                         }
                     }
-                    .padding(.horizontal, rowCount == 4 ? 40 : 10) // More horizontal padding for 4 rows
-                  //  .padding(.vertical, rowCount == 6 ? 20 : 10)  // More vertical padding for 6 rows
-                 //   .padding(.vertical, 0)
+                }
+                .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad  && rowCount == 4 ? 40 : 10) 
             }
             Spacer()
         }
-       
-        .frame(maxHeight: 750)
-        .frame(maxWidth: 400)
+        .frame(
+            maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 550 : 400, // Increase width for iPad
+            maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 900 : 750  // Increase height for iPad
+        )
         .alert(isPresented: $showAlertSaved) {
             Alert(title: Text("Save Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-           }
         }
+    }
 
     /// A header view displaying the dynamic title and a GPEG saving button
     private var header: some View {
@@ -82,32 +77,28 @@ struct PDFShareOneDayView: View {
             if !saveIsTapped {  // Hide button when tapped
                 Button {
                     saveIsTapped = true
-                    
+
                     // Delay screenshot slightly so button disappears first
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         captureAndSaveAsJPEG()
                         showAlertSaved = true
-                        
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         saveIsTapped = false
-                        
                     }
                 } label: {
                     Text("Save")
                 }
                 .tint(Color(colorManager.selectedColor.color))
-                
             }
         }
     }
 
-
     /// Generates an array of grid items based on the number of plates.
-        ///
-        /// This helps to dynamically adjust the layout depending on the plate count.
-        /// - Parameter itemCount: The total number of plates.
-        /// - Returns: An array of `GridItem` for the grid layout.
+    ///
+    /// This helps to dynamically adjust the layout depending on the plate count.
+    /// - Parameter itemCount: The total number of plates.
+    /// - Returns: An array of `GridItem` for the grid layout.
     private func generateGridItems(for itemCount: Int) -> [GridItem] {
         let columnCount: Int
         switch itemCount {
@@ -126,7 +117,7 @@ struct PDFShareOneDayView: View {
             print("Failed to capture screenshot.")
             return
         }
-        
+
         // Convert the UIImage to JPEG data
         guard let jpegData = screenshotImage.jpegData(compressionQuality: 0.8) else {
             print("Failed to convert image to JPEG.")
@@ -146,16 +137,15 @@ struct PDFShareOneDayView: View {
             print("Error: No active sheet found.")
             return nil
         }
-        
+
         let sheetView = topViewController.view
         UIGraphicsBeginImageContextWithOptions(sheetView?.bounds.size ?? .zero, false, 0)
         sheetView?.drawHierarchy(in: sheetView!.bounds, afterScreenUpdates: true)
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+
         return screenshot
     }
-    
 
     /// Saves JPEG image data to the user's Photo Library.
     /// - Parameter jpegData: The image data in JPEG format.
@@ -175,15 +165,16 @@ struct PDFShareOneDayView: View {
             showAlertSaved = true
         }
     }
-    
+
     /// Function to update user preferences based on grid item count
-        private func updateUserPreferences(for count: Int) {
-            let shouldShowPreferences = (count == 2)
-            userPreferences.showMealTime = shouldShowPreferences
-            userPreferences.showQuality = shouldShowPreferences
-            userPreferences.showTags = shouldShowPreferences
-        }
-    
+    private func updateUserPreferences(for count: Int) {
+        let shouldShowPreferences = (count == 2)
+        userPreferences.showMealTime = shouldShowPreferences
+        userPreferences.showQuality = shouldShowPreferences
+        userPreferences.showTags = shouldShowPreferences
+        userPreferences.showNotes = shouldShowPreferences
+    }
+
     /// Calculates the number of rows needed for the given number of plates and columns.
     /// - Parameters:
     ///   - plates: The total number of plates.
@@ -192,19 +183,17 @@ struct PDFShareOneDayView: View {
     private func calculateRowCount(for plates: Int, columns: Int) -> Int {
         return Int(ceil(Double(plates) / Double(columns)))
     }
-
-   
 }
 
 #Preview("English") {
-    PDFShareOneDayView()
+    JPEGShareOneDayView()
         .environmentObject(DataController.preview)
         .environmentObject(AppColorManager())
         .environment(\.locale, Locale(identifier: "EN"))
 }
 
 #Preview("Russian") {
-    PDFShareOneDayView()
+    JPEGShareOneDayView()
         .environmentObject(DataController.preview)
         .environmentObject(AppColorManager())
         .environment(\.locale, Locale(identifier: "RU"))

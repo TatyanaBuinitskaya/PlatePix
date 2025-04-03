@@ -16,12 +16,14 @@ extension Bundle {
     /// Returns the build number of the application.
     /// It retrieves the value for the key "CFBundleVersion" from the app's Info.plist.
     var appBuild: String {
-        object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "Could not determine the application build number"
+        object(forInfoDictionaryKey: "CFBundleVersion") as? String ??
+        "Could not determine the application build number"
     }
     /// Returns the short version string of the application.
     /// It retrieves the value for the key "CFBundleShortVersionString" from the app's Info.plist.
     var appVersion: String {
-        object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "Could not determine the application version"
+        object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ??
+        "Could not determine the application version"
     }
 
     /// Decodes a JSON file from the bundle into an instance of the specified Decodable type.

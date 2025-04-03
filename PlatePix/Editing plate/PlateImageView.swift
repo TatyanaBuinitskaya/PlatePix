@@ -54,45 +54,46 @@ struct PlateImageView: View {
             // Fetches the image when the view appears if it's not already loaded.
             fetchImage()
         }
+        .onChange(of: plate.platePhoto){
+            fetchImage()
+        }
     }
 
     /// Fetches the image for the plate from CloudKit or local storage.
     /// This method ensures that the image is only fetched once when needed.
     /// - It first tries to fetch the image from CloudKit using the `cloudRecordID`.
     /// - If CloudKit fails or the `cloudRecordID` is unavailable, it tries to load the image from local storage.
-   func fetchImage() {
-           // Only fetch image if it's not already loaded
-           if imagePlateView == nil {
-               Task {
-                   // Fetches image from CloudKit if the plate has a `cloudRecordID`.
-                   if let cloudRecordID = plate.cloudRecordID {
-                       if let fetchedImage = await fetchImageFromCloudKit(recordID: cloudRecordID) {
-                           // Successfully fetched image from CloudKit.
-                           imagePlateView = fetchedImage
-                           return // Exit if image fetched from CloudKit
-                       } else {
-                           print("Failed to fetch image from CloudKit. Attempting local load...")
-                       }
-                   }
-                   // If CloudKit fetch fails or there is no `cloudRecordID`, attempts to load from local storage.
-                   if let localPath = plate.photo {
-                       if let localImage = fetchImageFromFileSystem(imagePath: localPath) {
-                           // Successfully fetched image from local storage.
-                           imagePlateView = localImage
-                       } else {
-                           print("Failed to load image from local storage.")
-                       }
-                   } else {
-                       print("No CloudKit record ID or local photo path available.")
-                   }
-               }
-           }
-       }
+    func fetchImage() {
+        // Only fetch image if it's not already loaded
+            Task {
+                // Fetches image from CloudKit if the plate has a `cloudRecordID`.
+                if let cloudRecordID = plate.cloudRecordID {
+                    if let fetchedImage = await fetchImageFromCloudKit(recordID: cloudRecordID) {
+                        // Successfully fetched image from CloudKit.
+                        imagePlateView = fetchedImage
+                        return // Exit if image fetched from CloudKit
+                    } else {
+                        print("Failed to fetch image from CloudKit. Attempting local load...")
+                    }
+                }
+                // If CloudKit fetch fails or there is no `cloudRecordID`, attempts to load from local storage.
+                if let localPath = plate.photo {
+                    if let localImage = fetchImageFromFileSystem(imagePath: localPath) {
+                        // Successfully fetched image from local storage.
+                        imagePlateView = localImage
+                    } else {
+                        print("Failed to load image from local storage.")
+                    }
+                } else {
+                    print("No CloudKit record ID or local photo path available.")
+                }
+            }
+    }
 
     /// Fetches an image from CloudKit using the provided record ID.
-        /// - Parameter recordID: The CloudKit record ID of the image.
-        /// - Returns: The fetched image, or nil if the operation failed.
-        /// - Note: The image is fetched as a CKAsset and then converted back into a UIImage.
+    /// - Parameter recordID: The CloudKit record ID of the image.
+    /// - Returns: The fetched image, or nil if the operation failed.
+    /// - Note: The image is fetched as a CKAsset and then converted back into a UIImage.
     func fetchImageFromCloudKit(recordID: String) async -> UIImage? {
         // Check if the recordID is non-empty.
         guard !recordID.isEmpty else {
@@ -124,9 +125,9 @@ struct PlateImageView: View {
     }
 
     /// Fetches an image from the local filesystem using the given image path.
-        /// - Parameter imagePath: The path of the image to be fetched.
-        /// - Returns: The fetched image, or nil if the image is not found.
-        /// - Note: The method attempts to find the image file within the app's document directory.
+    /// - Parameter imagePath: The path of the image to be fetched.
+    /// - Returns: The fetched image, or nil if the image is not found.
+    /// - Note: The method attempts to find the image file within the app's document directory.
     func fetchImageFromFileSystem(imagePath: String) -> UIImage? {
         // Extract the file name from the image path (if it's a full path or a file name)
         let imageFileName = imagePath.components(separatedBy: "/").last ?? imagePath

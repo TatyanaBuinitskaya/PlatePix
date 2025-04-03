@@ -14,7 +14,7 @@ struct ColorPickerView: View {
     @EnvironmentObject var colorManager: AppColorManager
     /// Controls the state of the DisclosureGroup (expanded or collapsed).
     @State private var isExpanded = false // To control the dropdown state
-    
+
     var body: some View {
         DisclosureGroup(isExpanded: $isExpanded) {
             // Displays a grid of color options using LazyVGrid for efficient rendering.
@@ -33,7 +33,6 @@ struct ColorPickerView: View {
                     )
                 }
             }
-            
         } label: {
             HStack {
                 Label("Theme", systemImage: "paintpalette")
@@ -41,9 +40,6 @@ struct ColorPickerView: View {
                 Circle()
                     .fill(colorManager.selectedColor.color)
                     .frame(width: 25, height: 25)
-                // Arrow icon that rotates based on expansion state
-                //                            Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                //                                .foregroundColor(.gray)
             }
         }
     }

@@ -109,8 +109,6 @@ extension SideBarView {
                         Text(LocalizedStringKey(filter.name))
                             .fontWeight(.light)
                             .badge("\(countTagPlates(for: filter.name))")
-                            .accessibilityLabel(filter.name)
-                            .accessibilityHint("\(countTagPlates(for: filter.name)) plates")
                     }
                 )
             }

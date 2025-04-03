@@ -29,7 +29,7 @@ struct CalendarSheetView: View {
 
     /// The header section containing navigation and title elements.
     private var headerSection: some View {
-        VStack() {
+        VStack {
             Text("Select a Date:")
                 .font(.headline)
                 .padding(.top)
@@ -67,7 +67,7 @@ struct CalendarSheetView: View {
         Group {
             if let selectedDate = dataController.selectedDate {
                 VStack {
-                    HStack{
+                    HStack {
                         Text("Selected Date: ")
                         Text(dataController.formattedDate(selectedDate))
                             .font(.headline)
@@ -83,18 +83,17 @@ struct CalendarSheetView: View {
                     .padding(.top)
             }
         }
-        
     }
 
     /// The button to confirm the selection and dismiss the calendar sheet.
     private var okButton: some View {
         Button {
             if let selectedDate = dataController.selectedDate {
-                      dataController.selectedDate = nil
-                      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                          dataController.selectedDate = selectedDate
-                      }
-                  }
+                dataController.selectedDate = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    dataController.selectedDate = selectedDate
+                }
+            }
             // Dismisses the calendar sheet view
             dismiss()
         } label: {
@@ -102,10 +101,8 @@ struct CalendarSheetView: View {
                 .font(.title2)
                 .padding(5)
                 .padding(.horizontal, 20)
-              //  .frame(maxWidth: .infinity)
                 .background(Capsule().fill(colorManager.selectedColor.color))
                 .foregroundStyle(.white)
-               
         }
         .padding()
     }
@@ -133,11 +130,11 @@ extension Binding where Value: Equatable {
         .environmentObject(DataController.preview)
         .environmentObject(AppColorManager())
         .environment(\.locale, Locale(identifier: "EN"))
-        }
+}
 
 #Preview("Russian") {
     CalendarSheetView()
         .environmentObject(DataController.preview)
         .environmentObject(AppColorManager())
         .environment(\.locale, Locale(identifier: "RU"))
-        }
+}

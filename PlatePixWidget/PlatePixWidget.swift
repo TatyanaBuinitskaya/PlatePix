@@ -11,7 +11,6 @@ import SwiftUI
 
 /// Provider is responsible for supplying the timeline entries to the widget.
 struct Provider: TimelineProvider {
-
     /// Returns a placeholder view used in widget configuration and previews.
     /// This is shown while the widget data is being loaded.
     func placeholder(in context: Context) -> SimpleEntry {
@@ -56,13 +55,13 @@ struct Provider: TimelineProvider {
         if let sharedDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix") {
             let lastDate = sharedDefaults.object(forKey: "lastMotivationDate") as? Date ?? Date.distantPast
             let calendar = Calendar.current
-            
+
             if calendar.isDateInToday(lastDate) {
                 if let _ = sharedDefaults.object(forKey: "lastMotivationIndex") {
                     return sharedDefaults.integer(forKey: "lastMotivationIndex")
                 }
             }
-            
+
             let newMotivationIndex = pickNewRandomMotivationIndex()
             saveMotivationIndexToDefaults(newMotivationIndex)
             return newMotivationIndex
@@ -71,7 +70,7 @@ struct Provider: TimelineProvider {
             return 0
         }
     }
-    
+
     /// Saves the generated motivation index  to `UserDefaults`
     private func saveMotivationIndexToDefaults(_ index: Int) {
         let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")!
@@ -79,28 +78,28 @@ struct Provider: TimelineProvider {
         defaults.set(Date(), forKey: "lastMotivationDate")
         defaults.synchronize()
     }
-    
+
     /// Picks a new random motivation  index ensuring it's different from the last one.
     /// Prevents showing the same message consecutively.
     func pickNewRandomMotivationIndex() -> Int {
         var newMotivationIndex: Int
-        
+
         // Repeat until a different motivation is chosen
         repeat {
             newMotivationIndex = Motivations.motivations.randomElement()!.id
         } while newMotivationIndex == UserDefaults.standard.integer(forKey: "lastMotivationIndex")
-        
+
         return newMotivationIndex
     }
-    
+
     private func loadColor() -> AppColor {
-           if let groupDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix"),
-              let rawValue = groupDefaults.string(forKey: "selectedColor"),
-              let color = AppColor(rawValue: rawValue) {
-               return color
-           }
-           return .lavenderRaf
-       }
+        if let groupDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix"),
+           let rawValue = groupDefaults.string(forKey: "selectedColor"),
+           let color = AppColor(rawValue: rawValue) {
+            return color
+        }
+        return .lavenderRaf
+    }
 }
 
 ///  Model for the widget's data.
@@ -111,24 +110,22 @@ struct SimpleEntry: TimelineEntry {
 }
 
 /// PlatePixWidgetEntryView is responsible for rendering the widget UI.
-struct PlatePixWidgetEntryView : View {
+struct PlatePixWidgetEntryView: View {
     @Environment(\.widgetFamily) var widgetFamily // // Detects the widget size and type
     var entry: Provider.Entry // The data for the widget entry
-    
+
     var body: some View {
         switch widgetFamily {
-            
+
         case .systemMedium: // Medium widget size
             if #available(iOS 17.0, *) {
                 VStack {
                     Text(entry.text)
                         .font(.title3)
                         .minimumScaleFactor(0.6)
-                    //  .foregroundStyle(entry.color.color)
                         .foregroundStyle(Color(uiColor: .systemBackground))
                         .lineSpacing(5)
                         .multilineTextAlignment(.center)
-                     //   .containerBackground(entry.color.color, for: .widget) // iOS 17+ styling
                 }
             } else {
                 Text(entry.text)
@@ -137,10 +134,6 @@ struct PlatePixWidgetEntryView : View {
                     .foregroundColor(entry.color.color)
                     .lineSpacing(5)
                     .multilineTextAlignment(.center)
-//                    .padding()
-//                    .edgesIgnoringSafeArea(.all)
-//                    .background(colorManager.selectedColor.color)
-               
             }
         case .accessoryRectangular: // Lock screen widget
             Text(entry.text)
@@ -149,7 +142,6 @@ struct PlatePixWidgetEntryView : View {
         default:
             Text("Not implemented") // Default case for unsupported sizes
         }
-          
     }
 }
 
@@ -161,15 +153,12 @@ struct PlatePixWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
                 PlatePixWidgetEntryView(entry: entry)
-                     //   .containerBackground(.fill.tertiary, for: .widget) // iOS 17+ background
-                        .containerBackground(entry.color.color, for: .widget) // iOS 17+ styling
-
+                    .containerBackground(entry.color.color, for: .widget) // iOS 17+ styling
             } else {
                 PlatePixWidgetEntryView(entry: entry)
                     .padding()
                     .edgesIgnoringSafeArea(.all)
                     .background()
-                   
             }
         }
         .configurationDisplayName("Motivation of the Day") // Display name in widget gallery
@@ -180,15 +169,23 @@ struct PlatePixWidget: Widget {
 
 /// PlatePixWidget_Previews provides previews for the widget in Xcode.
 struct PlatePixWidget_Previews: PreviewProvider {
-    
+
     static var previews: some View {
         // Preview for medium widget
-        PlatePixWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .lavenderRaf))
+        PlatePixWidgetEntryView(entry: SimpleEntry(
+            date: Date(),
+            text: Motivations.motivations[0].localizedText,
+            color: .lavenderRaf
+        ))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .previewDisplayName("Medium")
-        
+
         // Preview for lock screen widget
-        PlatePixWidgetEntryView(entry: SimpleEntry(date: Date(), text: Motivations.motivations[0].localizedText, color: .lavenderRaf))
+        PlatePixWidgetEntryView(entry: SimpleEntry(
+            date: Date(),
+            text: Motivations.motivations[0].localizedText,
+            color: .lavenderRaf
+        ))
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
             .previewDisplayName("Rectangular")
     }

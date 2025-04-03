@@ -17,7 +17,6 @@ struct AwardsView: View {
     @State private var showingAwardDetails = false
     /// The layout configuration for the grid, adapting between a minimum and maximum width.
     var columns: [GridItem] {
-      //  [GridItem(.adaptive(minimum: 100, maximum: 150))]
         [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     }
 
@@ -32,18 +31,13 @@ struct AwardsView: View {
                         } label: {
                             VStack {
                                 AwardIcon(award: award, size: 85, color: color(for: award))
-                                
+
                                 Text(award.name)
                                     .font(.caption)
                                     .lineLimit(1)
                                     .foregroundStyle(color(for: award))
                             }
                         }
-                        .accessibilityLabel(
-                            label(for: award)
-                        )
-                        .accessibilityHint(award.description)
-                        .accessibilityValue(dataController.hasEarned(award: award) ? "Unlocked" : "Locked")
                     }
                 }
             }
@@ -56,7 +50,7 @@ struct AwardsView: View {
             Text(selectedAward.description)
         }
     }
-    
+
     /// The title for the award details alert, indicating whether the award is unlocked.
     var awardTitle: LocalizedStringKey {
         if dataController.hasEarned(award: selectedAward) {
@@ -67,15 +61,15 @@ struct AwardsView: View {
     }
 
     /// Determines the color to be displayed for an award based on whether it has been earned.
-        /// - Parameter award: The award to evaluate.
-        /// - Returns: A `Color` indicating the award status.
+    /// - Parameter award: The award to evaluate.
+    /// - Returns: A `Color` indicating the award status.
     func color(for award: Award) -> Color {
         dataController.hasEarned(award: award) ? Color(award.color) : .secondary.opacity(0.5)
     }
 
     /// Provides an accessibility label for an award, indicating its status.
-        /// - Parameter award: The award to generate the label for.
-        /// - Returns: A `LocalizedStringKey` describing the award status.
+    /// - Parameter award: The award to generate the label for.
+    /// - Returns: A `LocalizedStringKey` describing the award status.
     func label(for award: Award) -> LocalizedStringKey {
         dataController.hasEarned(award: award) ? "Unlocked: \(award.name)" : "Locked"
     }

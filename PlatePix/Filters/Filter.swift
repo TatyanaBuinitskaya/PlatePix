@@ -7,7 +7,8 @@
 
 import Foundation
 
-/// A struct that represents a filter for plates, which can be used to categorize and filter plates based on attributes like quality, meal type, and date.
+/// A struct that represents a filter for plates, which can be used to categorize
+/// and filter plates based on attributes like quality, meal type, and date.
 struct Filter: Identifiable, Hashable {
     /// The unique identifier for each filter, used to distinguish between different filters.
     var id: UUID
@@ -17,7 +18,8 @@ struct Filter: Identifiable, Hashable {
     var icon: String
     /// An optional tag associated with the filter, used for further categorization or grouping of filters.
     var tag: Tag?
-    /// The quality score of the filter, where -1 indicates no specific quality (default), 0 represents "Unhealthy", 1 represents "Moderate", and 2 represents "Healthy".
+    /// The quality score of the filter, where -
+    /// 1 indicates no specific quality (default), 0 represents "Unhealthy", 1 represents "Moderate", and 2 represents "Healthy".
     var quality = -1
     /// The selected date for the filter, if any, used to filter plates based on a specific date.
     var selectedDate: Date?
@@ -26,11 +28,11 @@ struct Filter: Identifiable, Hashable {
     /// A default filter representing all plates with no specific criteria, used when no filters are applied.
     static var all = Filter(id: UUID(), name: "All plates", icon: "calendar")
     /// A filter representing healthy plates (quality = 2), used when only healthy plates should be displayed.
-    static let healthy = Filter(id: UUID(), name: "Healthy", icon: "star.fill", quality: 2)
+    static let healthy = Filter(id: UUID(), name: "Healthy", icon: "HappyPDF", quality: 2)
     /// A filter representing moderately healthy plates (quality = 1), used when moderately healthy plates should be displayed.
-    static let moderate = Filter(id: UUID(), name: "Moderate", icon: "star.fill", quality: 1)
+    static let moderate = Filter(id: UUID(), name: "Moderate", icon: "NeutralPDF", quality: 1)
     /// A filter representing unhealthy plates (quality = 0), used when only unhealthy plates should be displayed.
-    static let unhealthy = Filter(id: UUID(), name: "Unhealthy", icon: "star.fill", quality: 0)
+    static let unhealthy = Filter(id: UUID(), name: "Unhealthy", icon: "SadPDF", quality: 0)
     /// A filter representing breakfast plates, used when only breakfast plates should be displayed.
     static let breakfast = Filter(id: UUID(), name: "Breakfast", icon: "clock", mealtime: "Breakfast")
     /// A filter representing morning snack plates, used when only morning snack plates should be displayed.
@@ -45,7 +47,7 @@ struct Filter: Identifiable, Hashable {
     static let eveningSnack = Filter(id: UUID(), name: "Evening Snack", icon: "clock", mealtime: "Evening Snack")
     /// A filter representing anytime meal plates, used when plates can be consumed at any time.
     static let anytimeMeal = Filter(id: UUID(), name: "Anytime Meal", icon: "clock", mealtime: "Anytime Meal")
-    
+
     /// Creates a filter for a specific date, useful for filtering plates based on a selected day.
     /// - Parameter date: The date for which the filter is applied.
     /// - Returns: A new `Filter` with the selected date.

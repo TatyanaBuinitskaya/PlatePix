@@ -8,6 +8,7 @@
 import PhotosUI
 import SwiftUI
 import CloudKit
+import Combine
 
 /// A view that displays detailed information about a specific plate, including images, meal time, quality, tags and notes.
 struct PlateView: View {
@@ -21,9 +22,9 @@ struct PlateView: View {
     @EnvironmentObject var colorManager: AppColorManager
     /// The fetched results of tags, sorted by name.
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
-//    /// A list of selected photo picker items.
+    /// A list of selected photo picker items.
     @State var pickerItems = [PhotosPickerItem]()
-//    /// The image to display for the plate.
+    /// The image to display for the plate.
     @State var imagePlateView: UIImage?
     /// A Boolean value that tracks whether the camera view is presented.
     @State private var isCameraPresented = false
@@ -35,8 +36,6 @@ struct PlateView: View {
     @State private var showTagList = false
     /// A flag indicating whether the congratulations screen should be shown.
     @State var showCongratulations: Bool = false
-   
-
 
     var body: some View {
         VStack {
@@ -45,7 +44,6 @@ struct PlateView: View {
                     .foregroundStyle(.red)
             } else {
                 ZStack {
-                    ScrollView {
                         VStack {
                             HStack {
                                 plateMealtimeView
@@ -59,23 +57,21 @@ struct PlateView: View {
                                 maxHeight: 600
                             )
                             .padding(.vertical, 10)
-                            .onTapGesture {
-                                isCameraPresented = true
-                            }
+
                             plateTagView
                             Divider()
                             plateNotesView
-                            Spacer()
                         }
                         .padding(.horizontal)
-                    }
+                        .onTapGesture {
+                            hideKeyboard()
+                        }
                     cameraAndLibraryButtonsView
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .padding(.vertical)
-        .navigationTitle($plate.plateTitle)
+        .navigationTitle(NSLocalizedString("Plate", comment: "") + " - " + plate.plateTitle)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             if dataController.checkAwards() {
@@ -95,24 +91,33 @@ struct PlateView: View {
             }
         }
         .sheet(isPresented: $showCongratulations) {
-           
             AwardSheetView()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
+                Button {
                     dismiss() // Dismiss the current view
-                }) {
+                } label: {
                     HStack {
                         Image(systemName: "chevron.left")
+                            .fontWeight(.bold)
                         Text("Plates") // Back button label
                     }
                 }
                 .accessibilityIdentifier("Plates") // Add accessibility identifier
             }
-            
             ToolbarItem(placement: .navigationBarTrailing) {
                 plateToolbar // Existing delete button
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    dismiss() // Dismiss the current view
+                } label: {
+                    HStack {
+                        Text("Done") // Back button label
+                            .fontWeight(.bold)
+                    }
+                }
             }
         }
         .navigationBarBackButtonHidden(true) // Hide the default back button
@@ -134,8 +139,8 @@ struct PlateView: View {
             } label: {
                 let mealtime = plate.mealtime ?? ""
                 let selectedMealtime = NSLocalizedString(mealtime, comment: "Mealtime")
-                    Text(selectedMealtime)
-                        .font(.title3)
+                Text(selectedMealtime)
+                    .font(.title3)
             }
             .buttonStyle(PlainButtonStyle())        }
     }
@@ -143,8 +148,11 @@ struct PlateView: View {
     /// Displays the meal quality selection view for the plate.
     private var plateQualityView: some View {
         HStack {
-            Image(systemName: "star.fill")
-                .foregroundStyle(plate.quality == 0 ? Color("RedBerry") : plate.quality == 1 ? Color("SunnyYellow") : Color("LeafGreen"))
+            Image(plate.quality == 0 ? "SadPDF" : (plate.quality == 1 ? "NeutralPDF" : "HappyPDF"))
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(Color(colorManager.selectedColor.color))
+                .frame(width: 23, height: 23)
                 .font(.title2)
             Menu {
                 Picker("Meal Quality", selection: $plate.quality) {
@@ -176,18 +184,38 @@ struct PlateView: View {
                 .buttonStyle(PlainButtonStyle())
                 Spacer()
             }
+
             Text(
                 plate.tags?.allObjects
-                    .compactMap { tag in
-                        // Ensure each tag is of type Tag, then get its localized name
-                        if let tag = tag as? Tag {
-                            // Pass the tag's name (which should be a localization key) to NSLocalizedString
-                            return NSLocalizedString(
-                                tag.tagName,
-                                tableName: dataController.tableNameForTagType(tag.type),
-                                comment: "")
+                    .compactMap { $0 as? Tag } // Ensure type safety
+                    .sorted { firstTag, secondTag in
+                        let typePriority: [String] = ["My", "Food", "Emotion", "Reaction"]
+                        let firstTypePriority = typePriority.firstIndex(of: firstTag.tagType) ?? Int.max
+                        let secondTypePriority = typePriority.firstIndex(of: secondTag.tagType) ?? Int.max
+
+                        if firstTypePriority == secondTypePriority {
+                            // Use localized name for sorting based on current locale
+                            let firstLocalized = NSLocalizedString(
+                                firstTag.tagName,
+                                tableName: dataController.tableNameForTagType(firstTag.type),
+                                comment: ""
+                            )
+                            let secondLocalized = NSLocalizedString(
+                                secondTag.tagName,
+                                tableName: dataController.tableNameForTagType(secondTag.type),
+                                comment: ""
+                            )
+
+                            return firstLocalized.localizedStandardCompare(secondLocalized) == .orderedAscending
                         }
-                        return nil
+                        return firstTypePriority < secondTypePriority
+                    }
+                    .map { tag in
+                        NSLocalizedString(
+                            tag.tagName,
+                            tableName: dataController.tableNameForTagType(tag.type),
+                            comment: ""
+                        )
                     }
                     .joined(separator: ", ") ?? NSLocalizedString("No Tags", comment: "Fallback text when no tags are assigned")
             )
@@ -202,32 +230,41 @@ struct PlateView: View {
     /// Displays the notes section for the plate.
     private var plateNotesView: some View {
         VStack(alignment: .leading) {
-            HStack {
+            HStack(alignment: .bottom) {
                 Image(systemName: "square.and.pencil")
                     .foregroundStyle(colorManager.selectedColor.color)
                     .font(.title3)
+                    .offset(y: -2)
                 Text("Notes:")
                     .font(.title3)
             }
-            ZStack(alignment: .topLeading) {
-                if plate.plateNotes.isEmpty {
-                    Text("Add notes about your plate\nYour text will be searchable")
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 8)
+            Text("text will be searchable")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            TextField(plate.plateCreationDate.formatted(date: .abbreviated, time: .omitted), text: $plate.plateNotes, axis: .vertical)
+                .padding(8)
+                .frame(maxWidth: .infinity, minHeight: 80, maxHeight: 120, alignment: .top) // Scales for larger devices
+                .background(Color(uiColor: .systemBackground))
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                )
+                .padding(.bottom, 50)
+                .onSubmit {
+                    hideKeyboard() // Hide keyboard when the user presses "Done"
                 }
-                
-                TextField("", text: $plate.plateNotes, axis: .vertical)
-                    .padding(8)
-            }
-           // .padding(8)
-            .frame(maxWidth: .infinity, minHeight: 100, maxHeight: 150, alignment: .top) // Scales for larger devices
-            .background(Color(uiColor: .systemBackground))
-            .cornerRadius(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-            )
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer() // Moves the "Done" button to the right side
+                        Button {
+                            hideKeyboard() // Hide keyboard when the user taps "Done"
+                        } label: {
+                            Text("Done")
+                                .fontWeight(.bold)
+                        }
+                    }
+                }
         }
     }
 
@@ -241,7 +278,7 @@ struct PlateView: View {
                     Image(systemName: "photo.stack")
                         .font(.title2)
                         .foregroundStyle(.white)
-                        .padding()
+                        .padding(13)
                         .background(colorManager.selectedColor.color)
                         .clipShape(Circle())
                 }
@@ -277,9 +314,9 @@ struct PlateView: View {
     }
 
     /// Saves an image to the local filesystem.
-        /// - Parameter image: The image to be saved.
-        /// - Returns: The file path where the image was saved, or nil if the save failed.
-        /// - Note: The image is saved as a JPEG with 80% quality compression.
+    /// - Parameter image: The image to be saved.
+    /// - Returns: The file path where the image was saved, or nil if the save failed.
+    /// - Note: The image is saved as a JPEG with 80% quality compression.
     func saveImageToFileSystem(image: UIImage) -> String? {
         let photoDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let photoName = UUID().uuidString + ".jpg"
@@ -299,11 +336,11 @@ struct PlateView: View {
     }
 
     /// Saves an image to CloudKit.
-        /// - Parameters:
-        ///   - image: The image to be saved.
-        ///   - imageName: The name for the image file.
-        /// - Returns: The CloudKit record ID of the saved record, or nil if the operation failed.
-        /// - Note: The image is temporarily saved to the local filesystem before uploading to CloudKit to create a CKAsset.
+    /// - Parameters:
+    ///   - image: The image to be saved.
+    ///   - imageName: The name for the image file.
+    /// - Returns: The CloudKit record ID of the saved record, or nil if the operation failed.
+    /// - Note: The image is temporarily saved to the local filesystem before uploading to CloudKit to create a CKAsset.
     func saveImageToCloudKit(image: UIImage, imageName: String) async -> CKRecord.ID? {
         // Convert UIImage to Data (JPEG format)
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
@@ -420,6 +457,10 @@ struct PlateView: View {
             }
         }
     }
+    /// Dismiss the keyboard
+       private func hideKeyboard() {
+           UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+       }
 }
 
 #Preview("English") {

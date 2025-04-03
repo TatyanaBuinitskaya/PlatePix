@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-/// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
+/// A view representing a sidebar containing various filters
+/// to refine plate data based on date, tags, mealtime, and quality.
 struct SideBarView: View {
-//    /// A view representing a sidebar containing various filters to refine plate data based on date, tags, mealtime, and quality.
-//    @EnvironmentObject var dataController: DataController
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
     /// The current color scheme of the app (light or dark mode).
@@ -21,17 +20,18 @@ struct SideBarView: View {
     @State private var showCalendarSheet = false
     /// State variables to control the visibility of various filter lists.
     @State private var showTagFilterList = false
-    @State private var showMonthTagFilterList = false
+    /// Controls the visibility of the food-related tag filter list.
     @State private var showFoodTagFilterList = false
+    /// Controls the visibility of the reaction-based tag filter list.
     @State private var showReactionTagFilterList = false
+    /// Controls the visibility of the emotion-based tag filter list.
     @State private var showEmotionTagFilterList = false
     /// A dictionary to track whether each tag type filter should be shown.
     @State private var showTagTypeFilters: [String: Bool] = [:]
-    /// A set to track which filter groups are expanded.
-  //  @State private var expandedGroups: Set<String> = []
     /// State variable to control the visibility of the mealtime filter list.
     @State private var showMealtimeFilterList = false
-    @State var showAlertNoTagsYet = false
+    /// Controls the visibility of an alert indicating that no tags have been added yet.
+    @State private var showAlertNoTagsYet = false
 
     /// A predefined set of mealtime filters for the sidebar.
     let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
@@ -42,17 +42,15 @@ struct SideBarView: View {
         let viewModel = ViewModel(dataController: dataController)
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         List(selection: $viewModel.dataController.selectedFilter) {
-
             // Section for date-based filters.
             Section("Filter by Date") {
                 dateFilterButton(
                     label: LocalizedStringKey("All Plates"),
                     systemImage: "calendar",
-                    plateCount: viewModel.allPlatesCount,
-                    accessibilityHint: "\(viewModel.allPlatesCount) plates"
+                    plateCount: viewModel.allPlatesCount
                 ) {
                     // Set filter to "All Plates"
                     viewModel.dataController.selectedFilter = Filter.all
@@ -61,8 +59,7 @@ struct SideBarView: View {
                 dateFilterButton(
                     label: LocalizedStringKey("Today"),
                     systemImage: "1.square",
-                    plateCount: viewModel.dataController.countSelectedDatePlates(for: Date()),
-                    accessibilityHint: "\(viewModel.dataController.countSelectedDatePlates(for: Date())) plates"
+                    plateCount: viewModel.dataController.countSelectedDatePlates(for: Date())
                 ) {
                     // Set filter to today's date
                     viewModel.dataController.selectedFilter = Filter.filterForDate(Date())
@@ -75,15 +72,18 @@ struct SideBarView: View {
                     HStack {
                         let selectedDate = viewModel.dataController.formattedDate(viewModel.dataController.selectedDate ?? Date())
                         Label(NSLocalizedString("Select a Date", comment: ""), systemImage: "calendar.badge.plus")
-                            .fixedSize(horizontal: true, vertical: false)
-                        Text(" (\(selectedDate))")
-                            .font(.footnote)  // Applying a smaller font to selectedDate
-                            .fixedSize(horizontal: true, vertical: false)
+                            .layoutPriority(1) // Gives higher priority to this text
+                            .lineLimit(1) // Ensures it stays in one line
+                            .fixedSize(horizontal: true, vertical: false) // Prevents truncation
+                        Text("(\(selectedDate))")
+                            .font(.caption) // Smaller font for date
+                            .minimumScaleFactor(0.6) // Allows shrinking
+                            .lineLimit(1) // Ensures one line
                         Spacer()
                         Image(systemName: "chevron.down")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.secondary.opacity(0.6))
                             .font(.footnote)
-                        
+                            .fontWeight(.bold)
                     }
                 }
             }
@@ -112,8 +112,6 @@ struct SideBarView: View {
                             let plateCount = viewModel.countMealtimePlates(for: mealtime)
                             Text(NSLocalizedString(filter.name, comment: "Mealtime"))
                                 .badge("\(plateCount)")
-                                .accessibilityLabel(filter.name)
-                                .accessibilityHint("\(plateCount) plates")
                         }
                     },
                     colorManager: colorManager,
@@ -123,9 +121,17 @@ struct SideBarView: View {
 
             // Section for quality filters.
             Section("Filter by Food Quality") {
-                QualityFiltersSection(
-                    qualityFilters: qualityFilters,
-                    countQualityPlates: viewModel.countQualityPlates(for:)
+
+                ForEach(qualityFilters) { filter in
+                    NavigationLink(value: filter) {
+                        qualityFilterRow(filter: filter)
+                    }
+                }
+                // Display the summary text for quality filter results.
+                qualitySummaryText(
+                    goodCount: viewModel.countQualityPlates(for: 2),
+                    averageCount: viewModel.countQualityPlates(for: 1),
+                    badCount: viewModel.countQualityPlates(for: 0)
                 )
             }
         }
@@ -141,8 +147,50 @@ struct SideBarView: View {
             }
         }
     }
+    /// A helper function to create a row for each quality filter.
+    @ViewBuilder
+    private func qualityFilterRow(filter: Filter) -> some View {
+        HStack {
+            // Display the icon for the filter with color based on quality.
+            Image(filter.icon)
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(Color(colorManager.selectedColor.color))
+                .frame(width: 23, height: 23)
+                .font(.title3)
 
-  
+            Text(LocalizedStringKey(filter.name))
+                .badge("\(viewModel.countQualityPlates(for: filter.quality))")
+        }
+    }
+
+    /// A helper function to display the summary text for the quality filters.
+    @ViewBuilder
+    private func qualitySummaryText(goodCount: Int, averageCount: Int, badCount: Int) -> some View {
+        // Display different messages depending on the counts of good, average, and bad plates.
+        if goodCount > badCount && goodCount > averageCount {
+            Text("You're doing amazing! Keep up the great work with your healthy choices!")
+                .font(.callout)
+                .foregroundStyle(Color(colorManager.selectedColor.color))
+                .fontDesign(.rounded)
+                .lineLimit(2)
+                .minimumScaleFactor(0.6)
+        } else if badCount > goodCount && badCount > averageCount {
+            Text("You might want to focus on healthier options to feel your best!")
+                .font(.callout)
+                .foregroundStyle(Color(colorManager.selectedColor.color))
+                .fontDesign(.rounded)
+                .lineLimit(2)
+                .minimumScaleFactor(0.6)
+        } else {
+            Text("You're maintaining a good balance! Keep making mindful choices!")
+                .font(.callout)
+                .foregroundStyle(Color(colorManager.selectedColor.color))
+                .fontDesign(.rounded)
+                .lineLimit(2)
+                .minimumScaleFactor(0.6)
+        }
+    }
 }
 
 #Preview("English") {
@@ -162,14 +210,12 @@ struct SideBarView: View {
 ///   - label: The label of the filter button (e.g., "All plates" or "Today").
 ///   - systemImage: The system image to be used for the button's icon (e.g., "calendar").
 ///   - plateCount: The number of plates associated with this filter.
-///   - accessibilityHint: A description for accessibility purposes (e.g., "5 plates").
 ///   - action: The action to be performed when the button is pressed. This is passed as a closure.
 @ViewBuilder
 private func dateFilterButton(
     label: LocalizedStringKey,
     systemImage: String,
     plateCount: Int,
-    accessibilityHint: String,
     action: @escaping () -> Void
 ) -> some View {
     Button(action: action) {
@@ -179,13 +225,10 @@ private func dateFilterButton(
                 .badge("\(plateCount)") // Adds a badge showing the plate count.
             // Chevron icon to indicate that this is a button that leads to further options.
             Image(systemName: "chevron.right")
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.secondary.opacity(0.6))
                 .font(.footnote)
+                .fontWeight(.bold)
         }
-        // Makes the button accessible with the label and hint for users with screen readers.
-        .accessibilityElement()
-        .accessibilityLabel(label)
-        .accessibilityHint(accessibilityHint)
     }
 }
 
@@ -205,7 +248,6 @@ private func expandableFilterSection(
     showAlertNoTags: Binding<Bool>
 ) -> some View {
 
-
     Button {
         // Toggle the expanded state with animation when the section header is tapped.
         if items.isEmpty {
@@ -215,29 +257,29 @@ private func expandableFilterSection(
                 isExpanded.wrappedValue.toggle()
             }
         }
-        
     } label: {
         HStack {
             // Display the system image and label for the section header.
             Image(systemName: systemImage)
-                .foregroundStyle(colorManager.selectedColor.color) 
+                .foregroundStyle(colorManager.selectedColor.color)
+                .font(.title3)
             Text(label) // The label text of the section.
             Spacer() // Pushes the chevron icon to the right of the label.
             // Chevron icon indicating the expanded or collapsed state.
             Image(systemName: "chevron.down")
                 .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0)) // Rotates the chevron based on expansion state.
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.secondary.opacity(0.6))
                 .font(.footnote)
+                .fontWeight(.bold)
                 .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue) // Adds smooth rotation animation.
         }
     }
     .alert("No tags available", isPresented: showAlertNoTags) {
         Button("OK", role: .cancel) { }
-          
+
         } message: {
             Text("You need to add at least one tag before filtering.")
         }
-       
 
     // If the section is expanded, show the items inside the section.
     if isExpanded.wrappedValue {
@@ -246,68 +288,6 @@ private func expandableFilterSection(
             // Each item is shown with a move-and-opacity transition when the section is expanded.
             items[index]
                 .transition(.move(edge: .top).combined(with: .opacity))
-        }
-    }
-}
-
-/// A section in the sidebar to display and handle quality-based filters.
-/// - Properties:
-///   - qualityFilters: The available quality filters to be displayed in the section.
-///   - countQualityPlates: A function that takes a quality value (e.g., 0, 1, or 2) and returns the count of plates matching that quality.
-struct QualityFiltersSection: View {
-    let qualityFilters: [Filter]
-    let countQualityPlates: (Int) -> Int
-    
-    var body: some View {
-        // Iterate over the available quality filters and create navigation links.
-
-            ForEach(qualityFilters) { filter in
-                NavigationLink(value: filter) {
-                    qualityFilterRow(filter: filter)
-                }
-            }
-            // Display the summary text for quality filter results.
-            qualitySummaryText(
-                goodCount: countQualityPlates(2),
-                averageCount: countQualityPlates(1),
-                badCount: countQualityPlates(0)
-            )
-    }
-
-    /// A helper function to create a row for each quality filter.
-    @ViewBuilder
-    private func qualityFilterRow(filter: Filter) -> some View {
-        HStack {
-            // Display the icon for the filter with color based on quality.
-            Image(systemName: filter.icon)
-                .foregroundStyle(
-                    filter.quality == 0 ? Color("RedBerry") :
-                    filter.quality == 1 ? Color("SunnyYellow") : Color("LeafGreen")
-                )
-            Text(LocalizedStringKey(filter.name))
-                .badge("\(countQualityPlates(filter.quality))")
-        }
-        .accessibilityElement()
-        .accessibilityLabel(filter.name)
-        .accessibilityHint("\(countQualityPlates(filter.quality)) plates")
-    }
-
-    /// A helper function to display the summary text for the quality filters.
-    @ViewBuilder
-    private func qualitySummaryText(goodCount: Int, averageCount: Int, badCount: Int) -> some View {
-        // Display different messages depending on the counts of good, average, and bad plates.
-        if goodCount > badCount && goodCount > averageCount {
-            Text("You're doing great! Keep up with the healthy choices!")
-                .foregroundStyle(Color("LeafGreen"))
-                .italic()
-        } else if badCount > goodCount && badCount > averageCount {
-            Text("You may want to focus on eating healthier.")
-                .foregroundStyle(Color("RedBerry"))
-                .italic()
-        } else {
-            Text("You're balancing your choices well!")
-                .foregroundStyle(Color("SunnyYellow"))
-                .italic()
         }
     }
 }

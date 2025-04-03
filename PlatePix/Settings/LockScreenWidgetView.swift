@@ -11,7 +11,7 @@ import SwiftUI
 struct LockScreenWidgetView: View {
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Spacer()
@@ -23,17 +23,17 @@ struct LockScreenWidgetView: View {
             .foregroundStyle(Color.primary)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
-            .padding()
-        
-                Text("LOCK SCREEN")
-                    .font(.title.bold())
-                    .fontDesign(.rounded)
-                    .frame(maxWidth: .infinity)
-                    .frame(alignment: .center)
-                // Lock Screen Widget example section
+            .padding(10)
+
+            Text("LOCK SCREEN")
+                .font(.title.bold())
+                .fontDesign(.rounded)
+                .frame(maxWidth: .infinity)
+                .frame(alignment: .center)
+            // Lock Screen Widget example section
             HStack {
                 Spacer()
-                VStack(spacing:0){
+                VStack(spacing:0) {
                     // Display current date
                     let currentDate = getCurrentDate()
                     Text(currentDate)
@@ -57,30 +57,27 @@ struct LockScreenWidgetView: View {
                         .font(.footnote)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
-                        
+
                         Spacer()
                     }
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 80)
-//                    .background(
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .stroke(lineWidth: 3)
-//                            .foregroundColor(.white.opacity(0.7)))
+                    .frame(height: 70)
                     .multilineTextAlignment(.center)
-                    
                 }
                 .padding(20)
                 .frame(maxWidth: 350)
                 .background(
-                    LinearGradient(colors: [Color("LavenderRaf"), Color("GirlsPink")], startPoint: .bottom, endPoint: .top)
+                    LinearGradient(
+                        colors: [Color("LavenderRaf"), Color("GirlsPink")],
+                        startPoint: .bottom,
+                        endPoint: .top)
                 )
                 .padding(.horizontal)
                 Spacer()
             }
-          
+
             // Instructions for Adding Widget
-            // TODO: Change name of app and localize properly!
             VStack(alignment: .leading, spacing: 20) {
                 Text("1. Touch and hold anywhere on your lock screen, tap Customize and choose Lock Screen.")
                 Text("2. Long press the widget area under the time to view available widgets, scroll to PlatePix Widget and choose it.")
@@ -88,7 +85,8 @@ struct LockScreenWidgetView: View {
             }
             .font(.callout)
             .fontWeight(.regular)
-            .padding(20)
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
             Spacer()
             Spacer()
         }
@@ -101,7 +99,7 @@ struct LockScreenWidgetView: View {
         let dateString = formatter.string(from: Date())
         return dateString
     }
-    
+
     /// Returns the current time in a short format (e.g., "3:45 PM").
     func getCurrentTime() -> String {
         let formatter = DateFormatter()

@@ -10,7 +10,6 @@ import SwiftUI
 
 @main
 struct PlatePixWidgetBundle: WidgetBundle {
-  //  let kind: String = "PlatePixWidgetKind"
     var body: some Widget {
         PlatePixWidget()
     }

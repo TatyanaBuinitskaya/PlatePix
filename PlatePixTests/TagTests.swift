@@ -42,5 +42,3 @@ final class TagTests: BaseTestCase {
         XCTAssertEqual(dataController.count(for: Plate.fetchRequest()), 50, "Expected 50 plates after deleting a tag.")
     }
 }
-
-

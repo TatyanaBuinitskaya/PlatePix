@@ -67,7 +67,10 @@ final class ExtensionTests: BaseTestCase {
         tag.name = "My Tag"
         plate.addToTags(tag)
         // Then
-        XCTAssertEqual(plate.plateTags.first?.tagName, "My Tag", "Adding 1 tag to a plate should make plateTags first name be My Tag.")
+        XCTAssertEqual(
+            plate.plateTags.first?.tagName,
+            "My Tag",
+            "Adding 1 tag to a plate should make plateTags first name be My Tag.")
     }
 
     func testPlateSortingIsStable() {
@@ -85,9 +88,12 @@ final class ExtensionTests: BaseTestCase {
         // When
         let sorted = allPlates.sorted()
         // Then
-        XCTAssertEqual([plate1, plate2, plate3], sorted, "Sorting plate arrays should use creation date.")
+        XCTAssertEqual(
+            [plate1, plate2, plate3],
+            sorted,
+            "Sorting plate arrays should use creation date.")
     }
-    
+
     func testTagIDUnwrap() {
         // Given
         let tag = Tag(context: managedObjectContext)
@@ -105,19 +111,6 @@ final class ExtensionTests: BaseTestCase {
         // Then
         XCTAssertEqual(tag.tagName, "Example Tag", "Changing name should also change tagName.")
     }
-
-//    func testTagActivePlates() {
-//        // Given
-//        let tag = Tag(context: managedObjectContext)
-//        let plate = Plate(context: managedObjectContext)
-//        // Then
-//        XCTAssertEqual(dataController.countTagPlates(for: tag.tagName), 0, "A new tag should have 0 active plates.")
-//        // When
-//        tag.addToPlates(plate)
-//        try? managedObjectContext.save() // Save changes to persist the relationship
-//        // Then
-//        XCTAssertEqual(dataController.countTagPlates(for: tag.tagName), 1, "A new tag with 1 new plate should have 1 active plate.")
-//    }
 
     func testTagSortingIsStable() {
         // Given

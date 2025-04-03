@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB189C2D2D8C662F007E5D94 /* Reminders.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB189C2C2D8C662F007E5D94 /* Reminders.xcstrings */; };
 		EB22500D2D1457FE00E002D7 /* PlatePixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22500C2D1457FE00E002D7 /* PlatePixApp.swift */; };
 		EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22500E2D1457FE00E002D7 /* ContentView.swift */; };
 		EB2250112D14580100E002D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB2250102D14580100E002D7 /* Assets.xcassets */; };
@@ -27,6 +28,8 @@
 		EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2250482D28FEA300E002D7 /* AwardSheetView.swift */; };
 		EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504A2D2D4B7700E002D7 /* SettingsView.swift */; };
 		EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */; };
+		EB3B64752D84CAC00073FD0A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5FF6F12D7B833800249F07 /* StoreKit.framework */; };
+		EB517DA72D9A954400046CA4 /* JPEGShareOneDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB517DA62D9A954400046CA4 /* JPEGShareOneDayView.swift */; };
 		EB5655E72D63400F00A25751 /* AppColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5655E62D63400F00A25751 /* AppColorManager.swift */; };
 		EB56562B2D63607F00A25751 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB56562A2D63607F00A25751 /* ColorPickerView.swift */; };
 		EB56562C2D6374B300A25751 /* AppColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5655E62D63400F00A25751 /* AppColorManager.swift */; };
@@ -40,7 +43,6 @@
 		EB5656A22D6DC1C000A25751 /* AwardIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5656A12D6DC1C000A25751 /* AwardIcon.swift */; };
 		EB5656C52D6E0D3100A25751 /* DefaultReactions.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB5656C42D6E0D3100A25751 /* DefaultReactions.xcstrings */; };
 		EB5656C72D6E0E3700A25751 /* DefaultEmotions.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB5656C62D6E0E3700A25751 /* DefaultEmotions.xcstrings */; };
-		EB5656C92D6E5F0C00A25751 /* DefaultMonths.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB5656C82D6E5F0C00A25751 /* DefaultMonths.xcstrings */; };
 		EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */; };
 		EB567F742D562ECF002AC274 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F732D562ECF002AC274 /* UserPreferences.swift */; };
 		EB567F7A2D5A2599002AC274 /* RemindersSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F792D5A2599002AC274 /* RemindersSheetView.swift */; };
@@ -54,9 +56,7 @@
 		EB567FB12D5E100A002AC274 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB567FB02D5E100A002AC274 /* WidgetKit.framework */; };
 		EB567FB32D5E100A002AC274 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB567FB22D5E100A002AC274 /* SwiftUI.framework */; };
 		EB567FC02D5E100C002AC274 /* PlatePixWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EB567FAE2D5E100A002AC274 /* PlatePixWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		EB5FF6AB2D75FAC600249F07 /* PDFShareOneDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */; };
 		EB5FF6F02D7B82F000249F07 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = EB5FF6EF2D7B82F000249F07 /* RevenueCat */; };
-		EB5FF6F22D7B833800249F07 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5FF6F12D7B833800249F07 /* StoreKit.framework */; };
 		EB5FF6F42D7EEA6F00249F07 /* ExtensionRevenueCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5FF6F32D7EEA6F00249F07 /* ExtensionRevenueCat.swift */; };
 		EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922452D3FDBDA00BF97D7 /* TagListView.swift */; };
 		EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79224D2D410E2F00BF97D7 /* Tags.swift */; };
@@ -111,6 +111,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EB189C2C2D8C662F007E5D94 /* Reminders.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Reminders.xcstrings; sourceTree = "<group>"; };
 		EB2250092D1457FE00E002D7 /* PlatePix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlatePix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22500C2D1457FE00E002D7 /* PlatePixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatePixApp.swift; sourceTree = "<group>"; };
 		EB22500E2D1457FE00E002D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -134,6 +135,7 @@
 		EB2250482D28FEA300E002D7 /* AwardSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardSheetView.swift; sourceTree = "<group>"; };
 		EB22504A2D2D4B7700E002D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetView.swift; sourceTree = "<group>"; };
+		EB517DA62D9A954400046CA4 /* JPEGShareOneDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPEGShareOneDayView.swift; sourceTree = "<group>"; };
 		EB5655E62D63400F00A25751 /* AppColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorManager.swift; sourceTree = "<group>"; };
 		EB56562A2D63607F00A25751 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		EB56562E2D64CC2400A25751 /* SupportEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportEmail.swift; sourceTree = "<group>"; };
@@ -146,7 +148,6 @@
 		EB5656A12D6DC1C000A25751 /* AwardIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardIcon.swift; sourceTree = "<group>"; };
 		EB5656C42D6E0D3100A25751 /* DefaultReactions.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultReactions.xcstrings; sourceTree = "<group>"; };
 		EB5656C62D6E0E3700A25751 /* DefaultEmotions.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultEmotions.xcstrings; sourceTree = "<group>"; };
-		EB5656C82D6E5F0C00A25751 /* DefaultMonths.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = DefaultMonths.xcstrings; sourceTree = "<group>"; };
 		EB567F6B2D54F570002AC274 /* SideBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewModel.swift; sourceTree = "<group>"; };
 		EB567F732D562ECF002AC274 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		EB567F792D5A2599002AC274 /* RemindersSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersSheetView.swift; sourceTree = "<group>"; };
@@ -161,7 +162,6 @@
 		EB567FB02D5E100A002AC274 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		EB567FB22D5E100A002AC274 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		EB567FC62D5E1A3E002AC274 /* PlatePixWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlatePixWidgetExtension.entitlements; sourceTree = "<group>"; };
-		EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFShareOneDayView.swift; sourceTree = "<group>"; };
 		EB5FF6F12D7B833800249F07 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		EB5FF6F32D7EEA6F00249F07 /* ExtensionRevenueCat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionRevenueCat.swift; sourceTree = "<group>"; };
 		EB7922452D3FDBDA00BF97D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
@@ -189,6 +189,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		EB189C202D8C643F007E5D94 /* Reminders */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Reminders; sourceTree = "<group>"; };
 		EB567FB42D5E100A002AC274 /* PlatePixWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EB567FC12D5E100C002AC274 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = PlatePixWidget; sourceTree = "<group>"; };
 		EBB2C9582D52486B008FA818 /* PlatePixTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlatePixTests; sourceTree = "<group>"; };
 		EBB2C97C2D53AC9E008FA818 /* PlatePixUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlatePixUITests; sourceTree = "<group>"; };
@@ -200,7 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB5FF6F02D7B82F000249F07 /* RevenueCat in Frameworks */,
-				EB5FF6F22D7B833800249F07 /* StoreKit.framework in Frameworks */,
+				EB3B64752D84CAC00073FD0A /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +258,7 @@
 		EB22500B2D1457FE00E002D7 /* PlatePix */ = {
 			isa = PBXGroup;
 			children = (
+				EB189C202D8C643F007E5D94 /* Reminders */,
 				EB56562D2D64B0DB00A25751 /* Controllers */,
 				EB567F882D5CB2BA002AC274 /* Motivations */,
 				EB567F812D5B6361002AC274 /* Store */,
@@ -343,7 +345,7 @@
 				EB22502F2D197B8B00E002D7 /* PlateBox.swift */,
 				EB567F732D562ECF002AC274 /* UserPreferences.swift */,
 				EB56563A2D676F2A00A25751 /* SplashScreenView.swift */,
-				EB5FF6AA2D75FAC600249F07 /* PDFShareOneDayView.swift */,
+				EB517DA62D9A954400046CA4 /* JPEGShareOneDayView.swift */,
 			);
 			path = Plates;
 			sourceTree = "<group>";
@@ -402,7 +404,7 @@
 				EB567FA82D5CDD8A002AC274 /* Motivations.xcstrings */,
 				EB5656C42D6E0D3100A25751 /* DefaultReactions.xcstrings */,
 				EB5656C62D6E0E3700A25751 /* DefaultEmotions.xcstrings */,
-				EB5656C82D6E5F0C00A25751 /* DefaultMonths.xcstrings */,
+				EB189C2C2D8C662F007E5D94 /* Reminders.xcstrings */,
 			);
 			path = Localizations;
 			sourceTree = "<group>";
@@ -447,6 +449,9 @@
 			);
 			dependencies = (
 				EB567FBF2D5E100C002AC274 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EB189C202D8C643F007E5D94 /* Reminders */,
 			);
 			name = PlatePix;
 			productName = MyPlates;
@@ -580,7 +585,6 @@
 				EB5656C72D6E0E3700A25751 /* DefaultEmotions.xcstrings in Resources */,
 				EB2250142D14580100E002D7 /* Preview Assets.xcassets in Resources */,
 				EB5656C52D6E0D3100A25751 /* DefaultReactions.xcstrings in Resources */,
-				EB5656C92D6E5F0C00A25751 /* DefaultMonths.xcstrings in Resources */,
 				EB7922502D43CEAF00BF97D7 /* Localizable.xcstrings in Resources */,
 				EB7922562D4588E900BF97D7 /* DefaultFoodTags.xcstrings in Resources */,
 				EB2250452D1D753A00E002D7 /* example.jpg in Resources */,
@@ -588,6 +592,7 @@
 				EB7922532D43E83400BF97D7 /* Awards.json in Resources */,
 				EB2250112D14580100E002D7 /* Assets.xcassets in Resources */,
 				EB5656352D64D2F300A25751 /* DeviceModels.json in Resources */,
+				EB189C2D2D8C662F007E5D94 /* Reminders.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,6 +637,7 @@
 				EB22503C2D1ADDAB00E002D7 /* Award.swift in Sources */,
 				EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */,
 				EB22503E2D1ADE7300E002D7 /* AwardsView.swift in Sources */,
+				EB517DA72D9A954400046CA4 /* JPEGShareOneDayView.swift in Sources */,
 				EB22502E2D159EAC00E002D7 /* Tag-CoreDataHelpers.swift in Sources */,
 				EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */,
 				EB567F832D5B6380002AC274 /* StoreView.swift in Sources */,
@@ -651,7 +657,6 @@
 				EB5656312D64D0BA00A25751 /* BundleForEmail.swift in Sources */,
 				EB56562F2D64CC2400A25751 /* SupportEmail.swift in Sources */,
 				EB567F8E2D5CC8D9002AC274 /* Motivations.swift in Sources */,
-				EB5FF6AB2D75FAC600249F07 /* PDFShareOneDayView.swift in Sources */,
 				EB5656372D65FEEA00A25751 /* HomeScreenWidgetView.swift in Sources */,
 				EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */,
 				EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */,
@@ -776,7 +781,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -835,7 +840,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -867,7 +872,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -903,7 +908,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -932,7 +937,7 @@
 				INFOPLIST_FILE = PlatePixWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PlatePixWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -963,7 +968,7 @@
 				INFOPLIST_FILE = PlatePixWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PlatePixWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

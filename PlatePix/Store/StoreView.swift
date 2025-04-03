@@ -15,8 +15,11 @@ struct StoreView: View {
     @EnvironmentObject var dataController: DataController
     /// Environment property to allow dismissing the store view.
     @Environment(\.dismiss) var dismiss
+    /// The environment property that rovides access to the environment's `openURL` action, used to open external links.
+    @Environment(\.openURL) var openURL
     /// The current offering retrieved from RevenueCat, which contains available subscription packages.
     @State var currentOffering: Offering?
+    /// Tracks whether a purchase process is in progress.
     @State var isPurchasing = false
 
     var body: some View {
@@ -25,16 +28,10 @@ struct StoreView: View {
                 VStack(spacing: 0) {
                     // Display the unlock image and title promoting the upgrade
                     VStack {
-                        
-                        Text("Unlock Premium")
+                        Text("Premium PlatePix")
                             .font(.title.bold())
                             .fontDesign(.rounded)
                             .foregroundStyle(.white)
-                        Text("PlatePix")
-                            .font(.system(size: 30, weight: .bold))
-                            .fontDesign(.rounded)
-                            .foregroundStyle(.white)
-                        
                         Image("Logo")
                             .resizable()
                             .scaledToFit()
@@ -43,82 +40,85 @@ struct StoreView: View {
                         Text("Add as many plates as you want!")
                             .font(.title2)
                             .foregroundStyle(.white)
-                            .padding(.bottom)
-                        
+                            .multilineTextAlignment(.center)
                     }
                     .frame(maxWidth: .infinity)
-                    .padding(20)
-                    .background(colorManager.selectedColor.color.gradient)
-                    
-                    // Scrollable content section
-                    ScrollView {
+                    .padding(40)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color("GirlsPink"), Color("LavenderRaf")]),
+                            startPoint: .top,
+                            endPoint: .bottom)
+                    )
+
+                        Spacer()
                         VStack {
-                            Spacer(minLength: 30)
+                            Text("Unlock Now")
+                                .font(.title2)
                             if currentOffering != nil {
                                 ForEach(currentOffering!.availablePackages) {pkg in
                                     Button {
                                         isPurchasing = true
-                                        Purchases.shared.purchase(package: pkg) { (transaction, customerInfo, error, userCancelled) in
+                                        Purchases.shared.purchase(package: pkg) {(transaction, customerInfo, error, userCancelled) in
                                             if customerInfo?.entitlements["premium"]?.isActive == true {
                                                 // Unlock that great "pro" content
                                                 dataController.isSubscriptionIsActive = true
-                                                
                                                 isPurchasing = false
-                                                // showingStore = false
-//                                                if !userCancelled, error == nil {
-//                                                   // dismiss()
-//                                                } else if let error = error {
-//                                                    self.error = error as NSError
-//                                                    self.displayError = true
-//                                                }
                                             }
                                         }
                                     } label: {
                                         HStack {
                                             Spacer()
                                             Text("\(pkg.storeProduct.localizedPriceString) / ")
-                                                .font(.title)
+                                                .font(.title2)
                                             
                                             Text("\(pkg.storeProduct.subscriptionPeriod!.periodTitle)")
-                                            
-                                                .font(.title.bold())
+                                                .font(.title2.bold())
                                                 .fontDesign(.rounded)
                                             Spacer()
                                         }
                                         .foregroundStyle(.white)
                                         .padding(.horizontal, 20)
-                                        .padding(.vertical, 15)
+                                        .padding(.vertical, 10)
                                         .frame(maxWidth: .infinity)
                                         .background(Color(colorManager.selectedColor.color), in: .capsule)
                                         .contentShape(.rect)
-                                        .padding(.vertical)
+                                        .padding(.vertical, 10)
                                     }
                                 }
                             }
-                            Text("Cancel Anytime")
+                            Text("You can cancel your subscription at any time")
+                                .font(.caption)
+                                .padding(.top, 0)
                         }
                         .padding(20)
-                    }
-                    
+
+                    Spacer()
                     // Button for restoring previous purchases
                     Button("Restore Purchases", action: restore)
                         .font(.title2)
-                        .foregroundStyle(Color(colorManager.selectedColor.color))
-                        .padding(.vertical, 20)
+                        .foregroundStyle(Color("LavenderRaf"))
+                        .padding(.vertical, 15)
                     HStack {
                         Spacer()
                         Button("Terms And Conditions") {
-                            
+                            if let urlTerms = URL(string: "https://tatyanabuinitskaya.github.io/PlatePixTerms/") {
+                                openURL(urlTerms)
+                            }
                         }
                         Spacer()
                         Button("Privacy Policy") {
-                            
+                            if let urlPolicy = URL(string:  "https://tatyanabuinitskaya.github.io/PlatePixPrivacyPolicy/") {
+                                openURL(urlPolicy)
+                            }
                         }
                         Spacer()
                     }
                     .font(.footnote)
-                    .foregroundStyle(Color(colorManager.selectedColor.color))
+                    .foregroundStyle(Color("LavenderRaf"))
+                    .padding(.bottom, 10)
                 }
+
                 Rectangle()
                     .foregroundStyle(Color.black)
                     .opacity(isPurchasing ? 0.5 : 0.0)
@@ -132,8 +132,10 @@ struct StoreView: View {
                 }
             }
         }
+        .onDisappear {
+            dataController.selectedPlate = nil
+        }
     }
-
 
     /// Restores previous purchases from the App Store by syncing with the App Store account.
     /// - Uses `AppStore.sync()` to sync and restore purchases asynchronously.

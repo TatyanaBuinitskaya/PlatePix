@@ -9,7 +9,7 @@
     {
         "name": "Master",
         "description": "Add 25 plates",
-        "color": "A Light Blue",
+        "color": "OrangeFruit",
         "criterion": "plates",
         "value": 25
     },

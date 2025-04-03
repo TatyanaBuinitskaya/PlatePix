@@ -8,7 +8,6 @@
 import SwiftUI
 import WidgetKit
 
-
 /// The main view for displaying plates, including a motivational text, a grid of plates,
 /// and floating controls for selecting which information about plates to show and adding new plates.
 struct ContentView: View {
@@ -17,13 +16,13 @@ struct ContentView: View {
     /// An environment property that provides access to the system's request review action.
     /// This allows the app to prompt the user for a review at an appropriate time.
     @Environment(\.requestReview) var requestReview
-    /// A variable that counts the number of plates created
-    @State var counter = 0
     /// An environment object that stores user preferences.
     /// This enables the app to access and modify user settings across different views.
     @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
+    /// A variable that counts the number of plates created
+    @State var counter = 0
     // spotlight
     /// A state variable that tracks whether a selected plate should be displayed in `PlateView`.
     @State private var isShowingPlate = false
@@ -31,73 +30,87 @@ struct ContentView: View {
     @State private var showingStore = false
     /// A boolean that tracks whether the PDF sheet is shown.
     @State private var showPDFSheet = false
-   
+    /// The date when the last filter was applied.
+    @State private var lastFilteredDate: Date = UserDefaults.standard.object(forKey: "lastFilteredDate") as? Date ?? Date.distantPast
+
     /// The layout of the grid used for displaying plates. It contains two flexible columns.
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 2),
         GridItem(.flexible(), spacing: 2)
     ]
     /// A computed property that checks if the user has created at least x plates.
-    // If the count of plates reaches x or more, the app may prompt the user for a review.
+    /// If the count of plates reaches x or more, the app may prompt the user for a review.
     var shouldRequestReview: Bool {
         dataController.count(for: Plate.fetchRequest()) >= 10
     }
-   
-    var body: some View {
-          NavigationStack {
-            
-              ZStack {
-                      VStack (spacing: 5) {
-                          motivation // Displays the motivational text.
-                          
-                          plateGrid // Displays the grid of plates.
-                  }
-                  .padding(.horizontal)
-                  floatingControls  // Displays the floating controls for interacting with the plates.
-              }
-              .onOpenURL(perform: openURL)
-//              .userActivity(newPlateActivity) { activity in
-//                  activity.isEligibleForPrediction = true
-//                  activity.title = "New Plate"
-//              }
-//              .onContinueUserActivity(newPlateActivity, perform: resumeActivity)
-              // Set the title of the navigation bar to be dynamic based on the selected title in the dataController.
-              .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
-              .navigationBarTitleDisplayMode(.inline)
-              .toolbar(content: ContentViewToolBar.init)
-              .tint(colorManager.selectedColor.color)
-              // Sets the navigation destination for Plate objects.
-              .navigationDestination(for: Plate.self) { plate in
-                  PlateView(plate: plate) // Navigates to the PlateView when a plate is selected.
-              }
-              // Navigates to a new plate view when a new plate is created.
-              .navigationDestination(isPresented: $dataController.isNewPlateCreated) {
-                  if let newPlate = dataController.selectedPlate {
-                      PlateView(plate: newPlate)
-                  }
-              }
-              // spotlight
-              // Dynamically navigates to PlateView when a plate is selected
-              .navigationDestination(isPresented: $isShowingPlate) {
-                              if let selectedPlate = dataController.selectedPlate {
-                                  PlateView(plate: selectedPlate)
-                              }
-                          }
-              // spotlight
-              // Observes changes in selectedPlate and triggers navigation
-              .onChange(of: dataController.selectedPlate) {
-                              if dataController.selectedPlate != nil {
-                                  isShowingPlate = true
-                              }
-                          }
-              // Applies the selected date filter when the date changes.
-              .onChange(of: dataController.selectedDate) {
-                  applyDateFilter()
-              }
-          }
-         
 
-      }
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                VStack(spacing: 5) {
+                    motivation // Displays the motivational text.
+
+                    plateGrid // Displays the grid of plates.
+                }
+                .padding(.horizontal)
+                floatingControls  // Displays the floating controls for interacting with the plates.
+            }
+            .onOpenURL(perform: openURL)
+            // Set the title of the navigation bar to be dynamic based on the selected title in the dataController.
+            //   .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("")
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(LocalizedStringKey(dataController.dynamicTitle))
+                        .font(.headline)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                }
+            }
+            .toolbar(content: ContentViewToolBar.init)
+            .tint(colorManager.selectedColor.color)
+            // Sets the navigation destination for Plate objects.
+            .navigationDestination(for: Plate.self) { plate in
+                PlateView(plate: plate) // Navigates to the PlateView when a plate is selected.
+            }
+            // Navigates to a new plate view when a new plate is created.
+            .navigationDestination(isPresented: $dataController.isNewPlateCreated) {
+                if let newPlate = dataController.selectedPlate {
+                    PlateView(plate: newPlate)
+                }
+            }
+            // spotlight
+            // Dynamically navigates to PlateView when a plate is selected
+            .navigationDestination(isPresented: $isShowingPlate) {
+                if let selectedPlate = dataController.selectedPlate {
+                    PlateView(plate: selectedPlate)
+                }
+            }
+            // spotlight
+            // Observes changes in selectedPlate and triggers navigation
+            .onChange(of: dataController.selectedPlate) {
+                if dataController.selectedPlate != nil {
+                    isShowingPlate = true
+                }
+            }
+            // Applies the selected date filter when the date changes.
+            .onChange(of: dataController.selectedDate) {
+                applyDateFilter()
+            }
+            .onAppear {
+                // Filter plates for today's date if the date has changed
+                let today = Calendar.current.startOfDay(for: Date())
+
+                // Apply filter if the date has changed
+                if !Calendar.current.isDate(today, inSameDayAs: lastFilteredDate) {
+                    dataController.selectedFilter = Filter.filterForDate(Date())
+                    lastFilteredDate = today // Save today's date to UserDefaults
+                    UserDefaults.standard.set(today, forKey: "lastFilteredDate") // Save the date to UserDefaults
+                }
+            }
+        }
+    }
 
     /// Checks if the review request criteria are met and triggers the review prompt.
     func askForReview() {
@@ -107,15 +120,14 @@ struct ContentView: View {
     }
 
     /// Handles URL opening logic, specifically checking for "newPlate" in the URL.
-        /// If found, it triggers the creation of a new plate.
-        /// - Parameter url: The URL to be processed.
+    /// If found, it triggers the creation of a new plate.
+    /// - Parameter url: The URL to be processed.
     func openURL(_ url: URL) {
         if url.absoluteString.contains("newPlate") {
             tryNewPlate()
         }
     }
-
-  }
+}
 
 #Preview("English") {
     ContentView()
@@ -142,16 +154,12 @@ extension ContentView {
             Text(motivationText)
                 .font(.callout)
                 .foregroundStyle(colorManager.selectedColor.color)
-             //   .foregroundStyle(Color(uiColor: .systemBackground))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
-             //   .padding(5)
-              //  .background(colorManager.selectedColor.color)
                 .cornerRadius(8)
                 .lineLimit(3)
                 .minimumScaleFactor(0.6)
         }
-      //  .padding(.top, 0)
         .padding(.top, 0)
     }
 
@@ -164,6 +172,16 @@ extension ContentView {
                     NavigationLink(value: plate) {
                         PlateBox(plate: plate) // Displays each plate in a PlateBox view.
                             .accessibilityIdentifier("plateView")
+                            .onTapGesture {
+                                if dataController.selectedPlate == plate {
+                                       dataController.selectedPlate = nil // Reset selection
+                                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                           dataController.selectedPlate = plate // Re-select after a slight delay
+                                       }
+                                   } else {
+                                       dataController.selectedPlate = plate
+                                   }
+                            }
                     }
                 }
             }
@@ -190,7 +208,7 @@ extension ContentView {
         }
         .padding()
     }
-    
+
     private var shareButton: some View {
         Group {
             if dataController.selectedDate != nil {
@@ -208,8 +226,7 @@ extension ContentView {
                         .background(Circle().fill(.ultraThickMaterial))
                 }
                 .sheet(isPresented: $showPDFSheet) { // Shows the PDF share view as a sheet.
-                    PDFShareOneDayView()
-                  //  PDFSheetShareView()
+                    JPEGShareOneDayView()
                 }
             } else {
                 Image(systemName: "square.and.arrow.down")
@@ -222,16 +239,17 @@ extension ContentView {
                     .background(Circle().fill(.clear))
             }
         }
-        }
-    
-    
+    }
+
     /// A view displaying toggle buttons for various plate finfo.
     private var plateInfoToggles: some View {
         HStack {
             // For each info, create a toggle button with the appropriate label.
             plateInfoToggle(label: "clock", isOn: $userPreferences.showMealTime)
-            plateInfoToggle(label: "star", isOn: $userPreferences.showQuality)
+            plateInfoToggle(label: "HappyPDF", isOn: $userPreferences.showQuality)
             plateInfoToggle(label: "tag", isOn: $userPreferences.showTags)
+            plateInfoToggle(label: "square.and.pencil", isOn: $userPreferences.showNotes)
+
         }
         .padding(5)
         .background(Capsule().fill(.ultraThickMaterial))
@@ -242,30 +260,26 @@ extension ContentView {
         HStack {
             Button {
                 isOn.wrappedValue.toggle() // Toggles the info state when the button is pressed.
-          //  MARK: haptics
-               // for iOS less 17
-//                if isOn.wrappedValue {
-//                    UINotificationFeedbackGenerator().notificationOccurred(.success)
-//                }
-             //   let generator = UIImpactFeedbackGenerator(style: .medium)
-               //                generator.impactOccurred() // Medium haptic for renaming
             } label: {
-                Image(systemName: label)
-                    .foregroundStyle(isOn.wrappedValue ? Color.white : Color.gray)
-                    .font(.title2)
-                    .padding(5)
-                    .background {
-                        Circle()
-                            .fill(isOn.wrappedValue ? colorManager.selectedColor.color : .clear)
+                Group {
+                    if label == "HappyPDF" {
+                        Image(label)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 25)
+                    } else {
+                        Image(systemName: label) // Loads SF Symbol
+                            .offset(y: label == "square.and.pencil" ? -2 : 0)
                     }
+                }
+                .foregroundStyle(isOn.wrappedValue ? Color.white : Color.gray)
+                .font(.title2)
+                .padding(5)
+                .background {
+                    Circle()
+                        .fill(isOn.wrappedValue ? colorManager.selectedColor.color : .clear)
+                }
             }
-//            .sensoryFeedback(trigger: isOn.wrappedValue) { oldValue, newValue in
-//                if newValue {
-//                    .success
-//                } else {
-//                    nil
-//                }
-//            }
         }
     }
 
@@ -290,10 +304,8 @@ extension ContentView {
                 .background(Circle().fill(Color(colorManager.selectedColor.color)))
                 .padding(2)
                 .background(Circle().fill(.ultraThickMaterial))
-             
         }
         .sheet(isPresented: $showingStore, content: StoreView.init)
-
     }
 
     /// Attempts to create a new plate.
@@ -306,15 +318,14 @@ extension ContentView {
             showingStore = true
         }
     }
-    
-// TODO: combine with mealtime filter too
+
     /// Applies the date filter to the current data.
     private func applyDateFilter() {
         if let date = dataController.selectedDate {
             if let currentFilter = dataController.selectedFilter {
                 // Combine the date filter with existing quality or tag filters
                 if currentFilter.quality >= 0 || currentFilter.tag != nil {
-                   dataController.selectedFilter = Filter.filterForDate(date)
+                    dataController.selectedFilter = Filter.filterForDate(date)
                         .applyingFilters(from: currentFilter)
                 } else {
                     dataController.selectedFilter = Filter.filterForDate(date)
@@ -329,19 +340,19 @@ extension ContentView {
     /// Loads motivation index from UserDefaults, or generates a new one if missing.
     private func loadOrGenerateMotivationIndex() -> Int {
         let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")!
-        
+
         let savedIndex = defaults.integer(forKey: "lastMotivationIndex")
 
         // If the saved index is 0, check if it's actually a valid index or just a default value.
-           if savedIndex != 0 || defaults.object(forKey: "lastMotivationIndex") != nil {
-               return savedIndex
+        if savedIndex != 0 || defaults.object(forKey: "lastMotivationIndex") != nil {
+            return savedIndex
         } else {
             let newIndex = pickNewRandomMotivationIndex()
             saveMotivationIndexToDefaults(newIndex)
             return newIndex
         }
     }
-    
+
     /// Saves the generated motivation index to `UserDefaults`
     private func saveMotivationIndexToDefaults(_ index: Int) {
         let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")!
@@ -349,7 +360,7 @@ extension ContentView {
         defaults.set(Date(), forKey: "lastMotivationDate")
         defaults.synchronize()
     }
-    
+
     /// Picks a new random motivation index ensuring it's different from the last one.
     private func pickNewRandomMotivationIndex() -> Int {
         var newIndex: Int
@@ -369,7 +380,6 @@ struct ContentViewToolBar: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
     @State private var isNewPlateCreated = false
-   
     /// A boolean that tracks whether the settings screen is being navigated to.
     @State private var isNavigatingToSettings = false
 

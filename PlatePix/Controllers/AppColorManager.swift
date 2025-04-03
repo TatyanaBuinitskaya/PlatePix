@@ -11,8 +11,11 @@ import SwiftUICore
 /// Enum representing the available app colors.
 /// Each case corresponds to a named color in the asset catalog.
 enum AppColor: String, CaseIterable {
-    case redBerry, watermelonPink, orangeFruit, sunnyYellow, appleGreen, leafGreen, coolMint, blueSky, appleBlue, coldBlue, lavenderRaf, girlsPink
-    
+    case redBerry, watermelonPink, orangeFruit,
+         sunnyYellow, appleGreen, coolMint,
+         blueSky, appleBlue, coldBlue,
+         lavenderRaf, girlsPink, brightPink
+
     /// Maps each enum case to its corresponding Color value.
     /// - Returns: A SwiftUI Color defined in the asset catalog.
     var color: Color {
@@ -27,8 +30,6 @@ enum AppColor: String, CaseIterable {
             return Color("SunnyYellow")
         case .appleGreen:
             return Color("AppleGreen")
-        case .leafGreen:
-            return Color("LeafGreen")
         case .coolMint:
             return Color("CoolMint")
         case .blueSky:
@@ -41,6 +42,8 @@ enum AppColor: String, CaseIterable {
             return Color("LavenderRaf")
         case .girlsPink:
             return Color("GirlsPink")
+        case .brightPink:
+            return Color("BrightPink")
         }
     }
 }
@@ -68,7 +71,7 @@ class AppColorManager: ObservableObject {
             groupDefaults.set(selectedColor.rawValue, forKey: "selectedColor")
         }
     }
-    
+
     /// Loads the previously selected color from UserDefaults.
     func loadColor() {
         if let groupDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix"),
@@ -78,4 +81,3 @@ class AppColorManager: ObservableObject {
         }
     }
 }
-

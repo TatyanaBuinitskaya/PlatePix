@@ -10,7 +10,6 @@ import RevenueCat
 import StoreKit
 
 /* Some methods to make displaying subscription terms easier */
-
 extension Package {
     var terms: String {
         if let intro = self.storeProduct.introductoryDiscount {
@@ -28,14 +27,14 @@ extension Package {
 extension SubscriptionPeriod {
     var durationTitle: String {
         switch self.unit {
-        case .day: return "day"
-        case .week: return "week"
-        case .month: return "month"
-        case .year: return "year"
+        case .day: return NSLocalizedString("day", comment: "")
+        case .week: return NSLocalizedString("week", comment: "")
+        case .month: return NSLocalizedString("month", comment: "")
+        case .year: return NSLocalizedString("year", comment: "")
         @unknown default: return "Unknown"
         }
     }
-    
+
     var periodTitle: String {
         let periodString = "\(self.value) \(self.durationTitle)"
         let pluralized = self.value > 1 ?  periodString + "s" : periodString

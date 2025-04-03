@@ -21,17 +21,19 @@ struct AwardSheetView: View {
     private let buttonPadding: CGFloat = 15
     /// The corner radius applied to buttons for rounded edges.
     private let buttonCornerRadius: CGFloat = 8
-    
+
     var body: some View {
         if let lastAward = dataController.congratulatedAwards.last {
             VStack(spacing: 10) {
                 VStack {
-                    HStack {
+                    HStack(spacing: 0) {
                         Image(systemName: "party.popper.fill")
                             .font(.system(size: 60))
                             .scaleEffect(x: -1, y: 1)
+                            .offset(x: 3)
                         Image(systemName: "party.popper.fill")
                             .font(.system(size: 60))
+                            .offset(x: -3)
                     }
                     .padding(.vertical)
                     Text("Congratulations!")

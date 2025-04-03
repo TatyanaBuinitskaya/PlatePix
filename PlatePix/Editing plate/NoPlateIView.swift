@@ -14,12 +14,9 @@ struct NoPlateIView: View {
 
     var body: some View {
         // Displays a message indicating no plate is selected.
-        Text("No Plate Selected")
+        Text("Select or Create a New Plate")
             .font(.title)
             .foregroundStyle(.secondary)
-        // Provides a button that allows the user to create a new plate.
-//        Button("New Plate", action: dataController.newPlate)
-//            .accessibilityIdentifier("New Plate")
     }
 }
 

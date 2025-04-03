@@ -3,6 +3,7 @@
   "strings" : {
     "Anger" : {
       "comment" : "Feeling upset or enraged",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -20,6 +21,7 @@
     },
     "Anxiety" : {
       "comment" : "Feeling uneasy or worried",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -37,6 +39,7 @@
     },
     "Boredom" : {
       "comment" : "Feeling uninterested or disengaged",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -54,6 +57,7 @@
     },
     "Celebration" : {
       "comment" : "Feeling festive or celebratory",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -71,6 +75,7 @@
     },
     "Disappointment" : {
       "comment" : "Feeling let down or unfulfilled",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -88,6 +93,7 @@
     },
     "Euphoria" : {
       "comment" : "Feeling intense happiness or bliss",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -105,6 +111,7 @@
     },
     "Happiness" : {
       "comment" : "Feeling content or joyful",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -122,6 +129,7 @@
     },
     "Insecurity" : {
       "comment" : "Feeling uncertain or vulnerable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -139,6 +147,7 @@
     },
     "Joy" : {
       "comment" : "Feeling great pleasure or delight",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -156,6 +165,7 @@
     },
     "Loneliness" : {
       "comment" : "Feeling isolated or alone",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -173,6 +183,7 @@
     },
     "Longing" : {
       "comment" : "Feeling a deep desire or craving",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -190,6 +201,7 @@
     },
     "Nervousness" : {
       "comment" : "Feeling uneasy or apprehensive",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -200,13 +212,14 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нервозность"
+            "value" : "Волнение"
           }
         }
       }
     },
     "Sadness" : {
       "comment" : "Feeling sorrowful or down",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -224,6 +237,7 @@
     },
     "Stress" : {
       "comment" : "Feeling overwhelmed or under pressure",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {

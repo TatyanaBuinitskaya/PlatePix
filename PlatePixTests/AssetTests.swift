@@ -8,7 +8,6 @@
 import XCTest
 @testable import PlatePix
 
-
 class AssetTests: XCTestCase {
 
     func testColorsExist() {

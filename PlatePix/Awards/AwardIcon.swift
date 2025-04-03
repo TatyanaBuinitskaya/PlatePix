@@ -15,7 +15,7 @@ struct AwardIcon: View {
     let size: CGFloat // Base size for scaling
     /// The color used for styling the rosette and text.
     let color: Color
-    
+
     var body: some View {
         ZStack {
             // Background rosette image

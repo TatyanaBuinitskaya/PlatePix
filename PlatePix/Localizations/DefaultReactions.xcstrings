@@ -3,6 +3,7 @@
   "strings" : {
     "A Bit Heavy" : {
       "comment" : "Feeling slightly sluggish",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -20,6 +21,7 @@
     },
     "Acid Reflux" : {
       "comment" : "Burning sensation in the throat",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -35,8 +37,27 @@
         }
       }
     },
+    "Acne" : {
+      "comment" : "Pimples",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acne"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Акне"
+          }
+        }
+      }
+    },
     "Allergic Reaction" : {
       "comment" : "Experiencing symptoms of an allergy",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -54,6 +75,7 @@
     },
     "Bloating" : {
       "comment" : "Uncomfortable swelling in the stomach",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -69,25 +91,45 @@
         }
       }
     },
-    "Boosted Mood" : {
-      "comment" : "Feeling happier",
+    "Constipation" : {
+      "comment" : "Digestive issues",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Boosted Mood"
+            "value" : "Constipation"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Хорошее настроение"
+            "value" : "Запор"
+          }
+        }
+      }
+    },
+    "Diarrhea" : {
+      "comment" : "Bowel problems",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diarrhea"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Диарея"
           }
         }
       }
     },
     "Dizzy" : {
       "comment" : "Feeling dizzy",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -105,6 +147,7 @@
     },
     "Drowsy" : {
       "comment" : "Feeling sleepy",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -120,25 +163,9 @@
         }
       }
     },
-    "Energized" : {
-      "comment" : "Feeling full of energy",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Energized"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Энергичность"
-          }
-        }
-      }
-    },
     "Feeling Light" : {
       "comment" : "Feeling good and light",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -156,6 +183,7 @@
     },
     "Food Poisoning" : {
       "comment" : "Severe illness",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -173,6 +201,7 @@
     },
     "Intense Fatigue" : {
       "comment" : "Extreme tiredness",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -190,6 +219,7 @@
     },
     "Mildly Bloated" : {
       "comment" : "Slight bloating",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -200,13 +230,14 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Небольшая вздутие"
+            "value" : "Небольшое вздутие"
           }
         }
       }
     },
     "Nauseous" : {
       "comment" : "Feeling like you might vomit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -224,6 +255,7 @@
     },
     "No Issues" : {
       "comment" : "No noticeable effects",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -241,6 +273,7 @@
     },
     "Satisfied" : {
       "comment" : "Feeling content and full",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -258,6 +291,7 @@
     },
     "Severe Stomach Pain" : {
       "comment" : "Intense pain in the stomach",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -275,6 +309,7 @@
     },
     "Sluggish" : {
       "comment" : "Feeling slow and low energy",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -292,6 +327,7 @@
     },
     "Stomach Ache" : {
       "comment" : "Mild to moderate stomach pain",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -309,6 +345,7 @@
     },
     "Thirsty" : {
       "comment" : "Feeling unusually thirsty",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -326,6 +363,7 @@
     },
     "Too Full" : {
       "comment" : "Feeling uncomfortably full",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {

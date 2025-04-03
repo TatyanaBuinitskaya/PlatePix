@@ -3,6 +3,7 @@
   "strings" : {
     "Almonds" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -20,6 +21,7 @@
     },
     "Apple" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -37,6 +39,7 @@
     },
     "Apple Juice" : {
       "comment" : "A drink",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -54,6 +57,7 @@
     },
     "Asparagus" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -71,6 +75,7 @@
     },
     "Avocado" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -88,6 +93,7 @@
     },
     "Banana" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -105,6 +111,7 @@
     },
     "Barley" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -122,6 +129,7 @@
     },
     "Beef" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -139,6 +147,7 @@
     },
     "Beet" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -156,6 +165,7 @@
     },
     "Bell Pepper" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -173,6 +183,7 @@
     },
     "Blueberry" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -190,6 +201,7 @@
     },
     "Bread" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -207,6 +219,7 @@
     },
     "Broccoli" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -224,6 +237,7 @@
     },
     "Butter" : {
       "comment" : "A dairy product",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -241,6 +255,7 @@
     },
     "Cabbage" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -258,6 +273,7 @@
     },
     "Cake" : {
       "comment" : "A dessert",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -275,6 +291,7 @@
     },
     "Carrot" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -292,6 +309,7 @@
     },
     "Cashews" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -309,6 +327,7 @@
     },
     "Cauliflower" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -326,6 +345,7 @@
     },
     "Celery" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -343,6 +363,7 @@
     },
     "Cereal" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -360,6 +381,7 @@
     },
     "Cheese" : {
       "comment" : "A dairy product",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -377,6 +399,7 @@
     },
     "Chicken" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -394,6 +417,7 @@
     },
     "Chips" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -411,6 +435,7 @@
     },
     "Chocolate" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -428,6 +453,7 @@
     },
     "Cod" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -445,6 +471,7 @@
     },
     "Coffee" : {
       "comment" : "A drink",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -462,6 +489,7 @@
     },
     "Cookie" : {
       "comment" : "A dessert",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -479,6 +507,7 @@
     },
     "Corn" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -496,6 +525,7 @@
     },
     "Couscous" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -513,6 +543,7 @@
     },
     "Crab" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -530,6 +561,7 @@
     },
     "Crackers" : {
       "comment" : "A snack food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -545,8 +577,26 @@
         }
       }
     },
+    "Crispbread" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crispbread"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хлебец"
+          }
+        }
+      }
+    },
     "Croissant" : {
       "comment" : "A baked good",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -564,6 +614,7 @@
     },
     "Cucumber" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -581,6 +632,7 @@
     },
     "Duck" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -598,6 +650,7 @@
     },
     "Egg" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -615,6 +668,7 @@
     },
     "Eggplant" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -632,6 +686,7 @@
     },
     "Flour" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -649,6 +704,7 @@
     },
     "Garlic" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -666,6 +722,7 @@
     },
     "Goose" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -681,8 +738,26 @@
         }
       }
     },
+    "Granola" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Granola"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Гранола"
+          }
+        }
+      }
+    },
     "Grapes" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -700,6 +775,7 @@
     },
     "Green Beans" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -717,6 +793,7 @@
     },
     "Honey" : {
       "comment" : "A sweetener",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -734,6 +811,7 @@
     },
     "Ice Cream" : {
       "comment" : "A dessert",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -751,6 +829,7 @@
     },
     "Jam" : {
       "comment" : "A spread",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -768,6 +847,7 @@
     },
     "Ketchup" : {
       "comment" : "A condiment",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -785,6 +865,7 @@
     },
     "Lamb" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -802,6 +883,7 @@
     },
     "Lettuce" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -819,6 +901,7 @@
     },
     "Mackerel" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -836,6 +919,7 @@
     },
     "Mango" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -853,6 +937,7 @@
     },
     "Mayonnaise" : {
       "comment" : "A condiment",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -870,6 +955,7 @@
     },
     "Milk" : {
       "comment" : "A drink",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -885,8 +971,26 @@
         }
       }
     },
+    "Muesli" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muesli"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мюсли"
+          }
+        }
+      }
+    },
     "Muffin" : {
       "comment" : "A baked good",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -904,6 +1008,7 @@
     },
     "Mushroom" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -921,6 +1026,7 @@
     },
     "Mustard" : {
       "comment" : "A condiment",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -938,6 +1044,7 @@
     },
     "Noodles" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -955,6 +1062,7 @@
     },
     "Oats" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -972,6 +1080,7 @@
     },
     "Onion" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -989,6 +1098,7 @@
     },
     "Orange" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1006,6 +1116,7 @@
     },
     "Orange Juice" : {
       "comment" : "A drink",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1023,6 +1134,7 @@
     },
     "Pancake" : {
       "comment" : "A baked good",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1040,6 +1152,7 @@
     },
     "Pasta" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1055,8 +1168,26 @@
         }
       }
     },
+    "Patty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patty"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Котлета"
+          }
+        }
+      }
+    },
     "Peach" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1074,6 +1205,7 @@
     },
     "Peanuts" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1091,6 +1223,7 @@
     },
     "Pear" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1108,6 +1241,7 @@
     },
     "Peas" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1125,6 +1259,7 @@
     },
     "Pickles" : {
       "comment" : "A condiment",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1142,6 +1277,7 @@
     },
     "Pineapple" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1159,6 +1295,7 @@
     },
     "Popcorn" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1176,6 +1313,7 @@
     },
     "Pork" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1193,6 +1331,7 @@
     },
     "Potato" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1210,6 +1349,7 @@
     },
     "Pumpkin" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1227,6 +1367,7 @@
     },
     "Pumpkin Seeds" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1244,6 +1385,7 @@
     },
     "Quinoa" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1261,6 +1403,7 @@
     },
     "Radish" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1278,6 +1421,7 @@
     },
     "Rice" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1295,6 +1439,7 @@
     },
     "Salmon" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1312,6 +1457,7 @@
     },
     "Shrimp" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1329,6 +1475,7 @@
     },
     "Spinach" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1346,6 +1493,7 @@
     },
     "Strawberry" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1363,6 +1511,7 @@
     },
     "Sugar" : {
       "comment" : "A sweetener",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1380,6 +1529,7 @@
     },
     "Sunflower Seeds" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1397,6 +1547,7 @@
     },
     "Tea" : {
       "comment" : "A drink",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1414,6 +1565,7 @@
     },
     "Tomato" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1431,6 +1583,7 @@
     },
     "Tortilla" : {
       "comment" : "A staple food",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1448,6 +1601,7 @@
     },
     "Tuna" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1465,6 +1619,7 @@
     },
     "Turkey" : {
       "comment" : "A protein source",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1482,6 +1637,7 @@
     },
     "Waffle" : {
       "comment" : "A baked good",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1499,6 +1655,7 @@
     },
     "Walnuts" : {
       "comment" : "A snack",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1516,6 +1673,7 @@
     },
     "Watermelon" : {
       "comment" : "A fruit",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1533,6 +1691,7 @@
     },
     "Yogurt" : {
       "comment" : "A dairy product",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1550,6 +1709,7 @@
     },
     "Zucchini" : {
       "comment" : "A vegetable",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {

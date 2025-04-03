@@ -26,8 +26,6 @@ struct TagListView: View {
     @State private var selectedTags = Set<Tag>()
     /// The set of tag groups that are currently expanded in the UI.
     @State private var expandedGroups: Set<String> = []
-    /// A flag indicating whether default month tags should be shown.
-    @AppStorage("showDedaultMonthTags") var showDedaultMonthTags: Bool = false
     /// A flag indicating whether default food tags should be shown.
     @AppStorage("showDedaultFoodTags") var showDedaultFoodTags: Bool = false
     /// A flag indicating whether default emotion tags should be shown.
@@ -50,103 +48,129 @@ struct TagListView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Form {
-                    HStack {
-                        Spacer()
-                        VStack(alignment: .center, spacing: 0) {
-                            defaultTagsToggles
-                            Text("Press and hold or swipe left on a tag to rename or delete it")
+                ScrollViewReader { proxy in
+                    List {
+                        VStack(alignment: .center) {
+                            HStack {
+                                Spacer()
+                                VStack(alignment: .center, spacing: 10) {
+                                    defaultTagsToggles
+                                }
+                                Spacer()
+                            }
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 40)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.white)
+                            )
+                            Text("Swipe left on a tag to rename or delete it")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
-                                .padding(.top)
                                 .multilineTextAlignment(.center)
+                                .padding(.top, 5)
                         }
-                        .padding(0)
-                        Spacer()
-                    }
-                    .padding(0)
-                    
-                    List {
-                            Section("Current tags") {
-                                if !plate.plateTags.isEmpty {
-                                    ForEach(plate.plateTags, id: \.self) { tag in
-                                        TagRow(selectedTags: nil, tag: tag, removeAction: { removeTagFromPlate(tag) })
-                                    }
-                                } else {
-                                    Text("No tags added yet")
-                                        .fontWeight(.light)
+                        .listRowBackground(Color.clear)
+
+                        Section("Current tags") {
+
+                            let typePriority: [String] = ["My", "Food", "Emotion", "Reaction"]
+
+                            let sortedTags = plate.plateTags.sorted { firstTag, secondTag in
+                                let firstTypePriority = typePriority.firstIndex(of: firstTag.tagType) ?? Int.max
+                                let secondTypePriority = typePriority.firstIndex(of: secondTag.tagType) ?? Int.max
+
+                                if firstTypePriority == secondTypePriority {
+                                    let firstLocalized = NSLocalizedString(
+                                        firstTag.tagName,
+                                        tableName: dataController.tableNameForTagType(firstTag.type),
+                                        comment: ""
+                                    )
+                                    let secondLocalized = NSLocalizedString(
+                                        secondTag.tagName,
+                                        tableName: dataController.tableNameForTagType(secondTag.type),
+                                        comment: ""
+                                    )
+
+                                    return firstLocalized.localizedStandardCompare(secondLocalized) == .orderedAscending
                                 }
+                                return firstTypePriority < secondTypePriority
                             }
-                            Section("Add tags") {
-                                let groupedTags = Dictionary(grouping: filteredTags) { $0.type ?? "Other" }
-//                                ForEach(groupedTags.keys.sorted(by: dataController.sortTags), id: \.self) { type in
-//                                    if dataController.availableTagTypes.contains(type) {
-//                                        Section {
-//                                            dataController.tagHeaderView(for: type, colorScheme: colorScheme)
-//                                            if dataController.shouldShowTags(for: type) {
-//                                                ForEach(groupedTags[type, default: []], id: \.id) { tag in
-//                                                    TagRow(selectedTags: selectedTags, tag: tag)
-//                                                        .contentShape(Rectangle())
-//                                                        .onTapGesture {
-//                                                            toggleSelection(for: tag)
-//                                                        }
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-                                ForEach(groupedTags.keys.sorted(by: dataController.sortTags), id: \.self) { type in
-                                    if dataController.availableTagTypes.contains(type) {
-                                        Section {
-                                           
-                                            dataController.tagHeaderView(for: type, colorScheme: colorScheme)
-                            
-                                            if dataController.shouldShowTags(for: type) || expandedGroups.contains(type) {
-                                                    ForEach(groupedTags[type, default: []], id: \.id) { tag in
-                                                        TagRow(selectedTags: selectedTags, tag: tag)
-                                                            .contentShape(Rectangle())
-                                                            .onTapGesture {
-                                                                toggleSelection(for: tag)
-                                                            }
+
+                            if !sortedTags.isEmpty {
+                                ForEach(sortedTags, id: \.self) { tag in
+                                    TagRow(selectedTags: nil, tag: tag, removeAction: { removeTagFromPlate(tag) })
+                                }
+                            } else {
+                                Text("No tags added yet")
+                                    .fontWeight(.light)
+                            }
+                        }
+                        Section("Add tags") {
+                            let groupedTags = Dictionary(grouping: filteredTags) { $0.type ?? "Other" }
+
+                            ForEach(groupedTags.keys.sorted(by: dataController.sortTags), id: \.self) { type in
+                                if dataController.availableTagTypes.contains(type) {
+                                    Section {
+                                        dataController.tagHeaderView(for: type, colorScheme: colorScheme)
+
+                                        if dataController.shouldShowTags(for: type) || expandedGroups.contains(type) {
+                                            ForEach(groupedTags[type, default: []].sorted(by: { firstTag, secondTag in
+                                                NSLocalizedString(firstTag.tagName, tableName: dataController.tableNameForTagType(firstTag.type), comment: "")
+                                                    .localizedCompare(
+                                                        NSLocalizedString(secondTag.tagName, tableName: dataController.tableNameForTagType(secondTag.type), comment: "")
+                                                    ) == .orderedAscending
+                                            }), id: \.id) { tag in
+                                                TagRow(selectedTags: selectedTags, tag: tag)
+                                                    .contentShape(Rectangle())
+                                                    .onTapGesture {
+                                                        toggleSelection(for: tag)
                                                     }
                                             }
                                         }
                                     }
                                 }
                             }
-                        
                         }
+                        Spacer(minLength: 5)
+                            .listRowBackground(Color.clear)
+                            .id("bottom")
                     }
                     .accentColor(colorManager.selectedColor.color)
                     .searchable(text: $searchQuery)
                     .onChange(of: searchQuery) {
                         if searchQuery.isEmpty {
-                                // Collapse all groups when the search query is cleared
-                                expandedGroups.removeAll()
-                            } else {
-                                // Find tags matching the search query and update the expanded groups
-                                let matchingTypes = Set(filteredTags.compactMap { $0.type })
-                                // Expand only groups that contain matching tags
-                                expandedGroups.formUnion(matchingTypes)
-                            }
+                            // Collapse all groups when the search query is cleared
+                            expandedGroups.removeAll()
+                        } else {
+                            // Find tags matching the search query and update the expanded groups
+                            let matchingTypes = Set(filteredTags.compactMap { $0.type })
+                            // Expand only groups that contain matching tags
+                            expandedGroups.formUnion(matchingTypes)
+                        }
                     }
-                    
-            
-            VStack {
-                Spacer()
-                Button("Add Selected Tags to Plate") {
-                    addSelectedTagsToPlate()
-                    dismiss()
+                    .onChange(of: searchQuery) {
+                        if !searchQuery.isEmpty {
+                            withAnimation {
+                                proxy.scrollTo("bottom", anchor: .bottom) // Scroll to the top of the list
+                            }
+                        }
+                    }
                 }
-                .foregroundStyle(!selectedTags.isEmpty ? .white : Color(uiColor: .systemBackground))
-                .padding(10)
-                .background(Capsule().fill(!selectedTags.isEmpty ? colorManager.selectedColor.color : (Color.secondary)))
-                .disabled(selectedTags.isEmpty)
-                .padding(.bottom, 20)
+                VStack {
+                    Spacer()
+                    Button("Add Selected Tags to Plate") {
+                        addSelectedTagsToPlate()
+                        dismiss()
+                    }
+                    .foregroundStyle(!selectedTags.isEmpty ? .white : Color(uiColor: .systemBackground))
+                    .padding(10)
+                    .background(Capsule().fill(!selectedTags.isEmpty ? colorManager.selectedColor.color : (Color.secondary)))
+                    .disabled(selectedTags.isEmpty)
+                    .padding(.bottom, 20)
+                }
             }
-        }
-    
-         //   .background(.gray.opacity(0.1))
             .navigationTitle("Tags")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -156,7 +180,6 @@ struct TagListView: View {
         }
     }
 
-    
     /// Toggles the selection status of a tag.
     func toggleSelection(for tag: Tag) {
         if selectedTags.contains(tag) {
@@ -180,79 +203,69 @@ struct TagListView: View {
         plate.removeFromTags(tag)
         dataController.save()
     }
-    
+
     /// A view containing toggles for default tags.
     private var defaultTagsToggles: some View {
         HStack {
-            tagToggle(
-                text: NSLocalizedString("Emotion", comment: ""),
-                label: colorScheme == .dark ? "face.smiling.inverse" : "face.smiling",
-                isOn: $showDedaultEmotionTags,
-                type: "emotion")
             tagToggle(
                 text: NSLocalizedString("Food", comment: ""),
                 label: "fork.knife.circle",
                 isOn: $showDedaultFoodTags,
                 type: "food")
             tagToggle(
-                text: NSLocalizedString("Month", comment: ""),
-                label: "30.square",
-                isOn: $showDedaultMonthTags,
-                type: "month")
+                text: NSLocalizedString("Emotion", comment: ""),
+                label: colorScheme == .dark ? "face.smiling.inverse" : "face.smiling",
+                isOn: $showDedaultEmotionTags,
+                type: "emotion")
             tagToggle(
                 text: NSLocalizedString("Reaction", comment: ""),
                 label: "heart.text.square",
                 isOn: $showDedaultReactionTags,
                 type: "reaction")
             Button {
-                        dataController.newTag()
-                } label: {
-                    VStack(spacing: 3) {
-                        Text("My")
-                            .font(.caption)
-                            .foregroundStyle(.primary)
-                        Image(systemName: "plus")
-                            .foregroundStyle(Color.white)
-                            .font(.title2)
-                            .padding(6)
-                            .background {
-                                Circle()
-                                    .fill(colorManager.selectedColor.color)
-                            }
-                       
-                    }
-                    .frame(width: 60)
+                dataController.newTag()
+            } label: {
+                VStack(spacing: 3) {
+                    Text("My")
+                        .font(.caption)
+                        .foregroundStyle(.primary)
+                    Image(systemName: "plus")
+                        .foregroundStyle(Color.white)
+                        .font(.title2)
+                        .padding(6)
+                        .background {
+                            Circle()
+                                .fill(colorManager.selectedColor.color)
+                        }
+                }
+                .frame(width: 60)
             }
-                .buttonStyle(PlainButtonStyle())
-            }
-          //  .padding(5)
-          //  .frame(maxWidth: .infinity)
-          //  .background(RoundedRectangle(cornerRadius: 10).fill(.gray.opacity(0.1)))
-          //  .padding()
+            .buttonStyle(PlainButtonStyle())
+        }
     }
 
     /// A toggle button for managing default tags.
     private func tagToggle(text: String, label: String, isOn: Binding<Bool>, type: String) -> some View {
-            Button {
-                isOn.wrappedValue.toggle()
-            } label: {
-                VStack(spacing: 3) {
-                    Text(text)
-                        .font(.caption)
-                        .foregroundStyle(isOn.wrappedValue ? .primary : Color.gray)
-                    Image(systemName: label)
-                        .foregroundStyle(isOn.wrappedValue ? Color.white : Color.gray)
-                        .font(.title2)
-                        .padding(5)
-                        .background {
-                            Circle()
-                                .fill(isOn.wrappedValue ? colorManager.selectedColor.color : .clear)
-                        }
-                        .symbolRenderingMode(.monochrome)
-                }
-                .frame(width: 60)
+        Button {
+            isOn.wrappedValue.toggle()
+        } label: {
+            VStack(spacing: 3) {
+                Text(text)
+                    .font(.caption)
+                    .foregroundStyle(isOn.wrappedValue ? .primary : Color.gray)
+                Image(systemName: label)
+                    .foregroundStyle(isOn.wrappedValue ? Color.white : Color.gray)
+                    .font(.title2)
+                    .padding(5)
+                    .background {
+                        Circle()
+                            .fill(isOn.wrappedValue ? colorManager.selectedColor.color : .clear)
+                    }
+                    .symbolRenderingMode(.monochrome)
+            }
+            .frame(width: 60)
         }
-            .buttonStyle(PlainButtonStyle())
+        .buttonStyle(PlainButtonStyle())
         .onChange(of: isOn.wrappedValue) {
             handleTagChange(for: type, isOn: isOn.wrappedValue)
         }
@@ -261,7 +274,8 @@ struct TagListView: View {
     /// Handles tag creation or deletion based on toggle state.
     private func handleTagChange(for type: String, isOn: Bool) {
         if isOn {
-            createDefaultTags(for: type)
+                deleteDefaultTags(for: type)
+                createDefaultTags(for: type)
         } else {
             deleteDefaultTags(for: type)
         }
@@ -270,8 +284,6 @@ struct TagListView: View {
     /// Creates default tags of a specific type.
     private func createDefaultTags(for type: String) {
         switch type {
-        case "month":
-            createDefaultMonthTags(context: dataController.container.viewContext)
         case "food":
             createDefaultFoodTags(context: dataController.container.viewContext)
         case "emotion":
@@ -286,8 +298,6 @@ struct TagListView: View {
     /// Deletes default tags of a specific type.
     private func deleteDefaultTags(for type: String) {
         switch type {
-        case "month":
-            deleteDefaultMonthTags(context: dataController.container.viewContext)
         case "food":
             deleteDefaultFoodTags(context: dataController.container.viewContext)
         case "emotion":
@@ -298,12 +308,12 @@ struct TagListView: View {
             break
         }
     }
-  
+
     /// Deletes default tags based on the provided tag type.
-       ///
-       /// - Parameters:
-       ///   - tagType: The tag type (e.g., "Food", "Month") of tags to be deleted.
-       ///   - context: The NSManagedObjectContext used to delete the tags.
+    ///
+    /// - Parameters:
+    ///   - tagType: The tag type (e.g., "Food", "Emotion") of tags to be deleted.
+    ///   - context: The NSManagedObjectContext used to delete the tags.
     func deleteDefaultTags(tagType: String, context: NSManagedObjectContext) {
         let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "type == %@", tagType)
@@ -319,70 +329,52 @@ struct TagListView: View {
             print("Failed to delete \(tagType) tags: \(error)")
         }
     }
-        /// Creates default food tags by calling `createDefaultTags` with the appropriate parameters.
-            ///
-            /// - Parameter context: The NSManagedObjectContext used for creating tags.
-        func createDefaultFoodTags(context: NSManagedObjectContext) {
-            createDefaultTags(tagType: "Food", tagNames: defaultFoodTags, context: context)
-        }
 
-        /// Deletes default food tags by calling `deleteDefaultTags` with the appropriate parameters.
-            ///
-            /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-        func deleteDefaultFoodTags(context: NSManagedObjectContext) {
-            deleteDefaultTags(tagType: "Food", context: context)
-        }
+    /// Creates default food tags by calling `createDefaultTags` with the appropriate parameters.
+    ///
+    /// - Parameter context: The NSManagedObjectContext used for creating tags.
+    func createDefaultFoodTags(context: NSManagedObjectContext) {
+        createDefaultTags(tagType: "Food", tagNames: defaultFoodTags, context: context)
+    }
 
-        /// Creates default month tags by calling `createDefaultTags` with the appropriate parameters.
-            ///
-            /// - Parameter context: The NSManagedObjectContext used for creating tags.
-        func createDefaultMonthTags(context: NSManagedObjectContext) {
-//            let defaultMonthTags = [
-//                "January", "February", "March", "April", "May", "June",
-//                "July", "August", "September", "October", "November", "December"
-//            ]
-                //.map { NSLocalizedString($0, tableName: "DefaultMonths", comment: "") }
-            createDefaultTags(tagType: "Month", tagNames: defaultMonthTags, context: context)
-        }
+    /// Deletes default food tags by calling `deleteDefaultTags` with the appropriate parameters.
+    ///
+    /// - Parameter context: The NSManagedObjectContext used for deleting tags.
+    func deleteDefaultFoodTags(context: NSManagedObjectContext) {
+        deleteDefaultTags(tagType: "Food", context: context)
+    }
 
-        /// Deletes default month tags by calling `deleteDefaultTags` with the appropriate parameters.
-            ///
-            /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-        func deleteDefaultMonthTags(context: NSManagedObjectContext) {
-            deleteDefaultTags(tagType: "Month", context: context)
-        }
+    /// Creates default emotion tags by calling `createDefaultTags` with the appropriate parameters.
+    ///
+    /// - Parameter context: The NSManagedObjectContext used for creating tags.
+    func createDefaultEmotionTags(context: NSManagedObjectContext) {
+        createDefaultTags(tagType: "Emotion", tagNames: defaultEmotionTags, context: context)
+    }
 
-        /// Creates default emotion tags by calling `createDefaultTags` with the appropriate parameters.
-            ///
-            /// - Parameter context: The NSManagedObjectContext used for creating tags.
-        func createDefaultEmotionTags(context: NSManagedObjectContext) {
-            createDefaultTags(tagType: "Emotion", tagNames: defaultEmotionTags, context: context)
-        }
+    /// Deletes default emotion tags by calling `deleteDefaultTags` with the appropriate parameters.
+    ///
+    /// - Parameter context: The NSManagedObjectContext used for deleting tags.
+    func deleteDefaultEmotionTags(context: NSManagedObjectContext) {
+        deleteDefaultTags(tagType: "Emotion", context: context)
+    }
 
-        /// Deletes default emotion tags by calling `deleteDefaultTags` with the appropriate parameters.
-           ///
-           /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-        func deleteDefaultEmotionTags(context: NSManagedObjectContext) {
-            deleteDefaultTags(tagType: "Emotion", context: context)
-        }
+    /// Creates default reaction tags by calling `createDefaultTags` with the appropriate parameters.
+    ///
+    /// - Parameter context: The NSManagedObjectContext used for creating tags.
+    func createDefaultReactionTags(context: NSManagedObjectContext) {
+        createDefaultTags(tagType: "Reaction", tagNames: defaultReactionTags, context: context)
+    }
 
-        /// Creates default reaction tags by calling `createDefaultTags` with the appropriate parameters.
-            ///
-            /// - Parameter context: The NSManagedObjectContext used for creating tags.
-        func createDefaultReactionTags(context: NSManagedObjectContext) {
-            createDefaultTags(tagType: "Reaction", tagNames: defaultReactionTags, context: context)
-        }
+    /// Deletes default reaction tags by calling `deleteDefaultTags` with the appropriate parameters.
+    ///
+    /// - Parameter context: The NSManagedObjectContext used for deleting tags.
+    func deleteDefaultReactionTags(context: NSManagedObjectContext) {
+        deleteDefaultTags(tagType: "Reaction", context: context)
+    }
 
-        /// Deletes default reaction tags by calling `deleteDefaultTags` with the appropriate parameters.
-            ///
-            /// - Parameter context: The NSManagedObjectContext used for deleting tags.
-        func deleteDefaultReactionTags(context: NSManagedObjectContext) {
-            deleteDefaultTags(tagType: "Reaction", context: context)
-        }
-    
     /// Adds a tag type to the list of available tag types if it isn't already present.
-       ///
-       /// - Parameter tagType: The tag type to be added.
+    ///
+    /// - Parameter tagType: The tag type to be added.
     private func addTagTypeIfNeeded(_ tagType: String) {
         if !dataController.availableTagTypes.contains(tagType) {
             dataController.availableTagTypes.append(tagType)
@@ -390,8 +382,8 @@ struct TagListView: View {
     }
 
     /// Removes a tag type from the list of available tag types if it exists.
-        ///
-        /// - Parameter tagType: The tag type to be removed.
+    ///
+    /// - Parameter tagType: The tag type to be removed.
     private func removeTagTypeIfNeeded(_ tagType: String) {
         if let index = dataController.availableTagTypes.firstIndex(of: tagType) {
             dataController.availableTagTypes.remove(at: index)
@@ -399,8 +391,8 @@ struct TagListView: View {
     }
 
     /// Saves the provided context to Core Data, handling any errors that may occur.
-        ///
-        /// - Parameter context: The NSManagedObjectContext to save.
+    ///
+    /// - Parameter context: The NSManagedObjectContext to save.
     private func saveContext(_ context: NSManagedObjectContext) {
         do {
             try context.save()
@@ -409,13 +401,12 @@ struct TagListView: View {
         }
     }
 
-
     /// Creates default tags if they don't already exist. Each tag is associated with a tag type.
-        ///
-        /// - Parameters:
-        ///   - tagType: The type of the tag to be created (e.g., "Food", "Month").
-        ///   - tagNames: A list of tag names to be created.
-        ///   - context: The NSManagedObjectContext used for saving the tag to the Core Data store.
+    ///
+    /// - Parameters:
+    ///   - tagType: The type of the tag to be created (e.g., "Food", "Emotion").
+    ///   - tagNames: A list of tag names to be created.
+    ///   - context: The NSManagedObjectContext used for saving the tag to the Core Data store.
     func createDefaultTags(tagType: String, tagNames: [String], context: NSManagedObjectContext) {
         for tagName in tagNames {
             let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
@@ -431,31 +422,6 @@ struct TagListView: View {
         }
         saveContext(context)
     }
-    
-//    func createDefaultTags(tagType: String, tagNames: [String], context: NSManagedObjectContext, tableName: String) {
-//        for tagName in tagNames {
-//            let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
-//            fetchRequest.predicate = NSPredicate(format: "name == %@", tagName)
-//
-//            // Fetch the existing tag if it exists
-//            let existingTags = (try? context.fetch(fetchRequest)) ?? []
-//
-//            // If the tag exists, update its name with localized string
-//            if let tag = existingTags.first {
-//                // Update the name with the localized version from the specified table
-//                let localizedTagName = NSLocalizedString(tagName, tableName: tableName, comment: "")
-//                tag.name = localizedTagName
-//            } else {
-//                // If the tag doesn't exist, create a new one
-//                let tag = Tag(context: context)
-//                tag.id = UUID() // Assign a new UUID for the tag
-//                tag.name = NSLocalizedString(tagName, tableName: tableName, comment: "") // Store the localized name
-//                tag.type = tagType
-//                addTagTypeIfNeeded(tagType)
-//            }
-//        }
-//        saveContext(context)
-//    }
 }
 
 /// A SwiftUI view that displays an individual tag with options to edit or delete.
@@ -466,7 +432,7 @@ struct TagRow: View {
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
     /// The tag currently being edited, if any.
-    @State private var tagToEdit: Tag?
+    @State var tagToEdit: Tag?
     /// A Boolean value indicating whether the tag is in editing mode.
     @State private var editingTag = false
     /// The name of the tag to be edited.
@@ -493,7 +459,6 @@ struct TagRow: View {
                     removeAction()
                 } label: {
                     HStack {
-                       // Text("Remove").font(.caption)
                         Image(systemName: "tag.slash")
                     }
                     .foregroundStyle(colorManager.selectedColor.color)
@@ -501,19 +466,6 @@ struct TagRow: View {
             } else if selectedTags?.contains(tag) == true {
                 // Shows a checkmark if the tag is part of the selected tags.
                 Image(systemName: "checkmark")
-            }
-        }
-        .contextMenu {
-            // Provides options to rename or delete the tag when long-pressed.
-            Button {
-                edit(tag)
-            } label: {
-                Label("Rename", systemImage: "pencil")
-            }
-            Button(role: .destructive) {
-                delete(tag)
-            } label: {
-                Label("Delete", systemImage: "trash")
             }
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
@@ -544,7 +496,7 @@ struct TagRow: View {
     }
 
     /// Initiates the editing process for the specified tag.
-        /// - Parameter tag: The tag to be edited.
+    /// - Parameter tag: The tag to be edited.
     func edit(_ tag: Tag) {
         tagToEdit = tag
         tagName = tag.tagName
@@ -553,25 +505,48 @@ struct TagRow: View {
     }
 
     /// Completes the editing process by saving the updated tag name and type.
-       /// Ensures the new tag type is added to the available types if not already present.
+    /// Ensures the new tag type is added to the available types if not already present.
     func completeEdit() {
-           tagToEdit?.name = tagName
-           tagToEdit?.type = tagType
-        if !dataController.availableTagTypes.contains(tagType) {
-            dataController.availableTagTypes.append(tagType)
-            }
-           dataController.save()
-       }
+        let mappedType = mapLocalizedTypeToDefaultType(localizedType: tagType)
+
+        tagToEdit?.name = tagName
+        tagToEdit?.type = mappedType
+        if !dataController.availableTagTypes.contains(mappedType) {
+            dataController.availableTagTypes.append(mappedType)
+        }
+        dataController.save()
+        editingTag = false
+    }
+
+    // MARK: Correct code for Localization to Different Languages!
+    /// Maps a localized tag type (e.g., Russian) to the default type.
+    /// - Parameter localizedType: The localized tag type (e.g., "Еда", "Эмоция") entered by the user.
+    /// - Returns: The default tag type (e.g., "Food", "Emotion"). Returns the original input if not recognized.
+    /// - Example:
+    ///   mapLocalizedTypeToDefaultType(localizedType: "Еда") // returns "Food"
+    func mapLocalizedTypeToDefaultType(localizedType: String) -> String {
+        switch localizedType.lowercased() {
+        case "еда", "food": // Handle different languages for 'Food'
+            return "Food"
+        case "эмоция", "emotion": // Handle different languages for 'Emotion'
+            return "Emotion"
+        case "реакция", "reaction": // Handle different languages for 'Reaction'
+            return "Reaction"
+        default:
+            return localizedType // Return original if it's not recognized
+        }
+    }
 
     /// Deletes the specified tag from the data source and saves the changes.
-        /// - Parameter tag: The tag to be deleted.
+    /// - Parameter tag: The tag to be deleted.
     func delete(_ tag: Tag) {
         dataController.delete(tag)
-        dataController.save()  
+        dataController.save()
     }
+
     /// Checks if a tag was created within the last hour.
-        /// - Parameter tag: The tag to check.
-        /// - Returns: True if the tag was created within the last hour, otherwise false.
+    /// - Parameter tag: The tag to check.
+    /// - Returns: True if the tag was created within the last hour, otherwise false.
     func isTagRecentlyCreated(tag: Tag) -> Bool {
         guard let creationDate = tag.creationDate else { return false }
         let timeInterval = Date().timeIntervalSince(creationDate)

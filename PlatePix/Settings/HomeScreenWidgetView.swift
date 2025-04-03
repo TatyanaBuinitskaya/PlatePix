@@ -11,7 +11,7 @@ import SwiftUI
 struct HomeScreenWidgetView: View {
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
-    
+
     var body: some View {
         VStack(alignment: .leading){
             Spacer()
@@ -23,16 +23,16 @@ struct HomeScreenWidgetView: View {
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .padding(.top)
-           
-            VStack{
+
+            VStack {
                 Text("HOME SCREEN")
                     .font(.title.bold())
                     .fontDesign(.rounded)
                     .frame(maxWidth: .infinity)
                     .frame(alignment: .center)
-    
+
                 // Home Screen Widget example section
-                ZStack{
+                ZStack {
                     // A rounded rectangle with a shadow to create a card effect
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color(colorManager.selectedColor.color)) // Fill with white color
@@ -52,9 +52,8 @@ struct HomeScreenWidgetView: View {
             }
             .padding(.horizontal)
             .padding()
-            
+
             // Instructions for Adding Widget
-            // TODO: Change name of app and localize properly!
             VStack(alignment: .leading, spacing: 20) {
                 Text("1. Touch and hold an empty area on the Home Screen until the apps jiggle.")
                 Text("2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for PlatePix widget.")

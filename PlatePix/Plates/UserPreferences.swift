@@ -22,9 +22,14 @@ class UserPreferences: ObservableObject {
         didSet { UserDefaults.standard.set(showTags, forKey: "showTags") }
     }
 
+    @Published var showNotes: Bool {
+        didSet { UserDefaults.standard.set(showNotes, forKey: "showNotes") }
+    }
+
     init() {
         self.showMealTime = UserDefaults.standard.bool(forKey: "showMealTime")
         self.showQuality = UserDefaults.standard.bool(forKey: "showQuality")
         self.showTags = UserDefaults.standard.bool(forKey: "showTags")
+        self.showNotes = UserDefaults.standard.bool(forKey: "showNotes")
     }
 }
