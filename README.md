@@ -1,10 +1,10 @@
-MyPlates
+PlatePix
 
  
 
 📱 Introduction
 
-MyPlates is a versatile iOS application designed to help users track, organize, and manage their dietary habits efficiently. Built using Swift 5.0, it leverages Core Data for robust data management and is optimized for devices running iOS 17.6 and later. The project focuses on user-friendly design, allowing easy navigation through meal logs, mood tracking, and reaction monitoring.
+PlatePix is a versatile iOS application designed to help users track, organize, and manage their dietary habits efficiently. Built using Swift 5.0, it leverages Core Data for robust data management and is optimized for devices running iOS 17.6 and later. The project focuses on user-friendly design, allowing easy navigation through meal logs, mood tracking, and reaction monitoring.
 
 ⚙️ Prerequisites
 
@@ -14,23 +14,11 @@ Xcode 15.0 or later
 
 iOS 17.6 SDK
 
-SwiftLint (for code linting)
-
-Install via Homebrew: brew install swiftlint
-
-Third-Party Frameworks:
-
-SwiftLint: Ensures code style consistency.
-
 🗂️ Architecture & Design Choices
 
 Core Data is utilized for efficient local data storage and management.
 
-MVVM Architecture promotes separation of concerns, enhancing maintainability.
-
 SwiftUI is used for declarative UI design, improving code readability and UI responsiveness.
-
-Accessibility features are integrated, ensuring the app is usable for a broader audience.
 
 🧪 Testing
 
@@ -74,9 +62,9 @@ By contributing to this project, you agree that your contributions become the pr
 
  Proprietary License
 
-Copyright (c) 2024 [Your Name]
+Copyright (c) 2024 Tatyana Buinitskaya
 
-This source code is the intellectual property of [Your Name]. It is provided for educational and review purposes only.
+This source code is the intellectual property of Tatyana Buinitskaya. It is provided for educational and review purposes only.
 
 You are NOT permitted to:
 
@@ -95,4 +83,4 @@ Swift Community for continuous learning resources
 Special thanks to contributors and testers who helped improve this app.
 
 
-Thank you for checking out MyPlates! Feel free to contribute, suggest improvements, or report issues.
+Thank you for checking out PlatePix! Feel free to contribute, suggest improvements, or report issues.
