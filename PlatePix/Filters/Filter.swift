@@ -12,24 +12,24 @@ import Foundation
 struct Filter: Identifiable, Hashable {
     /// The unique identifier for each filter, used to distinguish between different filters.
     var id: UUID
-    /// The name of the filter (e.g., "Healthy", "Lunch"), helping users understand the category or type of filter applied.
+    /// The name of the filter (e.g., "Healthy", "Lunch"), helping users understand  type of filter applied.
     var name: String
     /// The icon associated with the filter, providing a visual cue about the filter's category.
     var icon: String
     /// An optional tag associated with the filter, used for further categorization or grouping of filters.
     var tag: Tag?
     /// The quality score of the filter, where -
-    /// 1 indicates no specific quality (default), 0 represents "Unhealthy", 1 represents "Moderate", and 2 represents "Healthy".
+    /// 1 indicates no specific quality (default), 0 -"Unhealthy", 1 - "Moderate", and 2 - "Healthy".
     var quality = -1
     /// The selected date for the filter, if any, used to filter plates based on a specific date.
     var selectedDate: Date?
-    /// The mealtime associated with the filter (e.g., "Breakfast", "Lunch"), helping to categorize plates based on the time of day.
+    /// The mealtime associated with the filter (e.g., "Breakfast", "Lunch").
     var mealtime: String?
     /// A default filter representing all plates with no specific criteria, used when no filters are applied.
     static var all = Filter(id: UUID(), name: "All plates", icon: "calendar")
     /// A filter representing healthy plates (quality = 2), used when only healthy plates should be displayed.
     static let healthy = Filter(id: UUID(), name: "Healthy", icon: "HappyPDF", quality: 2)
-    /// A filter representing moderately healthy plates (quality = 1), used when moderately healthy plates should be displayed.
+    /// A filter representing moderate plates (quality = 1), used when moderate plates should be displayed.
     static let moderate = Filter(id: UUID(), name: "Moderate", icon: "NeutralPDF", quality: 1)
     /// A filter representing unhealthy plates (quality = 0), used when only unhealthy plates should be displayed.
     static let unhealthy = Filter(id: UUID(), name: "Unhealthy", icon: "SadPDF", quality: 0)

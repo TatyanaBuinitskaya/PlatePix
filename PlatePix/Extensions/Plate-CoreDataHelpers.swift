@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-/// An extension to the `Plate` model that provides computed properties for easier access and management of plate-related data.
+/// An extension to the `Plate` model that provides computed properties for management of plate-related data.
 extension Plate {
     /// The photo path associated with the plate. Returns an empty string if no photo is available.
     var platePhoto: String {
@@ -57,7 +57,7 @@ extension Plate {
     }
 }
 
-/// Extends the `Plate` model to conform to the `Comparable` protocol, allowing plates to be compared based on their creation dates.
+/// Allows plates to be compared based on their creation dates.
 extension Plate: Comparable {
     /// Compares two `Plate` instances based on their creation dates.
     ///

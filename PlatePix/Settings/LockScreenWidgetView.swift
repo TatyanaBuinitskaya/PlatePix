@@ -33,7 +33,7 @@ struct LockScreenWidgetView: View {
             // Lock Screen Widget example section
             HStack {
                 Spacer()
-                VStack(spacing:0) {
+                VStack(spacing: 0) {
                     // Display current date
                     let currentDate = getCurrentDate()
                     Text(currentDate)
@@ -80,7 +80,8 @@ struct LockScreenWidgetView: View {
             // Instructions for Adding Widget
             VStack(alignment: .leading, spacing: 20) {
                 Text("1. Touch and hold anywhere on your lock screen, tap Customize and choose Lock Screen.")
-                Text("2. Long press the widget area under the time to view available widgets, scroll to PlatePix Widget and choose it.")
+                // swiftlint:disable:next line_length
+                Text("2. Tap and hold the widgets area, then find the PlatePix widget from the suggested list.")
                 Text("3. Tap or drag to add widget, then close the window and press Done.")
             }
             .font(.callout)

@@ -37,16 +37,16 @@ struct JPEGShareOneDayView: View {
     @State private var alertMessage = ""
 
     var body: some View {
-        VStack(spacing: 2) {
-            let plates = dataController.platesForSelectedFilter()
-            let gridItems = generateGridItems(for: plates.count)
-            let rowCount = calculateRowCount(for: plates.count, columns: gridItems.count)
+            VStack(spacing: 2) {
+                let plates = dataController.platesForSelectedFilter()
+                let gridItems = generateGridItems(for: plates.count)
 
-            Spacer()
-            header
-                .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad  && rowCount == 4 ? 40 : 10)
-                .padding(.top, 5)
-            VStack {
+                Spacer()
+
+                header
+                    .padding(.horizontal, 10)
+                    .padding(.top, 5)
+
                 LazyVGrid(columns: gridItems, spacing: 2) {
                     ForEach(plates) { plate in
                         NavigationLink(value: plate) {
@@ -54,18 +54,24 @@ struct JPEGShareOneDayView: View {
                         }
                     }
                 }
-                .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad  && rowCount == 4 ? 40 : 10) 
+                .padding(.horizontal, 10)
+                .padding(.vertical, 10)
+
+                Spacer()
             }
-            Spacer()
+            .frame(
+                maxWidth: 350
+            )
+            .alert(isPresented: $showAlertSaved) {
+                Alert(
+                    title: Text("Save Status"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK")) {
+                        dismiss()
+                    }
+                )
+            }
         }
-        .frame(
-            maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 550 : 400, // Increase width for iPad
-            maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 900 : 750  // Increase height for iPad
-        )
-        .alert(isPresented: $showAlertSaved) {
-            Alert(title: Text("Save Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-        }
-    }
 
     /// A header view displaying the dynamic title and a GPEG saving button
     private var header: some View {
@@ -101,11 +107,10 @@ struct JPEGShareOneDayView: View {
     /// - Returns: An array of `GridItem` for the grid layout.
     private func generateGridItems(for itemCount: Int) -> [GridItem] {
         let columnCount: Int
-        switch itemCount {
-        case 1...8:
+        if (1...8).contains(itemCount) {
             columnCount = 2
-        default:
-            columnCount = maxColumns
+        } else {
+            columnCount = maxColumns // maxColumns = 3
         }
         return Array(repeating: GridItem(.flexible(), spacing: 2), count: columnCount)
     }

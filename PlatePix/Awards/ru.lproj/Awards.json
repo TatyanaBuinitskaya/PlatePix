@@ -1,5 +1,6 @@
 [
     {
+        "id": "Beginner",
         "name": "Новичок",
         "description": "Добавь 10 тарелок",
         "color": "WatermelonPink",
@@ -7,6 +8,7 @@
         "value": 10
     },
     {
+        "id": "Master",
         "name": "Мастер",
         "description": "Добавь 25 тарелок",
         "color": "OrangeFruit",
@@ -14,6 +16,7 @@
         "value": 25
     },
     {
+        "id": "Professional",
         "name": "Проффессионал",
         "description": "Добавь 50 тарелок",
         "color": "SunnyYellow",
@@ -21,6 +24,7 @@
         "value": 50
     },
     {
+        "id": "Expert",
         "name": "Эксперт",
         "description": "Добавь 100 тарелок",
         "color": "AppleGreen",
@@ -28,6 +32,7 @@
         "value": 100
     },
     {
+        "id": "Guru",
         "name": "Гуру",
         "description": "Добавь 250 тарелок",
         "color": "CoolMint",
@@ -35,6 +40,7 @@
         "value": 250
     },
     {
+        "id": "Maestro",
         "name": "Маэстро",
         "description": "Добавь 500 тарелок",
         "color": "BlueSky",
@@ -42,6 +48,7 @@
         "value": 500
     },
     {
+        "id": "Collector",
         "name": "Коллекционер",
         "description": "Добавь 1000 тарелок",
         "color": "AppleBlue",
@@ -49,6 +56,7 @@
         "value": 1000
     },
     {
+        "id": "Champion",
         "name": "Чемпион",
         "description": "Добавь 5000 тарелок",
         "color": "LavenderRaf",
@@ -56,6 +64,7 @@
         "value": 5000
     },
     {
+        "id": "Legend",
         "name": "Легенда",
         "description": "Добавь 10000 тарелок",
         "color": "GirlsPink",

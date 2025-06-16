@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// An extension to the `Tag` model that provides computed properties for easier access and management of tag-related data.
+/// An extension to the `Tag` model that provides computed properties for easier management of tag-related data.
 extension Tag {
     /// The unique identifier for the tag. Generates a new UUID if not set to ensure uniqueness.
     var tagID: UUID {
@@ -17,7 +17,7 @@ extension Tag {
     var tagName: String {
         name ?? ""
     }
-    /// The type of the tag, indicating whether it is user-defined or system-generated. Defaults to "User" if not specified.
+    /// The type of the tag, indicating whether it is user-defined or system-generated. 
     var tagType: String {
         type ?? "My"
     }
@@ -43,7 +43,7 @@ extension Tag {
        }
 }
 
-/// Extends the `Tag` model to conform to the `Comparable` protocol, allowing tags to be compared based on their names and IDs.
+/// Allows tags to be compared based on their names and IDs.
 extension Tag: Comparable {
     /// Compares two `Tag` instances based on their names in a case-insensitive manner.
     ///

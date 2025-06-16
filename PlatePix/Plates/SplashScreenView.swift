@@ -14,29 +14,18 @@ struct SplashScreenView: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
     /// The shared instance of user preferences, used to store UI settings persistently.
-    @StateObject var userPreferences = UserPreferences.shared  // Create the shared instance
-    /// A state variable that determines when to transition from the splash screen.
-    @State private var isActive = false
+    @EnvironmentObject var userPreferences: UserPreferences
+    /// The color manager that keeps track of the selected theme color and updates the UI accordingly.
+    @EnvironmentObject var colorManager: AppColorManager
     /// A state variable that tracks whether a plate is opened via Spotlight search.
     /// When this is `true`, the UI updates to show the selected plate.
     @State private var openSpotlightPlate = false  // Track Spotlight navigation
     /// Controls the animation state.
     @State var animationState = false
+    /// A binding that determines whether the main application interface should be shown.
+    @Binding var showMainApp: Bool
 
     var body: some View {
-        if isActive {
-            /// The main content view where the primary list of plates is displayed.
-            ContentView() // Your main app view
-                .navigationBarHidden(false)
-                .environmentObject(userPreferences)  // Pass it down as EnvironmentObject
-            // Detect changes to `openSpotlightPlate` and reset after handling.
-                .onChange(of: openSpotlightPlate) {
-                    if openSpotlightPlate {
-                        openSpotlightPlate = false
-                    }
-                }
-                .onContinueUserActivity(CSSearchableItemActionType, perform: loadSpotlightItem)
-        } else {
             ZStack {
                 LinearGradient(colors: [Color("LavenderRaf"), Color("GirlsPink")], startPoint: .bottom, endPoint: .top)
                     .ignoresSafeArea()
@@ -68,17 +57,17 @@ struct SplashScreenView: View {
                 .onAppear {
                     animationState = true
                 }
-            }
             .navigationBarTitle("", displayMode: .inline) // Hide title
             .navigationBarHidden(true) // Hide navigation bar completely
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    withAnimation {
-                        isActive = true
+                        animationState = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                showMainApp = true
+                            }
+                        }
                     }
                 }
-            }
-        }
     }
 
     /// Handles Spotlight search selection.
@@ -96,16 +85,22 @@ struct SplashScreenView: View {
     }
 }
 
+struct SplashScreenPreviewWrapper: View {
+    @State private var showMainApp = false
+
+    var body: some View {
+        SplashScreenView(showMainApp: $showMainApp)
+            .environmentObject(DataController.preview)
+            .environmentObject(AppColorManager())
+    }
+}
+
 #Preview("English") {
-    SplashScreenView()
-        .environmentObject(DataController.preview)
-        .environmentObject(AppColorManager())
-        .environment(\.locale, Locale(identifier: "EN"))
+    SplashScreenPreviewWrapper()
+        .environment(\.locale, .init(identifier: "en"))
 }
 
 #Preview("Russian") {
-    SplashScreenView()
-        .environmentObject(DataController.preview)
-        .environmentObject(AppColorManager())
-        .environment(\.locale, Locale(identifier: "RU"))
+    SplashScreenPreviewWrapper()
+        .environment(\.locale, .init(identifier: "ru"))
 }

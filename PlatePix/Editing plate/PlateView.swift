@@ -10,7 +10,7 @@ import SwiftUI
 import CloudKit
 import Combine
 
-/// A view that displays detailed information about a specific plate, including images, meal time, quality, tags and notes.
+/// A view that displays detailed information about a specific plate.
 struct PlateView: View {
     /// The data controller responsible for managing Core Data and related operations.
     @EnvironmentObject var dataController: DataController
@@ -30,8 +30,6 @@ struct PlateView: View {
     @State private var isCameraPresented = false
     /// A Boolean value indicating if iCloud is unavailable.
     @State private var showICloudUnavailableAlert = false
-    /// A Boolean value tracking whether the plate has been deleted.
-    @State private var isPlateDeleted = false
     /// A Boolean value that tracks whether the tag selection view is presented.
     @State private var showTagList = false
     /// A flag indicating whether the congratulations screen should be shown.
@@ -39,10 +37,6 @@ struct PlateView: View {
 
     var body: some View {
         VStack {
-            if isPlateDeleted {
-                Text("This plate has been deleted")
-                    .foregroundStyle(.red)
-            } else {
                 ZStack {
                         VStack {
                             HStack {
@@ -68,21 +62,30 @@ struct PlateView: View {
                         }
                     cameraAndLibraryButtonsView
                 }
-            }
         }
         .padding(.vertical)
         .navigationTitle(NSLocalizedString("Plate", comment: "") + " - " + plate.plateTitle)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            if dataController.checkAwards() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                if let newAward = dataController.checkForNewAward() {
+                    print("New award earned: \(newAward.name)")
+                    showCongratulations = true
+                }
+            }
+        }
+        .onChange(of: dataController.plateCount) {
+            // Check for a new award
+            if let newAward = dataController.checkForNewAward() {
+                print("New award earned: \(newAward.name)")
                 showCongratulations = true
             }
         }
-        .onChange(of: plate) {
-            isPlateDeleted = false
-        }
         .onReceive(plate.objectWillChange) { _ in
             dataController.queueSave()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)) { _ in
+            NSUbiquitousKeyValueStore.default.synchronize()
         }
         .onSubmit(dataController.save)
         .sheet(isPresented: $isCameraPresented) {
@@ -94,24 +97,26 @@ struct PlateView: View {
             AwardSheetView()
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss() // Dismiss the current view
-                } label: {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .fontWeight(.bold)
-                        Text("Plates") // Back button label
-                    }
-                }
-                .accessibilityIdentifier("Plates") // Add accessibility identifier
-            }
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button {
+//                    dataController.selectedPlate = nil
+//                   // dismiss() // Dismiss the current view
+//                } label: {
+//                    HStack {
+//                        Image(systemName: "chevron.left")
+//                            .fontWeight(.bold)
+//                        Text("Plates") // Back button label
+//                    }
+//                }
+//                .accessibilityIdentifier("Plates") // Add accessibility identifier
+//            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 plateToolbar // Existing delete button
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    dismiss() // Dismiss the current view
+                    dataController.selectedPlate = nil
+                 //   dismiss() // Dismiss the current view
                 } label: {
                     HStack {
                         Text("Done") // Back button label
@@ -120,7 +125,7 @@ struct PlateView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true) // Hide the default back button
+      //  .navigationBarBackButtonHidden(true) // Hide the default back button
     }
 
     /// Displays the mealtime selection view for the plate.
@@ -217,7 +222,10 @@ struct PlateView: View {
                             comment: ""
                         )
                     }
-                    .joined(separator: ", ") ?? NSLocalizedString("No Tags", comment: "Fallback text when no tags are assigned")
+                    .joined(separator: ", ") ?? NSLocalizedString(
+                        "No Tags",
+                        comment: "Fallback text when no tags are assigned"
+                    )
             )
             .fontWeight(.light)
             .padding(.top, 5)
@@ -243,7 +251,7 @@ struct PlateView: View {
                 .foregroundStyle(.secondary)
             TextField(plate.plateCreationDate.formatted(date: .abbreviated, time: .omitted), text: $plate.plateNotes, axis: .vertical)
                 .padding(8)
-                .frame(maxWidth: .infinity, minHeight: 80, maxHeight: 120, alignment: .top) // Scales for larger devices
+                .frame(maxWidth: .infinity, minHeight: 80, maxHeight: 120, alignment: .top)
                 .background(Color(uiColor: .systemBackground))
                 .cornerRadius(8)
                 .overlay(
@@ -305,8 +313,7 @@ struct PlateView: View {
     private var plateToolbar: some View {
         Button {
             dataController.delete(plate)
-            isPlateDeleted = true
-            dismiss()
+            dataController.selectedPlate = nil
         } label: {
             Image(systemName: "trash")
                 .foregroundStyle(.red)

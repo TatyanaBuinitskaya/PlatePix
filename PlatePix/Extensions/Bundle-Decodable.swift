@@ -47,7 +47,6 @@ extension Bundle {
             // Attempts to decode the data into the specified type `T`.
             return try decoder.decode(T.self, from: data)
         } catch DecodingError.keyNotFound(let key, let context) {
-            // swiftlint:disable:next line_length
             // Handles missing keys in the JSON structure, providing clear error feedback.
             fatalError("Failed to decode \(file): missing key '\(key.stringValue)' not found – \(context.debugDescription)")
         } catch DecodingError.typeMismatch(_, let context) {

@@ -11,7 +11,6 @@ import SwiftUI
 struct DetailView: View {
     /// The environment object that provides data for the selected plate.
     @EnvironmentObject var dataController: DataController
-
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
 
@@ -20,12 +19,12 @@ struct DetailView: View {
             // Displays the PlateView if a plate is selected, otherwise shows the NoPlateIView.
             // The conditional ensures that the UI adapts based on whether a plate is selected.
             if let selectedPlate = dataController.selectedPlate {
-                PlateView(plate: selectedPlate) 
+                PlateView(plate: selectedPlate)
             } else {
                 NoPlateIView()
             }
         }
-        .navigationTitle("Details")
+        .navigationTitle("Plate Details")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -17,26 +17,26 @@ struct PlateBox: View {
     @State var imagePlateView: UIImage?
     /// A flag to control whether the overlay (PlateInfoOverlay) is shown or not.
     @State var showOverlay: Bool = true
-
-    var body: some View {
-        VStack(spacing: 3) {
-            PlateImageView(
-                plate: plate,
-                imagePlateView: $imagePlateView,
-                maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 300 : 200,
-                maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 300 : 200
-            )
-            .overlay(
-                // Conditionally show the PlateInfoOverlay based on the showOverlay flag.
-                showOverlay ? PlateInfoOverlay(plate: plate) : nil
-            )
-            .frame(
-                maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 300 : 200,
-                maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 300 : 200
-            )
+    
+        var body: some View {
+            VStack(spacing: 3) {
+                PlateImageView(
+                    plate: plate,
+                    imagePlateView: $imagePlateView,
+                    maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 200 : 200,
+                    maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 200 : 200
+                )
+                .overlay(
+                    // Conditionally show the PlateInfoOverlay based on the showOverlay flag.
+                    showOverlay ? PlateInfoOverlay(plate: plate) : nil
+                )
+                .frame(
+                    maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 200 : 200,
+                    maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 200 : 200
+                )
+            }
+            .accessibilityIdentifier(plate.plateTitle)
         }
-        .accessibilityIdentifier(plate.plateTitle)
-    }
 }
 
 /// A view that overlays meal-related information on a plate.
@@ -80,7 +80,8 @@ struct PlateInfoOverlay: View {
             }
             .frame(maxHeight: 40)
             .background(
-                userPreferences.showTags || userPreferences.showNotes ? Color.black.opacity(0.5) : Color.white.opacity(0.0))
+                userPreferences.showTags || userPreferences.showNotes ?
+                Color.black.opacity(0.5) : Color.white.opacity(0.0))
         }
     }
 
@@ -93,15 +94,6 @@ struct PlateInfoOverlay: View {
                     .foregroundStyle(.white)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
-
-                // Display the plate's creation date in a shortened time format.
-                if plate.plateCreationDate.formatted(date: .omitted, time: .shortened) != "00:00" {
-                    Text(plate.plateCreationDate.formatted(date: .omitted, time: .shortened))
-                        .font(.footnote)
-                        .foregroundStyle(.white)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.6)
-                }
             }
         }
 
@@ -150,7 +142,10 @@ struct PlateInfoOverlay: View {
                         comment: ""
                     )
                 }
-                .joined(separator: ", ") ?? NSLocalizedString("No Tags", comment: "Fallback text when no tags are assigned")
+                .joined(separator: ", ") ?? NSLocalizedString(
+                    "No Tags",
+                    comment: "Fallback text when no tags are assigned"
+                )
         )
         .font(.footnote)
         .minimumScaleFactor(0.4)

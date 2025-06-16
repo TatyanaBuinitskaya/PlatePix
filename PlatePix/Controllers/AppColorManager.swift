@@ -48,36 +48,55 @@ enum AppColor: String, CaseIterable {
     }
 }
 
-/// Manages the selected color for the app, making it observable by SwiftUI views.
-/// This allows dynamic color updates across the app.
+/// A manager that handles the app’s selected color theme, synchronizing across devices using iCloud
+/// and persisting locally using UserDefaults with App Group support.
 class AppColorManager: ObservableObject {
-    /// The currently selected color.
-    /// Updating this property triggers UI updates and saves the selection to UserDefaults.
+    /// The currently selected color. Updating this triggers saving to iCloud and UserDefaults.
     @Published var selectedColor: AppColor = .lavenderRaf {
         didSet {
-            saveColor() // Save the new selection when it changes.
+            saveColor()
         }
     }
-
-    /// Initializes the color manager and loads the saved color.
+    /// Reference to iCloud key-value store.
+    private let iCloud = NSUbiquitousKeyValueStore.default
+    /// Shared UserDefaults for the app and extensions (e.g., widgets).
+    private let userDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")
+    /// Initializes the color manager by loading the saved color and observing iCloud updates.
     init() {
         loadColor()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(iCloudUpdated),
+            name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: iCloud
+        )
+
+        iCloud.synchronize()
     }
 
-    /// Saves the selected color to UserDefaults using App Groups.
-        /// This allows the color to be shared with widgets and other app extensions.
+    /// Saves the selected color to both iCloud and shared UserDefaults.
     func saveColor() {
-        if let groupDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix") {
-            groupDefaults.set(selectedColor.rawValue, forKey: "selectedColor")
+        iCloud.set(selectedColor.rawValue, forKey: "selectedColor")
+        userDefaults?.set(selectedColor.rawValue, forKey: "selectedColor")
+        iCloud.synchronize()
+    }
+
+    /// Loads the selected color from iCloud, falling back to UserDefaults if needed.
+    func loadColor() {
+        let iCloudValue = iCloud.string(forKey: "selectedColor")
+        let localValue = userDefaults?.string(forKey: "selectedColor")
+
+        if let rawValue = iCloudValue ?? localValue,
+           let color = AppColor(rawValue: rawValue) {
+            selectedColor = color
         }
     }
 
-    /// Loads the previously selected color from UserDefaults.
-    func loadColor() {
-        if let groupDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix"),
-           let rawValue = groupDefaults.string(forKey: "selectedColor"),
-           let color = AppColor(rawValue: rawValue) {
-            selectedColor = color
+    /// Responds to changes in iCloud data by reloading the selected color.
+    @objc private func iCloudUpdated(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.loadColor()
         }
     }
 }

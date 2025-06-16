@@ -13,9 +13,6 @@ import WidgetKit
 struct ContentView: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
-    /// An environment property that provides access to the system's request review action.
-    /// This allows the app to prompt the user for a review at an appropriate time.
-    @Environment(\.requestReview) var requestReview
     /// An environment object that stores user preferences.
     /// This enables the app to access and modify user settings across different views.
     @EnvironmentObject var userPreferences: UserPreferences // Get it from the environment
@@ -26,23 +23,15 @@ struct ContentView: View {
     // spotlight
     /// A state variable that tracks whether a selected plate should be displayed in `PlateView`.
     @State private var isShowingPlate = false
-    /// A state variable that determines whether the store view should be shown.
-    @State private var showingStore = false
     /// A boolean that tracks whether the PDF sheet is shown.
     @State private var showPDFSheet = false
     /// The date when the last filter was applied.
     @State private var lastFilteredDate: Date = UserDefaults.standard.object(forKey: "lastFilteredDate") as? Date ?? Date.distantPast
-
     /// The layout of the grid used for displaying plates. It contains two flexible columns.
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 2),
         GridItem(.flexible(), spacing: 2)
     ]
-    /// A computed property that checks if the user has created at least x plates.
-    /// If the count of plates reaches x or more, the app may prompt the user for a review.
-    var shouldRequestReview: Bool {
-        dataController.count(for: Plate.fetchRequest()) >= 10
-    }
 
     var body: some View {
         NavigationStack {
@@ -59,7 +48,7 @@ struct ContentView: View {
             // Set the title of the navigation bar to be dynamic based on the selected title in the dataController.
             //   .navigationTitle(LocalizedStringKey(dataController.dynamicTitle))
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("")
+            .navigationTitle("Plates")
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text(LocalizedStringKey(dataController.dynamicTitle))
@@ -73,11 +62,18 @@ struct ContentView: View {
             // Sets the navigation destination for Plate objects.
             .navigationDestination(for: Plate.self) { plate in
                 PlateView(plate: plate) // Navigates to the PlateView when a plate is selected.
+                    .environmentObject(colorManager)
+                    .environmentObject(dataController)
             }
             // Navigates to a new plate view when a new plate is created.
             .navigationDestination(isPresented: $dataController.isNewPlateCreated) {
                 if let newPlate = dataController.selectedPlate {
                     PlateView(plate: newPlate)
+                        .environmentObject(colorManager)
+                        .environmentObject(dataController)
+                } else {
+                    ContentView()
+                        .environmentObject(userPreferences)
                 }
             }
             // spotlight
@@ -85,6 +81,11 @@ struct ContentView: View {
             .navigationDestination(isPresented: $isShowingPlate) {
                 if let selectedPlate = dataController.selectedPlate {
                     PlateView(plate: selectedPlate)
+                        .environmentObject(colorManager)
+                        .environmentObject(dataController)
+                } else {
+                    ContentView()
+                        .environmentObject(userPreferences)
                 }
             }
             // spotlight
@@ -92,6 +93,8 @@ struct ContentView: View {
             .onChange(of: dataController.selectedPlate) {
                 if dataController.selectedPlate != nil {
                     isShowingPlate = true
+                } else {
+                    isShowingPlate = false
                 }
             }
             // Applies the selected date filter when the date changes.
@@ -112,19 +115,12 @@ struct ContentView: View {
         }
     }
 
-    /// Checks if the review request criteria are met and triggers the review prompt.
-    func askForReview() {
-        if shouldRequestReview {
-            requestReview()
-        }
-    }
-
     /// Handles URL opening logic, specifically checking for "newPlate" in the URL.
     /// If found, it triggers the creation of a new plate.
     /// - Parameter url: The URL to be processed.
     func openURL(_ url: URL) {
         if url.absoluteString.contains("newPlate") {
-            tryNewPlate()
+            dataController.tryNewPlate()
         }
     }
 }
@@ -165,31 +161,81 @@ extension ContentView {
 
     /// A view displaying the grid of plates with search functionality.
     private var plateGrid: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 2) {
-                // Iterate over the plates returned by the selected filter and display them.
-                ForEach(dataController.platesForSelectedFilter()) { plate in
-                    NavigationLink(value: plate) {
-                        PlateBox(plate: plate) // Displays each plate in a PlateBox view.
-                            .accessibilityIdentifier("plateView")
-                            .onTapGesture {
-                                if dataController.selectedPlate == plate {
-                                       dataController.selectedPlate = nil // Reset selection
-                                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                           dataController.selectedPlate = plate // Re-select after a slight delay
-                                       }
-                                   } else {
-                                       dataController.selectedPlate = plate
-                                   }
-                            }
+        let filteredPlates = dataController.platesForSelectedFilter()
+        let filterName = dataController.selectedFilter?.name ?? "selected filter"
+        let filter = NSLocalizedString(filterName, comment: "")
+        let date = dataController.selectedDate?.formatted(date: .abbreviated, time: .omitted) ?? ""
+        let tag = dataController.selectedFilter?.tag
+        return Group {
+            if filteredPlates.isEmpty {
+                VStack {
+                    Spacer()
+                    if filterName == "Selected Date" {
+                                Text("No plates on \(date)")
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                    } else if filterName == "All plates" {
+                        Text("You don't have any plates yet")
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                    } else if let tag = tag {
+                        let tagTitle = NSLocalizedString(tag.tagName, tableName: dataController.tableNameForTagType(tag.type), comment: "")
+                        if let selectedDate = dataController.selectedDate {
+                            Text("No plates match the \(tagTitle) filter on \(date)")
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        } else {
+                            Text("No plates match the \(tagTitle) filter \(date)")
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }
+                    } else {
+                        if let selectedDate = dataController.selectedDate {
+                            Text("No plates match the \(filter) filter on \(date)")
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        } else {
+                            Text("No plates match the \(filter) filter \(date)")
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }
                     }
+                    Spacer()
+                }
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 2) {
+                        // Iterate over the plates returned by the selected filter and display them.
+                        ForEach(filteredPlates) { plate in
+                            NavigationLink(value: plate) {
+                                PlateBox(plate: plate) // Displays each plate in a PlateBox view.
+                                    .accessibilityIdentifier("plateView")
+                                    .onTapGesture {
+                                        if dataController.selectedPlate == plate {
+                                            dataController.selectedPlate = nil // Reset selection
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                                dataController.selectedPlate = plate // Re-select after a slight delay
+                                            }
+                                        } else {
+                                            dataController.selectedPlate = plate
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                    // Adds search functionality to filter plates by text.
+                    .searchable(
+                        text: $dataController.filterText,
+                        prompt: "Search in Notes"
+                    )
                 }
             }
-            // Adds search functionality to filter plates by text.
-            .searchable(
-                text: $dataController.filterText,
-                prompt: "Search in Notes"
-            )
         }
     }
 
@@ -202,9 +248,14 @@ extension ContentView {
                 Spacer()
                 plateInfoToggles // Displays the plate info toggles.
                 Spacer()
-                addPlateButton // Displays the button to add a new plate.
+             //   addPlateButton // Displays the button to add a new plate.
+                AddPlateButtonView(showingStore: $dataController.showingStore)
+                        .environmentObject(dataController)
+                        .environmentObject(colorManager)
                     .accessibilityIdentifier("New Plate")
+                    .sheet(isPresented: $dataController.showingStore, content: StoreView.init)
             }
+            
         }
         .padding()
     }
@@ -283,42 +334,6 @@ extension ContentView {
         }
     }
 
-    /// A button that triggers the creation of a new plate.
-    private var addPlateButton: some View {
-        Button {
-            tryNewPlate()
-            dataController.isNewPlateCreated = true // Marks that a new plate has been created.
-            counter += 1
-            print("Counter updated: \(counter)")
-
-            if counter == 20 || counter.isMultiple(of: 300) {
-                print("Requesting review")
-
-                requestReview()
-            }
-        } label: {
-            Image(systemName: "plus")
-                .font(.title)
-                .foregroundStyle(.white)
-                .padding(10)
-                .background(Circle().fill(Color(colorManager.selectedColor.color)))
-                .padding(2)
-                .background(Circle().fill(.ultraThickMaterial))
-        }
-        .sheet(isPresented: $showingStore, content: StoreView.init)
-    }
-
-    /// Attempts to create a new plate.
-    /// - If the user has access to adding new plates, it proceeds normally.
-    /// - If the user has reached a limit (e.g., in the free version), it triggers the store view to prompt an upgrade.
-    func tryNewPlate() {
-        // Calls `newPlate()` from `dataController`, which returns `false` if the user cannot add more plates.
-        if dataController.newPlate() == false {
-            // If the user is restricted from adding more plates, show the store to encourage upgrading.
-            showingStore = true
-        }
-    }
-
     /// Applies the date filter to the current data.
     private func applyDateFilter() {
         if let date = dataController.selectedDate {
@@ -379,7 +394,9 @@ extension ContentView {
 struct ContentViewToolBar: View {
     /// The shared `DataController` object that manages the data.
     @EnvironmentObject var dataController: DataController
-    @State private var isNewPlateCreated = false
+    /// An environment variable that manages the app's selected color.
+    @EnvironmentObject var colorManager: AppColorManager
+  //  @State private var isNewPlateCreated = false
     /// A boolean that tracks whether the settings screen is being navigated to.
     @State private var isNavigatingToSettings = false
 
@@ -393,6 +410,8 @@ struct ContentViewToolBar: View {
         // Navigate to the settings view when 'isNavigatingToSettings' is true.
         .navigationDestination(isPresented: $isNavigatingToSettings) {
             SettingsView() // Navigate to the settings view.
+                .environmentObject(dataController)
+                .environmentObject(colorManager)
         }
     }
 }

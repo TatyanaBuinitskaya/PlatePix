@@ -34,7 +34,7 @@ extension SideBarView {
             tags.map { tag in
                 Filter(
                     id: tag.tagID,
-                    name: NSLocalizedString(tag.tagName, tableName: dataController.tableNameForTagType(tag.type), comment: ""),
+                    name: tag.tagName,
                     icon: "tag",
                     tag: tag)
             }
@@ -102,13 +102,31 @@ extension SideBarView {
         }
 
         /// A function to generate the list of tag filters for a specific tag type.
+//        func tagFilterList(for filters: [Filter]) -> [AnyView] {
+//            filters.map { filter in
+//                AnyView(
+//                    NavigationLink(value: filter) {
+//                        Text(NSLocalizedString(filter.name, tableName: dataController.tableNameForTagType(filter.tag?.type), comment: ""))
+//                            .fontWeight(.light)
+//                            .badge("\(countTagPlates(for: filter.name))")
+//                    }
+//                )
+//            }
+//        }
         func tagFilterList(for filters: [Filter]) -> [AnyView] {
-            filters.map { filter in
+            // Sort filters alphabetically by localized name
+            let sortedFilters = filters.sorted { lhs, rhs in
+                let lhsLocalized = NSLocalizedString(lhs.name, tableName: dataController.tableNameForTagType(lhs.tag?.type), comment: "")
+                let rhsLocalized = NSLocalizedString(rhs.name, tableName: dataController.tableNameForTagType(rhs.tag?.type), comment: "")
+                return lhsLocalized.localizedCompare(rhsLocalized) == .orderedAscending
+            }
+
+            return sortedFilters.map { filter in
                 AnyView(
                     NavigationLink(value: filter) {
-                        Text(LocalizedStringKey(filter.name))
+                        Text(NSLocalizedString(filter.name, tableName: dataController.tableNameForTagType(filter.tag?.type), comment: ""))
                             .fontWeight(.light)
-                            .badge("\(countTagPlates(for: filter.name))")
+                            .badge("\(countTagPlates(for: filter.tag?.name ?? filter.name))")
                     }
                 )
             }

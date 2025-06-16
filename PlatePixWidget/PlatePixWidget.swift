@@ -19,7 +19,7 @@ struct Provider: TimelineProvider {
 
     /// Returns a snapshot of the widget's current state.
     /// Used for previews and when the widget is displayed for the first time.
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
         // Load today's motivation text
         let index = loadTodaysMotivationIndex()
         let motivation = Motivations.motivations[index]
@@ -30,7 +30,7 @@ struct Provider: TimelineProvider {
 
     /// Supplies the timeline of entries for the widget.
     /// It refreshes once a day with a new motivational message.
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         // Load today's motivation text
         let index = loadTodaysMotivationIndex()
         let motivation = Motivations.motivations[index]
@@ -57,7 +57,7 @@ struct Provider: TimelineProvider {
             let calendar = Calendar.current
 
             if calendar.isDateInToday(lastDate) {
-                if let _ = sharedDefaults.object(forKey: "lastMotivationIndex") {
+                if sharedDefaults.object(forKey: "lastMotivationIndex") != nil {
                     return sharedDefaults.integer(forKey: "lastMotivationIndex")
                 }
             }

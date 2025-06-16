@@ -31,7 +31,7 @@ struct AwardIcon: View {
                 .frame(width: size * 0.88, height: size * 0.88)
                 .overlay(
                     Circle()
-                        .stroke(Color("GrayMaterial"), lineWidth: size * 0.02)
+                        .stroke(Color("GrayMaterial").opacity(0.5), lineWidth: size * 0.03)
                         .padding(size * 0.12)
                 )
                 .offset(y: -size * 0.2)

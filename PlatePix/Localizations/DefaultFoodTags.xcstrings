@@ -235,6 +235,23 @@
         }
       }
     },
+    "Bun" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bun"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Булочка"
+          }
+        }
+      }
+    },
     "Butter" : {
       "comment" : "A dairy product",
       "extractionState" : "manual",
@@ -285,6 +302,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Торт"
+          }
+        }
+      }
+    },
+    "Candy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Candy"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфета"
           }
         }
       }
@@ -487,6 +521,23 @@
         }
       }
     },
+    "Coffee with milk" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coffee with milk"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кофе с молоком"
+          }
+        }
+      }
+    },
     "Cookie" : {
       "comment" : "A dessert",
       "extractionState" : "manual",
@@ -519,6 +570,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Кукуруза"
+          }
+        }
+      }
+    },
+    "Cottage cheese" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cottage cheese"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Творог"
           }
         }
       }
@@ -1078,6 +1146,23 @@
         }
       }
     },
+    "Omelet" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omelet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Омлет"
+          }
+        }
+      }
+    },
     "Onion" : {
       "comment" : "A vegetable",
       "extractionState" : "manual",
@@ -1329,6 +1414,23 @@
         }
       }
     },
+    "Porridge" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porridge"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Каша"
+          }
+        }
+      }
+    },
     "Potato" : {
       "comment" : "A vegetable",
       "extractionState" : "manual",
@@ -1343,6 +1445,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Картофель"
+          }
+        }
+      }
+    },
+    "Prune" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prune"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чернослив"
           }
         }
       }
@@ -1559,6 +1678,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Чай"
+          }
+        }
+      }
+    },
+    "Tea with milk" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tea with milk"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чай с молоком"
           }
         }
       }

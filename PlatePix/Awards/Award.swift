@@ -11,7 +11,7 @@ import Foundation
 /// Conforms to `Codable` for easy encoding/decoding and `Identifiable` for unique identification.
 struct Award: Codable, Identifiable {
     /// The unique identifier for the award, derived from its name.
-    var id: String { name }
+    var id: String //{ name }
     /// The name of the award.
     var name: String
     /// The description providing details about the award.

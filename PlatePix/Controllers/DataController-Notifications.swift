@@ -12,33 +12,29 @@ extension DataController {
     /// Adds a reminder notification for the user.
     /// - Returns: `true` if the reminder was successfully scheduled, otherwise `false`.
     func addReminder() async -> Bool {
-        do {
-            let center = UNUserNotificationCenter.current()
-            let settings = await center.notificationSettings()
-            
-            switch settings.authorizationStatus {
-            case .notDetermined:
-                // If the user has not granted permission, request it first.
-                let success = try await requestNotifications()
-                
-                if success {
-                    try await placeReminders()  // Schedule a reminder if permission is granted.
-                } else {
-                    return false
-                }
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
 
-            case .authorized:
-                // If permission is already granted, schedule the reminder.
-                try await placeReminders()
-
-            default:
-                // If notifications are denied or restricted, do nothing.
+        switch settings.authorizationStatus {
+        case .notDetermined:
+            let granted = try? await center.requestAuthorization(options: [.alert, .sound])
+            if granted == true {
+                try? await scheduleReminder()
+                return true
+            } else {
                 return false
             }
 
+        case .authorized:
+            let existing = await center.pendingNotificationRequests()
+            let exists = existing.contains { $0.identifier == "dailyMealReminder" }
+
+            if !exists {
+                try? await scheduleReminder()
+            }
             return true
-        } catch {
-            // Return false if any error occurs.
+
+        default:
             return false
         }
     }
@@ -56,42 +52,60 @@ extension DataController {
         return try await center.requestAuthorization(options: [.alert, .sound])
     }
 
-    private func placeReminders() async throws {
-        // Pick a new random reminder index
-        let newIndex = pickNewRandomReminderIndex()
-        UserDefaults.standard.set(newIndex, forKey: "lastReminderIndex")
+    /// Schedules a daily notification to remind users to take a photo of their meal.
+    /// Helps promote mindful eating by encouraging regular food tracking.
+    ///
+    /// - Throws: An error if scheduling the notification fails.
+    private func placeReminder() async throws {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests() // remove any previous reminders
 
-        let reminderText = Reminders.reminders[newIndex].localizedText
-
-        // Configure the notification content
         let content = UNMutableNotificationContent()
         content.sound = .default
-        content.body = reminderText
+        content.body = NSLocalizedString("Don't forget to take photos of your plates, it will help you eat mindfully!📸🍴", comment: "")
 
-        // Scheduling the notification to trigger after 5 seconds (for testing)
+        // Schedule at user's selected time (daily)
         let components = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
 
-        // fot testing
-        //    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: "dailyMealReminder",
+            content: content,
+            trigger: trigger
+        )
 
-        // Create the notification request with a unique identifier
-        let request = UNNotificationRequest(identifier: "plateReminder", content: content, trigger: trigger)
-        // Add the notification request to the system
-        return try await UNUserNotificationCenter.current().add(request)
+        try await center.add(request)
     }
 
-    private func pickNewRandomReminderIndex() -> Int {
-        var newIndex: Int
+    /// Schedules a daily local notification reminding the user to take photos of their meals.
+    /// The notification triggers at the user-specified `reminderTime`.
+    private func scheduleReminder() async throws {
+        let center = UNUserNotificationCenter.current()
 
-        // Repeat until a different motivation is chosen
-        repeat {
-            newIndex = Reminders.reminders.randomElement()!.id
-        } while newIndex == UserDefaults.standard.integer(forKey: "lastReminderIndex")
+        let content = UNMutableNotificationContent()
+        content.sound = .default
+        content.body = NSLocalizedString("Don't forget to take photos of your plates, it will help you eat mindfully!📸🍴", comment: "")
 
-        // Save the new index to UserDefaults
-        UserDefaults.standard.set(newIndex, forKey: "lastReminderIndex")
+        let components = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
 
-        return newIndex
+        let request = UNNotificationRequest(
+            identifier: "dailyMealReminder",
+            content: content,
+            trigger: trigger
+        )
+
+        try await center.add(request)
+    }
+
+    /// Updates the daily meal reminder notification.
+    /// Removes any existing reminder and reschedules it if reminders are enabled.
+    func updateReminder() async {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: ["dailyMealReminder"])
+
+        if reminderEnabled {
+            _ = await addReminder()
+        }
     }
 }

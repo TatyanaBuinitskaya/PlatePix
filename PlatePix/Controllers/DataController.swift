@@ -44,25 +44,49 @@ class DataController: ObservableObject {
     @Published var showTagTypeFilters: [String: Bool] = [:]
     /// A flag indicating if a new tag has been created.
     @Published var hasNewTag = false
-    /// The list of available tag types. Updates are persisted using UserDefaults.
+    // Published property for available tag types
     @Published var availableTagTypes: [String] = [] {
         didSet {
-            UserDefaults.standard.set(availableTagTypes, forKey: "availableTagTypes")
+            saveToiCloudAndUserDefaults()
         }
     }
+    /// The iCloud key-value store used to sync settings across devices.
+    private let iCloud = NSUbiquitousKeyValueStore.default
     /// A variable that tracks whether a new plate is created.
     @Published var isNewPlateCreated = false
     /// A Boolean value indicating whether reminders are enabled.
-    @Published var reminderEnabled = false
+    @Published var reminderEnabled: Bool {
+        didSet {
+            UserDefaults.standard.set(reminderEnabled, forKey: "reminderEnabled")
+        }
+    }
     /// Stores the selected time for daily reminders.
-    @Published var reminderTime = Date()
+    @Published var reminderTime: Date {
+        didSet {
+            UserDefaults.standard.set(reminderTime, forKey: "reminderTime")
+        }
+    }
     /// Indicates whether the user has an active subscription.
     @Published var isSubscriptionIsActive = false
     /// The current count of plates. This value is synchronized with iCloud.
     @Published var plateCount: Int = 0
-    /// The iCloud key-value store used for synchronizing the plate count across devices.
-    let iCloudStore = NSUbiquitousKeyValueStore.default
-
+    /// The tag currently selected for editing.
+    @Published var tagToEdit: Tag? = nil
+    /// The name of the tag being edited.
+    @Published var tagName: String = ""
+    // The type/category of the tag being edited.
+    @Published var tagType: String = ""
+    /// Indicates whether the sheet for creating a new tag is currently being shown.
+    @Published var showCreateTagSheet: Bool = false
+    /// Indicates whether the sheet for editing an existing tag is currently being shown.
+    @Published var showEditTagSheet: Bool = false
+    /// Determines whether the Store view was opened from the Settings screen.
+    /// Used to alter navigation behavior (e.g. dismiss instead of navigating forward).
+    @Published var showStoreFromSettings: Bool = false
+    /// A state variable that determines whether the store view should be shown.
+    @Published var showingStore = false
+    /// A variable that controls the display of a notifications-related error alert.
+    @Published var showingNotificationsError = false
     /// A background task responsible for saving changes to Core Data asynchronously.
     private var saveTask: Task<Void, Error>?
     /// A static preview instance of DataController for SwiftUI previews and testing.
@@ -72,7 +96,7 @@ class DataController: ObservableObject {
     }()
 
     /// The UserDefaults suite where we're saving user data.
-    let defaults: UserDefaults
+    private let defaults = UserDefaults.standard
     /// Array of predefined meal times for filtering plates and UI selection, to be localized.
     let mealtimeArray: [String] = [
         "Breakfast",
@@ -122,7 +146,7 @@ class DataController: ObservableObject {
         }
         // If no date is selected and there is a tag filter selected, show the tag name
         if let tag = selectedFilter?.tag {
-            return tag.name ?? NSLocalizedString("Filtered Plates", comment: "Fallback tag name")
+            return NSLocalizedString(tag.tagName, tableName: tableNameForTagType(tag.type), comment: "")
         }
         // If no date is selected and there is a quality filter selected (even with "All" plates), show quality
         if let filter = selectedFilter, filter.quality >= 0 {
@@ -143,17 +167,19 @@ class DataController: ObservableObject {
         return NSLocalizedString("All Plates", comment: "")
     }
 
-    /// Manages the awards that have been congratulated, persisting the data using UserDefaults.
+    /// A computed property that persists and retrieves the list of awards that have been congratulated
+    /// using iCloud’s key–value store. The array is encoded/decoded as JSON data.
     var congratulatedAwards: [Award] {
         get {
-            guard let data = UserDefaults.standard.data(forKey: "congratulatedAwards") else { return [] }
+            guard let data = NSUbiquitousKeyValueStore.default.data(forKey: "congratulatedAwards") else { return [] }
             let decoder = JSONDecoder()
             return (try? decoder.decode([Award].self, from: data)) ?? []
         }
         set {
             let encoder = JSONEncoder()
             if let data = try? encoder.encode(newValue) {
-                UserDefaults.standard.set(data, forKey: "congratulatedAwards")
+                NSUbiquitousKeyValueStore.default.set(data, forKey: "congratulatedAwards")
+                NSUbiquitousKeyValueStore.default.synchronize()  // Optional: though the system handles sync periodically.
             }
         }
     }
@@ -179,45 +205,56 @@ class DataController: ObservableObject {
         return managedObjectModel
     }()
 
-    /// Initializes a data controller, either in memory (for temporary use such as testing and previewing),
-    /// or on permanent storage (for use in regular app runs.)
-    ///
-    /// Defaults to permanent storage.
-    /// - Parameter inMemory: Whether to store this data in temporary memory or not.
-    /// - Parameter defaults: The UserDefaults suite where user data should be stored
-    init(inMemory: Bool = false, defaults: UserDefaults = .standard) {
-
-        // Assigns the provided `UserDefaults` instance (or `.standard` if none is provided).
-        self.defaults = defaults
-
-        self.availableTagTypes = UserDefaults.standard.stringArray(forKey: "availableTagTypes") ?? []
-        //     container = NSPersistentCloudKitContainer(name: "Main")
+    
+    /// Initializes the data store, syncing from iCloud and setting up Core Data, Spotlight, and observers.
+    /// - Parameter inMemory: When `true`, uses an in-memory Core Data store (for previews/testing).
+    init(inMemory: Bool = false) {
+        
+        /// Load availableTagTypes from iCloud first; fallback to UserDefaults if iCloud has no data.
+        if let savedTypes = iCloud.array(forKey: "availableTagTypes") as? [String] {
+            self.availableTagTypes = savedTypes
+        } else {
+            self.availableTagTypes = defaults.array(forKey: "availableTagTypes") as? [String] ?? []
+        }
+        self.reminderEnabled = UserDefaults.standard.bool(forKey: "reminderEnabled")
+        if let saved = UserDefaults.standard.object(forKey: "reminderTime") as? Date {
+                self.reminderTime = saved
+            } else {
+                // Default time e.g. 9:00 AM today
+                self.reminderTime = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: Date()) ?? Date()
+            }
+        /// Create Core Data container using shared model.
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
 
-        // For testing and previewing purposes, we create a
-        // temporary, in-memory database by writing to /dev/null
-        // so our data is destroyed after the app finishes running.
+        /// If running in memory (i.e. for SwiftUI Previews or unit tests), save to /dev/null.
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
+
+        /// Enable automatic merging of changes from parent context (e.g. iCloud sync).
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-        // Make sure that we watch iCloud for all changes to make
-        // absolutely sure we keep our local UI in sync when a
-        // remote change happens.
+
+        /// Enable remote change notifications from iCloud.
         container.persistentStoreDescriptions.first?.setOption(
-            true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey
+            true as NSNumber,
+            forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey
         )
+
+        /// Listen for remote store changes to react to iCloud changes (e.g. background syncs).
         NotificationCenter.default.addObserver(
             forName: .NSPersistentStoreRemoteChange,
             object: container.persistentStoreCoordinator,
             queue: .main,
             using: remoteStoreChanged
         )
+
+        /// Load the Core Data persistent stores and configure Spotlight indexing.
         container.loadPersistentStores { [weak self] _, error in
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
+
             if let description = self?.container.persistentStoreDescriptions.first {
                 description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
 
@@ -226,27 +263,34 @@ class DataController: ObservableObject {
                         forStoreWith: description,
                         coordinator: coordinator
                     )
-
-                    self?.spotlightDelegate?.startSpotlightIndexing()            }
+                    self?.spotlightDelegate?.startSpotlightIndexing()
+                }
             }
 
-#if DEBUG
+            #if DEBUG
+            /// If testing mode is enabled, clear existing data and disable animations.
             if CommandLine.arguments.contains("enable-testing") {
                 self?.deleteAll()
             }
             UIView.setAnimationsEnabled(false)
-#endif
+            #endif
         }
-        Purchases.shared.getCustomerInfo {(customerInfo, error) in
+
+        /// Load subscription status via RevenueCat.
+        Purchases.shared.getCustomerInfo { (customerInfo, error) in
             self.isSubscriptionIsActive = customerInfo?.entitlements.all["premium"]?.isActive == true
         }
+
+        /// Load plate count from iCloud or fallback to UserDefaults.
         loadPlateCount()
-                NotificationCenter.default.addObserver(
-                    self,
-                    selector: #selector(iCloudDataChanged),
-                    name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
-                    object: iCloudStore
-                )
+
+        /// Observe iCloud key-value store changes to keep app state in sync across devices.
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(iCloudDataChanged),
+            name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: iCloud
+        )
     }
 
     /// Runs a fetch request with various predicates that filter the user's plates based
@@ -288,6 +332,7 @@ class DataController: ObservableObject {
         if !trimmedFilterText.isEmpty {
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
             let notesPredicate = NSPredicate(format: "notes CONTAINS[c] %@", trimmedFilterText)
+            // swiftlint:disable:next line_length
             let textSearchPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, notesPredicate])
             predicates.append(textSearchPredicate)
         }
@@ -296,45 +341,38 @@ class DataController: ObservableObject {
 
         // If the filter is "All", only apply the search filter (if any)
         if filter == .all {
+            // swiftlint:disable:next line_length
             fetchRequest.predicate = predicates.isEmpty ? nil : NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         } else {
             fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         }
 
         // Sorting plates by creationDate
-     //   fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
+     //   fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
 
         return (try? container.viewContext.fetch(fetchRequest)) ?? []
     }
-
+// TODO: 
     /// Creates a new plate and initializes its properties with default values or values from the current selection.
-    /// - Note: The creation date is set to the selected date (or today's date if no date is selected). The quality and mealtime are set to default values.
+    /// - Note: The creation date is set to the selected date (or today's date if no date is selected).
     func newPlate() -> Bool {
-        plateCount += 1
-        savePlateCount()
-
+        // plateCount = 0
         var shouldCreate = isSubscriptionIsActive
         if shouldCreate == false {
 
-        shouldCreate = plateCount < 36 // 35
+        shouldCreate = plateCount < 35 // 35
         }
         guard shouldCreate else {
             return false
         }
+        plateCount += 1
+        savePlateCount()
 
         let plate = Plate(context: container.viewContext)
 
         plate.title = "\(plateCount)"
-        if let selectedDate = selectedDate {
-            // Set the creation date to the selected date, but keep the time as midnight
-            let calendar = Calendar.current
-            let newDate = calendar.startOfDay(for: selectedDate) // This sets time to midnight
-            plate.creationDate = newDate
-        } else {
-            // If no date is selected, default to today's date and time
-            plate.creationDate = .now
-        }
+        plate.creationDate = selectedDate ?? .now
         plate.quality = 1
         // Set the mealtime attribute from the selected filter, defaulting to "breakfast" if no mealtime is selected
         plate.mealtime = "Anytime Meal"
@@ -351,21 +389,42 @@ class DataController: ObservableObject {
         return true
     }
 
-    /// Creates a new tag with default values and saves it to the context.
-    /// - Note: New tags are added to the available tag types if they do not already exist.
-    func newTag() {
+    /// Attempts to create a new plate.
+    /// - If the user has access to adding new plates, it proceeds normally.
+    /// - If the user has reached a limit (e.g., in the free version), it triggers the store view to prompt an upgrade.
+    func tryNewPlate() {
+        // Calls `newPlate()` from `dataController`, which returns `false` if the user cannot add more plates.
+        if newPlate() == false {
+            // If the user is restricted from adding more plates, show the store to encourage upgrading.
+         //   showingStore = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.showingStore = true
+                    }
+        }
+    }
+
+    /// Creates a new tag with default values and returns it.
+    ///
+    /// - Returns: A `Tag` object with a unique ID, default name ("New Tag"),
+    ///   current date, and default type ("My").
+    func newTag() -> Tag {
         let tag = Tag(context: container.viewContext)
         tag.id = UUID()
-        tag.name = " New Tag"
+       // tag.name = NSLocalizedString("New Tag", comment: "")
+        tag.name = "New Tag"
         tag.creationDate = Date()
+       // tag.type = NSLocalizedString("My", comment: "")
         tag.type = "My"
+
         if !availableTagTypes.contains(tag.type ?? "My") {
             availableTagTypes.append(tag.type ?? "My")
         }
-        save()
-        // Add new tag logic
-        hasNewTag = true  // Ensure "User" tags are initially shown
+
+        hasNewTag = true
         showTagTypeFilters["My"] = true
+        save()
+
+        return tag
     }
 
     /// Counts the number of plates created on a specific date.
@@ -448,29 +507,27 @@ class DataController: ObservableObject {
     /// - Returns: True if the user has earned the award, otherwise false.
     func hasEarned(award: Award) -> Bool {
         if award.criterion == "plates" {
-//            let fetchRequest = Plate.fetchRequest()
-//            let awardCount = count(for: fetchRequest)
-        //    let awardCount = UserDefaults.standard.integer(forKey: "plateCounter")
             let awardCount = plateCount
             return awardCount >= award.value
         }
         return false
     }
-
-    /// Checks if any awards have been earned.
-    /// - Returns: True if any awards have been earned, otherwise false.
-    func checkAwards() -> Bool {
-        var existingAwards = congratulatedAwards
+// TODO: 
+    /// Checks if any new awards have been earned.
+    /// - Returns: The newly earned Award if one was found, otherwise nil.
+    func checkForNewAward() -> Award? {
         for award in Award.allAwards {
-            if hasEarned(award: award) && !existingAwards.contains(where: { $0.id == award.id }) {
-                existingAwards.append(award)
-                congratulatedAwards = existingAwards
-                return true
+           // congratulatedAwards = []
+            if hasEarned(award: award) &&
+               !congratulatedAwards.contains(where: { $0.id == award.id }) {
+
+                // Add new award
+                congratulatedAwards.append(award)
+                return award
             }
         }
-        return false
+        return nil
     }
-
     /// Counts the number of items for a fetch request.
     /// - Parameter fetchRequest: The fetch request to count.
     /// - Returns: The count of items for the specified fetch request.
@@ -531,6 +588,7 @@ class DataController: ObservableObject {
             } else if type == "Month" {
                 Label(localizedType.capitalized, systemImage: "30.square")
             } else if type == "Emotion" {
+                // swiftlint:disable:next line_length
                 Label(localizedType.capitalized, systemImage: colorScheme == .dark ? "face.smiling.inverse" : "face.smiling")
             } else if type == "Reaction" {
                 Label(localizedType.capitalized, systemImage: "heart.text.square")
@@ -593,18 +651,31 @@ class DataController: ObservableObject {
         return index1 < index2
     }
 
+    /// Maps a localized user-entered tag type to a standardized internal type.
+        /// - Parameter localizedType: A user-entered string representing the tag type.
+        /// - Returns: A default internal type string (e.g., "Food", "Emotion").
+    func mapLocalizedTypeToDefaultType(localizedType: String) -> String {
+        switch localizedType.lowercased() {
+        case "еда", "food": return "Food"
+        case "эмоция", "emotion": return "Emotion"
+        case "реакция", "reaction": return "Reaction"
+        case "мои", "my": return "My"
+        default: return localizedType
+        }
+    }
+
     /// Creates sample data for testing purposes.
     /// - This method populates Core Data with test tags and plates.
     func createSampleData() {
         let viewContext = container.viewContext
-        for i in 1...5 {
+        for number1 in 1...5 {
             let tag = Tag(context: viewContext)
             tag.id = UUID()
-            tag.name = "Tag \(i)"
+            tag.name = "Tag \(number1)"
 
-            for j in 1...10 {
+            for number2 in 1...10 {
                 let plate = Plate(context: viewContext)
-                plate.title = "Issue \(i)-\(j)"
+                plate.title = "Issue \(number1)-\(number2)"
                 plate.creationDate = .now
                 tag.addToPlates(plate)
             }
@@ -645,22 +716,60 @@ class DataController: ObservableObject {
 
     /// Saves `plateCount` to iCloud.
     func savePlateCount() {
-        iCloudStore.set(Int64(plateCount), forKey: "plateCount")
-        iCloudStore.synchronize()  // Ensure sync happens immediately
+        UserDefaults.standard.set(plateCount, forKey: "plateCount")
+        iCloud.set(Int64(plateCount), forKey: "plateCount")
+        iCloud.synchronize() // Optional: force sync
     }
 
-    /// Loads `plateCount` from iCloud.
+    /// Loads `plateCount` from iCloud if available, otherwise falls back to UserDefaults.
     func loadPlateCount() {
         DispatchQueue.main.async {
+            // Load plateCount from iCloud first
             let storedCount = NSUbiquitousKeyValueStore.default.longLong(forKey: "plateCount")
-            self.plateCount = Int(storedCount)
+            if storedCount >= 0 {
+                // If a valid value is found in iCloud, use it
+                self.plateCount = Int(storedCount)
+            } else {
+                // If no value is found in iCloud, fall back to UserDefaults
+                let userDefaultsCount = UserDefaults.standard.integer(forKey: "plateCount")
+                self.plateCount = userDefaultsCount // Set to UserDefaults value
+            }
         }
     }
 
-    /// Handles external iCloud data changes.
+    /// Handles external iCloud data changes for both plate count and tag types.
     @objc func iCloudDataChanged(_ notification: Notification) {
-        loadPlateCount()  // Reload count if changed externally
+        guard let userInfo = notification.userInfo,
+              let reason = userInfo[NSUbiquitousKeyValueStoreChangeReasonKey] as? Int,
+              reason == NSUbiquitousKeyValueStoreServerChange ||
+              reason == NSUbiquitousKeyValueStoreInitialSyncChange,
+              let changedKeys = userInfo[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String]
+        else {
+            return
+        }
+
+        if changedKeys.contains("plateCount") {
+            loadPlateCount()
+        }
+
+        if changedKeys.contains("availableTagTypes") {
+            DispatchQueue.main.async {
+                if let savedTypes = self.iCloud.array(forKey: "availableTagTypes") as? [String] {
+                    self.availableTagTypes = savedTypes
+                }
+            }
+        }
     }
+
+    /// Saves availableTagTypes to both iCloud and UserDefaults.
+    private func saveToiCloudAndUserDefaults() {
+        // Always save to UserDefaults
+        defaults.set(availableTagTypes, forKey: "availableTagTypes")
+        // Attempt to save to iCloud (without checking iCloud availability)
+        iCloud.set(availableTagTypes, forKey: "availableTagTypes")
+        iCloud.synchronize()
+    }
+    
 
     /// Removes observer when deinitialized.
     deinit {
@@ -688,7 +797,7 @@ class DataController: ObservableObject {
 extension Date {
     /// The start of the day for the given date.
     ///
-    /// This computed property uses the current calendar to determine the start of the day (midnight) for the given `Date`.
+    /// This computed property uses the current calendar to determine midnight for the given `Date`.
     /// It adjusts the time to 00:00:00 of the same day, regardless of the time of day the `Date` represents.
     ///
     /// - Returns: A `Date` object representing the start of the day (midnight) of the current date.

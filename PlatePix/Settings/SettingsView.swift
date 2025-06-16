@@ -19,8 +19,6 @@ struct SettingsView: View {
     @Environment(\.openURL) var openURL
     /// A variable that controls the visibility of the reminders sheet.
     @State var showRemindersSheet = false
-    /// A variable that controls the display of a notifications-related error alert.
-    @State private var showingNotificationsError = false
     /// URL for leaving a review on the App Store.
     private(set) var reviewLink = URL(string: "https://apps.apple.com/app/id6743003345?action=write-review")
     /// Support email configuration.
@@ -41,26 +39,21 @@ struct SettingsView: View {
                     if !dataController.isSubscriptionIsActive {
                         // Premium
                         Button {
+                            dataController.showStoreFromSettings = true
                             showingStore = true
                         } label: {
                             HStack {
-                                Image("Logo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(maxWidth: 50)
                                 VStack(alignment: .leading) {
-                                    HStack {
-                                        Text("Premium PlatePix")
+                                    Text("Free version allows up to 35 plates")
+                                        .foregroundStyle(Color.white)
+                                        .font(.body)
+                                  
+                                        Text("Get unlimited with Premium")
                                             .foregroundStyle(Color.white)
                                             .font(.title3)
                                             .fontDesign(.rounded)
                                             .fontWeight(.semibold)
                                     }
-                                    Text("Get Full Access")
-                                        .foregroundStyle(Color.white)
-                                        .font(.body)
-                                }
-                                Spacer()
                             }
                             .contentShape(Rectangle())
                         }
@@ -218,40 +211,6 @@ struct SettingsView: View {
                     dismiss()
                 } label: {
                     Label("Back", systemImage: "chevron.backward") // Custom back button title
-                }
-            }
-        }
-        .alert("Notifications are not enabled", isPresented: $showingNotificationsError) {
-            Button("Check Settings", action: showAppSettings)
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("There was a problem setting your notification. Please check you have notifications enabled.")
-        }
-        .onChange(of: dataController.reminderEnabled) {
-            updateReminder()
-        }
-        .onChange(of: dataController.reminderTime) {
-            updateReminder()
-        }
-    }
-
-    /// Opens app notification settings if there is an issue with reminders.
-    func showAppSettings() {
-        guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {
-            return
-        }
-        openURL(settingsURL)
-    }
-
-    /// Updates the reminder based on user settings.
-    func updateReminder() {
-        dataController.removeReminders()
-        Task { @MainActor in
-            if dataController.reminderEnabled {
-                let success = await dataController.addReminder()
-                if success == false {
-                    dataController.reminderEnabled = false
-                    showingNotificationsError = true
                 }
             }
         }

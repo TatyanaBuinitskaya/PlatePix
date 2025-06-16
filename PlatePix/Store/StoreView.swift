@@ -21,6 +21,10 @@ struct StoreView: View {
     @State var currentOffering: Offering?
     /// Tracks whether a purchase process is in progress.
     @State var isPurchasing = false
+    /// A state variable to control whether the alert is shown or not.
+    @State private var showAlert = false
+    /// A state variable that holds the message to be displayed in the alert.
+    @State private var alertMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -28,22 +32,29 @@ struct StoreView: View {
                 VStack(spacing: 0) {
                     // Display the unlock image and title promoting the upgrade
                     VStack {
-                        Text("Premium PlatePix")
-                            .font(.title.bold())
-                            .fontDesign(.rounded)
+                        Spacer()
+                        Text("Free version allows up to 35 plates")
+                            .font(.title2)
                             .foregroundStyle(.white)
+                            .multilineTextAlignment(.center)
+                        Spacer()
                         Image("Logo")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 150)
                             .padding(0)
-                        Text("Add as many plates as you want!")
-                            .font(.title2)
+                        Spacer()
+                        Text("Get unlimited plates with Premium")
+                            .font(.title.bold())
+                            .fontDesign(.rounded)
                             .foregroundStyle(.white)
                             .multilineTextAlignment(.center)
+                        Spacer()
                     }
                     .frame(maxWidth: .infinity)
-                    .padding(40)
+                    .frame(maxHeight: 400)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 40)
                     .background(
                         LinearGradient(
                             gradient: Gradient(colors: [Color("GirlsPink"), Color("LavenderRaf")]),
@@ -61,9 +72,16 @@ struct StoreView: View {
                                         isPurchasing = true
                                         Purchases.shared.purchase(package: pkg) {(transaction, customerInfo, error, userCancelled) in
                                             if customerInfo?.entitlements["premium"]?.isActive == true {
-                                                // Unlock that great "pro" content
                                                 dataController.isSubscriptionIsActive = true
                                                 isPurchasing = false
+                                                dismiss()
+                                                if !dataController.showStoreFromSettings {
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                        if dataController.newPlate() == true {
+                                                            dataController.isNewPlateCreated = true
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     } label: {
@@ -71,7 +89,7 @@ struct StoreView: View {
                                             Spacer()
                                             Text("\(pkg.storeProduct.localizedPriceString) / ")
                                                 .font(.title2)
-                                            
+
                                             Text("\(pkg.storeProduct.subscriptionPeriod!.periodTitle)")
                                                 .font(.title2.bold())
                                                 .fontDesign(.rounded)
@@ -79,11 +97,11 @@ struct StoreView: View {
                                         }
                                         .foregroundStyle(.white)
                                         .padding(.horizontal, 20)
-                                        .padding(.vertical, 10)
+                                        .padding(.vertical, 15)
                                         .frame(maxWidth: .infinity)
                                         .background(Color(colorManager.selectedColor.color), in: .capsule)
                                         .contentShape(.rect)
-                                        .padding(.vertical, 10)
+                                        .padding(.vertical, 15)
                                     }
                                 }
                             }
@@ -108,7 +126,8 @@ struct StoreView: View {
                         }
                         Spacer()
                         Button("Privacy Policy") {
-                            if let urlPolicy = URL(string:  "https://tatyanabuinitskaya.github.io/PlatePixPrivacyPolicy/") {
+                            // swiftlint:disable:next line_length
+                            if let urlPolicy = URL(string: "https://tatyanabuinitskaya.github.io/PlatePixPrivacyPolicy/") {
                                 openURL(urlPolicy)
                             }
                         }
@@ -132,8 +151,8 @@ struct StoreView: View {
                 }
             }
         }
-        .onDisappear {
-            dataController.selectedPlate = nil
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Subscription Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
     }
 
@@ -141,8 +160,36 @@ struct StoreView: View {
     /// - Uses `AppStore.sync()` to sync and restore purchases asynchronously.
     func restore() {
         Purchases.shared.restorePurchases { customerInfo, error in
-            dataController.isSubscriptionIsActive = customerInfo?.entitlements.all["Premium"]?.isActive == true
+            if let error = error {
+                // Show an alert with the error message if restore fails
+                showAlert(message: NSLocalizedString("Restore failed: \(error.localizedDescription)", comment: ""))
+                return
+            }
+
+            if customerInfo?.entitlements.all["premium"]?.isActive == true {
+                // Dismiss the store sheet and show success alert
+                dataController.isSubscriptionIsActive = true
+                dismiss()
+                showAlert(message: NSLocalizedString("Your purchase has been successfully restored.", comment: ""))
+
+                if !dataController.showStoreFromSettings {
+                    // Delay the new plate presentation slightly for a smoother UX
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        if dataController.newPlate() == true {
+                            dataController.isNewPlateCreated = true
+                        }
+                    }
+                }
+            } else {
+                // Show an alert if the user does not have active entitlements
+                showAlert(message: NSLocalizedString("No active subscription found. Please purchase a subscription.", comment: ""))
+            }
         }
+    }
+
+    func showAlert(message: String) {
+        alertMessage = message
+        showAlert = true
     }
 }
 
@@ -152,7 +199,7 @@ struct StoreView: View {
         .environmentObject(AppColorManager())
         .environment(\.locale, Locale(identifier: "EN"))
 }
-                           
+
 #Preview("Russian") {
     StoreView()
         .environmentObject(DataController.preview)

@@ -17,7 +17,7 @@ struct ImagePicker: UIViewControllerRepresentable {
 
     /// Creates the UIImagePickerController and sets its properties.
     /// This method is called to initialize the view controller.
-    /// - Parameter context: The context passed by SwiftUI that contains necessary information for coordinating the view.
+    /// - Parameter context: The context passed by SwiftUI that contains necessary information for coordinating the view
     /// - Returns: The UIImagePickerController configured with the appropriate source type and delegate.
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
@@ -29,11 +29,11 @@ struct ImagePicker: UIViewControllerRepresentable {
     /// Updates the UIViewController when changes happen in the SwiftUI view.
     /// This method doesn't need to do anything here, as there is no need to update the picker in this case.
     /// - Parameter uiViewController: The UIImagePickerController to update.
-    /// - Parameter context: The context passed by SwiftUI that contains necessary information for coordinating the view.
+    /// - Parameter context: The context passed by SwiftUI that contains necessary information for coordinating the view
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
 
     /// Creates and returns the Coordinator that will manage the UIImagePickerControllerDelegate methods.
-    /// - Returns: A Coordinator object that handles the interactions between the UIImagePickerController and the SwiftUI view.
+    /// - Returns: An object that handles the interactions between the UIImagePickerController and the SwiftUI view.
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }

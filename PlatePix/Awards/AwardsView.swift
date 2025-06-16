@@ -64,7 +64,7 @@ struct AwardsView: View {
     /// - Parameter award: The award to evaluate.
     /// - Returns: A `Color` indicating the award status.
     func color(for award: Award) -> Color {
-        dataController.hasEarned(award: award) ? Color(award.color) : .secondary.opacity(0.5)
+        dataController.hasEarned(award: award) ? Color(award.color) : Color("GrayMaterial")
     }
 
     /// Provides an accessibility label for an award, indicating its status.

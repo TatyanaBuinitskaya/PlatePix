@@ -56,7 +56,9 @@ struct HomeScreenWidgetView: View {
             // Instructions for Adding Widget
             VStack(alignment: .leading, spacing: 20) {
                 Text("1. Touch and hold an empty area on the Home Screen until the apps jiggle.")
-                Text("2. Tap the Edit button in the upper left corner then tap Add Widget to view available widgets, scroll or search for PlatePix widget.")
+                // swiftlint:disable:next line_length
+                Text("2. Tap the “Edit” button or the “+” in the top left corner, then find the PlatePix widget from the suggested list.")
+                // swiftlint:disable:next line_length
                 Text("3. Press Add Widget button and place widget in the position you want, then tap the empty area to finish.")
             }
             .font(.callout)

@@ -49,12 +49,16 @@ struct PlateImageView: View {
                     .clipShape(Rectangle())
             }
         }
-        .accessibilityIdentifier("plateView") 
+        .accessibilityIdentifier("plateView")
         .onAppear {
             // Fetches the image when the view appears if it's not already loaded.
             fetchImage()
         }
-        .onChange(of: plate.platePhoto){
+        .onChange(of: plate.platePhoto) {
+            fetchImage()
+        }
+        .onChange(of: plate) {
+            imagePlateView = nil
             fetchImage()
         }
     }

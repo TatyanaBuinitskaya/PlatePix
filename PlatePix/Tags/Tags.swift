@@ -23,7 +23,8 @@ let defaultEmotionTags: [String] = [
     "Celebration",
     "Euphoria",
     "Nervousness",
-    "Insecurity"
+    "Insecurity",
+    "Tiredness"
 ]
 
 /// A list of default food tags used for categorizing or labeling food items within the app.
@@ -124,7 +125,15 @@ let defaultFoodTags: [String] = [
     "Crispbread",
     "Muesli",
     "Granola",
-    "Patty"
+    "Patty",
+    "Candy",
+    "Cottage cheese",
+    "Omelet",
+    "Porridge",
+    "Coffee with milk",
+    "Tea with milk",
+    "Bun",
+    "Prune"
 ]
 
 /// A list of default reaction tags used for categorizing or labeling food items within the app.
@@ -152,5 +161,3 @@ let defaultReactionTags: [String] = [
     "Dizzy",
     "Intense Fatigue"
 ]
-
-

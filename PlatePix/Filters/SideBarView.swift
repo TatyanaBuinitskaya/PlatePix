@@ -205,7 +205,8 @@ struct SideBarView: View {
         .environment(\.locale, Locale(identifier: "RU"))
         }
 
-/// Creates a button view for a date filter that displays the filter label, a badge with plate count, and an arrow to indicate selection.
+/// Creates a button view for a date filter that displays the filter label, a badge with plate count,
+/// and an arrow to indicate selection.
 /// - Parameters:
 ///   - label: The label of the filter button (e.g., "All plates" or "Today").
 ///   - systemImage: The system image to be used for the button's icon (e.g., "calendar").
@@ -232,12 +233,13 @@ private func dateFilterButton(
     }
 }
 
-/// Creates a button view that allows expanding or collapsing a filter section. The expansion/collapse is animated and displays items when expanded.
+/// Creates a button view that allows expanding or collapsing a filter section.
+/// The expansion/collapse is animated and displays items when expanded.
 /// - Parameters:
 ///   - label: The label for the filter section (e.g., "Tags", "Quality").
 ///   - systemImage: The system image for the section (e.g., "tag").
 ///   - isExpanded: A binding to track whether the section is expanded or collapsed.
-///   - items: A list of views (items) to be shown when the section is expanded. This can be dynamic content such as filter options.
+///   - items: A list of views (items) to be shown when the section is expanded.
 @ViewBuilder
 private func expandableFilterSection(
     label: LocalizedStringKey,
@@ -267,11 +269,11 @@ private func expandableFilterSection(
             Spacer() // Pushes the chevron icon to the right of the label.
             // Chevron icon indicating the expanded or collapsed state.
             Image(systemName: "chevron.down")
-                .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0)) // Rotates the chevron based on expansion state.
+                .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0))
                 .foregroundStyle(.secondary.opacity(0.6))
                 .font(.footnote)
                 .fontWeight(.bold)
-                .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue) // Adds smooth rotation animation.
+                .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue) 
         }
     }
     .alert("No tags available", isPresented: showAlertNoTags) {

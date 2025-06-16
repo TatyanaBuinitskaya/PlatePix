@@ -15,10 +15,12 @@ struct RemindersSheetView: View {
     @EnvironmentObject var colorManager: AppColorManager
     /// The dismiss environment property to close the sheet view.
     @Environment(\.dismiss) var dismiss
+    /// The environment property that rovides access to the environment's `openURL` action, used to open external links.
+    @Environment(\.openURL) var openURL
 
     var body: some View {
         Form {
-            Section("Motivational Reminders") {
+            Section("Reminders") {
                 Toggle("Show", isOn: $dataController.reminderEnabled.animation())
                 // If reminders are enabled, show the `DatePicker` to allow time selection.
                 if dataController.reminderEnabled {
@@ -45,6 +47,30 @@ struct RemindersSheetView: View {
             }
             .listRowBackground(Color.clear)
         }
+        .alert("Notifications are not enabled", isPresented: $dataController.showingNotificationsError) {
+            Button("Check Settings", action: showAppSettings)
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("There was a problem setting your notification. Please check you have notifications enabled.")
+        }
+        .onChange(of: dataController.reminderEnabled) {
+            Task {
+                    await dataController.updateReminder()
+                }
+        }
+        .onChange(of: dataController.reminderTime) {
+            Task {
+                await dataController.updateReminder()
+            }
+        }
+    }
+
+    /// Opens app notification settings if there is an issue with reminders.
+    func showAppSettings() {
+        guard let settingsURL = URL(string: UIApplication.openNotificationSettingsURLString) else {
+            return
+        }
+        openURL(settingsURL)
     }
 }
 

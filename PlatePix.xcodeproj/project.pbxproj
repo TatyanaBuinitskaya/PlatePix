@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB189C2D2D8C662F007E5D94 /* Reminders.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB189C2C2D8C662F007E5D94 /* Reminders.xcstrings */; };
 		EB22500D2D1457FE00E002D7 /* PlatePixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22500C2D1457FE00E002D7 /* PlatePixApp.swift */; };
 		EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22500E2D1457FE00E002D7 /* ContentView.swift */; };
 		EB2250112D14580100E002D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB2250102D14580100E002D7 /* Assets.xcassets */; };
@@ -66,6 +65,13 @@
 		EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */; };
 		EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */; };
 		EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922612D48F17800BF97D7 /* PlateImageView.swift */; };
+		EB87A1532DA6A47000E808CA /* TagSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A1522DA6A46F00E808CA /* TagSettings.swift */; };
+		EB87A1552DA9569A00E808CA /* EditTagSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A1542DA9569A00E808CA /* EditTagSheet.swift */; };
+		EB87A17C2DA962E100E808CA /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = EB87A17B2DA962E100E808CA /* RevenueCat */; };
+		EB87A17E2DB03F6300E808CA /* CreateTagSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A17D2DB03F6300E808CA /* CreateTagSheet.swift */; };
+		EB87A1802DC22E1400E808CA /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A17F2DC22E1400E808CA /* AppView.swift */; };
+		EB87A1822DC22E7A00E808CA /* MainSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A1812DC22E7A00E808CA /* MainSplitView.swift */; };
+		EB87A1842DC4039A00E808CA /* AddPlateButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A1832DC4039A00E808CA /* AddPlateButtonView.swift */; };
 		EBB2C9482D4D8C48008FA818 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EBB2C9462D4D8C48008FA818 /* Main.xcdatamodeld */; };
 		EBBD6D602D616B00006A3DC2 /* Motivations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F8D2D5CC8D9002AC274 /* Motivations.swift */; };
 		EBBD6D612D616B00006A3DC2 /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F8B2D5CC853002AC274 /* Motivation.swift */; };
@@ -111,7 +117,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EB189C2C2D8C662F007E5D94 /* Reminders.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Reminders.xcstrings; sourceTree = "<group>"; };
 		EB2250092D1457FE00E002D7 /* PlatePix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlatePix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB22500C2D1457FE00E002D7 /* PlatePixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatePixApp.swift; sourceTree = "<group>"; };
 		EB22500E2D1457FE00E002D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -173,6 +178,12 @@
 		EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		EB7922612D48F17800BF97D7 /* PlateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageView.swift; sourceTree = "<group>"; };
+		EB87A1522DA6A46F00E808CA /* TagSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettings.swift; sourceTree = "<group>"; };
+		EB87A1542DA9569A00E808CA /* EditTagSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagSheet.swift; sourceTree = "<group>"; };
+		EB87A17D2DB03F6300E808CA /* CreateTagSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagSheet.swift; sourceTree = "<group>"; };
+		EB87A17F2DC22E1400E808CA /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		EB87A1812DC22E7A00E808CA /* MainSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitView.swift; sourceTree = "<group>"; };
+		EB87A1832DC4039A00E808CA /* AddPlateButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlateButtonView.swift; sourceTree = "<group>"; };
 		EBB2C9472D4D8C48008FA818 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		EBB2C9572D52486B008FA818 /* PlatePixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatePixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB2C97B2D53AC9E008FA818 /* PlatePixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatePixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -189,7 +200,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EB189C202D8C643F007E5D94 /* Reminders */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Reminders; sourceTree = "<group>"; };
 		EB567FB42D5E100A002AC274 /* PlatePixWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EB567FC12D5E100C002AC274 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = PlatePixWidget; sourceTree = "<group>"; };
 		EBB2C9582D52486B008FA818 /* PlatePixTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlatePixTests; sourceTree = "<group>"; };
 		EBB2C97C2D53AC9E008FA818 /* PlatePixUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PlatePixUITests; sourceTree = "<group>"; };
@@ -202,6 +212,7 @@
 			files = (
 				EB5FF6F02D7B82F000249F07 /* RevenueCat in Frameworks */,
 				EB3B64752D84CAC00073FD0A /* StoreKit.framework in Frameworks */,
+				EB87A17C2DA962E100E808CA /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +269,6 @@
 		EB22500B2D1457FE00E002D7 /* PlatePix */ = {
 			isa = PBXGroup;
 			children = (
-				EB189C202D8C643F007E5D94 /* Reminders */,
 				EB56562D2D64B0DB00A25751 /* Controllers */,
 				EB567F882D5CB2BA002AC274 /* Motivations */,
 				EB567F812D5B6361002AC274 /* Store */,
@@ -346,6 +356,9 @@
 				EB567F732D562ECF002AC274 /* UserPreferences.swift */,
 				EB56563A2D676F2A00A25751 /* SplashScreenView.swift */,
 				EB517DA62D9A954400046CA4 /* JPEGShareOneDayView.swift */,
+				EB87A17F2DC22E1400E808CA /* AppView.swift */,
+				EB87A1812DC22E7A00E808CA /* MainSplitView.swift */,
+				EB87A1832DC4039A00E808CA /* AddPlateButtonView.swift */,
 			);
 			path = Plates;
 			sourceTree = "<group>";
@@ -380,6 +393,9 @@
 			children = (
 				EB79224D2D410E2F00BF97D7 /* Tags.swift */,
 				EB7922452D3FDBDA00BF97D7 /* TagListView.swift */,
+				EB87A1522DA6A46F00E808CA /* TagSettings.swift */,
+				EB87A1542DA9569A00E808CA /* EditTagSheet.swift */,
+				EB87A17D2DB03F6300E808CA /* CreateTagSheet.swift */,
 			);
 			path = Tags;
 			sourceTree = "<group>";
@@ -404,7 +420,6 @@
 				EB567FA82D5CDD8A002AC274 /* Motivations.xcstrings */,
 				EB5656C42D6E0D3100A25751 /* DefaultReactions.xcstrings */,
 				EB5656C62D6E0E3700A25751 /* DefaultEmotions.xcstrings */,
-				EB189C2C2D8C662F007E5D94 /* Reminders.xcstrings */,
 			);
 			path = Localizations;
 			sourceTree = "<group>";
@@ -449,9 +464,6 @@
 			);
 			dependencies = (
 				EB567FBF2D5E100C002AC274 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				EB189C202D8C643F007E5D94 /* Reminders */,
 			);
 			name = PlatePix;
 			productName = MyPlates;
@@ -560,6 +572,7 @@
 				en,
 				Base,
 				ru,
+				"pt-BR",
 			);
 			mainGroup = EB2250002D1457FE00E002D7;
 			packageReferences = (
@@ -592,7 +605,6 @@
 				EB7922532D43E83400BF97D7 /* Awards.json in Resources */,
 				EB2250112D14580100E002D7 /* Assets.xcassets in Resources */,
 				EB5656352D64D2F300A25751 /* DeviceModels.json in Resources */,
-				EB189C2D2D8C662F007E5D94 /* Reminders.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +645,7 @@
 				EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */,
 				EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */,
 				EBB2C9482D4D8C48008FA818 /* Main.xcdatamodeld in Sources */,
+				EB87A17E2DB03F6300E808CA /* CreateTagSheet.swift in Sources */,
 				EB567F852D5C6F71002AC274 /* AppDelegate.swift in Sources */,
 				EB22503C2D1ADDAB00E002D7 /* Award.swift in Sources */,
 				EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */,
@@ -642,16 +655,20 @@
 				EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */,
 				EB567F832D5B6380002AC274 /* StoreView.swift in Sources */,
 				EB2250242D156C6800E002D7 /* DetailView.swift in Sources */,
+				EB87A1552DA9569A00E808CA /* EditTagSheet.swift in Sources */,
 				EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */,
 				EB567F7C2D5A2751002AC274 /* DataController-Notifications.swift in Sources */,
 				EB567F6C2D54F570002AC274 /* SideBarViewModel.swift in Sources */,
 				EB5656392D660B8A00A25751 /* LockScreenWidgetView.swift in Sources */,
+				EB87A1842DC4039A00E808CA /* AddPlateButtonView.swift in Sources */,
 				EB2250362D1ADA5C00E002D7 /* Bundle-Decodable.swift in Sources */,
 				EB5656A22D6DC1C000A25751 /* AwardIcon.swift in Sources */,
 				EB5655E72D63400F00A25751 /* AppColorManager.swift in Sources */,
+				EB87A1822DC22E7A00E808CA /* MainSplitView.swift in Sources */,
 				EB22501E2D146E9600E002D7 /* DataController.swift in Sources */,
 				EB22500F2D1457FE00E002D7 /* ContentView.swift in Sources */,
 				EB2250302D197B8B00E002D7 /* PlateBox.swift in Sources */,
+				EB87A1802DC22E1400E808CA /* AppView.swift in Sources */,
 				EB567F8C2D5CC853002AC274 /* Motivation.swift in Sources */,
 				EB2250222D156C5A00E002D7 /* SideBarView.swift in Sources */,
 				EB5656312D64D0BA00A25751 /* BundleForEmail.swift in Sources */,
@@ -668,6 +685,7 @@
 				EB22500D2D1457FE00E002D7 /* PlatePixApp.swift in Sources */,
 				EB2250322D198AD100E002D7 /* PlateView.swift in Sources */,
 				EB22502A2D1599C800E002D7 /* Plate-CoreDataHelpers.swift in Sources */,
+				EB87A1532DA6A47000E808CA /* TagSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,7 +877,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePix/Configuration/PlatePix.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_ASSET_PATHS = "\"PlatePix/Preview Content\"";
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				ENABLE_PREVIEWS = YES;
@@ -877,7 +895,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -895,7 +913,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePix/Configuration/PlatePix.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_ASSET_PATHS = "\"PlatePix/Preview Content\"";
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				ENABLE_PREVIEWS = YES;
@@ -913,7 +931,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -931,7 +949,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePixWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlatePixWidget/Info.plist;
@@ -943,7 +961,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix.PlatePixWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -962,7 +980,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePixWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlatePixWidget/Info.plist;
@@ -974,7 +992,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix.PlatePixWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -989,6 +1007,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DMY523XRW6;
@@ -997,6 +1016,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Tatyana.PlatePixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1008,6 +1028,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DMY523XRW6;
@@ -1016,6 +1037,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Tatyana.PlatePixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1026,6 +1048,7 @@
 		EBB2C9842D53AC9E008FA818 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DMY523XRW6;
@@ -1034,6 +1057,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Tatyana.PlatePixUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1044,6 +1068,7 @@
 		EBB2C9852D53AC9E008FA818 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DMY523XRW6;
@@ -1052,6 +1077,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Tatyana.PlatePixUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1122,6 +1148,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		EB5FF6EF2D7B82F000249F07 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB5FF6EE2D7B82F000249F07 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		EB87A17B2DA962E100E808CA /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EB5FF6EE2D7B82F000249F07 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
 			productName = RevenueCat;
