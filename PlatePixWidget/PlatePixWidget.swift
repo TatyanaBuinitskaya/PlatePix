@@ -21,8 +21,10 @@ struct Provider: TimelineProvider {
     /// Used for previews and when the widget is displayed for the first time.
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
         // Load today's motivation text
-        let index = loadTodaysMotivationIndex()
+        
+        let index = MotivationManager.todaysMotivationIndex()
         let motivation = Motivations.motivations[index]
+        
         // Create a snapshot entry using the loaded motivation
         let entry = SimpleEntry(date: Date(), text: motivation.localizedText, color: loadColor())
         completion(entry)
@@ -32,7 +34,8 @@ struct Provider: TimelineProvider {
     /// It refreshes once a day with a new motivational message.
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         // Load today's motivation text
-        let index = loadTodaysMotivationIndex()
+        
+        let index = MotivationManager.todaysMotivationIndex()
         let motivation = Motivations.motivations[index]
 
         var entries: [SimpleEntry] = []
@@ -49,47 +52,6 @@ struct Provider: TimelineProvider {
         // Create the timeline with a policy to update daily
         let timeline = Timeline(entries: entries, policy: .after(nextUpdate))
         completion(timeline)
-    }
-
-    func loadTodaysMotivationIndex() -> Int {
-        if let sharedDefaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix") {
-            let lastDate = sharedDefaults.object(forKey: "lastMotivationDate") as? Date ?? Date.distantPast
-            let calendar = Calendar.current
-
-            if calendar.isDateInToday(lastDate) {
-                if sharedDefaults.object(forKey: "lastMotivationIndex") != nil {
-                    return sharedDefaults.integer(forKey: "lastMotivationIndex")
-                }
-            }
-
-            let newMotivationIndex = pickNewRandomMotivationIndex()
-            saveMotivationIndexToDefaults(newMotivationIndex)
-            return newMotivationIndex
-        } else {
-            print("Failed to access shared UserDefaults")
-            return 0
-        }
-    }
-
-    /// Saves the generated motivation index  to `UserDefaults`
-    private func saveMotivationIndexToDefaults(_ index: Int) {
-        let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")!
-        defaults.set(index, forKey: "lastMotivationIndex")
-        defaults.set(Date(), forKey: "lastMotivationDate")
-        defaults.synchronize()
-    }
-
-    /// Picks a new random motivation  index ensuring it's different from the last one.
-    /// Prevents showing the same message consecutively.
-    func pickNewRandomMotivationIndex() -> Int {
-        var newMotivationIndex: Int
-
-        // Repeat until a different motivation is chosen
-        repeat {
-            newMotivationIndex = Motivations.motivations.randomElement()!.id
-        } while newMotivationIndex == UserDefaults.standard.integer(forKey: "lastMotivationIndex")
-
-        return newMotivationIndex
     }
 
     private func loadColor() -> AppColor {

@@ -11,6 +11,12 @@
             "value" : "Almonds"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Migdały"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jabłko"
           }
         },
         "ru" : {
@@ -47,6 +59,12 @@
             "value" : "Apple Juice"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sok jabłkowy"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +81,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asparagus"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szparagi"
           }
         },
         "ru" : {
@@ -83,6 +107,12 @@
             "value" : "Avocado"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Awokado"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -99,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Banana"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banan"
           }
         },
         "ru" : {
@@ -119,6 +155,12 @@
             "value" : "Barley"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jęczmień"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,6 +177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beef"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wołowina"
           }
         },
         "ru" : {
@@ -155,6 +203,12 @@
             "value" : "Beet"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Burak"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bell Pepper"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Papryka"
           }
         },
         "ru" : {
@@ -191,6 +251,12 @@
             "value" : "Blueberry"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jagoda"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -207,6 +273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bread"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chleb"
           }
         },
         "ru" : {
@@ -227,6 +299,12 @@
             "value" : "Broccoli"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brokuł"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -242,6 +320,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bun"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bułka"
           }
         },
         "ru" : {
@@ -262,6 +346,12 @@
             "value" : "Butter"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masło"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -278,6 +368,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cabbage"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapusta"
           }
         },
         "ru" : {
@@ -298,6 +394,12 @@
             "value" : "Cake"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciasto"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -313,6 +415,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Candy"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cukierki"
           }
         },
         "ru" : {
@@ -333,6 +441,12 @@
             "value" : "Carrot"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marchew"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -349,6 +463,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cashews"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orzechy nerkowca"
           }
         },
         "ru" : {
@@ -369,6 +489,12 @@
             "value" : "Cauliflower"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalafior"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -385,6 +511,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Celery"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seler"
           }
         },
         "ru" : {
@@ -405,6 +537,12 @@
             "value" : "Cereal"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Płatki śniadaniowe"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -421,6 +559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cheese"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ser"
           }
         },
         "ru" : {
@@ -441,6 +585,12 @@
             "value" : "Chicken"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurczak"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -457,6 +607,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chips"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chipsy"
           }
         },
         "ru" : {
@@ -477,6 +633,12 @@
             "value" : "Chocolate"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czekolada"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -493,6 +655,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cod"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dorsz"
           }
         },
         "ru" : {
@@ -513,6 +681,12 @@
             "value" : "Coffee"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kawa"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -528,6 +702,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Coffee with milk"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kawa z mlekiem"
           }
         },
         "ru" : {
@@ -548,6 +728,12 @@
             "value" : "Cookie"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ciasteczko"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -566,6 +752,12 @@
             "value" : "Corn"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kukurydza"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -581,6 +773,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cottage cheese"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twaróg"
           }
         },
         "ru" : {
@@ -601,6 +799,12 @@
             "value" : "Couscous"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuskus"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -617,6 +821,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crab"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Krab"
           }
         },
         "ru" : {
@@ -637,6 +847,12 @@
             "value" : "Crackers"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Krakersy"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -652,6 +868,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crispbread"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wafle chrupkie"
           }
         },
         "ru" : {
@@ -672,6 +894,12 @@
             "value" : "Croissant"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kruasant"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -685,6 +913,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cucumber"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cucumber"
@@ -708,6 +942,12 @@
             "value" : "Duck"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaczka"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -724,6 +964,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Egg"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jajko"
           }
         },
         "ru" : {
@@ -744,6 +990,12 @@
             "value" : "Eggplant"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bakłażan"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -760,6 +1012,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flour"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mąka"
           }
         },
         "ru" : {
@@ -780,6 +1038,12 @@
             "value" : "Garlic"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czosnek"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -798,6 +1062,12 @@
             "value" : "Goose"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gęś"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -810,6 +1080,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Granola"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Granola"
@@ -833,6 +1109,12 @@
             "value" : "Grapes"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winogrona"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -849,6 +1131,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Green Beans"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fasolka szparagowa"
           }
         },
         "ru" : {
@@ -869,6 +1157,12 @@
             "value" : "Honey"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miód"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -885,6 +1179,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ice Cream"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lody"
           }
         },
         "ru" : {
@@ -905,6 +1205,12 @@
             "value" : "Jam"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dżem"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -918,6 +1224,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ketchup"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ketchup"
@@ -941,6 +1253,12 @@
             "value" : "Lamb"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jagnięcina"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -957,6 +1275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lettuce"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sałata"
           }
         },
         "ru" : {
@@ -977,6 +1301,12 @@
             "value" : "Mackerel"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makrela"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -990,6 +1320,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mango"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mango"
@@ -1013,6 +1349,12 @@
             "value" : "Mayonnaise"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Majonez"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1029,6 +1371,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Milk"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mleko"
           }
         },
         "ru" : {
@@ -1048,6 +1396,12 @@
             "value" : "Muesli"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Musli"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1061,6 +1415,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muffin"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Muffin"
@@ -1084,6 +1444,12 @@
             "value" : "Mushroom"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pieczarka"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1100,6 +1466,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mustard"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Musztarda"
           }
         },
         "ru" : {
@@ -1120,6 +1492,12 @@
             "value" : "Noodles"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makaron"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1138,6 +1516,12 @@
             "value" : "Oats"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Owies"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1153,6 +1537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Omelet"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omlet"
           }
         },
         "ru" : {
@@ -1173,6 +1563,12 @@
             "value" : "Onion"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cebula"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1189,6 +1585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Orange"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomarańcza"
           }
         },
         "ru" : {
@@ -1209,6 +1611,12 @@
             "value" : "Orange Juice"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sok pomarańczowy"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1225,6 +1633,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pancake"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naleśnik"
           }
         },
         "ru" : {
@@ -1245,6 +1659,12 @@
             "value" : "Pasta"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makaron"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1260,6 +1680,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Patty"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kotlet"
           }
         },
         "ru" : {
@@ -1280,6 +1706,12 @@
             "value" : "Peach"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brzoskwinia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1296,6 +1728,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peanuts"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orzeszki ziemne"
           }
         },
         "ru" : {
@@ -1316,6 +1754,12 @@
             "value" : "Pear"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruszka"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1332,6 +1776,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peas"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groch"
           }
         },
         "ru" : {
@@ -1352,6 +1802,12 @@
             "value" : "Pickles"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogórki kiszone"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1370,6 +1826,12 @@
             "value" : "Pineapple"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ananas"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1383,6 +1845,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popcorn"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Popcorn"
@@ -1406,6 +1874,12 @@
             "value" : "Pork"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wieprzowina"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1421,6 +1895,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Porridge"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Owsianka"
           }
         },
         "ru" : {
@@ -1441,6 +1921,12 @@
             "value" : "Potato"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ziemniak"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1456,6 +1942,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prune"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śliwka suszona"
           }
         },
         "ru" : {
@@ -1476,6 +1968,12 @@
             "value" : "Pumpkin"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dynia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1494,6 +1992,12 @@
             "value" : "Pumpkin Seeds"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pestki dyni"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1507,6 +2011,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quinoa"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quinoa"
@@ -1530,6 +2040,12 @@
             "value" : "Radish"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rzodkiewka"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1546,6 +2062,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rice"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ryż"
           }
         },
         "ru" : {
@@ -1566,6 +2088,12 @@
             "value" : "Salmon"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Łosoś"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1582,6 +2110,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shrimp"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Krewetki"
           }
         },
         "ru" : {
@@ -1602,6 +2136,12 @@
             "value" : "Spinach"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szpinak"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1618,6 +2158,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Strawberry"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Truskawka"
           }
         },
         "ru" : {
@@ -1638,6 +2184,12 @@
             "value" : "Sugar"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cukier"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1654,6 +2206,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sunflower Seeds"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pestki słonecznika"
           }
         },
         "ru" : {
@@ -1674,6 +2232,12 @@
             "value" : "Tea"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herbata"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1686,6 +2250,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tea with milk"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tea with milk"
@@ -1709,6 +2279,12 @@
             "value" : "Tomato"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomidor"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1722,6 +2298,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tortilla"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tortilla"
@@ -1745,6 +2327,12 @@
             "value" : "Tuna"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuńczyk"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1761,6 +2349,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Turkey"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indyk"
           }
         },
         "ru" : {
@@ -1781,6 +2375,12 @@
             "value" : "Waffle"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gofr"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1797,6 +2397,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Walnuts"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orzechy włoskie"
           }
         },
         "ru" : {
@@ -1817,6 +2423,12 @@
             "value" : "Watermelon"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbuz"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1835,6 +2447,12 @@
             "value" : "Yogurt"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jogurt"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1851,6 +2469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zucchini"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cukinia"
           }
         },
         "ru" : {

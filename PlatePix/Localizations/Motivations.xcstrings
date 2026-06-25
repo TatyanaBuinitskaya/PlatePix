@@ -10,6 +10,12 @@
             "value" : "Your dream will never become a reality unless you start working toward it"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoje marzenie nigdy nie stanie się rzeczywistością, jeśli nie zaczniesz nad nim pracować"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25,6 +31,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don't wait for the perfect moment - it will never come. Just start taking action"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie czekaj na idealny moment - on nigdy nie nadejdzie. Po prostu zacznij działać"
           }
         },
         "ru" : {
@@ -44,6 +56,12 @@
             "value" : "You can achieve even the biggest goal by simply taking small steps every day"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Możesz osiągnąć nawet największy cel, po prostu robiąc małe kroki każdego dnia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +77,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Taking photos of your meals is the best way to track and control your eating habits"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Robienie zdjęć posiłków to najlepszy sposób na śledzenie i kontrolowanie swoich nawyków żywieniowych"
           }
         },
         "ru" : {
@@ -78,6 +102,12 @@
             "value" : "Eat healthy, train hard, and you’ll always be ahead of those who do nothing"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedz zdrowo, trenuj ciężko, a zawsze będziesz przed tymi, którzy nic nie robią"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -93,6 +123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Setbacks are part of the process. Don’t blame yourself—just keep moving toward your goal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niepowodzenia są częścią procesu. Nie obwiniaj się - po prostu dalej dąż do swojego celu"
           }
         },
         "ru" : {
@@ -112,6 +148,12 @@
             "value" : "The first changes will be noticeable in two weeks, and visible results will appear in one or two months. Don't give up too soon"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pierwsze zmiany będą zauważalne po dwóch tygodniach, a widoczne efekty pojawią się po jednym lub dwóch miesiącach. Nie poddawaj się zbyt szybko"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -127,6 +169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "It's hard to change your usual lifestyle, but it's even harder to spend your whole life wanting to change and never actually doing it"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trudno jest zmienić swój dotychczasowy styl życia, ale jeszcze trudniej jest spędzić całe życie, chcąc się zmienić, i nigdy tego nie zrobić"
           }
         },
         "ru" : {
@@ -146,6 +194,12 @@
             "value" : "Eat more fiber-rich foods, and keep vegetables, fruits, and greens always on hand"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedz więcej produktów bogatych w błonnik i zawsze miej pod ręką warzywa, owoce i zieleninę"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Do at least one thing today that brings you closer to your dream, and the day will be well spent"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrób dziś przynajmniej jedną rzecz, która przybliży Cię do Twojego marzenia, a ten dzień będzie dobrze wykorzystany"
           }
         },
         "ru" : {
@@ -180,6 +240,12 @@
             "value" : "Love your body now, not when you lose weight, because this is your dream body—it's just a work in progress"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokochaj swoje ciało już dziś, a nie dopiero po osiągnięciu celu. To już jest Twoje wymarzone ciało - po prostu wciąż nad nim pracujesz"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -195,6 +261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Look at the people who have managed to lose weight. You’re just like them—if they could do it, so can you"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spójrz na osoby, którym udało się schudnąć. Jeśli im się udało, Tobie również się uda"
           }
         },
         "ru" : {
@@ -214,6 +286,12 @@
             "value" : "Inner confidence and discipline will surely lead you to your goal"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pewność siebie i dyscyplina pomogą Ci osiągnąć każdy cel"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -229,6 +307,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The extra pounds didn’t come on overnight, so don’t expect them to disappear instantly. Give yourself time and patience"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodatkowe kilogramy nie pojawiły się z dnia na dzień, więc nie oczekuj, że znikną od razu. Daj sobie czas i uzbrój się w cierpliwość"
           }
         },
         "ru" : {
@@ -248,6 +332,12 @@
             "value" : "Do your best now, and your future self will definitely thank you"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrób dziś wszystko, co w Twojej mocy, a Twoje przyszłe ja będzie Ci za to wdzięczne"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -263,6 +353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The availability and convenience of foods define the foundation of your diet. Make sure healthy, low-calorie foods are always in your kitchen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To, jakie produkty masz pod ręką, w dużej mierze wpływa na Twoje nawyki żywieniowe. Zadbaj o to, aby w Twojej kuchni zawsze były zdrowe i niskokaloryczne produkty"
           }
         },
         "ru" : {
@@ -282,6 +378,12 @@
             "value" : "Motivation is what gets you moving, what sparks change, and gives you that initial push. After that, it's daily actions and discipline that make the difference"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motywacja pomaga Ci ruszyć z miejsca i zrobić pierwszy krok. Jednak to codzienne nawyki i dyscyplina decydują o osiągnięciu celu"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -297,6 +399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The pleasure of eating a pastry lasts 5 minutes, but you can enjoy your stunning reflection in the mirror every day"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przyjemność ze zjedzenia ciastka trwa tylko chwilę, ale dobre samopoczucie i zadowolenie z siebie mogą towarzyszyć Ci każdego dnia"
           }
         },
         "ru" : {
@@ -316,6 +424,12 @@
             "value" : "Instead of sitting and scrolling through social media, admiring how amazing others look, get up and do something to make yourself look amazing"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamiast siedzieć i przeglądać media społecznościowe, podziwiając, jak świetnie wyglądają inni, wstań i zrób coś, co pomoże Ci poczuć się świetnie we własnej skórze"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -331,6 +445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A setback is not the end, just a temporary pause on the way to your goal. Just keep going"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niepowodzenie to nie koniec, a jedynie tymczasowa przerwa na drodze do celu. Po prostu idź dalej"
           }
         },
         "ru" : {
@@ -350,6 +470,12 @@
             "value" : "Don't do what's easy, do what will lead you to a beautiful body"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie rób tego, co łatwe - rób to, co doprowadzi Cię do pięknej sylwetki"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -365,6 +491,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your journey to a healthy weight is a marathon, not a sprint. Persistence and consistency will lead you to success"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoja droga do zdrowej wagi to maraton, a nie sprint. Wytrwałość i konsekwencja doprowadzą Cię do sukcesu"
           }
         },
         "ru" : {
@@ -384,6 +516,12 @@
             "value" : "If you're looking at your phone and eating right now, put the phone down, enjoy your food, and then get back to other tasks"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeśli teraz patrzysz w telefon i jesz, odłóż go, ciesz się posiłkiem, a potem wróć do innych zajęć"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -399,6 +537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don’t regret not starting to lose weight earlier. Just start doing it now, so there will be no regrets in the future"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie żałuj, że nie zacząłeś wcześniej odchudzać się. Po prostu zacznij teraz, aby w przyszłości nie mieć żadnych wyrzutów sumienia"
           }
         },
         "ru" : {
@@ -418,6 +562,12 @@
             "value" : "Set yourself up for a smooth and lasting process, don’t chase quick results"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadbaj o spokojny i trwały proces, nie goń za szybkim efektem"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -433,6 +583,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don’t listen to those who say you can’t do it. Believe in yourself and prove to everyone that you’re capable of more"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie słuchaj tych, którzy mówią, że nie dasz rady. Uwierz w siebie i pokaż wszystkim, że stać Cię na więcej"
           }
         },
         "ru" : {
@@ -452,6 +608,12 @@
             "value" : "Every step, even the smallest one, brings you closer to your goal. Even if progress seems slow, it’s still there"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy krok, nawet najmniejszy, przybliża Cię do celu. Nawet jeśli postępy wydają się powolne, wciąż są widoczne"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -467,6 +629,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Load your menu with vitamins and minerals. The more varied your diet, the better you'll feel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wzbogacaj swój jadłospis w witaminy i minerały. Im bardziej zróżnicowana dieta, tym lepiej się poczujesz"
           }
         },
         "ru" : {
@@ -486,6 +654,12 @@
             "value" : "Don’t forget to drink water—it helps keep your body in good shape and reduces appetite"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie zapominaj o piciu wody - pomaga utrzymać organizm w dobrej formie i zmniejsza apetyt"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -501,6 +675,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Every day you choose a healthy lifestyle, you invest in your future"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdego dnia, wybierając zdrowy styl życia, inwestujesz w swoją przyszłość"
           }
         },
         "ru" : {
@@ -520,6 +700,12 @@
             "value" : "There will always be someone slimmer or more successful than you, so compare yourself not to them, but to who you were in the past"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zawsze znajdzie się ktoś szczuplejszy lub bardziej odnoszący sukcesy od Ciebie, więc nie porównuj się do innych, lecz do tego, kim byłeś w przeszłośc"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -535,6 +721,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Every time you say no to sweets, it's a victory over yourself and one step closer to your goal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za każdym razem, gdy odmawiasz sobie słodyczy, to zwycięstwo nad sobą i jeden krok bliżej do celu"
           }
         },
         "ru" : {
@@ -554,6 +746,12 @@
             "value" : "If you had started losing weight six months ago, you would already have a fit and toned body today. Don’t waste time"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gdybyś zaczął chudnąć sześć miesięcy temu, dziś miałbyś już wysportowaną i wyrzeźbioną sylwetkę. Nie marnuj czasu"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -569,6 +767,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Even if you lose only a small part of your excess weight, it’s still a positive step toward your goal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nawet jeśli tracisz tylko niewielką część nadwagi, to nadal jest to pozytywny krok w stronę celu"
           }
         },
         "ru" : {
@@ -588,6 +792,12 @@
             "value" : "Loving yourself means nourishing your body with delicious and healthy food, not sugar and fast food that only harm it"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kochać siebie to odżywiać swoje ciało pysznym i zdrowym jedzeniem, a nie cukrem i fast foodem, które tylko mu szkodzą"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -603,6 +813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What matters is not whether you slip up, but how quickly you get back on track with healthy eating"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie liczy się to, czy zdarzy Ci się potknięcie, ale jak szybko wrócisz do zdrowego odżywiania"
           }
         },
         "ru" : {
@@ -622,6 +838,12 @@
             "value" : "Work out instead of watching TV shows or scrolling through social media—it's much more beneficial"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamiast oglądać seriale lub przeglądać media społecznościowe, poćwicz - to znacznie bardziej korzystne"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -637,6 +859,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Life is too short to live in a body you don’t like"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Życie jest zbyt krótkie, aby żyć w ciele, którego nie lubisz"
           }
         },
         "ru" : {
@@ -656,6 +884,12 @@
             "value" : "If you're tired and don't have the strength to continue, just take a break, rest, and distract yourself, but make sure to return to your goal"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeśli jesteś zmęczony i nie masz siły, aby dalej działać, zrób przerwę, odpocznij i odwróć uwagę, ale upewnij się, że wrócisz do swojego celu"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -671,6 +905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "If a walk outdoors isn’t part of your plans today, try to combine it with a trip to the store or your way home"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeśli spacer na świeżym powietrzu nie jest dziś w Twoich planach, spróbuj połączyć go z wyjściem do sklepu lub drogą do domu"
           }
         },
         "ru" : {
@@ -690,6 +930,12 @@
             "value" : "Buy only healthy and low-calorie food, and you won’t risk eating something harmful"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kupuj tylko zdrowe i niskokaloryczne produkty, a nie będziesz ryzykować zjedzenia czegoś szkodliwego"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -705,6 +951,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stand up straight, roll your shoulders back, and pull in your stomach—you already look slimmer and more confident"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyprostuj się, ściągnij łopatki do tyłu i trzymaj wyprostowaną postawę - od razu wyglądasz pewniej i czujesz się lepiej"
           }
         },
         "ru" : {
@@ -724,6 +976,12 @@
             "value" : "Stay fully focused on your goal; no external factors should distract you from your path"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skup się w pełni na swoim celu; żadne czynniki zewnętrzne nie powinny odciągać Cię od Twojej drogi"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -739,6 +997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don’t give up halfway; otherwise, all your efforts will be in vain. Just keep moving toward your goal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie poddawaj się w połowie drogi, bo wtedy cały Twój wysiłek pójdzie na marne. Po prostu dalej dąż do swojego celu"
           }
         },
         "ru" : {
@@ -758,6 +1022,12 @@
             "value" : "You deserve to feel confident and comfortable in your body"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zasługujesz na to, by czuć się pewnie i komfortowo we własnym ciele"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -773,6 +1043,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don’t waste time regretting how you look; instead, focus on how slim you will become"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie trać czasu na zamartwianie się swoim wyglądem - skup się na tym, by iść naprzód i robić postępy"
           }
         },
         "ru" : {
@@ -792,6 +1068,12 @@
             "value" : "Train yourself to think before eating something, stop mindless eating out of boredom or frustration"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naucz się myśleć, zanim coś zjesz, i przestań jeść bezmyślnie z nudów lub frustracji"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -807,6 +1089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don’t pay attention to people who drink alcohol and eat a lot of junk food. Just do what will lead you to your goal, not theirs"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie zwracaj uwagi na innych - skup się na swoim celu i wybieraj to, co przybliża Cię do jego osiągnięcia, a nie cele innych"
           }
         },
         "ru" : {
@@ -826,6 +1114,12 @@
             "value" : "Vegetables and fruits are your best friends: they are rich in vitamins and minerals, and are also low in calories"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warzywa i owoce to Twoi najlepsi przyjaciele: są bogate w witaminy i minerały, a jednocześnie niskokaloryczne"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -841,6 +1135,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Moderation is the key to success. Don’t restrict yourself too much, but remember portion sizes"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umiar jest kluczem do sukcesu. Nie ograniczaj się zbyt mocno, ale pamiętaj o wielkości porcji"
           }
         },
         "ru" : {
@@ -860,6 +1160,12 @@
             "value" : "Physical activity isn’t just gym workouts, but also walking to work or taking the stairs instead of the elevator"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktywność fizyczna to nie tylko treningi na siłowni, ale także chodzenie pieszo do pracy czy wybieranie schodów zamiast windy"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -875,6 +1181,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A healthy lifestyle is a long-term investment in your well-being and happiness"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdrowy styl życia to długoterminowa inwestycja w Twoje samopoczucie i szczęście"
           }
         },
         "ru" : {
@@ -894,6 +1206,12 @@
             "value" : "Don’t skip meals: regular eating helps keep your metabolism in check and control your appetit"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie pomijaj posiłków: regularne jedzenie pomaga utrzymać metabolizm w równowadze i kontrolować apetyt"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -909,6 +1227,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weight loss isn’t about restriction; it’s about freeing yourself from excess weight and self-doubt"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdrowy styl życia to nie ograniczenia, lecz budowanie dobrych nawyków i większej pewności siebie"
           }
         },
         "ru" : {
@@ -928,6 +1252,12 @@
             "value" : "Every kilogram you lose brings you closer to a long, active, and fulfilling life"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy krok w stronę zdrowszego stylu życia przybliża Cię do długiego, aktywnego i satysfakcjonującego życia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -943,6 +1273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You are stronger than you think. Give yourself a chance"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jesteś silniejszy, niż myślisz. Daj sobie szansę"
           }
         },
         "ru" : {
@@ -962,6 +1298,12 @@
             "value" : "Imagine how great it will feel to meet your ex or old friends after you’ve lost weight"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyobraź sobie, jak dobrze będziesz się czuć, gdy zobaczysz efekty swoich zmian i poczujesz większą pewność siebie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -977,6 +1319,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "When you lose the extra weight, you’ll improve not only your appearance but also your quality of life"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wprowadzając zdrowe nawyki, możesz poprawić nie tylko swój wygląd, ale także jakość życia i samopoczucie"
           }
         },
         "ru" : {
@@ -996,6 +1344,12 @@
             "value" : "Believe in yourself, you are capable of achieving anything you desire"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uwierz w siebie - jesteś w stanie osiągnąć wszystko, czego pragniesz"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1011,6 +1365,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Make your health and your desires a priority — you are the most important person in your life"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postaw swoje zdrowie i potrzeby na pierwszym miejscu - jesteś najważniejszą osobą w swoim życiu"
           }
         },
         "ru" : {
@@ -1030,6 +1390,12 @@
             "value" : "You can't make your body younger, but you can make it healthier and more beautiful"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie możesz cofnąć czasu swojemu ciału, ale możesz uczynić je zdrowszym i lepiej o nie zadbać"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1045,6 +1411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The sooner you start taking care of your body, the longer you’ll look amazing"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im wcześniej zaczniesz dbać o swoje ciało, tym dłużej będzie Ci dobrze służyć i będziesz czuć się lepiej"
           }
         },
         "ru" : {
@@ -1064,6 +1436,12 @@
             "value" : "The weight loss journey isn’t easy, but what an amazing body awaits you at the end"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Droga do zmiany nie jest łatwa, ale prowadzi do lepszego samopoczucia i większej pewności siebie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1079,6 +1457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Take control of your thoughts and actions, finally become the person you want to be"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przejmij kontrolę nad swoimi myślami i działaniami, w końcu stań się osobą, którą chcesz być"
           }
         },
         "ru" : {
@@ -1098,6 +1482,12 @@
             "value" : "The longer you delay your weight loss, the longer and harder your transformation journey will be"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im dłużej odkładasz wprowadzenie zdrowych nawyków, tym trudniej może być osiągnąć trwałe zmiany"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1113,6 +1503,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Set small goals for yourself, work towards them, celebrate the results, praise yourself, and be inspired by your achievements"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyznaczaj sobie małe cele, dąż do ich realizacji, celebruj rezultaty, chwal siebie i czerp inspirację ze swoich osiągnięć"
           }
         },
         "ru" : {
@@ -1132,6 +1528,12 @@
             "value" : "If you love rewarding yourself with something tasty, make sure it’s healthy and low-calorie"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeśli lubisz nagradzać się jedzeniem, wybieraj opcje, które są bardziej odżywcze i wspierają Twój styl życia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1147,6 +1549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Only take inspiration from those you want to be like, mimic their lifestyle — they too once went through a long journey"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czerp inspirację od osób, które Cię motywują, pamiętając, że one również przeszły długą drogę, zanim osiągnęły swoje cele"
           }
         },
         "ru" : {
@@ -1166,6 +1574,12 @@
             "value" : "Physically active people don’t look for energy for their workouts; they get it from their activities"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Osoby aktywne fizycznie nie szukają energii do treningu - czerpią ją ze swojej aktywności"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1181,6 +1595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Every day gives you the chance to change your life and become better. The choice is yours — whether to take this opportunity or not"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy dzień daje Ci szansę, aby zmienić swoje życie i stać się lepszym. Wybór należy do Ciebie - czy skorzystasz z tej okazji, czy nie"
           }
         },
         "ru" : {
@@ -1200,6 +1620,12 @@
             "value" : "It’s important to make proper nutrition and physical activity a part of your lifestyle, not temporary restrictions"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ważne jest, aby zdrowe odżywianie i aktywność fizyczna stały się częścią Twojego stylu życia, a nie tymczasowym ograniczeniem"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1215,6 +1641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don’t postpone your life in a beautiful body for later, that later may never come"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie odkładaj życia i dbania o siebie na później - to „później” może nigdy nie nadejść"
           }
         },
         "ru" : {
@@ -1234,6 +1666,12 @@
             "value" : "Take it step by step, be patient, and the results will surely come"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idź krok po kroku, bądź cierpliwy, a rezultaty z pewnością przyjdą"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1249,6 +1687,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Frequent consumption of alcohol, sugar, and refined carbs with low fiber will lead to health issues"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Częste spożywanie alkoholu, cukru oraz rafinowanych węglowodanów przy niskiej zawartości błonnika może prowadzić do problemów zdrowotnych"
           }
         },
         "ru" : {
@@ -1268,6 +1712,12 @@
             "value" : "Be active in all areas of life: walk, socialize, dance, love — and there won’t be time for endless eating"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bądź aktywny we wszystkich obszarach życia: spaceruj, spotykaj się z ludźmi, tańcz, kochaj - a nie będzie czasu na bezustanne jedzenie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1283,6 +1733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Every step towards improving your health and appearance is a step towards a new version of yourself"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy krok w stronę poprawy zdrowia jest krokiem w stronę nowej, lepszej wersji siebie"
           }
         },
         "ru" : {
@@ -1302,6 +1758,12 @@
             "value" : "When you reach your weight loss goal, you’ll become not just slim, but also energetic, happy, and confident"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Osiągając swoje cele związane ze zdrowym stylem życia, możesz stać się bardziej energiczny, szczęśliwy i pewny siebie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1317,6 +1779,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fill your day with healthy snacks like fruits, nuts, or vegetables"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wypełnij swój dzień zdrowymi przekąskami, takimi jak owoce, orzechy lub warzywa"
           }
         },
         "ru" : {
@@ -1336,6 +1804,12 @@
             "value" : "Weight loss is not just about appearance, but also about your overall health and well-being"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdrowe nawyki to nie tylko kwestia wyglądu, ale przede wszystkim ogólnego zdrowia i dobrego samopoczucia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1351,6 +1825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regular workouts reduce stress and improve mood"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regularne treningi redukują stres i poprawiają nastrój"
           }
         },
         "ru" : {
@@ -1370,6 +1850,12 @@
             "value" : "Good posture not only enhances your appearance but also improves your health"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dobra postawa ciała nie tylko wspiera zdrowie, ale także poprawia samopoczucie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1385,6 +1871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Food is your fuel. Give your body the best so it can give its best to you"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedzenie to Twoje paliwo. Daj swojemu ciału to, co najlepsze, aby mogło dać z siebie wszystko"
           }
         },
         "ru" : {
@@ -1404,6 +1896,12 @@
             "value" : "Don't stop at what you've achieved—keep moving forward and reaching new heights"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie zatrzymuj się na tym, co już osiągnąłeś - idź dalej i sięgaj po nowe wyżyny"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1419,6 +1917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Success doesn’t come to those who wait, but to those who take action"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sukces nie przychodzi do tych, którzy czekają, lecz do tych, którzy działają"
           }
         },
         "ru" : {
@@ -1438,6 +1942,12 @@
             "value" : "The best way to predict the future is to create it. Invest your time and energy today in taking care of your body"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najlepszym sposobem na przewidzenie przyszłości jest jej tworzenie. Zainwestuj dziś swój czas i energię w dbanie o swoje ciało"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1453,6 +1963,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Every step towards healthy eating and physical activity brings you closer to the best version of yourself"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy krok w stronę zdrowego odżywiania i aktywności fizycznej przybliża Cię do lepszej wersji siebie"
           }
         },
         "ru" : {
@@ -1472,6 +1988,12 @@
             "value" : "You deserve to be slim, beautiful, healthy, and happy"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zasługujesz na to, by być zdrowym, szczęśliwym i dobrze czuć się we własnym ciele"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1487,6 +2009,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Every day is a new opportunity to become better"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy dzień jest nową szansą, by stać się lepszym"
           }
         },
         "ru" : {
@@ -1506,6 +2034,12 @@
             "value" : "Let others admire and be inspired by your before-and-after photos, just as you were once inspired by theirs"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niech Twoje postępy inspirują innych tak, jak Ciebie kiedyś inspirowały postępy innych"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1521,6 +2055,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Taking care of your body is an expression of self-love and respect"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dbanie o swoje ciało jest wyrazem miłości do siebie i szacunku do siebie"
           }
         },
         "ru" : {
@@ -1540,6 +2080,12 @@
             "value" : "Once you reach your goal, remember that maintaining the results is just as important as achieving them"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kiedy osiągniesz swój cel, pamiętaj, że utrzymanie rezultatów jest równie ważne jak ich osiągnięcie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1555,6 +2101,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Each meal is a step on your journey. Take photos, analyze, and keep moving forward"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy posiłek jest częścią Twojej drogi. Bądź świadomy swoich wyborów i konsekwentnie idź naprzód"
           }
         },
         "ru" : {
@@ -1574,6 +2126,12 @@
             "value" : "Consistency is more important than perfection — take photos, track your progress, and stay focused on your goal"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsekwencja jest ważniejsza niż perfekcja - trzymaj się swoich nawyków i skup się na swoim celu"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1589,6 +2147,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A healthy lifestyle starts with one plate — take photos and make mindful choices"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdrowy styl życia zaczyna się od jednego posiłku - dokonuj świadomych wyborów"
           }
         },
         "ru" : {
@@ -1608,6 +2172,12 @@
             "value" : "By seeing your meals, you see your progress — record, adjust, and improve"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obserwując swoje nawyki żywieniowe, możesz lepiej rozumieć swój postęp - ucz się, dostosowuj i rozwija"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1623,6 +2193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your eating habits shape your future — take photos to stay accountable and inspired"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoje nawyki żywieniowe kształtują Twoją przyszłość — dbaj o świadome wybory i czerp z nich motywację"
           }
         },
         "ru" : {
@@ -1642,6 +2218,12 @@
             "value" : "Weight loss is not about restrictions, but awareness. Let the photos of your plates guide you"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdrowe odżywianie to nie restrykcje, lecz świadomość. Kieruj się świadomymi wyborami i obserwuj swoje nawyki"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1657,6 +2239,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your plate tells a story - make it one you're proud to look back on"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój talerz opowiada historię - spraw, by była taką, z której będziesz dumny, gdy spojrzysz wstecz"
           }
         },
         "ru" : {
@@ -1676,6 +2264,12 @@
             "value" : "Every healthy choice brings you closer to your goal — keep moving forward, plate by plate"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy zdrowy wybór przybliża Cię do celu - idź dalej krok po kroku"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1693,6 +2287,12 @@
             "value" : "Small steps, big results. Every plate photo is a step towards a healthier you"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Małe kroki, wielkie efekty. Każdy zdrowy wybór przybliża Cię do zdrowszej wersji siebie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1708,6 +2308,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your journey to a healthy life starts with awareness — take photos and make every bite meaningful"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoja droga do zdrowego życia zaczyna się od świadomości - spraw, aby każdy wybór był przemyślany"
           }
         },
         "ru" : {

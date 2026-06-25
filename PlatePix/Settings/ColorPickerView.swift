@@ -35,15 +35,21 @@ struct ColorPickerView: View {
             }
         } label: {
             HStack {
-                Label("Theme", systemImage: "paintpalette")
+                Label {
+                    Text("Theme")
+                } icon: {
+                    Image(systemName: "paintpalette")
+                        .foregroundStyle(colorManager.selectedColor.color)
+                }
                 Spacer()
                 Circle()
                     .fill(colorManager.selectedColor.color)
                     .frame(width: 25, height: 25)
             }
         }
+        }
     }
-}
+
 
 /// A circular color option in the color picker grid.
 /// Shows a checkmark if the color is currently selected.

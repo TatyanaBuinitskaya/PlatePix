@@ -34,7 +34,10 @@ struct ContentView: View {
     ]
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $dataController.path) {
+//            Button("Reset Awards") {
+//                dataController.congratulatedAwards = []
+//            }
             ZStack {
                 VStack(spacing: 5) {
                     motivation // Displays the motivational text.
@@ -65,38 +68,6 @@ struct ContentView: View {
                     .environmentObject(colorManager)
                     .environmentObject(dataController)
             }
-            // Navigates to a new plate view when a new plate is created.
-            .navigationDestination(isPresented: $dataController.isNewPlateCreated) {
-                if let newPlate = dataController.selectedPlate {
-                    PlateView(plate: newPlate)
-                        .environmentObject(colorManager)
-                        .environmentObject(dataController)
-                } else {
-                    ContentView()
-                        .environmentObject(userPreferences)
-                }
-            }
-            // spotlight
-            // Dynamically navigates to PlateView when a plate is selected
-            .navigationDestination(isPresented: $isShowingPlate) {
-                if let selectedPlate = dataController.selectedPlate {
-                    PlateView(plate: selectedPlate)
-                        .environmentObject(colorManager)
-                        .environmentObject(dataController)
-                } else {
-                    ContentView()
-                        .environmentObject(userPreferences)
-                }
-            }
-            // spotlight
-            // Observes changes in selectedPlate and triggers navigation
-            .onChange(of: dataController.selectedPlate) {
-                if dataController.selectedPlate != nil {
-                    isShowingPlate = true
-                } else {
-                    isShowingPlate = false
-                }
-            }
             // Applies the selected date filter when the date changes.
             .onChange(of: dataController.selectedDate) {
                 applyDateFilter()
@@ -119,9 +90,14 @@ struct ContentView: View {
     /// If found, it triggers the creation of a new plate.
     /// - Parameter url: The URL to be processed.
     func openURL(_ url: URL) {
-        if url.absoluteString.contains("newPlate") {
-            dataController.tryNewPlate()
-        }
+//        if url.absoluteString.contains("newPlate") {
+//           // dataController.tryNewPlate()
+//            dataController.newPlate()
+//
+//        }
+        let plate = dataController.newPlate()
+        guard let plate else { return }
+        dataController.path.append(plate)
     }
 }
 
@@ -145,8 +121,9 @@ extension ContentView {
     /// A view displaying the motivational text at the top of the screen.
     private var motivation: some View {
         VStack {
-            let index = loadOrGenerateMotivationIndex()
+            let index = MotivationManager.todaysMotivationIndex()
             let motivationText = Motivations.motivations[index].localizedText
+            
             Text(motivationText)
                 .font(.callout)
                 .foregroundStyle(colorManager.selectedColor.color)
@@ -182,49 +159,44 @@ extension ContentView {
                             .padding()
                     } else if let tag = tag {
                         let tagTitle = NSLocalizedString(tag.tagName, tableName: dataController.tableNameForTagType(tag.type), comment: "")
-                        if let selectedDate = dataController.selectedDate {
+                     //   if let selectedDate = dataController.selectedDate {
                             Text("No plates match the \(tagTitle) filter on \(date)")
                                 .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
                                 .padding()
-                        } else {
-                            Text("No plates match the \(tagTitle) filter \(date)")
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        }
+//                        } else {
+//                            Text("No plates match the \(tagTitle) filter \(date)")
+//                                .foregroundColor(.secondary)
+//                                .multilineTextAlignment(.center)
+//                                .padding()
+//                        }
                     } else {
-                        if let selectedDate = dataController.selectedDate {
+                     //   if let selectedDate = dataController.selectedDate {
                             Text("No plates match the \(filter) filter on \(date)")
                                 .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
                                 .padding()
-                        } else {
-                            Text("No plates match the \(filter) filter \(date)")
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        }
+//                        } else {
+//                            Text("No plates match the \(filter) filter \(date)")
+//                                .foregroundColor(.secondary)
+//                                .multilineTextAlignment(.center)
+//                                .padding()
+//                        }
                     }
                     Spacer()
                 }
             } else {
+              //  NavigationStack(path: $dataController.path) {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 2) {
                         // Iterate over the plates returned by the selected filter and display them.
-                        ForEach(filteredPlates) { plate in
-                            NavigationLink(value: plate) {
+                     ForEach(filteredPlates, id: \.objectID) { plate in
+                           // NavigationLink(value: plate) {
+                        
                                 PlateBox(plate: plate) // Displays each plate in a PlateBox view.
                                     .accessibilityIdentifier("plateView")
                                     .onTapGesture {
-                                        if dataController.selectedPlate == plate {
-                                            dataController.selectedPlate = nil // Reset selection
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                                dataController.selectedPlate = plate // Re-select after a slight delay
-                                            }
-                                        } else {
-                                            dataController.selectedPlate = plate
-                                        }
+                                        dataController.path.append(plate)
                                     }
                             }
                         }
@@ -234,7 +206,7 @@ extension ContentView {
                         text: $dataController.filterText,
                         prompt: "Search in Notes"
                     )
-                }
+              //  }
             }
         }
     }
@@ -254,6 +226,9 @@ extension ContentView {
                         .environmentObject(colorManager)
                     .accessibilityIdentifier("New Plate")
                     .sheet(isPresented: $dataController.showingStore, content: StoreView.init)
+                    .onReceive(NotificationCenter.default.publisher(for: .openStoreView)) { _ in
+                        dataController.showingStore = true
+                    }
             }
             
         }
@@ -350,43 +325,6 @@ extension ContentView {
             // Apply existing filters (if any) or reset to default
             dataController.selectedFilter = dataController.selectedFilter ?? .all
         }
-    }
-
-    /// Loads motivation index from UserDefaults, or generates a new one if missing.
-    private func loadOrGenerateMotivationIndex() -> Int {
-        let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")!
-
-        let savedIndex = defaults.integer(forKey: "lastMotivationIndex")
-
-        // If the saved index is 0, check if it's actually a valid index or just a default value.
-        if savedIndex != 0 || defaults.object(forKey: "lastMotivationIndex") != nil {
-            return savedIndex
-        } else {
-            let newIndex = pickNewRandomMotivationIndex()
-            saveMotivationIndexToDefaults(newIndex)
-            return newIndex
-        }
-    }
-
-    /// Saves the generated motivation index to `UserDefaults`
-    private func saveMotivationIndexToDefaults(_ index: Int) {
-        let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")!
-        defaults.set(index, forKey: "lastMotivationIndex")
-        defaults.set(Date(), forKey: "lastMotivationDate")
-        defaults.synchronize()
-    }
-
-    /// Picks a new random motivation index ensuring it's different from the last one.
-    private func pickNewRandomMotivationIndex() -> Int {
-        var newIndex: Int
-        let defaults = UserDefaults(suiteName: "group.com.TatianaBuinitskaia.PlatePix")!
-
-        // Repeat until a different motivation is chosen
-        repeat {
-            newIndex = Motivations.motivations.randomElement()!.id
-        } while newIndex == defaults.integer(forKey: "lastMotivationIndex")
-
-        return newIndex
     }
 }
 

@@ -14,7 +14,6 @@ struct PlateBox: View {
     /// The plate object that provides data for the plate image and related information.
     @ObservedObject var plate: Plate
     /// The optional image of the plate that will be displayed.
-    @State var imagePlateView: UIImage?
     /// A flag to control whether the overlay (PlateInfoOverlay) is shown or not.
     @State var showOverlay: Bool = true
     
@@ -22,7 +21,6 @@ struct PlateBox: View {
             VStack(spacing: 3) {
                 PlateImageView(
                     plate: plate,
-                    imagePlateView: $imagePlateView,
                     maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 200 : 200,
                     maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 200 : 200
                 )
@@ -67,7 +65,8 @@ struct PlateInfoOverlay: View {
             .padding(.horizontal, 3)
             .padding(3)
             // Set background color based on whether the meal time is shown.
-            .background(userPreferences.showMealTime ? Color.black.opacity(0.5) : Color.white.opacity(0.0))
+            .background(userPreferences.showMealTime || userPreferences.showQuality ?
+                        Color.black.opacity(0.5) : Color.white.opacity(0.0))
             Spacer() // Pushes the content to the bottom
             HStack(spacing: 0) {
                 // Show tags if the dataController indicates it's enabled.

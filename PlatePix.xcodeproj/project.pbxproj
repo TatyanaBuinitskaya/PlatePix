@@ -28,6 +28,7 @@
 		EB22504B2D2D4B7700E002D7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504A2D2D4B7700E002D7 /* SettingsView.swift */; };
 		EB22504F2D2EC3A400E002D7 /* CalendarSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */; };
 		EB3B64752D84CAC00073FD0A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5FF6F12D7B833800249F07 /* StoreKit.framework */; };
+		EB4DD9932FE034F300147919 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = EB4DD9922FE034F300147919 /* RevenueCat */; };
 		EB517DA72D9A954400046CA4 /* JPEGShareOneDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB517DA62D9A954400046CA4 /* JPEGShareOneDayView.swift */; };
 		EB5655E72D63400F00A25751 /* AppColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5655E62D63400F00A25751 /* AppColorManager.swift */; };
 		EB56562B2D63607F00A25751 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB56562A2D63607F00A25751 /* ColorPickerView.swift */; };
@@ -55,7 +56,6 @@
 		EB567FB12D5E100A002AC274 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB567FB02D5E100A002AC274 /* WidgetKit.framework */; };
 		EB567FB32D5E100A002AC274 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB567FB22D5E100A002AC274 /* SwiftUI.framework */; };
 		EB567FC02D5E100C002AC274 /* PlatePixWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EB567FAE2D5E100A002AC274 /* PlatePixWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		EB5FF6F02D7B82F000249F07 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = EB5FF6EF2D7B82F000249F07 /* RevenueCat */; };
 		EB5FF6F42D7EEA6F00249F07 /* ExtensionRevenueCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5FF6F32D7EEA6F00249F07 /* ExtensionRevenueCat.swift */; };
 		EB7922462D3FDBDA00BF97D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922452D3FDBDA00BF97D7 /* TagListView.swift */; };
 		EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79224D2D410E2F00BF97D7 /* Tags.swift */; };
@@ -65,6 +65,9 @@
 		EB79225E2D47BC0A00BF97D7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */; };
 		EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */; };
 		EB7922622D48F17800BF97D7 /* PlateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7922612D48F17800BF97D7 /* PlateImageView.swift */; };
+		EB8495902FE6EE320033F572 /* MotivationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB84958F2FE6EE320033F572 /* MotivationManager.swift */; };
+		EB8495912FE6EEE80033F572 /* MotivationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB84958F2FE6EE320033F572 /* MotivationManager.swift */; };
+		EB8495922FE6EEE80033F572 /* MotivationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB84958F2FE6EE320033F572 /* MotivationManager.swift */; };
 		EB87A1532DA6A47000E808CA /* TagSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A1522DA6A46F00E808CA /* TagSettings.swift */; };
 		EB87A1552DA9569A00E808CA /* EditTagSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB87A1542DA9569A00E808CA /* EditTagSheet.swift */; };
 		EB87A17C2DA962E100E808CA /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = EB87A17B2DA962E100E808CA /* RevenueCat */; };
@@ -76,6 +79,7 @@
 		EBBD6D602D616B00006A3DC2 /* Motivations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F8D2D5CC8D9002AC274 /* Motivations.swift */; };
 		EBBD6D612D616B00006A3DC2 /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB567F8B2D5CC853002AC274 /* Motivation.swift */; };
 		EBBD6D832D654B5B006A3DC2 /* Motivations.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EB567FA82D5CDD8A002AC274 /* Motivations.xcstrings */; };
+		EBBF94352FD834730023874D /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBF94342FD834730023874D /* Cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +144,7 @@
 		EB2250482D28FEA300E002D7 /* AwardSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AwardSheetView.swift; sourceTree = "<group>"; };
 		EB22504A2D2D4B7700E002D7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EB22504E2D2EC3A300E002D7 /* CalendarSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSheetView.swift; sourceTree = "<group>"; };
+		EB4DD94D2FE0249B00147919 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = pl; path = pl.lproj/Awards.json; sourceTree = "<group>"; };
 		EB517DA62D9A954400046CA4 /* JPEGShareOneDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPEGShareOneDayView.swift; sourceTree = "<group>"; };
 		EB5655E62D63400F00A25751 /* AppColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorManager.swift; sourceTree = "<group>"; };
 		EB56562A2D63607F00A25751 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
@@ -178,6 +183,7 @@
 		EB79225D2D47BC0A00BF97D7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		EB79225F2D47BDD600BF97D7 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		EB7922612D48F17800BF97D7 /* PlateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateImageView.swift; sourceTree = "<group>"; };
+		EB84958F2FE6EE320033F572 /* MotivationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivationManager.swift; sourceTree = "<group>"; };
 		EB87A1522DA6A46F00E808CA /* TagSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettings.swift; sourceTree = "<group>"; };
 		EB87A1542DA9569A00E808CA /* EditTagSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagSheet.swift; sourceTree = "<group>"; };
 		EB87A17D2DB03F6300E808CA /* CreateTagSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTagSheet.swift; sourceTree = "<group>"; };
@@ -187,6 +193,7 @@
 		EBB2C9472D4D8C48008FA818 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		EBB2C9572D52486B008FA818 /* PlatePixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatePixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB2C97B2D53AC9E008FA818 /* PlatePixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatePixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBBF94342FD834730023874D /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -210,9 +217,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB5FF6F02D7B82F000249F07 /* RevenueCat in Frameworks */,
 				EB3B64752D84CAC00073FD0A /* StoreKit.framework in Frameworks */,
 				EB87A17C2DA962E100E808CA /* RevenueCat in Frameworks */,
+				EB4DD9932FE034F300147919 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,11 +307,13 @@
 		EB56562D2D64B0DB00A25751 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EB84958F2FE6EE320033F572 /* MotivationManager.swift */,
 				EB22501D2D146E9600E002D7 /* DataController.swift */,
 				EB5655E62D63400F00A25751 /* AppColorManager.swift */,
 				EB567F842D5C6F71002AC274 /* AppDelegate.swift */,
 				EB567F862D5C6F8C002AC274 /* SceneDelegate.swift */,
 				EB567F7B2D5A2751002AC274 /* DataController-Notifications.swift */,
+				EBBF94342FD834730023874D /* Cache.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -573,6 +582,7 @@
 				Base,
 				ru,
 				"pt-BR",
+				pl,
 			);
 			mainGroup = EB2250002D1457FE00E002D7;
 			packageReferences = (
@@ -643,6 +653,7 @@
 				EB5FF6F42D7EEA6F00249F07 /* ExtensionRevenueCat.swift in Sources */,
 				EB2250492D28FEA300E002D7 /* AwardSheetView.swift in Sources */,
 				EB7922602D47BDD600BF97D7 /* UIImage+Extensions.swift in Sources */,
+				EB8495912FE6EEE80033F572 /* MotivationManager.swift in Sources */,
 				EB79224E2D410E2F00BF97D7 /* Tags.swift in Sources */,
 				EBB2C9482D4D8C48008FA818 /* Main.xcdatamodeld in Sources */,
 				EB87A17E2DB03F6300E808CA /* CreateTagSheet.swift in Sources */,
@@ -683,6 +694,7 @@
 				EB56562B2D63607F00A25751 /* ColorPickerView.swift in Sources */,
 				EB5656332D64D13100A25751 /* UIDeviceForEmail.swift in Sources */,
 				EB22500D2D1457FE00E002D7 /* PlatePixApp.swift in Sources */,
+				EBBF94352FD834730023874D /* Cache.swift in Sources */,
 				EB2250322D198AD100E002D7 /* PlateView.swift in Sources */,
 				EB22502A2D1599C800E002D7 /* Plate-CoreDataHelpers.swift in Sources */,
 				EB87A1532DA6A47000E808CA /* TagSettings.swift in Sources */,
@@ -694,6 +706,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB56562C2D6374B300A25751 /* AppColorManager.swift in Sources */,
+				EB8495922FE6EEE80033F572 /* MotivationManager.swift in Sources */,
 				EBBD6D612D616B00006A3DC2 /* Motivation.swift in Sources */,
 				EBBD6D602D616B00006A3DC2 /* Motivations.swift in Sources */,
 			);
@@ -703,6 +716,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB8495902FE6EE320033F572 /* MotivationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,6 +753,7 @@
 			children = (
 				EB7922512D43E83400BF97D7 /* en */,
 				EB7922542D43E8A000BF97D7 /* ru */,
+				EB4DD94D2FE0249B00147919 /* pl */,
 			);
 			name = Awards.json;
 			sourceTree = "<group>";
@@ -877,7 +892,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePix/Configuration/PlatePix.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"PlatePix/Preview Content\"";
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				ENABLE_PREVIEWS = YES;
@@ -895,7 +910,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -913,7 +928,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePix/Configuration/PlatePix.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"PlatePix/Preview Content\"";
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				ENABLE_PREVIEWS = YES;
@@ -931,7 +946,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -949,7 +964,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePixWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlatePixWidget/Info.plist;
@@ -961,7 +976,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix.PlatePixWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -980,7 +995,7 @@
 				CODE_SIGN_ENTITLEMENTS = PlatePixWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = DMY523XRW6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlatePixWidget/Info.plist;
@@ -992,7 +1007,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.TatianaBuinitskaia.PlatePix.PlatePixWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1147,7 +1162,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EB5FF6EF2D7B82F000249F07 /* RevenueCat */ = {
+		EB4DD9922FE034F300147919 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EB5FF6EE2D7B82F000249F07 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
 			productName = RevenueCat;

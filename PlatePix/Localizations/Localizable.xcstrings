@@ -13,6 +13,12 @@
             "value" : " Healthy"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdrowe"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -28,6 +34,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " Moderate"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Średnie"
           }
         },
         "ru" : {
@@ -48,6 +60,12 @@
             "value" : " New Tag"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowy tag"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +81,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " Unhealthy"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niezdrowe"
           }
         },
         "ru" : {
@@ -81,6 +105,12 @@
             "value" : "(%@)"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%@)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -89,9 +119,25 @@
         }
       }
     },
+    "/ %@" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ %@"
+          }
+        }
+      }
+    },
     "%@" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -106,8 +152,15 @@
       }
     },
     "%@ / " : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ / "
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ / "
@@ -124,6 +177,12 @@
     "%lld" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -197,6 +256,12 @@
             "value" : "1. Touch and hold an empty area on the Home Screen until the apps jiggle."
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Naciśnij i przytrzymaj puste miejsce na ekranie głównym, aż ikony aplikacji zaczną drżeć."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -211,6 +276,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1. Touch and hold anywhere on your Lock Screen, tap “Customize” and choose Lock Screen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Naciśnij i przytrzymaj dowolne miejsce na ekranie blokady, stuknij „Dostosuj” i wybierz „Ekran blokady”."
           }
         },
         "ru" : {
@@ -229,6 +300,12 @@
             "value" : "2. Tap and hold the widgets area, then find the PlatePix widget from the suggested list."
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Naciśnij i przytrzymaj obszar widżetów, a następnie znajdź widżet PlatePix na liście sugestii."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -243,6 +320,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2. Tap the “Edit” button or the “+” in the top left corner, then find the PlatePix widget from the suggested list."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Stuknij przycisk „Edytuj” lub „+” w lewym górnym rogu, a następnie znajdź widżet PlatePix na liście sugestii."
           }
         },
         "ru" : {
@@ -261,6 +344,12 @@
             "value" : "3. Press “Add Widget” button and place widget in the position you want, then tap the empty area to finish."
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Stuknij przycisk „Dodaj widżet” i umieść widżet w wybranym miejscu, a następnie stuknij puste miejsce, aby zakończyć."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,6 +364,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "3. Tap or drag to add widget, then close the window and press “Done”."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3. Stuknij lub przeciągnij, aby dodać widżet, a następnie zamknij okno i stuknij „Gotowe”."
           }
         },
         "ru" : {
@@ -293,6 +388,12 @@
             "value" : "About App"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O aplikacji"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -307,6 +408,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add tags"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj tagi"
           }
         },
         "ru" : {
@@ -325,6 +432,12 @@
             "value" : "Add Tags"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj tagi"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -341,6 +454,12 @@
             "value" : "Added tags"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodane tagi"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -355,6 +474,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All created plates appear in the sidebar on the left, where you can select any of them to view or edit."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie utworzone talerze pojawiają się na pasku bocznym po lewej stronie, gdzie możesz wybrać dowolny z nich, aby go wyświetlić lub edytować."
           }
         },
         "ru" : {
@@ -374,6 +499,12 @@
             "value" : "All Plates"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie talerze"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -389,6 +520,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anytime Meal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dowolny posiłek"
           }
         },
         "ru" : {
@@ -407,6 +544,12 @@
             "value" : "Awards"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nagrody"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -421,6 +564,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Back"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wstecz"
           }
         },
         "ru" : {
@@ -441,6 +590,12 @@
             "value" : "Breakfast"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śniadanie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -455,6 +610,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuluj"
           }
         },
         "ru" : {
@@ -473,6 +634,12 @@
             "value" : "Check Settings"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprawdź ustawienia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,6 +654,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Congratulations!!!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gratulacje!!!"
           }
         },
         "ru" : {
@@ -505,6 +678,12 @@
             "value" : "Contact us"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skontaktuj się z nami"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -521,6 +700,12 @@
             "value" : "daily motivations on your"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dodać codzienną motywację na"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -535,6 +720,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "day"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dzień"
           }
         },
         "ru" : {
@@ -554,6 +745,12 @@
             "value" : "Day Snack"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przekąska w ciągu dnia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -570,6 +767,12 @@
             "value" : "Delete"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -584,6 +787,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deleting the default %@ tags will also remove them from any plates where they were previously used."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usunięcie domyślnych tagów %@ spowoduje również ich usunięcie ze wszystkich talerzy, w których były wcześniej używane."
           }
         },
         "ru" : {
@@ -604,6 +813,12 @@
             "value" : "Dinner"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolacja"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -618,6 +833,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Don't forget to take photos of your plates, it will help you eat mindfully!📸🍴"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie zapomnij robić zdjęć swoich talerzy — pomoże Ci to jeść bardziej uważnie! 📸🍴"
           }
         },
         "ru" : {
@@ -636,6 +857,12 @@
             "value" : "Done"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gotowe"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -652,6 +879,12 @@
             "value" : "Edit Tag"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytuj tag"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -666,6 +899,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Emotion"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emocja"
           }
         },
         "ru" : {
@@ -685,6 +924,12 @@
             "value" : "Evening Snack"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przekąska wieczorna"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -699,6 +944,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to save JPEG."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się zapisać pliku JPEG."
           }
         },
         "ru" : {
@@ -717,6 +968,12 @@
             "value" : "Filter by Date"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtruj według Daty"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -731,6 +988,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filter by Food Quality"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtruj według Jakości jedzenia"
           }
         },
         "ru" : {
@@ -749,6 +1012,12 @@
             "value" : "Filter by Mealtime"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtruj według Pory posiłku"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -763,6 +1032,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filter by Tag"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtruj według Tagu"
           }
         },
         "ru" : {
@@ -781,6 +1056,12 @@
             "value" : "Filters"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtry"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -795,6 +1076,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Follow instructions to reach"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postępuj zgodnie z instrukcjami, aby"
           }
         },
         "ru" : {
@@ -813,6 +1100,12 @@
             "value" : "Food"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedzenie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -821,18 +1114,24 @@
         }
       }
     },
-    "Free version allows up to 35 plates" : {
+    "Free version allows up to 15 plates" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Free version allows up to 35 plates"
+            "value" : "Free version allows up to 15 plates"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do 15 talerzy w wersji bezpłatnej"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "До 35 тарелок в бесплатной версии"
+            "value" : "До 15 тарелок в бесплатной версии"
           }
         }
       }
@@ -843,6 +1142,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Get unlimited plates with Premium"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium — bez ograniczeń"
           }
         },
         "ru" : {
@@ -859,6 +1164,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Get unlimited with Premium"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium — bez ograniczeń"
           }
         },
         "ru" : {
@@ -878,6 +1189,12 @@
             "value" : "Healthy"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdrowe"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -892,6 +1209,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HOME SCREEN"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EKRAN GŁÓWNY"
           }
         },
         "ru" : {
@@ -910,6 +1233,12 @@
             "value" : "Home Screen Widget"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widżet ekranu głównego"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -924,6 +1253,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "JPEG with day plates saved successfully!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plik JPEG z dziennymi talerzami został pomyślnie zapisany!"
           }
         },
         "ru" : {
@@ -942,6 +1277,12 @@
             "value" : "Just a few steps to get"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wystarczy kilka kroków, aby"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -956,6 +1297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Language"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Język"
           }
         },
         "ru" : {
@@ -974,6 +1321,12 @@
             "value" : "Leave a review"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zostaw opinię"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -988,6 +1341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LOCK SCREEN"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EKRANIE BLOKADY"
           }
         },
         "ru" : {
@@ -1006,6 +1365,12 @@
             "value" : "Lock Screen Widget"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widżet ekranu blokady"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1020,6 +1385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Locked"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zablokowane"
           }
         },
         "ru" : {
@@ -1040,6 +1411,12 @@
             "value" : "Lunch"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obiad"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1056,6 +1433,12 @@
             "value" : "Meal Quality"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jakość posiłku"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1070,6 +1453,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mealtime"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pora posiłku"
           }
         },
         "ru" : {
@@ -1089,6 +1478,12 @@
             "value" : "Moderate"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Średnie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1103,6 +1498,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "month"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "miesiąc"
           }
         },
         "ru" : {
@@ -1122,6 +1523,12 @@
             "value" : "Morning Snack"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przekąska poranna"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1138,6 +1545,12 @@
             "value" : "My"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moje"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1152,6 +1565,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Name"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa"
           }
         },
         "ru" : {
@@ -1171,6 +1590,12 @@
             "value" : "New Name"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowa Nazwa"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1185,6 +1610,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New Tag"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowy Tag"
           }
         },
         "ru" : {
@@ -1204,6 +1635,12 @@
             "value" : "New Type"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowy Typ"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1218,6 +1655,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No active subscription found. Please purchase a subscription."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znaleziono aktywnej subskrypcji. Proszę wykupić subskrypcję."
           }
         },
         "ru" : {
@@ -1236,6 +1679,12 @@
             "value" : "No awards earned yet"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie zdobyto jeszcze żadnych nagród"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1250,6 +1699,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No Date Selected"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie wybrano daty"
           }
         },
         "ru" : {
@@ -1268,6 +1723,12 @@
             "value" : "No Plate Selected"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie wybrano talerza"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1277,11 +1738,18 @@
       }
     },
     "No plates match the %@ filter %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "No plates match the %1$@ filter %2$@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Żadne talerze nie pasują do filtra %1$@ %2$@"
           }
         },
         "ru" : {
@@ -1300,6 +1768,12 @@
             "value" : "No plates match the %1$@ filter on %2$@"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Żadne talerze nie pasują do filtra %1$@ w dniu %2$@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1310,6 +1784,12 @@
     },
     "No plates on %@" : {
       "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak talerzy w %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1325,6 +1805,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No Tags"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak tagów"
           }
         },
         "ru" : {
@@ -1343,6 +1829,12 @@
             "value" : "No tags added yet"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie dodano jeszcze żadnych tagów"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1357,6 +1849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No tags available"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak dostępnych tagów"
           }
         },
         "ru" : {
@@ -1375,6 +1873,12 @@
             "value" : "Notes:"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notatki:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1391,6 +1895,12 @@
             "value" : "Notifications are not enabled"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Powiadomienia nie są włączone"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1402,6 +1912,12 @@
     "OK" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -1423,6 +1939,12 @@
             "value" : "Personalization"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalizacja"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1438,6 +1960,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Plate"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talerz"
           }
         },
         "ru" : {
@@ -1456,6 +1984,12 @@
             "value" : "Plate Details"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szczegóły talerza"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1467,6 +2001,12 @@
     "PlatePix" : {
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PlatePix"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PlatePix"
@@ -1488,6 +2028,12 @@
             "value" : "Plates"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Talerze"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1502,6 +2048,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy Policy"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polityka prywatności"
           }
         },
         "ru" : {
@@ -1520,6 +2072,12 @@
             "value" : "Privacy Policy"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polityka prywatności"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1528,12 +2086,21 @@
         }
       }
     },
+    "Processing purchase..." : {
+
+    },
     "Reaction" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reaction"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reakcja"
           }
         },
         "ru" : {
@@ -1552,6 +2119,12 @@
             "value" : "Reading motivations"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czytanie motywacji"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1566,6 +2139,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "regulary will help"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "regularnie pomoże"
           }
         },
         "ru" : {
@@ -1584,10 +2163,32 @@
             "value" : "Reminders"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przypomnienia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Напоминания"
+          }
+        }
+      }
+    },
+    "Remove" : {
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odłącz"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Убрать"
           }
         }
       }
@@ -1598,6 +2199,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rename"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmień nazwę"
           }
         },
         "ru" : {
@@ -1616,6 +2223,12 @@
             "value" : "Restore Purchases"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przywróć zakupy"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1630,6 +2243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisz"
           }
         },
         "ru" : {
@@ -1648,6 +2267,12 @@
             "value" : "Save Status"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stan zapisu"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1662,6 +2287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search in Notes"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szukaj w notatkach"
           }
         },
         "ru" : {
@@ -1680,6 +2311,12 @@
             "value" : "Select a Date"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz datę"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1694,6 +2331,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select a Date:"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz datę:"
           }
         },
         "ru" : {
@@ -1712,6 +2355,12 @@
             "value" : "Select a Mealtime"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz porę posiłku"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1726,6 +2375,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select a Tag"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz tag"
           }
         },
         "ru" : {
@@ -1744,6 +2399,12 @@
             "value" : "Selected Date: "
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybrana data:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1758,6 +2419,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ustawienia"
           }
         },
         "ru" : {
@@ -1776,6 +2443,12 @@
             "value" : "Share"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udostępnij"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1790,6 +2463,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Show"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokaż"
           }
         },
         "ru" : {
@@ -1808,6 +2487,12 @@
             "value" : "Show awards"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokaż nagrody"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1822,6 +2507,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Small doses of motivation can make a big difference in your life"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Małe dawki motywacji mogą zrobić dużą różnicę w Twoim życiu"
           }
         },
         "ru" : {
@@ -1840,6 +2531,12 @@
             "value" : "Subscription Status"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status subskrypcji"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1854,6 +2551,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Swipe left on a tag to rename or delete it"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przesuń w lewo na tagu, aby zmienić jego nazwę lub go usunąć"
           }
         },
         "ru" : {
@@ -1872,6 +2575,12 @@
             "value" : "Tags"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagi"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1886,6 +2595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tap the '+' in the bottom right to add a new plate."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kliknij „+” w prawym dolnym rogu, aby dodać nowy talerz."
           }
         },
         "ru" : {
@@ -1904,6 +2619,12 @@
             "value" : "Terms And Conditions"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regulamin"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1918,6 +2639,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terms And Conditions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regulamin"
           }
         },
         "ru" : {
@@ -1936,6 +2663,12 @@
             "value" : "text will be searchable"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekst będzie przeszukiwalny"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1950,6 +2683,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Theme"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motyw"
           }
         },
         "ru" : {
@@ -1968,6 +2707,12 @@
             "value" : "There was a problem setting your notification. Please check you have notifications enabled."
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wystąpił problem z ustawieniem powiadomienia. Sprawdź, czy masz włączone powiadomienia."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1982,6 +2727,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Time"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czas"
           }
         },
         "ru" : {
@@ -2001,6 +2752,12 @@
             "value" : "Today"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzisiaj"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2015,6 +2772,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Track Your Meals and Lose Weight, \nStay Motivated and Improve Your Health!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śledź swoje posiłki i chudnij,\nzachowaj motywację i popraw swoje zdrowie!"
           }
         },
         "ru" : {
@@ -2033,6 +2796,12 @@
             "value" : "Type"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typ"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2048,6 +2817,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unhealthy"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niezdrowe"
           }
         },
         "ru" : {
@@ -2068,6 +2843,12 @@
             "value" : "Unknown"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieznane"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2082,6 +2863,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unlock Now"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odblokuj teraz"
           }
         },
         "ru" : {
@@ -2100,6 +2887,12 @@
             "value" : "Unlocked: %@"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odblokowano: %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2114,6 +2907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Warning"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostrzeżenie"
           }
         },
         "ru" : {
@@ -2132,6 +2931,12 @@
             "value" : "week"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tydzień"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2146,6 +2951,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "year"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rok"
           }
         },
         "ru" : {
@@ -2164,6 +2975,12 @@
             "value" : "You can cancel your subscription at any time"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Możesz anulować subskrypcję w dowolnym momencie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2174,6 +2991,12 @@
     },
     "You don't have any plates yet" : {
       "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie masz jeszcze żadnych talerzy"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2188,6 +3011,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You might want to focus on healthier options to feel your best!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Możesz chcieć skupić się na zdrowszych opcjach, aby czuć się jak najlepiej!"
           }
         },
         "ru" : {
@@ -2206,6 +3035,12 @@
             "value" : "You need to add at least one tag before filtering."
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Musisz dodać co najmniej jeden tag przed filtrowaniem."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2220,6 +3055,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "you to reach your goal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aby osiągnąć swój cel"
           }
         },
         "ru" : {
@@ -2238,6 +3079,12 @@
             "value" : "You're doing amazing! Keep up the great work with your healthy choices!"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Świetnie Ci idzie! Kontynuuj dobre nawyki i zdrowe wybory!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2252,6 +3099,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You're maintaining a good balance! Keep making mindful choices!"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utrzymujesz dobrą równowagę! Kontynuuj świadome wybory!"
           }
         },
         "ru" : {
@@ -2270,6 +3123,12 @@
             "value" : "You've earned award:"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdobyłeś nagrodę:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2286,6 +3145,12 @@
             "value" : "your motivations even on your"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "otrzymywać swoją codzienną motywację nawet na"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2300,6 +3165,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your purchase has been successfully restored."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoje zakupy zostały pomyślnie przywrócone."
           }
         },
         "ru" : {

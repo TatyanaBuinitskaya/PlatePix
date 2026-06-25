@@ -1,0 +1,74 @@
+[
+    {
+        "id": "Beginner",
+        "name": "Początkujący",
+        "description": "Dodaj 10 talerzy",
+        "color": "WatermelonPink",
+        "criterion": "plates",
+        "value": 10
+    },
+    {
+        "id": "Master",
+        "name": "Mistrz",
+        "description": "Dodaj 25 talerzy",
+        "color": "OrangeFruit",
+        "criterion": "plates",
+        "value": 25
+    },
+    {
+        "id": "Professional",
+        "name": "Profesjonalista",
+        "description": "Dodaj 50 talerzy",
+        "color": "SunnyYellow",
+        "criterion": "plates",
+        "value": 50
+    },
+    {
+        "id": "Expert",
+        "name": "Ekspert",
+        "description": "Dodaj 100 talerzy",
+        "color": "AppleGreen",
+        "criterion": "plates",
+        "value": 100
+    },
+    {
+        "id": "Guru",
+        "name": "Guru",
+        "description": "Dodaj 250 talerzy",
+        "color": "CoolMint",
+        "criterion": "plates",
+        "value": 250
+    },
+    {
+        "id": "Maestro",
+        "name": "Maestro",
+        "description": "Dodaj 500 talerzy",
+        "color": "BlueSky",
+        "criterion": "plates",
+        "value": 500
+    },
+    {
+        "id": "Collector",
+        "name": "Kolekcjoner",
+        "description": "Dodaj 1000 talerzy",
+        "color": "AppleBlue",
+        "criterion": "plates",
+        "value": 1000
+    },
+    {
+        "id": "Champion",
+        "name": "Czempion",
+        "description": "Dodaj 5000 talerzy",
+        "color": "LavenderRaf",
+        "criterion": "plates",
+        "value": 5000
+    },
+    {
+        "id": "Legend",
+        "name": "Legenda",
+        "description": "Dodaj 10000 talerzy",
+        "color": "GirlsPink",
+        "criterion": "plates",
+        "value": 10000
+    }
+]

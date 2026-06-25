@@ -13,6 +13,7 @@ struct NoPlateIView: View {
     @EnvironmentObject var dataController: DataController
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
+   // @Binding var path: NavigationPath
 
     var body: some View {
         VStack {
@@ -41,14 +42,14 @@ struct NoPlateIView: View {
     }
 }
 
-#Preview("English") {
-    NoPlateIView()
-        .environmentObject(AppColorManager())
-        .environment(\.locale, Locale(identifier: "EN"))
-}
-
-#Preview("Russian") {
-    NoPlateIView()
-        .environmentObject(AppColorManager())
-        .environment(\.locale, Locale(identifier: "RU"))
-}
+//#Preview("English") {
+//    NoPlateIView()
+//        .environmentObject(AppColorManager())
+//        .environment(\.locale, Locale(identifier: "EN"))
+//}
+//
+//#Preview("Russian") {
+//    NoPlateIView()
+//        .environmentObject(AppColorManager())
+//        .environment(\.locale, Locale(identifier: "RU"))
+//}

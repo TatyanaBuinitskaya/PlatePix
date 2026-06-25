@@ -13,16 +13,12 @@ struct DetailView: View {
     @EnvironmentObject var dataController: DataController
     /// An environment variable that manages the app's selected color.
     @EnvironmentObject var colorManager: AppColorManager
-
+  
     var body: some View {
         VStack {
-            // Displays the PlateView if a plate is selected, otherwise shows the NoPlateIView.
-            // The conditional ensures that the UI adapts based on whether a plate is selected.
-            if let selectedPlate = dataController.selectedPlate {
-                PlateView(plate: selectedPlate)
-            } else {
-                NoPlateIView()
-            }
+            if dataController.path.isEmpty {
+                       NoPlateIView()
+                  }
         }
         .navigationTitle("Plate Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -30,6 +26,7 @@ struct DetailView: View {
 }
 
 #Preview("English") {
+    
     DetailView()
         .environmentObject(DataController.preview)
         .environmentObject(AppColorManager())

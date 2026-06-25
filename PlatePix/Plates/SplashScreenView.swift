@@ -24,63 +24,61 @@ struct SplashScreenView: View {
     @State var animationState = false
     /// A binding that determines whether the main application interface should be shown.
     @Binding var showMainApp: Bool
-
+    
     var body: some View {
-            ZStack {
-                LinearGradient(colors: [Color("LavenderRaf"), Color("GirlsPink")], startPoint: .bottom, endPoint: .top)
-                    .ignoresSafeArea()
-                VStack(alignment: .center, spacing: 0) {
-                    Spacer()
-                    Text("PlatePix")
-                        .font(.system(size: 50, weight: .bold))
-                        .fontDesign(.rounded)
-                        .foregroundStyle(.white)
-
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200)
-
-                    Text("Track Your Meals and Lose Weight, Stay Motivated and Improve Your Health!")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white)
-                        .multilineTextAlignment(.center)
-
-                    Spacer()
-                    Spacer()
-                }
-                .padding()
-                .opacity(animationState ? 1 : 0)
-                .scaleEffect(animationState ? 1 : 0.8)
-                .animation(.easeOut(duration: 1), value: animationState)
-                .onAppear {
-                    animationState = true
-                }
+        ZStack {
+            LinearGradient(colors: [Color("LavenderRaf"), Color("GirlsPink")], startPoint: .bottom, endPoint: .top)
+                .ignoresSafeArea()
+            VStack(alignment: .center, spacing: 0) {
+                Spacer()
+                Text("PlatePix")
+                    .font(.system(size: 50, weight: .bold))
+                    .fontDesign(.rounded)
+                    .foregroundStyle(.white)
+                
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200)
+                
+                Text("Track Your Meals and Lose Weight, Stay Motivated and Improve Your Health!")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                
+                Spacer()
+                Spacer()
+            }
+            .padding()
+            .opacity(animationState ? 1 : 0)
+            .scaleEffect(animationState ? 1 : 0.8)
+            .animation(.easeOut(duration: 1), value: animationState)
+            .onAppear {
+                animationState = true
+            }
             .navigationBarTitle("", displayMode: .inline) // Hide title
             .navigationBarHidden(true) // Hide navigation bar completely
             .onAppear {
-                        animationState = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            withAnimation {
-                                showMainApp = true
-                            }
-                        }
+                animationState = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation {
+                        showMainApp = true
                     }
                 }
-    }
-
-    /// Handles Spotlight search selection.
-    ///
-    /// - Parameter userActivity: The user activity that triggered the app from Spotlight search.
-    func loadSpotlightItem(_ userActivity: NSUserActivity) {
-        // Retrieve the unique identifier stored in Spotlight's metadata.
-        if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-            // Find the corresponding plate in Core Data.
-            if let plate = dataController.plate(with: uniqueIdentifier) {
-                dataController.selectedPlate = plate
-                openSpotlightPlate = true  // Trigger UI update
             }
+        }
+    }
+    
+    /// Handles Spotlight search selection.
+    func loadSpotlightItem(_ userActivity: NSUserActivity) {
+        guard
+            let id = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
+            let plate = dataController.plate(with: id)
+        else { return }
+        
+        DispatchQueue.main.async {
+            dataController.path.append(plate)
         }
     }
 }

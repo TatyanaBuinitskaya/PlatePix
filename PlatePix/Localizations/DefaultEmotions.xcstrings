@@ -11,6 +11,12 @@
             "value" : "Anger"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Złość"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anxiety"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lęk"
           }
         },
         "ru" : {
@@ -47,6 +59,12 @@
             "value" : "Boredom"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuda"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +81,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Celebration"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Świętowanie"
           }
         },
         "ru" : {
@@ -83,6 +107,12 @@
             "value" : "Disappointment"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozczarowanie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -99,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Euphoria"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Euforia"
           }
         },
         "ru" : {
@@ -119,6 +155,12 @@
             "value" : "Happiness"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szczęście"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,6 +177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Insecurity"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niepewność"
           }
         },
         "ru" : {
@@ -155,6 +203,12 @@
             "value" : "Joy"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radość"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loneliness"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samotność"
           }
         },
         "ru" : {
@@ -191,6 +251,12 @@
             "value" : "Longing"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tęsknota"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -207,6 +273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nervousness"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdenerwowanie"
           }
         },
         "ru" : {
@@ -227,6 +299,12 @@
             "value" : "Sadness"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smutek"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -245,6 +323,12 @@
             "value" : "Stress"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stres"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -260,6 +344,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tiredness"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmęczenie"
           }
         },
         "ru" : {

@@ -7,7 +7,7 @@
 import CloudKit
 import CoreData
 import SwiftUI
-import UIKit
+//import UIKit
 import WidgetKit
 import RevenueCat
 
@@ -24,8 +24,6 @@ class DataController: ObservableObject {
     @Environment(\.colorScheme) var colorScheme
     /// The currently selected filter for viewing plates, initialized with today's date.
     @Published var selectedFilter: Filter? = Filter.filterForDate(Date())
-    /// The currently selected plate, if any, for detailed viewing or editing.
-    @Published var selectedPlate: Plate?
     /// The text used to filter plates based on user input.
     @Published var filterText = ""
     /// The quality filter applied to plates. A value of -1 indicates no filter is applied.
@@ -35,7 +33,7 @@ class DataController: ObservableObject {
     /// A Boolean value indicating whether the plates are sorted from newest to oldest.
     @Published var sortNewestFirst = true
     /// The currently selected image, typically for display or upload.
-    @Published var selectedImage: UIImage?
+ //   @Published var selectedImage: UIImage?
     /// The award currently being tracked or displayed.
     @Published var currentAward: Award = .example
     /// The date selected for filtering plates, initialized with the current date.
@@ -94,7 +92,8 @@ class DataController: ObservableObject {
         let dataController = DataController(inMemory: true)
         return dataController
     }()
-
+    @Published var path = NavigationPath()
+    
     /// The UserDefaults suite where we're saving user data.
     private let defaults = UserDefaults.standard
     /// Array of predefined meal times for filtering plates and UI selection, to be localized.
@@ -233,7 +232,7 @@ class DataController: ObservableObject {
 
         /// Enable automatic merging of changes from parent context (e.g. iCloud sync).
         container.viewContext.automaticallyMergesChangesFromParent = true
-        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
         /// Enable remote change notifications from iCloud.
         container.persistentStoreDescriptions.first?.setOption(
@@ -297,6 +296,7 @@ class DataController: ObservableObject {
     /// on tags, mealtime, quality, title and notes.
     /// - Returns: An array of all matching plates.
     func platesForSelectedFilter() -> [Plate] {
+        
         let filter = selectedFilter ?? .all
         var predicates = [NSPredicate]()
 
@@ -348,59 +348,47 @@ class DataController: ObservableObject {
         }
 
         // Sorting plates by creationDate
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
-     //   fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst)]
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "creationDate", ascending: sortNewestFirst),
+            NSSortDescriptor(key: "title", ascending: true)
+        ]
+        
 
         return (try? container.viewContext.fetch(fetchRequest)) ?? []
     }
-// TODO: 
-    /// Creates a new plate and initializes its properties with default values or values from the current selection.
-    /// - Note: The creation date is set to the selected date (or today's date if no date is selected).
-    func newPlate() -> Bool {
-        // plateCount = 0
-        var shouldCreate = isSubscriptionIsActive
-        if shouldCreate == false {
 
-        shouldCreate = plateCount < 35 // 35
+    func newPlate() -> Plate? {
+//        plateCount = 24
+        var shouldCreate = isSubscriptionIsActive
+
+        if shouldCreate == false {
+            shouldCreate = plateCount < 15
         }
+
         guard shouldCreate else {
-            return false
+            return nil
         }
+
         plateCount += 1
         savePlateCount()
 
         let plate = Plate(context: container.viewContext)
-
-        plate.title = "\(plateCount)"
+        plate.cloudRecordID = UUID().uuidString
+        plate.title = String(format: "%02d", plateCount)
         plate.creationDate = selectedDate ?? .now
         plate.quality = 1
-        // Set the mealtime attribute from the selected filter, defaulting to "breakfast" if no mealtime is selected
         plate.mealtime = "Anytime Meal"
         plate.photo = nil
 
         if let creationDate = plate.creationDate {
             plate.notes = dateFormatter.string(from: creationDate)
-        } else {
-            plate.notes = nil // Handle case where creationDate is nil
         }
-        selectedPlate = plate
+
         save()
 
-        return true
-    }
-
-    /// Attempts to create a new plate.
-    /// - If the user has access to adding new plates, it proceeds normally.
-    /// - If the user has reached a limit (e.g., in the free version), it triggers the store view to prompt an upgrade.
-    func tryNewPlate() {
-        // Calls `newPlate()` from `dataController`, which returns `false` if the user cannot add more plates.
-        if newPlate() == false {
-            // If the user is restricted from adding more plates, show the store to encourage upgrading.
-         //   showingStore = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.showingStore = true
-                    }
-        }
+        return plate
     }
 
     /// Creates a new tag with default values and returns it.
@@ -470,10 +458,19 @@ class DataController: ObservableObject {
     /// Deletes a specified object from Core Data and saves the context after deletion.
     ///
     /// - Parameter object: The NSManagedObject to be deleted.
+//    func delete(_ object: NSManagedObject) {
+//        objectWillChange.send()
+//        container.viewContext.delete(object)
+//        save()
+//    }
     func delete(_ object: NSManagedObject) {
-        objectWillChange.send()
         container.viewContext.delete(object)
-        save()
+
+        do {
+            try container.viewContext.save()
+        } catch {
+            print("Delete error:", error)
+        }
     }
 
     /// Performs a batch delete of the objects returned by the fetch request.
@@ -574,27 +571,35 @@ class DataController: ObservableObject {
         let request: NSFetchRequest<Tag> = Tag.fetchRequest()
         return (try? container.viewContext.fetch(request)) ?? []
     }
+    
+ 
 
     /// Provides a header view for a tag section with an appropriate icon and toggle button.
     /// - Parameter type: The type of the tag to display.
     /// - Returns: A view for the header of a tag section.
-    func tagHeaderView(for type: String, colorScheme: ColorScheme) -> some View {
-        let localizedType = NSLocalizedString(type, comment: "Tag category") // Localize type name
+   func tagHeaderView(for type: String, colorScheme: ColorScheme) -> some View {
 
+        let localizedType = NSLocalizedString(type, comment: "Tag category") // Localize type name
+       let iconName: String = {
+           switch type {
+           case "Food":
+               return "fork.knife.circle"
+           case "Month":
+               return "30.square"
+           case "Emotion":
+               return colorScheme == .dark ? "face.smiling.inverse" : "face.smiling"
+           case "Reaction":
+               return "heart.text.square"
+           default:
+               return "tag"
+           }
+       }()
         return HStack {
-            // Display appropriate icon based on tag type
-            if type == "Food" {
-                Label(localizedType.capitalized, systemImage: "fork.knife.circle")
-            } else if type == "Month" {
-                Label(localizedType.capitalized, systemImage: "30.square")
-            } else if type == "Emotion" {
-                // swiftlint:disable:next line_length
-                Label(localizedType.capitalized, systemImage: colorScheme == .dark ? "face.smiling.inverse" : "face.smiling")
-            } else if type == "Reaction" {
-                Label(localizedType.capitalized, systemImage: "heart.text.square")
-            } else {
-                Label(localizedType.capitalized, systemImage: "tag")
-            }
+                Image(systemName: iconName)
+                .renderingMode(.template)
+                .foregroundStyle(.tint)
+                Text(localizedType.capitalized)
+
             Spacer()
             // Toggle button for expand/collapse
             if availableTagTypes.contains(type) {
@@ -656,10 +661,10 @@ class DataController: ObservableObject {
         /// - Returns: A default internal type string (e.g., "Food", "Emotion").
     func mapLocalizedTypeToDefaultType(localizedType: String) -> String {
         switch localizedType.lowercased() {
-        case "еда", "food": return "Food"
-        case "эмоция", "emotion": return "Emotion"
-        case "реакция", "reaction": return "Reaction"
-        case "мои", "my": return "My"
+        case "еда", "food", "jedzenie": return "Food"
+        case "эмоция", "emotion", "emocja": return "Emotion"
+        case "реакция", "reaction", "reakcja": return "Reaction"
+        case "мои", "my", "moje": return "My"
         default: return localizedType
         }
     }
@@ -792,6 +797,8 @@ class DataController: ObservableObject {
         return formatter
     }
 }
+
+
 
 /// An extension to `Date` that provides a computed property for getting the start of the day.
 extension Date {

@@ -15,10 +15,17 @@ import WidgetKit
 struct PlatePixApp: App {
     /// Adapts `AppDelegate` for use with SwiftUI's application lifecycle.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @Environment(\.openURL) var openURL
 
     var body: some Scene {
         WindowGroup {
             AppView()
+                .onOpenURL { url in
+                    if url.scheme == "platepix", url.host == "store" {
+                        NotificationCenter.default.post(name: .openStoreView, object: nil)
+                    }
+                }
+               
         }
     }
 
@@ -26,4 +33,8 @@ struct PlatePixApp: App {
 //        Purchases.logLevel = .debug
 //        Purchases.configure(withAPIKey: "appl_XivMTqpJYjMYwMHtKPZXIipMuMP")
 //    }
+}
+
+extension Notification.Name {
+    static let openStoreView = Notification.Name("OpenStoreView")
 }

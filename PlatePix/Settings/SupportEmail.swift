@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import SwiftUICore
+import SwiftUI
 
 /// A structure that represents an email for user support.
 /// It includes the recipient's email address, subject, message header, and optional data attachments.

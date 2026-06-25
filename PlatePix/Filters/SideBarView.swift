@@ -32,6 +32,8 @@ struct SideBarView: View {
     @State private var showMealtimeFilterList = false
     /// Controls the visibility of an alert indicating that no tags have been added yet.
     @State private var showAlertNoTagsYet = false
+    
+
 
     /// A predefined set of mealtime filters for the sidebar.
     let mealtimeFilters: [Filter] = [.breakfast, .morningSnack, .lunch, .daySnack, .dinner, .eveningSnack, .anytimeMeal]
@@ -71,10 +73,19 @@ struct SideBarView: View {
                 } label: {
                     HStack {
                         let selectedDate = viewModel.dataController.formattedDate(viewModel.dataController.selectedDate ?? Date())
-                        Label(NSLocalizedString("Select a Date", comment: ""), systemImage: "calendar.badge.plus")
-                            .layoutPriority(1) // Gives higher priority to this text
-                            .lineLimit(1) // Ensures it stays in one line
-                            .fixedSize(horizontal: true, vertical: false) // Prevents truncation
+                        Label {
+                            Text("Select a Date")
+//                                .layoutPriority(1) // Gives higher priority to this text
+//                                .lineLimit(1) // Ensures it stays in one line
+//                                .fixedSize(horizontal: true, vertical: false) // Prevents truncation
+                        } icon: {
+                            Image(systemName: "calendar.badge.plus")
+                                .foregroundStyle(colorManager.selectedColor.color)
+                        }
+//                        Label(NSLocalizedString("Select a Date", comment: ""), systemImage: "calendar.badge.plus")
+//                            .layoutPriority(1) // Gives higher priority to this text
+//                            .lineLimit(1) // Ensures it stays in one line
+//                            .fixedSize(horizontal: true, vertical: false) // Prevents truncation
                         Text("(\(selectedDate))")
                             .font(.caption) // Smaller font for date
                             .minimumScaleFactor(0.6) // Allows shrinking
@@ -87,6 +98,8 @@ struct SideBarView: View {
                     }
                 }
             }
+            .accentColor(colorManager.selectedColor.color)
+            
 
             // Section for tag-based filters.
             Section("Filter by Tag") {
@@ -94,11 +107,14 @@ struct SideBarView: View {
                     label: LocalizedStringKey("Select a Tag"),
                     systemImage: "tag",
                     isExpanded: $showTagFilterList,
-                    items: viewModel.generateTagFilters(colorScheme: colorScheme),
+                  items: viewModel.generateTagFilters(colorScheme: colorScheme),
                     colorManager: colorManager,
                     showAlertNoTags: $showAlertNoTagsYet
                 )
+             
             }
+            .tint(Color(colorManager.selectedColor.color))
+
 
             // Section for mealtime filters.
             Section("Filter by Mealtime") {
@@ -135,7 +151,7 @@ struct SideBarView: View {
                 )
             }
         }
-        .accentColor(colorManager.selectedColor.color)
+        .tint(Color(colorManager.selectedColor.color))
         .navigationTitle("Filters")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: SideBarViewToolBar.init)
@@ -145,6 +161,9 @@ struct SideBarView: View {
             for tagType in viewModel.dataController.availableTagTypes where showTagTypeFilters[tagType] == nil {
                 showTagTypeFilters[tagType] = false
             }
+        }
+        .onAppear {
+            viewModel.loadTags()
         }
     }
     /// A helper function to create a row for each quality filter.
@@ -191,6 +210,107 @@ struct SideBarView: View {
                 .minimumScaleFactor(0.6)
         }
     }
+    
+    /// Creates a button view for a date filter that displays the filter label, a badge with plate count,
+    /// and an arrow to indicate selection.
+    /// - Parameters:
+    ///   - label: The label of the filter button (e.g., "All plates" or "Today").
+    ///   - systemImage: The system image to be used for the button's icon (e.g., "calendar").
+    ///   - plateCount: The number of plates associated with this filter.
+    ///   - action: The action to be performed when the button is pressed. This is passed as a closure.
+    @ViewBuilder
+    private func dateFilterButton(
+        label: LocalizedStringKey,
+        systemImage: String,
+        plateCount: Int,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            HStack {
+                Label {
+                    Text(label)
+                } icon: {
+                    Image(systemName: systemImage)
+                        .foregroundStyle(colorManager.selectedColor.color)
+                }
+                .badge("\(plateCount)")
+                   
+                // Chevron icon to indicate that this is a button that leads to further options.
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.secondary.opacity(0.6))
+                    .font(.footnote)
+                    .fontWeight(.bold)
+            }
+        }
+    }
+    /// Creates a button view that allows expanding or collapsing a filter section.
+    /// The expansion/collapse is animated and displays items when expanded.
+    /// - Parameters:
+    ///   - label: The label for the filter section (e.g., "Tags", "Quality").
+    ///   - systemImage: The system image for the section (e.g., "tag").
+    ///   - isExpanded: A binding to track whether the section is expanded or collapsed.
+    ///   - items: A list of views (items) to be shown when the section is expanded.
+    @ViewBuilder
+    private func expandableFilterSection(
+        label: LocalizedStringKey,
+        systemImage: String,
+        isExpanded: Binding<Bool>,
+        items: [some View],
+        colorManager: AppColorManager, // Pass colorManager explicitly as a parameter
+        showAlertNoTags: Binding<Bool>
+    ) -> some View {
+
+        Button {
+            // Toggle the expanded state with animation when the section header is tapped.
+            if items.isEmpty {
+                showAlertNoTags.wrappedValue = true
+            } else {
+                withAnimation {
+                    isExpanded.wrappedValue.toggle()
+                }
+            }
+        } label: {
+            HStack {
+                Image(systemName: systemImage)
+                              .foregroundStyle(colorManager.selectedColor.color)
+                              .font(.title3)
+
+                          Text(label)
+
+//                // Display the system image and label for the section header.
+//                Image(systemName: systemImage)
+//                    .foregroundStyle(colorManager.selectedColor.color)
+//                    .font(.title3)
+//                Text(label) // The label text of the section.
+                Spacer() // Pushes the chevron icon to the right of the label.
+                // Chevron icon indicating the expanded or collapsed state.
+                Image(systemName: "chevron.down")
+                    .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0))
+                    .foregroundStyle(.secondary.opacity(0.6))
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue)
+            }
+        }
+        .alert("No tags available", isPresented: showAlertNoTags) {
+            Button("OK", role: .cancel) { }
+
+            } message: {
+                Text("You need to add at least one tag before filtering.")
+            }
+
+        // If the section is expanded, show the items inside the section.
+        if isExpanded.wrappedValue {
+            // Use `ForEach` to render the items inside the expanded section.
+            ForEach(items.indices, id: \.self) { index in
+                // Each item is shown with a move-and-opacity transition when the section is expanded.
+                items[index]
+                    .transition(.move(edge: .top).combined(with: .opacity))
+            }
+        }
+    }
+  
+  
 }
 
 #Preview("English") {
@@ -222,8 +342,19 @@ private func dateFilterButton(
     Button(action: action) {
         HStack {
             // Display the label with the system image, followed by a badge showing the plate count.
-            Label(label, systemImage: systemImage)
-                .badge("\(plateCount)") // Adds a badge showing the plate count.
+//            Label(label, systemImage: systemImage)
+//                .badge("\(plateCount)") // Adds a badge showing the plate count.
+        
+            Image(systemName: systemImage)
+               
+                       Text(label)
+
+                       Spacer()
+
+                       Text("\(plateCount)")
+                           .font(.caption)
+                           .foregroundStyle(.secondary)
+               
             // Chevron icon to indicate that this is a button that leads to further options.
             Image(systemName: "chevron.right")
                 .foregroundStyle(.secondary.opacity(0.6))
@@ -233,66 +364,7 @@ private func dateFilterButton(
     }
 }
 
-/// Creates a button view that allows expanding or collapsing a filter section.
-/// The expansion/collapse is animated and displays items when expanded.
-/// - Parameters:
-///   - label: The label for the filter section (e.g., "Tags", "Quality").
-///   - systemImage: The system image for the section (e.g., "tag").
-///   - isExpanded: A binding to track whether the section is expanded or collapsed.
-///   - items: A list of views (items) to be shown when the section is expanded.
-@ViewBuilder
-private func expandableFilterSection(
-    label: LocalizedStringKey,
-    systemImage: String,
-    isExpanded: Binding<Bool>,
-    items: [some View],
-    colorManager: AppColorManager, // Pass colorManager explicitly as a parameter
-    showAlertNoTags: Binding<Bool>
-) -> some View {
 
-    Button {
-        // Toggle the expanded state with animation when the section header is tapped.
-        if items.isEmpty {
-            showAlertNoTags.wrappedValue = true
-        } else {
-            withAnimation {
-                isExpanded.wrappedValue.toggle()
-            }
-        }
-    } label: {
-        HStack {
-            // Display the system image and label for the section header.
-            Image(systemName: systemImage)
-                .foregroundStyle(colorManager.selectedColor.color)
-                .font(.title3)
-            Text(label) // The label text of the section.
-            Spacer() // Pushes the chevron icon to the right of the label.
-            // Chevron icon indicating the expanded or collapsed state.
-            Image(systemName: "chevron.down")
-                .rotationEffect(.degrees(isExpanded.wrappedValue ? 180 : 0))
-                .foregroundStyle(.secondary.opacity(0.6))
-                .font(.footnote)
-                .fontWeight(.bold)
-                .animation(.easeInOut(duration: 0.3), value: isExpanded.wrappedValue) 
-        }
-    }
-    .alert("No tags available", isPresented: showAlertNoTags) {
-        Button("OK", role: .cancel) { }
-
-        } message: {
-            Text("You need to add at least one tag before filtering.")
-        }
-
-    // If the section is expanded, show the items inside the section.
-    if isExpanded.wrappedValue {
-        // Use `ForEach` to render the items inside the expanded section.
-        ForEach(items.indices, id: \.self) { index in
-            // Each item is shown with a move-and-opacity transition when the section is expanded.
-            items[index]
-                .transition(.move(edge: .top).combined(with: .opacity))
-        }
-    }
-}
 
 /// A toolbar view for the sidebar with a button to show the awards sheet.
 /// - Properties:

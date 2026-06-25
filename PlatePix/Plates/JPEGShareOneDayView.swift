@@ -25,8 +25,6 @@ struct JPEGShareOneDayView: View {
             Filter(id: tag.tagID, name: tag.tagName, icon: "fork.knife.circle", tag: tag)
         }
     }
-    /// The captured screenshot of the plate view to be included in the PDF.
-    @State var imagePlateView: UIImage?
     /// The maximum number of columns allowed in the grid layout.
     private let maxColumns = 3
     /// A variable that tracks if the save button was tapped.
@@ -76,9 +74,24 @@ struct JPEGShareOneDayView: View {
     /// A header view displaying the dynamic title and a GPEG saving button
     private var header: some View {
         HStack {
-            Text(dataController.dynamicTitle)
-                .font(.title3)
+            ZStack {
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(Color("LavenderRaf"))
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(1)
+            }
+            .frame(width: 20, height: 20)
+            .padding(0)
+            Text("PlatePix")
+                .font(.body)
                 .fontWeight(.bold)
+                .minimumScaleFactor(0.8)
+            Text(dataController.dynamicTitle)
+                .font(.footnote)
+                .minimumScaleFactor(0.5)
+                //.fontWeight(.bold)
             Spacer()
             if !saveIsTapped {  // Hide button when tapped
                 Button {

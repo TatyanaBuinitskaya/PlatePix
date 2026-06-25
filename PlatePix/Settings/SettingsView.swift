@@ -44,7 +44,7 @@ struct SettingsView: View {
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text("Free version allows up to 35 plates")
+                                    Text("Free version allows up to 15 plates")
                                         .foregroundStyle(Color.white)
                                         .font(.body)
                                   
@@ -80,9 +80,14 @@ struct SettingsView: View {
                             showRemindersSheet = true
                         } label: {
                             HStack {
-                                Label("Reminders", systemImage: "envelope")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Reminders")
+                                   } icon: {
+                                       Image(systemName: "envelope")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
 
@@ -93,9 +98,14 @@ struct SettingsView: View {
                             }
                         } label: {
                             HStack {
-                                Label("Language", systemImage: "flag")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Language")
+                                   } icon: {
+                                       Image(systemName: "flag")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
 
@@ -104,9 +114,14 @@ struct SettingsView: View {
                             showHomeScreenWidgetSheet.toggle()
                         } label: {
                             HStack {
-                                Label("Home Screen Widget", systemImage: "quote.bubble")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Home Screen Widget")
+                                   } icon: {
+                                       Image(systemName: "quote.bubble")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
                         .sheet(isPresented: $showHomeScreenWidgetSheet, content: {
@@ -118,9 +133,14 @@ struct SettingsView: View {
                             showLockScreenWidgetSheet.toggle()
                         } label: {
                             HStack {
-                                Label("Lock Screen Widget", systemImage: "text.bubble")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Lock Screen Widget")
+                                   } icon: {
+                                       Image(systemName: "text.bubble")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
                         .sheet(isPresented: $showLockScreenWidgetSheet, content: {
@@ -138,18 +158,28 @@ struct SettingsView: View {
                             }
                         } label: {
                             HStack {
-                                Label("Leave a review", systemImage: "hand.thumbsup")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Leave a review")
+                                   } icon: {
+                                       Image(systemName: "hand.thumbsup")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
 
                         // Button to share the app link.
                         ShareLink(item: URL(string: "https://apps.apple.com/app/id6743003345")!) {
                             HStack {
-                                Label("Share", systemImage: "square.and.arrow.up")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Share")
+                                   } icon: {
+                                       Image(systemName: "square.and.arrow.up")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
 
@@ -158,9 +188,14 @@ struct SettingsView: View {
                             email.send(openURL: openURL)
                         } label: {
                             HStack {
-                                Label("Contact us", systemImage: "at")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Contact us")
+                                   } icon: {
+                                       Image(systemName: "at")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
 
@@ -171,9 +206,14 @@ struct SettingsView: View {
                             }
                         } label: {
                             HStack {
-                                Label("Terms and conditions", systemImage: "doc.text")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Terms and conditions")
+                                   } icon: {
+                                       Image(systemName: "doc.text")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
                         // Button to open the privacy policy page.
@@ -185,9 +225,14 @@ struct SettingsView: View {
                             }
                         } label: {
                             HStack {
-                                Label("Privacy policy", systemImage: "shield")
-                                Spacer()
-                            }
+                                   Label {
+                                       Text("Privacy policy")
+                                   } icon: {
+                                       Image(systemName: "shield")
+                                           .foregroundStyle(colorManager.selectedColor.color)
+                                   }
+                                   Spacer()
+                               }
                             .contentShape(Rectangle())
                         }
                     }

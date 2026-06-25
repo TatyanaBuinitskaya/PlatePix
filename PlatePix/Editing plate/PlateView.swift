@@ -24,8 +24,6 @@ struct PlateView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var tags: FetchedResults<Tag>
     /// A list of selected photo picker items.
     @State var pickerItems = [PhotosPickerItem]()
-    /// The image to display for the plate.
-    @State var imagePlateView: UIImage?
     /// A Boolean value that tracks whether the camera view is presented.
     @State private var isCameraPresented = false
     /// A Boolean value indicating if iCloud is unavailable.
@@ -34,7 +32,7 @@ struct PlateView: View {
     @State private var showTagList = false
     /// A flag indicating whether the congratulations screen should be shown.
     @State var showCongratulations: Bool = false
-
+    
     var body: some View {
         VStack {
                 ZStack {
@@ -46,7 +44,6 @@ struct PlateView: View {
                             }
                             PlateImageView(
                                 plate: plate,
-                                imagePlateView: $imagePlateView,
                                 maxWidth: UIScreen.main.bounds.width * 1, // Larger size
                                 maxHeight: 600
                             )
@@ -81,9 +78,6 @@ struct PlateView: View {
                 showCongratulations = true
             }
         }
-        .onReceive(plate.objectWillChange) { _ in
-            dataController.queueSave()
-        }
         .onReceive(NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)) { _ in
             NSUbiquitousKeyValueStore.default.synchronize()
         }
@@ -97,26 +91,12 @@ struct PlateView: View {
             AwardSheetView()
         }
         .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading) {
-//                Button {
-//                    dataController.selectedPlate = nil
-//                   // dismiss() // Dismiss the current view
-//                } label: {
-//                    HStack {
-//                        Image(systemName: "chevron.left")
-//                            .fontWeight(.bold)
-//                        Text("Plates") // Back button label
-//                    }
-//                }
-//                .accessibilityIdentifier("Plates") // Add accessibility identifier
-//            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 plateToolbar // Existing delete button
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    dataController.selectedPlate = nil
-                 //   dismiss() // Dismiss the current view
+                    dismiss()
                 } label: {
                     HStack {
                         Text("Done") // Back button label
@@ -125,7 +105,6 @@ struct PlateView: View {
                 }
             }
         }
-      //  .navigationBarBackButtonHidden(true) // Hide the default back button
     }
 
     /// Displays the mealtime selection view for the plate.
@@ -313,47 +292,45 @@ struct PlateView: View {
     private var plateToolbar: some View {
         Button {
             dataController.delete(plate)
-            dataController.selectedPlate = nil
+            dismiss()
         } label: {
             Image(systemName: "trash")
                 .foregroundStyle(.red)
         }
     }
+   
 
     /// Saves an image to the local filesystem.
     /// - Parameter image: The image to be saved.
     /// - Returns: The file path where the image was saved, or nil if the save failed.
     /// - Note: The image is saved as a JPEG with 80% quality compression.
     func saveImageToFileSystem(image: UIImage) -> String? {
-        let photoDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let photoName = UUID().uuidString + ".jpg"
-        let photoURL = photoDirectory.appendingPathComponent(photoName)
-        if let imageData = image.jpegData(compressionQuality: 0.8) {
-            do {
-                try imageData.write(to: photoURL)
-                print("Image successfully saved at path: \(photoURL.path)")
-                return photoURL.path
-            } catch {
-                print("Error saving image: \(error.localizedDescription)")
-            }
-        } else {
-            print("Failed to generate JPEG data for the image.")
-        }
-        return nil
-    }
 
-    /// Saves an image to CloudKit.
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let name = UUID().uuidString + ".jpg"
+        let url = dir.appendingPathComponent(name)
+
+        guard let data = image.jpegData(compressionQuality: 0.8) else {
+            return nil
+        }
+
+        try? data.write(to: url)
+        return name
+    }
+    
+    
+    /// Uploads an image to CloudKit and returns the created record ID.
     /// - Parameters:
-    ///   - image: The image to be saved.
-    ///   - imageName: The name for the image file.
-    /// - Returns: The CloudKit record ID of the saved record, or nil if the operation failed.
-    /// - Note: The image is temporarily saved to the local filesystem before uploading to CloudKit to create a CKAsset.
+    ///   - image: Image to upload.
+    ///   - imageName: Temporary file name for the image.
+    /// - Returns: The saved `CKRecord.ID`, or `nil` if the upload fails.
     func saveImageToCloudKit(image: UIImage, imageName: String) async -> CKRecord.ID? {
         // Convert UIImage to Data (JPEG format)
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+        guard let imageData = image.jpegData(compressionQuality: 0.6) else {
             print("Failed to convert image to JPEG data.")
             return nil
         }
+        print("JPEG size MB: \(Double(imageData.count) / 1024 / 1024)")
         // Save the image data locally before uploading to CloudKit (in a temporary directory)
         let fileManager = FileManager.default
         let temporaryDirectoryURL = fileManager.temporaryDirectory
@@ -370,7 +347,11 @@ struct PlateView: View {
             let container = CKContainer.default()
             let privateDatabase = container.privateCloudDatabase
             // Save the record and await the result
+            let start = Date()
+
             let savedRecord = try await privateDatabase.save(record)
+
+            print("CloudKit upload time: \(Date().timeIntervalSince(start)) sec")
             // Clean up the local file after uploading it to CloudKit
             try fileManager.removeItem(at: fileURL)
             // Return the recordID of the saved record
@@ -381,36 +362,129 @@ struct PlateView: View {
         }
     }
 
-    /// Saves an image captured from the camera.
-    /// - Parameter image: The image captured from the camera.
+    /// Processes a camera image, saves it locally, updates the plate record,
+    /// and starts an asynchronous CloudKit upload.
+    /// - Parameter image: The image captured by the camera.
     func saveImageFromCamera(image: UIImage) {
-        let normalizedImage = image.fixedOrientation() // Correct orientation
-        if let croppedImage = cropToSquare(image: normalizedImage) {
-            let imageName = UUID().uuidString
-            Task {
-                do {
-                    // Attempt to save the image to CloudKit
-                    if let cloudRecordID = await saveImageToCloudKit(
-                        image: croppedImage,
-                        imageName: imageName
-                    ) {
-                        plate.cloudRecordID = cloudRecordID.recordName
-                        plate.photo = imageName
-                        imagePlateView = croppedImage
-                    } else {
-                        throw NSError(domain: "CloudKitSave", code: -1, userInfo: nil)
-                    }
-                } catch {
-                    print("CloudKit save failed, attempting local save: \(error)")
-                    if let localPath = saveImageToFileSystem(image: croppedImage) {
-                        plate.photo = localPath
-                        imagePlateView = croppedImage
-                    } else {
-                        print("Failed to save image locally.")
-                    }
-                }
-                dataController.save()
+
+        let normalizedImage = image.fixedOrientation()
+
+        guard let croppedImage = cropToSquare(image: normalizedImage) else { return }
+
+        let optimizedImage = resizedImage(croppedImage, maxDimension: 1200)
+
+        let imageName = UUID().uuidString + ".jpg"
+
+        guard let localPath = saveImageToFileSystem(image: optimizedImage) else {
+            return
+        }
+
+        let recordID = plate.cloudRecordID ?? UUID().uuidString
+      
+        
+        let key = plate.objectID.uriRepresentation().absoluteString
+
+           ImageCache.shared.removeObject(forKey: key as NSString)
+           ImageCache.shared.setObject(optimizedImage, forKey: key as NSString)
+
+        plate.cloudRecordID = recordID
+        plate.photo = localPath
+        dataController.save()
+
+        Task.detached {
+            await uploadToCloudKit(
+                image: optimizedImage,
+                imageName: imageName,
+                recordID: recordID   
+            )
+        }
+    }
+    
+    /// Uploads an image to CloudKit for an existing record, or creates a new one if needed
+    /// The image is converted to JPEG, temporarily written to disk, and uploaded
+    /// as a `CKAsset` to the `imageData` field of a `Plate` record in the private database.
+    /// - Parameters:
+    ///   - image: Image to upload.
+    ///   - imageName: Temporary filename used for the JPEG file.
+    ///   - recordID: CloudKit record identifier (string) for the target record.
+    /// - Note: If the record does not exist, a new `Plate` record is created automatically.
+    func uploadToCloudKit(
+        image: UIImage,
+        imageName: String,
+        recordID: String
+    ) async {
+
+        let ckID = CKRecord.ID(recordName: recordID)
+        let db = CKContainer.default().privateCloudDatabase
+
+        do {
+            let record = try await db.record(for: ckID)
+
+            let tempURL = FileManager.default.temporaryDirectory
+                .appendingPathComponent(imageName)
+                .appendingPathExtension("jpg")
+
+            if let data = image.jpegData(compressionQuality: 0.7) {
+                try? data.write(to: tempURL)
             }
+
+            record["imageData"] = CKAsset(fileURL: tempURL)
+
+            _ = try await db.save(record)
+
+            try? FileManager.default.removeItem(at: tempURL)
+
+        } catch {
+            print("CloudKit upload error:", error)
+
+            let record = CKRecord(recordType: "Plate", recordID: ckID)
+
+            let tempURL = FileManager.default.temporaryDirectory
+                .appendingPathComponent(imageName)
+                .appendingPathExtension("jpg")
+
+            if let data = image.jpegData(compressionQuality: 0.7) {
+                try? data.write(to: tempURL)
+            }
+
+            record["imageData"] = CKAsset(fileURL: tempURL)
+
+            do {
+                _ = try await db.save(record)
+                try? FileManager.default.removeItem(at: tempURL)
+            } catch {
+                print("CloudKit create error:", error)
+            }
+        }
+    }
+    
+    /// Resizes an image while preserving its aspect ratio so that its largest side
+    /// does not exceed the specified maximum dimension.
+    /// - Parameters:
+    ///   - image: The source image to resize.
+    ///   - maxDimension: The maximum allowed width or height.
+    /// - Returns: A resized image, or the original image if it is already within limits.
+    func resizedImage(_ image: UIImage, maxDimension: CGFloat) -> UIImage {
+        let size = image.size
+
+        let scale = min(
+            maxDimension / size.width,
+            maxDimension / size.height
+        )
+
+        if scale >= 1 {
+            return image
+        }
+
+        let newSize = CGSize(
+            width: size.width * scale,
+            height: size.height * scale
+        )
+
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+
+        return renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: newSize))
         }
     }
 
@@ -430,40 +504,55 @@ struct PlateView: View {
         return UIImage(cgImage: cgImage)
     }
 
-    /// Handles the selection of images from the photo library.
+    /// Handles image selection from the photo picker, processes the image,
+    /// saves it locally, updates the model, and uploads it to CloudKit.
+    /// The image is normalized, cropped to a square, resized, cached,
+    /// and then persisted locally before being uploaded asynchronously.
+    /// - Note: CloudKit upload is performed in a detached background task.
     func handleImageSelection() {
+
         guard let item = pickerItems.first else { return }
+
         Task {
-            if let data = try? await item.loadTransferable(type: Data.self),
-               let image = UIImage(data: data) {
-                let normalizedImage = image.fixedOrientation() // Correct orientation
-                if let croppedImage = cropToSquare(image: normalizedImage) {
-                    let imageName = UUID().uuidString
-                    do {
-                        if let recordID = await saveImageToCloudKit(
-                            image: croppedImage,
-                            imageName: imageName
-                        ) {
-                            plate.cloudRecordID = recordID.recordName
-                            plate.photo = imageName
-                            imagePlateView = croppedImage
-                        } else {
-                            throw NSError(domain: "CloudKitSave", code: -1, userInfo: nil)
-                        }
-                    } catch {
-                        print("CloudKit save failed, attempting local save: \(error)")
-                        if let localPath = saveImageToFileSystem(image: croppedImage) {
-                            plate.photo = localPath
-                            imagePlateView = croppedImage
-                        } else {
-                            print("Failed to save image locally.")
-                        }
-                    }
-                    dataController.save()
-                }
+            guard
+                let data = try? await item.loadTransferable(type: Data.self),
+                let image = UIImage(data: data)
+            else { return }
+
+            let normalized = image.fixedOrientation()
+            let cropped = cropToSquare(image: normalized)!
+            let optimized = resizedImage(cropped, maxDimension: 1200)
+
+            let imageName = UUID().uuidString + ".jpg"
+
+            guard let localPath = saveImageToFileSystem(image: optimized) else { return }
+
+            let recordID = plate.cloudRecordID ?? UUID().uuidString
+
+            await MainActor.run {
+                let key = plate.objectID.uriRepresentation().absoluteString
+
+                   ImageCache.shared.removeObject(forKey: key as NSString)
+                   ImageCache.shared.setObject(optimized, forKey: key as NSString)
+                plate.photo = localPath
+                plate.cloudRecordID = recordID
+                dataController.save()
+
+                print("PHOTO =", plate.photo ?? "nil")
+                print("RECORD =", plate.cloudRecordID ?? "nil")
+            }
+
+            Task.detached {
+                await uploadToCloudKit(
+                    image: optimized,
+                    imageName: imageName,
+                    recordID: recordID
+                )
             }
         }
     }
+    
+
     /// Dismiss the keyboard
        private func hideKeyboard() {
            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

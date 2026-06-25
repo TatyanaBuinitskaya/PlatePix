@@ -15,7 +15,9 @@ struct MainSplitView: View {
     @EnvironmentObject var colorManager: AppColorManager
     /// Shared user preferences for managing UI settings across the app.
     @EnvironmentObject var userPreferences: UserPreferences
-
+    
+    
+    
     var body: some View {
         NavigationSplitView {
             SideBarView(dataController: dataController)
@@ -24,7 +26,12 @@ struct MainSplitView: View {
                 .environmentObject(userPreferences)
                 .environmentObject(colorManager)
         } detail: {
-            DetailView()
+            NavigationStack(path: $dataController.path) {
+                DetailView()
+                    .navigationDestination(for: Plate.self) { plate in
+                        PlateView(plate: plate)
+                    }
+            }
         }
     }
 }

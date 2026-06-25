@@ -22,15 +22,18 @@ struct AddPlateButtonView: View {
     // TODO:
     var body: some View {
         Button {
-            dataController.tryNewPlate()
-            dataController.isNewPlateCreated = true // Marks that a new plate has been created.
-          //  let counter = 0
+            if let plate = dataController.newPlate() {
+                dataController.path.append(plate)
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    dataController.showingStore = true
+                }
+            }
+
             let counter = dataController.plateCount
             print("Counter updated: \(counter)")
 
-            if counter == 15 || counter == 30 || counter.isMultiple(of: 300) {
-                print("Requesting review")
-
+            if counter == 8 || counter == 30 || counter.isMultiple(of: 300) {
                 requestReview()
             }
         } label: {
@@ -47,7 +50,10 @@ struct AddPlateButtonView: View {
 }
 
 #Preview {
-    AddPlateButtonView(showingStore: .constant(false))
-        .environmentObject(DataController())
-        .environmentObject(AppColorManager())
+
+    return AddPlateButtonView(
+        showingStore: .constant(false)
+    )
+    .environmentObject(DataController())
+    .environmentObject(AppColorManager())
 }

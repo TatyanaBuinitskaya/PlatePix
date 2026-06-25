@@ -11,6 +11,12 @@
             "value" : "A Bit Heavy"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trochę ciężkie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27,6 +33,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Acid Reflux"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refluks żołądkowy"
           }
         },
         "ru" : {
@@ -47,6 +59,12 @@
             "value" : "Acne"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trądzik"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +81,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allergic Reaction"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reakcja alergiczna"
           }
         },
         "ru" : {
@@ -83,6 +107,12 @@
             "value" : "Bloating"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wzdęcia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -99,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Constipation"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaparcia"
           }
         },
         "ru" : {
@@ -119,6 +155,12 @@
             "value" : "Diarrhea"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biegunka"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,6 +177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dizzy"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zawroty głowy"
           }
         },
         "ru" : {
@@ -155,6 +203,12 @@
             "value" : "Drowsy"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senny"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Feeling Light"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uczucie lekkości"
           }
         },
         "ru" : {
@@ -191,6 +251,12 @@
             "value" : "Food Poisoning"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrucie pokarmowe"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -207,6 +273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intense Fatigue"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silne zmęczenie"
           }
         },
         "ru" : {
@@ -227,6 +299,12 @@
             "value" : "Mildly Bloated"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lekkie wzdęcia"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -243,6 +321,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nauseous"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mdłości"
           }
         },
         "ru" : {
@@ -263,6 +347,12 @@
             "value" : "No Issues"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak problemów"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -279,6 +369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Satisfied"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadowolona"
           }
         },
         "ru" : {
@@ -299,6 +395,12 @@
             "value" : "Severe Stomach Pain"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silny ból żołądka"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -315,6 +417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sluggish"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ospały"
           }
         },
         "ru" : {
@@ -335,6 +443,12 @@
             "value" : "Stomach Ache"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ból brzucha"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -353,6 +467,12 @@
             "value" : "Thirsty"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spragniona"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -369,6 +489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Too Full"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przejedzona"
           }
         },
         "ru" : {

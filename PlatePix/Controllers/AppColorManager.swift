@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import SwiftUICore
+import SwiftUI
+import WidgetKit
 
 /// Enum representing the available app colors.
 /// Each case corresponds to a named color in the asset catalog.
@@ -80,6 +81,7 @@ class AppColorManager: ObservableObject {
         iCloud.set(selectedColor.rawValue, forKey: "selectedColor")
         userDefaults?.set(selectedColor.rawValue, forKey: "selectedColor")
         iCloud.synchronize()
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     /// Loads the selected color from iCloud, falling back to UserDefaults if needed.

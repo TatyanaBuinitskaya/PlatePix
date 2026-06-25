@@ -7,7 +7,7 @@
 
 import CoreData
 import Foundation
-import SwiftUICore
+import SwiftUI
 import SwiftUI
 
 /// An extension of `SideBarView` containing the `ViewModel` class,
@@ -48,30 +48,57 @@ extension SideBarView {
 
         /// Initializes the `ViewModel` and sets up the fetched results controller for `Tag` entities.
         /// - Parameter dataController: The `DataController` used for managing Core Data interactions.
+//        init(dataController: DataController) {
+//            self.dataController = dataController
+//            // Create a fetch request to retrieve tags, sorted alphabetically by name.
+//            let request = Tag.fetchRequest()
+//            request.sortDescriptors = [NSSortDescriptor(keyPath: \Tag.name, ascending: true)]
+//            // Initialize the fetched results controller with the Core Data context.
+//            tagsController = NSFetchedResultsController(
+//                fetchRequest: request,
+//                managedObjectContext: dataController.container.viewContext,
+//                sectionNameKeyPath: nil,
+//                cacheName: nil
+//            )
+//            super.init()
+//            // Assign self as the delegate to listen for Core Data changes.
+//            tagsController.delegate = self
+//            // Perform the initial fetch to load tags into the `tags` array.
+//            do {
+//                try tagsController.performFetch()
+//                tags = tagsController.fetchedObjects ?? []
+//            } catch {
+//                print("Failed to fetch tags")
+//            }
+//        }
         init(dataController: DataController) {
             self.dataController = dataController
-            // Create a fetch request to retrieve tags, sorted alphabetically by name.
+
             let request = Tag.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(keyPath: \Tag.name, ascending: true)]
-            // Initialize the fetched results controller with the Core Data context.
+            request.sortDescriptors = [
+                NSSortDescriptor(keyPath: \Tag.name, ascending: true)
+            ]
+
             tagsController = NSFetchedResultsController(
                 fetchRequest: request,
                 managedObjectContext: dataController.container.viewContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil
             )
+
             super.init()
-            // Assign self as the delegate to listen for Core Data changes.
+
             tagsController.delegate = self
-            // Perform the initial fetch to load tags into the `tags` array.
+        }
+        
+        func loadTags() {
             do {
                 try tagsController.performFetch()
                 tags = tagsController.fetchedObjects ?? []
             } catch {
-                print("Failed to fetch tags")
+                print("Failed to fetch tags:", error)
             }
         }
-
         /// A delegate method from `NSFetchedResultsControllerDelegate`, called when the fetched objects change.
                 /// This method updates the `tags` array whenever new `Tag` objects are added, deleted, or modified in Core Data.
                 /// - Parameter controller: The `NSFetchedResultsController` that detected the changes.
@@ -83,6 +110,7 @@ extension SideBarView {
 
         /// A function to generate tag filters by grouping them by type and creating viewable filters.
         func generateTagFilters(colorScheme: ColorScheme) -> [AnyView] {
+        
             // Group the tag filters by their type.
             let groupedTags = Dictionary(grouping: tagFilters) { $0.tag?.type ?? "Other" }
             // Return sorted views for each tag type.

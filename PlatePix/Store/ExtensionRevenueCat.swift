@@ -24,7 +24,7 @@ extension Package {
     }
 }
 
-extension SubscriptionPeriod {
+extension RevenueCat.SubscriptionPeriod {
     var durationTitle: String {
         switch self.unit {
         case .day: return NSLocalizedString("day", comment: "")

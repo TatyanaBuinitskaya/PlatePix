@@ -145,11 +145,12 @@ struct TagListView: View {
                                 }
                             }
                         }
+                        .tint(colorManager.selectedColor.color)
                         Spacer(minLength: 5)
                             .listRowBackground(Color.clear)
                             .id("bottom")
                     }
-                    .accentColor(colorManager.selectedColor.color)
+                    .tint(colorManager.selectedColor.color)
                     .searchable(text: $searchQuery)
                     .onChange(of: searchQuery) {
                         if searchQuery.isEmpty {
@@ -504,6 +505,7 @@ struct TagRow: View {
                     removeAction()
                 } label: {
                     HStack {
+                        Text("Remove")
                         Image(systemName: "tag.slash")
                     }
                     .foregroundStyle(colorManager.selectedColor.color)
